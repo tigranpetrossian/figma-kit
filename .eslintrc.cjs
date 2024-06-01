@@ -6,6 +6,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'prettier',
     'plugin:react-hooks/recommended',
+    'plugin:storybook/recommended',
   ],
   plugins: ['react-refresh', 'import'],
   ignorePatterns: ['dist', '.eslintrc.cjs'],

@@ -26,3 +26,5 @@ dist-ssr
 # Generated
 tsconfig.tsbuildinfo
 .eslintcache
+
+*storybook.log
