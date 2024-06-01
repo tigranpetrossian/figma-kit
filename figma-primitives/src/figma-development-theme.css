@@ -1,3 +1,21 @@
+/**
+* FOR DEVELOPMENT PURPOSES ONLY.
+* Use this file in non-figma plugin environments, e.g. Storybook to ensure base styles and color tokens are accessible to components.
+* This file doesn't need to be imported into Plugin UI.
+* https://www.figma.com/plugin-docs/css-variables/
+*/
+
+.body {
+  font-family: Inter, sans-serif;
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 400;
+  font-feature-settings:
+    'liga' on,
+    'calt' on;
+  color: var(--figma-color-text);
+}
+
 :root,
 .light,
 .light-theme {
