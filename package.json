@@ -8,7 +8,7 @@
     "lint": "eslint \"**/{src,test}/**/*.{ts,tsx}\" --ext ts,tsx --fix --max-warnings 0",
     "test": "pnpm --filter figma-primitives test",
     "prepare": "husky",
-    "storybook": "storybook dev -p 6006",
+    "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build"
   },
   "devDependencies": {
@@ -44,6 +44,7 @@
     "prettier": "^3.2.5",
     "semantic-release": "^23.0.8",
     "storybook": "^8.1.5",
+    "storybook-dark-mode": "^4.0.1",
     "typescript": "^5.4.5",
     "vite": "^5.2.7",
     "vite-plugin-dts": "^3.9.0",
