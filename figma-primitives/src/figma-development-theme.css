@@ -5,14 +5,14 @@
 * https://www.figma.com/plugin-docs/css-variables/
 */
 
-.body {
+body {
   font-family: Inter, sans-serif;
   font-size: 11px;
   line-height: 16px;
   font-weight: 400;
   font-feature-settings:
-    'liga' on,
-    'calt' on;
+    'liga' 1,
+    'calt' 1;
   color: var(--figma-color-text);
 }
 
