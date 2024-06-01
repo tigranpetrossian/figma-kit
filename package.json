@@ -1,0 +1,47 @@
+{
+  "name": "figma-primitives-root",
+  "private": true,
+  "scripts": {
+    "site:dev": "pnpm --filter website dev",
+    "dev": "pnpm --filter figma-primitives dev",
+    "build": "pnpm --filter figma-primitives build",
+    "lint": "eslint \"**/{src,test}/**/*.{ts,tsx}\" --ext ts,tsx --fix --max-warnings 0",
+    "test": "pnpm --filter figma-primitives test",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.2.1",
+    "@commitlint/config-conventional": "^19.1.0",
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^14.2.2",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/node": "^20.11.30",
+    "@typescript-eslint/eslint-plugin": "^7.2.0",
+    "@typescript-eslint/parser": "^7.2.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "conventional-changelog-conventionalcommits": "^7.0.2",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.6",
+    "happy-dom": "^14.3.9",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5",
+    "semantic-release": "^23.0.8",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.7",
+    "vite-plugin-dts": "^3.9.0",
+    "vite-tsconfig-paths": "^4.3.2",
+    "vitest": "^1.5.0"
+  },
+  "lint-staged": {
+    "**/{src,test}/**/*.{ts,tsx}": [
+      "eslint --cache --fix --max-warnings 0",
+      "prettier --write"
+    ]
+  },
+  "packageManager": "pnpm@9.1.3"
+}

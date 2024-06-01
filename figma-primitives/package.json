@@ -1,0 +1,43 @@
+{
+  "name": "figma-primitives",
+  "description": "Headless multi-checkbox management library",
+  "version": "0.0.0-semantic-release",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tigranpetrossian/figma-primitives"
+  },
+  "keywords": [
+    "checkbox-list",
+    "checkbox",
+    "react",
+    "hook"
+  ],
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "dev": "vite build --mode development --watch",
+    "build": "vite build",
+    "test": "vitest"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22"
+  }
+}
