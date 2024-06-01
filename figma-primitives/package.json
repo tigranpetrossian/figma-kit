@@ -37,7 +37,8 @@
     "react-dom": "^18.2.0"
   },
   "dependencies": {
-    "class-variance-authority": "^0.7.0"
+    "class-variance-authority": "^0.7.0",
+    "merge-props": "^6.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

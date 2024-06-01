@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { InputBase } from './InputBase';
+import { Input } from './Input';
 
-type Story = StoryObj<typeof InputBase>;
+type Story = StoryObj<typeof Input>;
 
-const meta: Meta<typeof InputBase> = {
-  component: InputBase,
+const meta: Meta<typeof Input> = {
+  component: Input,
   argTypes: {
     variant: {
       options: ['normal', 'ghost', 'underline'],
@@ -36,5 +36,12 @@ export const Underline: Story = {
   args: {
     variant: 'underline',
     placeholder: 'Suffix',
+  },
+};
+
+export const SelectOnClick: Story = {
+  args: {
+    value: 'Some value',
+    selectOnClick: true,
   },
 };
