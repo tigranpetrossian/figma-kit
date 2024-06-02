@@ -5,7 +5,18 @@ type Story = StoryObj<typeof Input>;
 
 const meta: Meta<typeof Input> = {
   component: Input,
+  args: {
+    variant: 'normal',
+    value: '',
+    placeholder: '',
+    disabled: false,
+  },
   argTypes: {
+    value: {
+      type: 'string',
+      control: 'text',
+      defaultValue: '',
+    },
     variant: {
       options: ['normal', 'ghost', 'underline'],
       control: { type: 'radio' },
