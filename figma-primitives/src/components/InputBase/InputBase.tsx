@@ -5,8 +5,21 @@ import { cva } from 'class-variance-authority';
 const inputBase = cva('fp-inputBase', {
   variants: {
     variant: {
-      normal: 'normal',
+      /**
+       * Unstyled variant for constructing mode complex fields.
+       * */
+      base: 'base',
+      /**
+       * Borderless, unless interacted with.
+       * */
       ghost: 'ghost',
+      /**
+       * Common bordered input.
+       * */
+      normal: 'normal',
+      /*
+       * Bottom border only, unless interacted with.
+       * */
       underline: 'underline',
     },
   },

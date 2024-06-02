@@ -26,6 +26,14 @@
     color: var(--figma-color-text-tertiary);
   }
 
+  &.base {
+    border-color: transparent;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
   &.normal {
     border-color: var(--figma-color-border);
   }
