@@ -22,17 +22,41 @@ type ControlInputParserResult<V> =
       valid: false;
     };
 
+type IncrementTargets = Record<string, boolean> | null;
+
 type ControlInputProps<V> = Omit<InputProps, 'value' | 'onChange'> & {
   value: V;
   onChange: (value: V) => void;
   inputRef?: React.Ref<HTMLInputElement>;
+  smallNudge?: number;
+  bigNudge?: number;
   parse: (input: string) => ControlInputParserResult<V>;
   format: (value: V) => string;
   clamp?: (value: V) => V;
+  incrementBy?: (value: V, amount: number, incrementTargets: IncrementTargets) => V;
+  getIncrementTargets?: (element: HTMLInputElement) => IncrementTargets;
+  getIncrementSelection?: () => [start: number, end: number];
 };
 
+const DEFAULT_SMALL_NUDGE = 1;
+const DEFAULT_BIG_NUDGE = 10;
+
 const Field = <V,>(props: ControlInputProps<V>) => {
-  const { className, inputRef: forwardedRef, value, onChange, format, parse, clamp, ...controlInputProps } = props;
+  const {
+    className,
+    inputRef: forwardedRef,
+    value,
+    onChange,
+    format,
+    parse,
+    clamp,
+    smallNudge = DEFAULT_SMALL_NUDGE,
+    bigNudge = DEFAULT_BIG_NUDGE,
+    incrementBy,
+    getIncrementTargets,
+    getIncrementSelection,
+    ...controlInputProps
+  } = props;
   const ref = useRef<HTMLInputElement>(null);
   const composedRef = useComposedRefs(forwardedRef, ref);
 
@@ -77,6 +101,34 @@ const Field = <V,>(props: ControlInputProps<V>) => {
       revert();
       inputElement.blur();
     }
+
+    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+      if (!getIncrementTargets || !incrementBy) {
+        return;
+      }
+
+      event.preventDefault();
+      const parseResult = parse(inputElement.value);
+
+      if (!parseResult.valid) {
+        return;
+      }
+
+      const nudge = event.shiftKey ? bigNudge : smallNudge;
+      const amount = event.key === 'ArrowUp' ? nudge : -nudge;
+      const incrementTargets = getIncrementTargets(inputElement);
+      const newValue = incrementBy(parseResult.value, amount, incrementTargets);
+      submit(format(newValue));
+      // TODO: Needs better solution
+      // Delegate selection to the next tick to make sure it happens after value is set.
+      requestAnimationFrame(() => {
+        if (incrementTargets && getIncrementSelection) {
+          const [start, end] = getIncrementSelection();
+          inputElement.setSelectionRange(start, end);
+        }
+        inputElement.select();
+      });
+    }
   };
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -99,5 +151,5 @@ const Field = <V,>(props: ControlInputProps<V>) => {
   );
 };
 
-export type { ControlInputProps, ControlInputParserResult };
+export type { ControlInputProps, ControlInputParserResult, IncrementTargets };
 export { Root, Field };
