@@ -1,5 +1,5 @@
 import type React from 'react';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 const MAX_CURSOR_DRIFT = 5;
 
@@ -10,20 +10,23 @@ const MAX_CURSOR_DRIFT = 5;
 export function useSelectOnInputClick(ref: React.RefObject<HTMLInputElement>) {
   const [cursorX, setCursorX] = useState<number | null>(null);
 
-  const handleMouseDown = (e: React.MouseEvent) => {
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
     setCursorX(e.clientX);
-  };
+  }, []);
 
-  const handleMouseUp = (e: React.MouseEvent) => {
-    if (!ref.current) {
-      return;
-    }
+  const handleMouseUp = useCallback(
+    (e: React.MouseEvent) => {
+      if (!ref.current) {
+        return;
+      }
 
-    if (cursorX === null || Math.abs(e.clientX - cursorX) < MAX_CURSOR_DRIFT) {
-      ref.current.select();
-      setCursorX(null);
-    }
-  };
+      if (cursorX === null || Math.abs(e.clientX - cursorX) < MAX_CURSOR_DRIFT) {
+        ref.current.select();
+        setCursorX(null);
+      }
+    },
+    [cursorX, ref]
+  );
 
   return {
     onMouseDown: handleMouseDown,
