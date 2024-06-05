@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { cx } from 'class-variance-authority';
+import mergeProps from 'merge-props';
 import type { InputProps } from 'components/Input';
 import { Input } from 'components/Input';
 import { useComposedRefs } from 'lib/react/useComposeRefs';
@@ -88,7 +89,7 @@ const Field = <V,>(props: ControlInputProps<V>) => {
     return { valid: true, value };
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     const inputElement = event.currentTarget;
 
     if (event.key === 'Enter') {
@@ -131,7 +132,7 @@ const Field = <V,>(props: ControlInputProps<V>) => {
     }
   };
 
-  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+  const onBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     submit(event.currentTarget.value);
   };
 
@@ -144,9 +145,7 @@ const Field = <V,>(props: ControlInputProps<V>) => {
       selectOnClick={true}
       className={cx(className, 'fp-ControlInputField')}
       variant="base"
-      onBlur={handleBlur}
-      onKeyDown={handleKeyDown}
-      {...controlInputProps}
+      {...mergeProps(controlInputProps, { onBlur, onKeyDown })}
     />
   );
 };
