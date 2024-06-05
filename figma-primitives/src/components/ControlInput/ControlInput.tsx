@@ -31,7 +31,7 @@ type ControlInputProps<V> = Omit<InputProps, 'value' | 'onChange'> & {
   inputRef?: React.Ref<HTMLInputElement>;
   smallNudge?: number;
   bigNudge?: number;
-  parse: (input: string) => ControlInputParserResult<V>;
+  parse: (input: string, value: V) => ControlInputParserResult<V>;
   format: (value: V) => string;
   clamp?: (value: V) => V;
   incrementBy?: (value: V, amount: number, incrementTargets: IncrementTargets) => V;
@@ -43,7 +43,7 @@ const Field = <V,>(props: ControlInputProps<V>) => {
   const {
     className,
     inputRef: forwardedRef,
-    value,
+    value: valueProp,
     onChange,
     format,
     parse,
@@ -58,12 +58,12 @@ const Field = <V,>(props: ControlInputProps<V>) => {
   const ref = useRef<HTMLInputElement>(null);
   const composedRef = useComposedRefs(forwardedRef, ref);
   const [editingValue, setEditingValue] = useState<string | null>(null);
-  const inputValue = editingValue ?? format(value);
+  const inputValue = editingValue ?? format(valueProp);
 
   const submit = (input: string) => {
     const parserResult = parseInput(input);
 
-    if (input.length === 0 || !parserResult.valid || parserResult.value === value) {
+    if (input.length === 0 || !parserResult.valid || parserResult.value === valueProp) {
       return revert();
     }
 
@@ -76,7 +76,7 @@ const Field = <V,>(props: ControlInputProps<V>) => {
   };
 
   const parseInput = (input: string): ControlInputParserResult<V> => {
-    const parserResult = parse(input);
+    const parserResult = parse(input, valueProp);
     if (!parserResult.valid) {
       return parserResult;
     }
@@ -109,8 +109,8 @@ const Field = <V,>(props: ControlInputProps<V>) => {
       }
 
       event.preventDefault();
-      const parseResult = parse(inputElement.value);
-      const oldValue = parseResult.valid ? parseResult.value : value;
+      const parseResult = parse(inputElement.value, valueProp);
+      const oldValue = parseResult.valid ? parseResult.value : valueProp;
       const nudge = event.shiftKey ? bigNudge : smallNudge;
       const amount = event.key === 'ArrowUp' ? nudge : -nudge;
       const incrementTargets = getIncrementTargets ? getIncrementTargets(inputElement) : null;
