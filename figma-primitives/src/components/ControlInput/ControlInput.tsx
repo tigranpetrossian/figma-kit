@@ -1,10 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { cx } from 'class-variance-authority';
 import mergeProps from 'merge-props';
 import type { InputProps } from 'components/Input';
 import { Input } from 'components/Input';
 import { useComposedRefs } from 'lib/react/useComposeRefs';
-import { setInputElementValue } from 'lib/dom/setInputValue';
 import { DEFAULT_BIG_NUDGE, DEFAULT_SMALL_NUDGE } from 'lib/constants';
 
 type RootElement = React.ElementRef<'div'>;
@@ -58,10 +57,8 @@ const Field = <V,>(props: ControlInputProps<V>) => {
   } = props;
   const ref = useRef<HTMLInputElement>(null);
   const composedRef = useComposedRefs(forwardedRef, ref);
-
-  useEffect(() => {
-    setInputElementValue(ref.current, format(value));
-  }, [value, format]);
+  const [editingValue, setEditingValue] = useState<string | null>(null);
+  const inputValue = editingValue ?? format(value);
 
   const submit = (input: string) => {
     const parserResult = parseInput(input);
@@ -70,11 +67,12 @@ const Field = <V,>(props: ControlInputProps<V>) => {
       return revert();
     }
 
+    setEditingValue(null);
     onChange(parserResult.value);
   };
 
   const revert = () => {
-    setInputElementValue(ref.current, format(value));
+    setEditingValue(null);
   };
 
   const parseInput = (input: string): ControlInputParserResult<V> => {
@@ -87,7 +85,11 @@ const Field = <V,>(props: ControlInputProps<V>) => {
     return { valid: true, value };
   };
 
-  const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEditingValue(event.currentTarget.value);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     const inputElement = event.currentTarget;
 
     if (event.key === 'Enter') {
@@ -108,15 +110,11 @@ const Field = <V,>(props: ControlInputProps<V>) => {
 
       event.preventDefault();
       const parseResult = parse(inputElement.value);
-
-      if (!parseResult.valid) {
-        return;
-      }
-
+      const oldValue = parseResult.valid ? parseResult.value : value;
       const nudge = event.shiftKey ? bigNudge : smallNudge;
       const amount = event.key === 'ArrowUp' ? nudge : -nudge;
       const incrementTargets = getIncrementTargets(inputElement);
-      const newValue = incrementBy(parseResult.value, amount, incrementTargets);
+      const newValue = incrementBy(oldValue, amount, incrementTargets);
       submit(format(newValue));
       // TODO: Needs better solution
       // Delegate selection to the next tick to make sure it happens after value is set.
@@ -130,7 +128,7 @@ const Field = <V,>(props: ControlInputProps<V>) => {
     }
   };
 
-  const onBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     submit(event.currentTarget.value);
   };
 
@@ -143,7 +141,9 @@ const Field = <V,>(props: ControlInputProps<V>) => {
       selectOnClick={true}
       className={cx(className, 'fp-ControlInputField')}
       variant="base"
-      {...mergeProps(controlInputProps, { onBlur, onKeyDown })}
+      value={inputValue}
+      onChange={handleChange}
+      {...mergeProps(controlInputProps, { onBlur: handleBlur, onKeyDown: handleKeyDown })}
     />
   );
 };
