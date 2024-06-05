@@ -104,7 +104,7 @@ const Field = <V,>(props: ControlInputProps<V>) => {
     }
 
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-      if (!getIncrementTargets || !incrementBy) {
+      if (!incrementBy) {
         return;
       }
 
@@ -113,7 +113,7 @@ const Field = <V,>(props: ControlInputProps<V>) => {
       const oldValue = parseResult.valid ? parseResult.value : value;
       const nudge = event.shiftKey ? bigNudge : smallNudge;
       const amount = event.key === 'ArrowUp' ? nudge : -nudge;
-      const incrementTargets = getIncrementTargets(inputElement);
+      const incrementTargets = getIncrementTargets ? getIncrementTargets(inputElement) : null;
       const newValue = incrementBy(oldValue, amount, incrementTargets);
       submit(format(newValue));
       // TODO: Needs better solution
