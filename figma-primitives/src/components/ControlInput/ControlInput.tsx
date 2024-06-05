@@ -5,6 +5,7 @@ import type { InputProps } from 'components/Input';
 import { Input } from 'components/Input';
 import { useComposedRefs } from 'lib/react/useComposeRefs';
 import { setInputElementValue } from 'lib/dom/setInputValue';
+import { DEFAULT_BIG_NUDGE, DEFAULT_SMALL_NUDGE } from 'lib/constants';
 
 type RootElement = React.ElementRef<'div'>;
 type RootProps = React.ComponentPropsWithoutRef<'div'>;
@@ -38,9 +39,6 @@ type ControlInputProps<V> = Omit<InputProps, 'value' | 'onChange'> & {
   getIncrementTargets?: (element: HTMLInputElement) => IncrementTargets;
   getIncrementSelection?: () => [start: number, end: number];
 };
-
-const DEFAULT_SMALL_NUDGE = 1;
-const DEFAULT_BIG_NUDGE = 10;
 
 const Field = <V,>(props: ControlInputProps<V>) => {
   const {
