@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 import mergeProps from 'merge-props';
-import { InputBase } from 'components/InputBase';
-import { useSelectOnInputClick } from 'lib/react/useSelectOnInputClick';
-import { useComposedRefs } from 'lib/react/useComposeRefs';
+import { InputBase } from '@components/InputBase';
+import { useSelectOnInputClick } from '@lib/react/useSelectOnInputClick';
+import { useComposedRefs } from '@lib/react/useComposeRefs';
 
 type InputElement = React.ElementRef<'input'>;
 type InputProps = React.ComponentPropsWithoutRef<typeof InputBase> & {

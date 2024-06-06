@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react';
 import { cx } from 'class-variance-authority';
 import mergeProps from 'merge-props';
-import type { InputProps } from 'components/Input';
-import { Input } from 'components/Input';
-import { useComposedRefs } from 'lib/react/useComposeRefs';
-import { DEFAULT_BIG_NUDGE, DEFAULT_SMALL_NUDGE } from 'lib/constants';
+import type { InputProps } from '@components/Input';
+import { Input } from '@components/Input';
+import { useComposedRefs } from '@lib/react/useComposeRefs';
+import { DEFAULT_BIG_NUDGE, DEFAULT_SMALL_NUDGE } from '@lib/constants';
 
 type RootElement = React.ElementRef<'div'>;
 type RootProps = React.ComponentPropsWithoutRef<'div'>;
