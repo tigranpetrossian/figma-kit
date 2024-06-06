@@ -4,8 +4,8 @@ function evaluateExpression(expression: string, value: number) {
   const result = evaluate(
     `(${expression
       .replace(/%/g, '')
-      .replace(/(\d+)x/gi, (match, p1) => `(${value}*${p1})`)
-      .replace(/x(\d+)/gi, (match, p1) => `(${value}*${p1})`)})/100`
+      .replace(/([+-]?\d*\.?\d+)x/gi, (match, p1) => `(${p1}*${value})`)
+      .replace(/x([+-]?\d*\.?\d+)/gi, (match, p1) => `(${value}*${p1})`)})/100`
   );
 
   if (result === null) {
