@@ -39,7 +39,8 @@
   "dependencies": {
     "@emmetio/math-expression": "^1.0.5",
     "class-variance-authority": "^0.7.0",
-    "merge-props": "^6.0.0"
+    "merge-props": "^6.0.0",
+    "remeda": "^2.0.5"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
