@@ -88,7 +88,11 @@ const Field = <V,>(props: ControlInputProps<V>) => {
     if (event.key === 'Escape') {
       event.preventDefault();
       revert();
-      inputElement.blur();
+      // TODO: Needs better solution
+      // Delegate selection to the next tick to make sure it happens after value is set.
+      requestAnimationFrame(() => {
+        inputElement.blur();
+      });
     }
 
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {

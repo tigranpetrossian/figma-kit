@@ -1,11 +1,97 @@
-import { it } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
+import '@testing-library/jest-dom/vitest';
+import { useState } from 'react';
+import { render } from '@testing-library/react';
+import { userEvent } from '@testing-library/user-event';
+import type { ControlInputParserResult } from './ControlInput';
+import * as ControlInput from './ControlInput';
 
-it.todo('reverts invalid values', () => {});
-it.todo("doesn't call onChange when input is same as current value", () => {});
-it.todo('parses correctly', () => {});
-it.todo('clamps correctly', () => {});
-it.todo('formats correctly', () => {});
-it.todo('saves on Enter', () => {});
-it.todo('saves on blur', () => {});
-it.todo('reverts on Escape', () => {});
-it.todo("doesn't close parent modal on Escape", () => {});
+const LABEL = 'test-field';
+const INITIAL_VALUE = 30;
+const user = userEvent.setup();
+
+function parse(input: string): ControlInputParserResult<number> {
+  if (input.length > 0 && !isNaN(Number(input))) {
+    return { valid: true, value: Number(input) };
+  }
+
+  return { valid: false };
+}
+
+function format(value: number) {
+  return `${value}`;
+}
+
+describe('given a basic field', () => {
+  const VALID_VALUE = '40';
+  const INVALID_VALUE = 'dogs';
+
+  const TestControl = ({ onChange }: { onChange?: (value: number) => void }) => {
+    const [value, setValue] = useState(INITIAL_VALUE);
+
+    const handleChange = (value: number) => {
+      onChange?.(value);
+      setValue(value);
+    };
+
+    return (
+      <ControlInput.Root>
+        <ControlInput.Field aria-label={LABEL} value={value} onChange={handleChange} parse={parse} format={format} />
+      </ControlInput.Root>
+    );
+  };
+
+  it('formats correctly', () => {
+    const { getByLabelText } = render(<TestControl />);
+    const field = getByLabelText(LABEL);
+    expect(field).toHaveValue(format(INITIAL_VALUE));
+  });
+
+  it('saves on blur', async () => {
+    const { getByLabelText } = render(<TestControl />);
+    const field = getByLabelText(LABEL);
+    await user.type(field, VALID_VALUE);
+    await user.keyboard('{Tab}');
+    expect(field).not.toHaveFocus();
+    expect(field).toHaveValue(VALID_VALUE);
+  });
+
+  it('reverts invalid values', async () => {
+    const { getByLabelText } = render(<TestControl />);
+    const field = getByLabelText(LABEL);
+    await user.type(field, INVALID_VALUE);
+    await user.keyboard('{Tab}');
+    expect(field).not.toHaveFocus();
+    expect(field).toHaveValue(format(INITIAL_VALUE));
+  });
+
+  it('saves on Enter', async () => {
+    const { getByLabelText } = render(<TestControl />);
+    const field = getByLabelText(LABEL);
+    await user.type(field, VALID_VALUE);
+    await user.keyboard('{Enter}');
+    expect(field).not.toHaveFocus();
+    expect(field).toHaveValue(VALID_VALUE);
+  });
+
+  it('reverts on Escape', async () => {
+    const { getByLabelText } = render(<TestControl />);
+    const field = getByLabelText(LABEL);
+    await user.type(field, VALID_VALUE);
+    expect(field).toHaveValue(VALID_VALUE);
+    await user.keyboard('{Escape}');
+    expect(field).not.toHaveFocus();
+    expect(field).toHaveValue(format(INITIAL_VALUE));
+  });
+
+  it("doesn't fire onChange when submitted value is the same", async () => {
+    const changeHandler = vi.fn();
+    const { getByLabelText } = render(<TestControl onChange={changeHandler} />);
+    const field = getByLabelText(LABEL);
+    await user.type(field, `${INITIAL_VALUE}`);
+    await user.keyboard('{Enter}');
+    expect(changeHandler).not.toBeCalled();
+  });
+
+  it.todo("doesn't close parent modal on Escape"); // feature unimplemented
+});
