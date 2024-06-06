@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { round } from 'remeda';
-import * as ControlInput from 'components/ControlInput/ControlInput';
-import type { ControlInputParserResult } from 'components/ControlInput/ControlInput';
+import * as ControlInput from 'components/ControlInput';
+import type { ControlInputParserResult } from 'components/ControlInput';
 import { clamp } from 'lib/number/clamp';
-import { evaluateExpression } from 'examples/OpacityControl/evaluateExpression';
+import { evaluateExpression } from 'examples/Alpha/evaluateExpression';
 
-const OpacityControl = () => {
+const Alpha = () => {
   const [value, setValue] = useState(0.567503000004);
 
   const handleChange = (value: number) => {
@@ -55,4 +55,4 @@ function alphaToPercentage(alpha: number): number {
   return round(alpha * 100, 2);
 }
 
-export { OpacityControl };
+export { Alpha };

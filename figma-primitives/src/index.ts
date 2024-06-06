@@ -1,3 +1,1 @@
-export const sample = {
-  test: true,
-};
+export { Alpha } from './examples/Alpha';
