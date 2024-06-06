@@ -13,8 +13,8 @@ const Input = React.forwardRef<InputElement, InputProps>((props, forwardedRef) =
   const { selectOnClick = false, ...rest } = props;
   const ref = useRef<HTMLInputElement>(null);
   const composedRef = useComposedRefs(ref, forwardedRef);
-  const { onMouseDown, onMouseUp } = useSelectOnInputClick(ref);
-  const inputProps = selectOnClick ? mergeProps({ onMouseDown, onMouseUp }, rest) : rest;
+  const { onMouseLeave, onMouseUp, onFocus } = useSelectOnInputClick();
+  const inputProps = selectOnClick ? mergeProps({ onMouseLeave, onMouseUp, onFocus }, rest) : rest;
 
   return <InputBase ref={composedRef} {...inputProps} />;
 });
