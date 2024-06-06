@@ -33,7 +33,6 @@ type ControlInputProps<V> = Omit<InputProps, 'value' | 'onChange'> & {
   bigNudge?: number;
   parse: (input: string, value: V) => ControlInputParserResult<V>;
   format: (value: V) => string;
-  clamp?: (value: V) => V;
   incrementBy?: (value: V, amount: number, incrementTargets: IncrementTargets) => V;
   getIncrementTargets?: (element: HTMLInputElement) => IncrementTargets;
   getIncrementSelection?: () => [start: number, end: number];
@@ -47,7 +46,6 @@ const Field = <V,>(props: ControlInputProps<V>) => {
     onChange,
     format,
     parse,
-    clamp,
     smallNudge = DEFAULT_SMALL_NUDGE,
     bigNudge = DEFAULT_BIG_NUDGE,
     incrementBy,
@@ -61,7 +59,7 @@ const Field = <V,>(props: ControlInputProps<V>) => {
   const inputValue = editingValue ?? format(valueProp);
 
   const submit = (input: string) => {
-    const parserResult = parseInput(input);
+    const parserResult = parse(input, valueProp);
 
     if (input.length === 0 || !parserResult.valid || parserResult.value === valueProp) {
       return revert();
@@ -73,16 +71,6 @@ const Field = <V,>(props: ControlInputProps<V>) => {
 
   const revert = () => {
     setEditingValue(null);
-  };
-
-  const parseInput = (input: string): ControlInputParserResult<V> => {
-    const parserResult = parse(input, valueProp);
-    if (!parserResult.valid) {
-      return parserResult;
-    }
-
-    const value = clamp ? clamp(parserResult.value) : parserResult.value;
-    return { valid: true, value };
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -20,7 +20,6 @@ const OpacityControl = () => {
           onChange={handleChange}
           format={format}
           parse={parse}
-          clamp={(value) => clamp(value, 0, 100)}
           incrementBy={incrementBy}
         />
       </ControlInput.Root>
@@ -30,21 +29,19 @@ const OpacityControl = () => {
 
 const format = (value: number) => `${value}%`;
 
-const parse = (input: string, value: number): ControlInputParserResult<number> => {
+// @todo Rounding
+// @todo most likely real valueProp for this is 0-1
+const parse = (input: string, currentValue: number): ControlInputParserResult<number> => {
   try {
-    const evaluation = evaluateExpression(input, value);
-    return evaluation === null
-      ? {
-          valid: false,
-        }
-      : { valid: true, value: evaluation };
+    const value = evaluateExpression(input, currentValue);
+    return {
+      valid: true,
+      value: clamp(value, 0, 100),
+    };
   } catch (e) {
     return { valid: false };
   }
 };
-
-// isNumberLike ? -> convert to number -> return
-// isExpressionLike ? try expression
 
 function incrementBy(value: number, amount: number): number {
   return value + amount;
