@@ -3,24 +3,23 @@ import '@testing-library/jest-dom/vitest';
 import { useState } from 'react';
 import { render } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import type { ControlInputParserResult } from './ControlInput';
+import type { Formatter } from '@components/ControlInput/types';
 import * as ControlInput from './ControlInput';
 
 const LABEL = 'test-field';
 const INITIAL_VALUE = 30;
 const user = userEvent.setup();
 
-function parse(input: string): ControlInputParserResult<number> {
-  if (input.length > 0 && !isNaN(Number(input))) {
-    return { valid: true, value: Number(input) };
-  }
+const formatter: Formatter<number> = {
+  parse: (input: string) => {
+    if (input.length > 0 && !isNaN(Number(input))) {
+      return { valid: true, value: Number(input) };
+    }
 
-  return { valid: false };
-}
-
-function format(value: number) {
-  return `${value}`;
-}
+    return { valid: false };
+  },
+  format: (value: number) => `${value}`,
+};
 
 describe('given a basic field', () => {
   const VALID_VALUE = '40';
@@ -36,7 +35,7 @@ describe('given a basic field', () => {
 
     return (
       <ControlInput.Root>
-        <ControlInput.Field aria-label={LABEL} value={value} onChange={handleChange} parse={parse} format={format} />
+        <ControlInput.Field aria-label={LABEL} value={value} onChange={handleChange} formatter={formatter} />
       </ControlInput.Root>
     );
   };
@@ -44,7 +43,7 @@ describe('given a basic field', () => {
   it('formats correctly', () => {
     const { getByLabelText } = render(<TestControl />);
     const field = getByLabelText(LABEL);
-    expect(field).toHaveValue(format(INITIAL_VALUE));
+    expect(field).toHaveValue(formatter.format(INITIAL_VALUE));
   });
 
   it('saves on blur', async () => {
@@ -62,7 +61,7 @@ describe('given a basic field', () => {
     await user.type(field, INVALID_VALUE);
     await user.keyboard('{Tab}');
     expect(field).not.toHaveFocus();
-    expect(field).toHaveValue(format(INITIAL_VALUE));
+    expect(field).toHaveValue(formatter.format(INITIAL_VALUE));
   });
 
   it('saves on Enter', async () => {
@@ -81,7 +80,7 @@ describe('given a basic field', () => {
     expect(field).toHaveValue(VALID_VALUE);
     await user.keyboard('{Escape}');
     expect(field).not.toHaveFocus();
-    expect(field).toHaveValue(format(INITIAL_VALUE));
+    expect(field).toHaveValue(formatter.format(INITIAL_VALUE));
   });
 
   it("doesn't fire onChange when submitted value is the same", async () => {
@@ -94,4 +93,6 @@ describe('given a basic field', () => {
   });
 
   it.todo("doesn't close parent modal on Escape"); // feature unimplemented
+
+  it.todo('increments correctly');
 });

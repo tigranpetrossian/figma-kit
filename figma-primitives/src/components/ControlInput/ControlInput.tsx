@@ -5,6 +5,7 @@ import type { InputProps } from '@components/Input';
 import { Input } from '@components/Input';
 import { useComposedRefs } from '@lib/react/useComposeRefs';
 import { DEFAULT_BIG_NUDGE, DEFAULT_SMALL_NUDGE } from '@lib/constants';
+import type { Formatter } from './types';
 
 type RootElement = React.ElementRef<'div'>;
 type RootProps = React.ComponentPropsWithoutRef<'div'>;
@@ -14,28 +15,13 @@ const Root = React.forwardRef<RootElement, RootProps>((props, ref) => {
   return <div ref={ref} className={cx(className, 'fp-ControlInputRoot')} {...rootProps} />;
 });
 
-type ControlInputParserResult<V> =
-  | {
-      valid: true;
-      value: V;
-    }
-  | {
-      valid: false;
-    };
-
-type IncrementTargets = Record<string, boolean> | null;
-
 type ControlInputProps<V> = Omit<InputProps, 'value' | 'onChange'> & {
   value: V;
   onChange: (value: V) => void;
   inputRef?: React.Ref<HTMLInputElement>;
   smallNudge?: number;
   bigNudge?: number;
-  parse: (input: string, value: V) => ControlInputParserResult<V>;
-  format: (value: V) => string;
-  incrementBy?: (value: V, amount: number, incrementTargets: IncrementTargets) => V;
-  getIncrementTargets?: (element: HTMLInputElement) => IncrementTargets;
-  getIncrementSelection?: () => [start: number, end: number];
+  formatter: Formatter<V>;
 };
 
 const Field = <V,>(props: ControlInputProps<V>) => {
@@ -44,22 +30,18 @@ const Field = <V,>(props: ControlInputProps<V>) => {
     inputRef: forwardedRef,
     value: valueProp,
     onChange,
-    format,
-    parse,
     smallNudge = DEFAULT_SMALL_NUDGE,
     bigNudge = DEFAULT_BIG_NUDGE,
-    incrementBy,
-    getIncrementTargets,
-    getIncrementSelection,
+    formatter,
     ...controlInputProps
   } = props;
   const ref = useRef<HTMLInputElement>(null);
   const composedRef = useComposedRefs(forwardedRef, ref);
   const [editingValue, setEditingValue] = useState<string | null>(null);
-  const inputValue = editingValue ?? format(valueProp);
+  const inputValue = editingValue ?? formatter.format(valueProp);
 
   const submit = (input: string) => {
-    const parserResult = parse(input, valueProp);
+    const parserResult = formatter.parse(input, valueProp);
 
     if (input.length === 0 || !parserResult.valid || parserResult.value === valueProp) {
       return revert();
@@ -96,23 +78,23 @@ const Field = <V,>(props: ControlInputProps<V>) => {
     }
 
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
-      if (!incrementBy) {
+      if (!formatter.incrementBy) {
         return;
       }
 
       event.preventDefault();
-      const parseResult = parse(inputElement.value, valueProp);
+      const parseResult = formatter.parse(inputElement.value, valueProp);
       const oldValue = parseResult.valid ? parseResult.value : valueProp;
       const nudge = event.shiftKey ? bigNudge : smallNudge;
       const amount = event.key === 'ArrowUp' ? nudge : -nudge;
-      const incrementTargets = getIncrementTargets ? getIncrementTargets(inputElement) : null;
-      const newValue = incrementBy(oldValue, amount, incrementTargets);
-      submit(format(newValue));
+      const incrementTargets = formatter.getIncrementTargets ? formatter.getIncrementTargets(inputElement) : null;
+      const newValue = formatter.incrementBy(oldValue, amount, incrementTargets);
+      submit(formatter.format(newValue));
       // TODO: Needs better solution
       // Delegate selection to the next tick to make sure it happens after value is set.
       requestAnimationFrame(() => {
-        if (incrementTargets && getIncrementSelection) {
-          const [start, end] = getIncrementSelection();
+        if (incrementTargets && formatter.getIncrementSelection) {
+          const [start, end] = formatter.getIncrementSelection();
           inputElement.setSelectionRange(start, end);
         }
         inputElement.select();
@@ -140,5 +122,5 @@ const Field = <V,>(props: ControlInputProps<V>) => {
   );
 };
 
-export type { ControlInputProps, ControlInputParserResult, IncrementTargets };
+export type { ControlInputProps };
 export { Root, Field };
