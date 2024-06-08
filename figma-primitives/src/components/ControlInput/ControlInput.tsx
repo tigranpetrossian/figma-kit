@@ -96,8 +96,9 @@ const Field = <V,>(props: ControlInputProps<V>) => {
         if (incrementTargets && formatter.getIncrementSelection) {
           const [start, end] = formatter.getIncrementSelection();
           inputElement.setSelectionRange(start, end);
+        } else {
+          inputElement.select();
         }
-        inputElement.select();
       });
     }
   };
