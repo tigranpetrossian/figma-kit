@@ -1,1 +1,1 @@
-export { Alpha } from './examples/Alpha';
+export * from './components/ControlInput';
