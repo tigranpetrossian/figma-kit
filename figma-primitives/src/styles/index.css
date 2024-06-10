@@ -1,4 +1,4 @@
 @import 'tokens/space.css';
 @import 'tokens/radii.css';
-@import '../components/InputBase/InputBase.css';
-@import '../components/ControlInput/ControlInput.css';
+@import '../components/input-base/input-base.css';
+@import '../components/control-input/control-input.css';

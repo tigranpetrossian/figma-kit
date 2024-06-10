@@ -3,8 +3,8 @@ import '@testing-library/jest-dom/vitest';
 import { useState } from 'react';
 import { render } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import type { Formatter } from '@components/ControlInput/types';
-import * as ControlInput from './ControlInput';
+import type { Formatter } from '@components/control-input/control-input.types';
+import * as ControlInput from './control-input';
 
 const LABEL = 'test-field';
 const INITIAL_VALUE = 30;

@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import { clamp, pipe, round } from 'remeda';
-import * as ControlInput from '@components/ControlInput';
-import type { Formatter } from '@components/ControlInput/types';
-import { evaluateExpression } from '@components/NumericInput/evaluateExpression';
+import * as ControlInput from 'src/components/control-input';
+import type { Formatter } from '@components/control-input/control-input.types';
+import { evaluateExpression } from '@components/numeric-input/numeric-input.evaluator';
 
 const MAX_SUPPORTED_PRECISION = 15;
 

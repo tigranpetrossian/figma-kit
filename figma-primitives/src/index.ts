@@ -1,1 +1,1 @@
-export * from './components/ControlInput';
+export * from './components/control-input';
