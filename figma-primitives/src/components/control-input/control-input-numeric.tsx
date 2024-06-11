@@ -1,12 +1,13 @@
 import React, { useMemo } from 'react';
 import { clamp, pipe, round } from 'remeda';
 import evaluate from '@emmetio/math-expression';
+import type { InputProps } from '@components/input';
 import type { Formatter } from './types';
 import { Base } from './control-input-base';
 
 const MAX_SUPPORTED_PRECISION = 15;
 
-type NumericProps = {
+type NumericProps = Omit<InputProps, 'value' | 'onChange' | 'min' | 'max' | 'type'> & {
   value: number;
   onChange: (value: number) => void;
   min?: number;
@@ -19,13 +20,13 @@ type NumericProps = {
 type FormatterOptions = Pick<NumericProps, 'min' | 'max' | 'targetRange' | 'precision' | 'suffix'>;
 
 const Numeric = (props: NumericProps) => {
-  const { value, onChange, min, max, targetRange, precision, suffix } = props;
+  const { value, onChange, min, max, targetRange, precision, suffix, ...inputProps } = props;
   const formatter = useMemo(
     () => createFormatter({ min, max, precision, targetRange, suffix }),
     [min, max, precision, targetRange, suffix]
   );
 
-  return <Base value={value} onChange={onChange} formatter={formatter} />;
+  return <Base value={value} onChange={onChange} formatter={formatter} {...inputProps} />;
 };
 
 function createFormatter(options: FormatterOptions = {}): Formatter<number> {
