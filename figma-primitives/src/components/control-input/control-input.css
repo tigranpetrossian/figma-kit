@@ -3,6 +3,7 @@
   align-items: center;
   border-radius: var(--radius-base);
   border: 1px solid transparent;
+  box-sizing: border-box;
 
   &:hover {
     border-color: var(--figma-color-border);
@@ -12,12 +13,29 @@
     outline-offset: -1px;
     outline: 2px solid var(--figma-color-border-selected);
   }
+
+  .fp-ControlInputBase {
+    margin-top: -1px;
+    margin-bottom: -1px;
+    background-clip: padding-box;
+  }
 }
 
 .fp-ControlInputBase {
   cursor: default;
+}
 
-  .fp-ControlInputRoot & {
-    border: 0;
+.fp-controlInputLabel {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  fill: var(--figma-color-icon-secondary);
+  color: var(--figma-color-text-secondary);
+  padding-left: calc(var(--size-3) - 1px);
+  padding-right: calc(var(--size-3) - 1px);
+
+  & + .fp-ControlInputBase {
+    padding-left: 0;
   }
 }

@@ -9,5 +9,18 @@ const Root = React.forwardRef<RootElement, RootProps>((props, ref) => {
   return <label ref={ref} className={cx(className, 'fp-ControlInputRoot')} {...rootProps} />;
 });
 
-export type { RootProps };
-export { Root };
+type LabelElement = React.ElementRef<'span'>;
+type LabelProps = React.ComponentPropsWithoutRef<'span'>;
+
+const Label = React.forwardRef<LabelElement, LabelProps>((props, ref) => {
+  const { className, children, ...labelProps } = props;
+
+  return (
+    <span ref={ref} className={cx(className, 'fp-controlInputLabel')} {...labelProps}>
+      {children}
+    </span>
+  );
+});
+
+export type { RootProps, LabelProps };
+export { Root, Label };
