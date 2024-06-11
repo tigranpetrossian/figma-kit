@@ -1,1 +1,1 @@
-export * from './numeric-input';
+export * from '../control-input/control-input-numeric';

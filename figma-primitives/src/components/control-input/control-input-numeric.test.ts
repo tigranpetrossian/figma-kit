@@ -1,5 +1,5 @@
 import { it, describe, expect } from 'vitest';
-import { evaluateExpression } from '@components/numeric-input/numeric-input.evaluator';
+import { evaluateExpression } from './control-input-numeric';
 
 describe('treat percentage as value', () => {
   const currentDisplayValue = 1;

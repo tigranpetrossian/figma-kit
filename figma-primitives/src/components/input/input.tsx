@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import mergeProps from 'merge-props';
-import { InputBase } from 'src/components/input-base';
+import { InputBase } from '@components/input-base';
 import { useSelectOnInputClick } from '@lib/react/use-select-on-input-click';
 import { useComposedRefs } from '@lib/react/use-compose-refs';
 

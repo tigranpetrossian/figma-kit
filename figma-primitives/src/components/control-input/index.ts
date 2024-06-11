@@ -1,1 +1,1 @@
-export * from './control-input';
+export * from './control-input-base';

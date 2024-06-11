@@ -3,8 +3,8 @@ import '@testing-library/jest-dom/vitest';
 import { useState } from 'react';
 import { render } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import type { Formatter } from '@components/control-input/control-input.types';
-import * as ControlInput from './control-input';
+import type { Formatter } from '@components/control-input/types';
+import * as ControlInput from './control-input-base';
 
 const LABEL = 'test-field';
 const INITIAL_VALUE = 30;
@@ -33,11 +33,7 @@ describe('given a basic field', () => {
       setValue(value);
     };
 
-    return (
-      <ControlInput.Root>
-        <ControlInput.Field aria-label={LABEL} value={value} onChange={handleChange} formatter={formatter} />
-      </ControlInput.Root>
-    );
+    return <ControlInput.Base aria-label={LABEL} value={value} onChange={handleChange} formatter={formatter} />;
   };
 
   it('formats correctly', () => {

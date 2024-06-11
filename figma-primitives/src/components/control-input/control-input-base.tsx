@@ -1,21 +1,13 @@
 import React, { useRef, useState } from 'react';
 import { cx } from 'class-variance-authority';
 import mergeProps from 'merge-props';
-import type { InputProps } from 'src/components/input';
-import { Input } from 'src/components/input';
+import type { InputProps } from '@components/input';
+import { Input } from '@components/input';
 import { useComposedRefs } from '@lib/react/use-compose-refs';
 import { DEFAULT_BIG_NUDGE, DEFAULT_SMALL_NUDGE } from '@lib/constants';
-import type { Formatter } from './control-input.types';
+import type { Formatter } from './types';
 
-type RootElement = React.ElementRef<'div'>;
-type RootProps = React.ComponentPropsWithoutRef<'div'>;
-
-const Root = React.forwardRef<RootElement, RootProps>((props, ref) => {
-  const { className, ...rootProps } = props;
-  return <div ref={ref} className={cx(className, 'fp-ControlInputRoot')} {...rootProps} />;
-});
-
-type ControlInputProps<V> = Omit<InputProps, 'value' | 'onChange'> & {
+type BaseProps<V> = Omit<InputProps, 'value' | 'onChange'> & {
   value: V;
   onChange: (value: V) => void;
   inputRef?: React.Ref<HTMLInputElement>;
@@ -24,7 +16,7 @@ type ControlInputProps<V> = Omit<InputProps, 'value' | 'onChange'> & {
   formatter: Formatter<V>;
 };
 
-const Field = <V,>(props: ControlInputProps<V>) => {
+const Base = <V,>(props: BaseProps<V>) => {
   const {
     className,
     inputRef: forwardedRef,
@@ -114,8 +106,7 @@ const Field = <V,>(props: ControlInputProps<V>) => {
       autoComplete="off"
       spellCheck="false"
       selectOnClick={true}
-      className={cx(className, 'fp-ControlInputField')}
-      variant="base"
+      className={cx(className, 'fp-ControlInputBase')}
       value={inputValue}
       onChange={handleChange}
       {...mergeProps(controlInputProps, { onBlur: handleBlur, onKeyDown: handleKeyDown })}
@@ -123,5 +114,5 @@ const Field = <V,>(props: ControlInputProps<V>) => {
   );
 };
 
-export type { ControlInputProps };
-export { Root, Field };
+export type { BaseProps };
+export { Base };

@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import { clamp, pipe, round } from 'remeda';
-import * as ControlInput from 'src/components/control-input';
-import type { Formatter } from '@components/control-input/control-input.types';
-import { evaluateExpression } from '@components/numeric-input/numeric-input.evaluator';
+import evaluate from '@emmetio/math-expression';
+import type { Formatter } from './types';
+import { Base } from './control-input-base';
 
 const MAX_SUPPORTED_PRECISION = 15;
 
@@ -18,18 +18,14 @@ type NumericProps = {
 
 type FormatterOptions = Pick<NumericProps, 'min' | 'max' | 'targetRange' | 'precision' | 'suffix'>;
 
-const NumericInput = (props: NumericProps) => {
+const Numeric = (props: NumericProps) => {
   const { value, onChange, min, max, targetRange, precision, suffix } = props;
   const formatter = useMemo(
     () => createFormatter({ min, max, precision, targetRange, suffix }),
     [min, max, precision, targetRange, suffix]
   );
 
-  return (
-    <ControlInput.Root>
-      <ControlInput.Field value={value} onChange={onChange} formatter={formatter} />
-    </ControlInput.Root>
-  );
+  return <Base value={value} onChange={onChange} formatter={formatter} />;
 };
 
 function createFormatter(options: FormatterOptions = {}): Formatter<number> {
@@ -107,5 +103,26 @@ function normalize(params: NormalizeParams): (value: number) => number {
   };
 }
 
+function evaluateExpression(expression: string, currentDisplayValue: number, treatPercentageAsValue: boolean = false) {
+  const modifiedExpression = treatPercentageAsValue
+    ? expression
+        .replace(/%/g, '')
+        .replace(/(\d*\.?\d+)x/gi, (match, p1) => `(${currentDisplayValue}*${p1})`)
+        .replace(/x(\d*\.?\d+)/gi, (match, p1) => `(${currentDisplayValue}*${p1})`)
+        .replace(/(?<!\d)x(?!\d)/gi, `${currentDisplayValue}`)
+    : expression
+        .replace(/(\d*\.?\d+)%/gi, (match, p1) => `(${currentDisplayValue}*${p1}/100)`)
+        .replace(/%(\d*\.?\d+)/gi, (match, p1) => `(${currentDisplayValue}*${p1}/100)`)
+        .replace(/(\d*\.?\d+)x/gi, (match, p1) => `(${currentDisplayValue}*${p1})`)
+        .replace(/x(\d*\.?\d+)/gi, (match, p1) => `(${currentDisplayValue}*${p1})`)
+        .replace(/(?<!\d)x(?!\d)/gi, `${currentDisplayValue}`);
+
+  const result = evaluate(modifiedExpression);
+  if (result === null) {
+    throw new Error('Invalid expression.');
+  }
+  return result;
+}
+
 export type { NumericProps };
-export { NumericInput };
+export { Numeric, evaluateExpression };

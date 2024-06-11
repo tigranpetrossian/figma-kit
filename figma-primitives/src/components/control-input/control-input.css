@@ -7,7 +7,7 @@
   }
 }
 
-.fp-ControlInputField {
+.fp-ControlInputBase {
   cursor: default;
 
   .fp-ControlInputRoot:hover & {
