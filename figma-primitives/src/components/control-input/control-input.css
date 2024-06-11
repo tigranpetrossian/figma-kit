@@ -1,5 +1,12 @@
 .fp-ControlInputRoot {
+  display: flex;
+  align-items: center;
   border-radius: var(--radius-base);
+  border: 1px solid transparent;
+
+  &:hover {
+    border-color: var(--figma-color-border);
+  }
 
   &:focus-within {
     outline-offset: -1px;
@@ -10,7 +17,7 @@
 .fp-ControlInputBase {
   cursor: default;
 
-  .fp-ControlInputRoot:hover & {
-    border-color: var(--figma-color-border);
+  .fp-ControlInputRoot & {
+    border: 0;
   }
 }
