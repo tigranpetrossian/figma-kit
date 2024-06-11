@@ -27,6 +27,7 @@ module.exports = {
       files: ['*.stories.tsx'],
       rules: {
         'import/no-default-export': 'off',
+        'import/exports-last': 'off',
       },
     },
   ],
