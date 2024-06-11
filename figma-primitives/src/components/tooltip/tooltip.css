@@ -1,0 +1,18 @@
+:root {
+  --color-tooltip-background: #1e1e1e;
+  --color-tooltip-text: #fff;
+}
+
+.fp-tooltip {
+  padding: var(--size-1_5) var(--size-2);
+  background-color: var(--color-tooltip-background);
+  color: var(--color-tooltip-text);
+  border-radius: var(--radius-base);
+  box-shadow: var(--elevation-300-tooltip, 0 2px 7px rgba(0, 0, 0, 0.15));
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.fp-arrow {
+  fill: var(--color-tooltip-background);
+}
