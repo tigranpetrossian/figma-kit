@@ -36,11 +36,7 @@ type FormatterOptions = Pick<NumericProps, 'min' | 'max' | 'targetRange' | 'prec
 function createFormatter(options: FormatterOptions = {}): Formatter<number> {
   const { min, max, targetRange, precision = MAX_SUPPORTED_PRECISION, suffix, allowedUnits = [] } = options;
   const toDisplayValue = normalize({ min, max, targetRange });
-  const fromDisplayValue = normalize({
-    min: targetRange?.[0],
-    max: targetRange?.[1],
-    targetRange: typeof min === 'number' && typeof max === 'number' ? [min, max] : undefined,
-  });
+  const fromDisplayValue = denormalize({ min, max, targetRange });
 
   return {
     parse: (input: string, currentValue: number) => {
@@ -48,10 +44,17 @@ function createFormatter(options: FormatterOptions = {}): Formatter<number> {
         return {
           valid: true,
           value: pipe(
-            currentValue,
-            toDisplayValue,
-            (displayValue) => evaluateExpression({ expression: input, displayValue, suffix, allowedUnits }),
-            fromDisplayValue
+            input,
+            (input) =>
+              evaluateExpression({
+                expression: input,
+                displayValue: toDisplayValue(currentValue),
+                suffix,
+                allowedUnits,
+              }),
+            round(precision),
+            fromDisplayValue,
+            clamp({ min, max })
           ),
         };
       } catch (e) {
@@ -69,6 +72,7 @@ function createFormatter(options: FormatterOptions = {}): Formatter<number> {
   };
 }
 
+// TODO Extract into a single decoupled helper, validate prop combinations from within the component instead.
 /**
  * Map a value to a specified range.
  *
@@ -99,6 +103,27 @@ function normalize(params: { min?: number; max?: number; targetRange?: [number, 
 
     const [targetMin, targetMax] = targetRange;
     return ((value - min) / (max - min)) * (targetMax - targetMin) + targetMin;
+  };
+}
+
+/**
+ * Denormalize value from target range
+ * */
+function denormalize(params: {
+  min?: number;
+  max?: number;
+  targetRange?: [number, number];
+}): (value: number) => number {
+  const { min, max, targetRange } = params;
+
+  return function (value: number) {
+    // Mostly to appease TS. This would be an extreme edge case of formatter options changing while user was typing.
+    if (!targetRange || typeof min !== 'number' || typeof max !== 'number' || min === max) {
+      return value;
+    }
+
+    const [targetMin, targetMax] = targetRange;
+    return ((value - targetMin) / (targetMax - targetMin)) * (max - min) + min;
   };
 }
 
