@@ -9,15 +9,38 @@ const MAX_SUPPORTED_PRECISION = 15;
 
 type NumericElement = React.ElementRef<'input'>;
 type NumericProps = Omit<InputProps, 'value' | 'onChange' | 'min' | 'max' | 'type'> & {
+  /** The numeric value of the input. */
   value: number;
+
+  /** Callback to call upon submission. */
   onChange: (value: number) => void;
+
+  /** The minimum allowed value. */
   min?: number;
+
+  /** The maximum allowed value. */
   max?: number;
+
+  /** The numeric range that the `value` prop will be normalized to when displayed in the input.
+   * Requires non-equal 'max' and 'min' values.
+   * @example:
+   * <Numeric value={0.5} min={0} max={1} targetRange={[0, 100]} /> // Displays value of 50
+   * */
   targetRange?: [number, number];
+
+  /** The decimal precision that user input will be rounded to. */
   precision?: number;
-  suffix?: string;
+
+  /** Units that will be accepted as valid input (e.g., "px", "%"). */
   allowedUnits?: string[];
+
+  /** Suffix to be appended to the value (e.g., "px", "%"). Suffix is treated as an allowed unit.  */
+  suffix?: string;
+
+  /** The small nudge increment for the value. */
   smallNudge?: number;
+
+  /** The big nudge increment for the value. */
   bigNudge?: number;
 };
 
