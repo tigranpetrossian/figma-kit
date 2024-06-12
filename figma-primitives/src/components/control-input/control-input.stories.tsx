@@ -39,9 +39,7 @@ export const WithTooltip = () => {
 
   return (
     <Tooltip.Tooltip content="what">
-      <div>
-        <Numeric value={value} onChange={setValue} />
-      </div>
+      <Numeric value={value} onChange={setValue} />
     </Tooltip.Tooltip>
   );
 };

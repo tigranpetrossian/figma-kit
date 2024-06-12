@@ -7,6 +7,7 @@ import { Base } from './control-input-base';
 
 const MAX_SUPPORTED_PRECISION = 15;
 
+type NumericElement = React.ElementRef<'input'>;
 type NumericProps = Omit<InputProps, 'value' | 'onChange' | 'min' | 'max' | 'type'> & {
   value: number;
   onChange: (value: number) => void;
@@ -20,17 +21,17 @@ type NumericProps = Omit<InputProps, 'value' | 'onChange' | 'min' | 'max' | 'typ
   bigNudge?: number;
 };
 
-type FormatterOptions = Pick<NumericProps, 'min' | 'max' | 'targetRange' | 'precision' | 'suffix' | 'allowedUnits'>;
-
-const Numeric = (props: NumericProps) => {
+const Numeric = React.forwardRef<NumericElement, NumericProps>((props, ref) => {
   const { value, onChange, min, max, targetRange, precision, suffix, allowedUnits, ...inputProps } = props;
   const formatter = useMemo(
     () => createFormatter({ min, max, precision, targetRange, suffix, allowedUnits }),
     [min, max, precision, targetRange, suffix, allowedUnits]
   );
 
-  return <Base value={value} onChange={onChange} formatter={formatter} {...inputProps} />;
-};
+  return <Base inputRef={ref} value={value} onChange={onChange} formatter={formatter} {...inputProps} />;
+});
+
+type FormatterOptions = Pick<NumericProps, 'min' | 'max' | 'targetRange' | 'precision' | 'suffix' | 'allowedUnits'>;
 
 function createFormatter(options: FormatterOptions = {}): Formatter<number> {
   const { min, max, targetRange, precision = MAX_SUPPORTED_PRECISION, suffix, allowedUnits = [] } = options;
