@@ -41,6 +41,7 @@
     "@radix-ui/react-tooltip": "^1.0.7",
     "class-variance-authority": "^0.7.0",
     "merge-props": "^6.0.0",
+    "react-textarea-autosize": "^8.5.3",
     "remeda": "^2.0.5"
   },
   "devDependencies": {

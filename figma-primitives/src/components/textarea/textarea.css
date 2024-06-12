@@ -1,0 +1,31 @@
+.fp-textarea {
+  all: unset;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: calc(var(--size-1_5) - 1px) calc(var(--size-2) - 1px);
+  font-family: inherit;
+  font-size: inherit;
+  background-color: var(--figma-color-bg);
+  color: var(--figma-color-text);
+  border-radius: var(--radius-base);
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--figma-color-border);
+  resize: none; /*TODO: Make a prop*/
+  word-break: break-word;
+
+  &:focus {
+    outline-offset: -1px;
+    outline: 2px solid var(--figma-color-border-selected);
+  }
+
+  &:disabled {
+    color: var(--figma-color-text-disabled);
+  }
+
+  &::placeholder {
+    color: var(--figma-color-text-tertiary);
+  }
+}
