@@ -135,6 +135,7 @@ describe('allowed units', () => {
     expect(evaluateExpression({ expression, displayValue,  allowedUnits: ['px'] })).toBe(expected);
   });
 });
+
 describe('allowed units with suffix', () => {
   const displayValue = 10;
 
