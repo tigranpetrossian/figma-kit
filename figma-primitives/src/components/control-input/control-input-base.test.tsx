@@ -1,5 +1,4 @@
 import { describe, it, expect, vi } from 'vitest';
-import '@testing-library/jest-dom/vitest';
 import { useState } from 'react';
 import { render } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
