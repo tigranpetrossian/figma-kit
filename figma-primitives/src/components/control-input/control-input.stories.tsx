@@ -29,7 +29,7 @@ const AngleIcon = () => (
 );
 
 export const BasicNumericInput = () => {
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState(12);
 
   return <Numeric value={value} onChange={setValue} />;
 };

@@ -15,23 +15,23 @@ type NumericProps = Omit<InputProps, 'value' | 'onChange' | 'min' | 'max' | 'typ
   targetRange?: [number, number];
   precision?: number;
   suffix?: string;
+  allowedUnits?: string[];
 };
 
-type FormatterOptions = Pick<NumericProps, 'min' | 'max' | 'targetRange' | 'precision' | 'suffix'>;
+type FormatterOptions = Pick<NumericProps, 'min' | 'max' | 'targetRange' | 'precision' | 'suffix' | 'allowedUnits'>;
 
 const Numeric = (props: NumericProps) => {
-  const { value, onChange, min, max, targetRange, precision, suffix, ...inputProps } = props;
+  const { value, onChange, min, max, targetRange, precision, suffix, allowedUnits, ...inputProps } = props;
   const formatter = useMemo(
-    () => createFormatter({ min, max, precision, targetRange, suffix }),
-    [min, max, precision, targetRange, suffix]
+    () => createFormatter({ min, max, precision, targetRange, suffix, allowedUnits }),
+    [min, max, precision, targetRange, suffix, allowedUnits]
   );
 
   return <Base value={value} onChange={onChange} formatter={formatter} {...inputProps} />;
 };
 
 function createFormatter(options: FormatterOptions = {}): Formatter<number> {
-  const { min, max, targetRange, precision = MAX_SUPPORTED_PRECISION, suffix = '' } = options;
-  const isPercentageInput = suffix === '%';
+  const { min, max, targetRange, precision = MAX_SUPPORTED_PRECISION, suffix, allowedUnits = [] } = options;
   const toDisplayValue = normalize({ min, max, targetRange });
   const fromDisplayValue = normalize({
     min: targetRange?.[0],
@@ -47,7 +47,7 @@ function createFormatter(options: FormatterOptions = {}): Formatter<number> {
           value: pipe(
             currentValue,
             toDisplayValue,
-            (displayValue) => evaluateExpression(input, displayValue, isPercentageInput),
+            (displayValue) => evaluateExpression({ expression: input, displayValue, suffix, allowedUnits }),
             fromDisplayValue
           ),
         };
@@ -56,7 +56,9 @@ function createFormatter(options: FormatterOptions = {}): Formatter<number> {
       }
     },
     format: (value: number) => {
-      return pipe(value, clamp({ min, max }), toDisplayValue, round(precision), (value) => `${value}${suffix}`);
+      return pipe(value, clamp({ min, max }), toDisplayValue, round(precision), (value) =>
+        toValueString(value, suffix)
+      );
     },
     incrementBy(value: number, amount: number) {
       return value + fromDisplayValue(amount);
@@ -64,16 +66,9 @@ function createFormatter(options: FormatterOptions = {}): Formatter<number> {
   };
 }
 
-type NormalizeParams = {
-  min?: number;
-  max?: number;
-  targetRange?: [number, number];
-};
-
 /**
  * Map a value to a specified range.
  *
- * @param {NormalizeParams} params
  * @param {number} [params.min] - The minimum value of the input range.
  * @param {number} [params.max] - The maximum value of the input range.
  * @param {[number, number]} [params.targetRange] - The target range to map the value to.
@@ -83,7 +78,7 @@ type NormalizeParams = {
  * normalize(0, 1, [0, 100])(0.5) -> 50
  * normalize(0, 1, [0, 255])(1) -> 255
  */
-function normalize(params: NormalizeParams): (value: number) => number {
+function normalize(params: { min?: number; max?: number; targetRange?: [number, number] }): (value: number) => number {
   const { min, max, targetRange } = params;
 
   return function (value: number) {
@@ -104,19 +99,33 @@ function normalize(params: NormalizeParams): (value: number) => number {
   };
 }
 
-function evaluateExpression(expression: string, currentDisplayValue: number, treatPercentageAsValue: boolean = false) {
-  const modifiedExpression = treatPercentageAsValue
-    ? expression
-        .replace(/%/g, '')
-        .replace(/(\d*\.?\d+)x/gi, (match, p1) => `(${currentDisplayValue}*${p1})`)
-        .replace(/x(\d*\.?\d+)/gi, (match, p1) => `(${currentDisplayValue}*${p1})`)
-        .replace(/(?<!\d)x(?!\d)/gi, `${currentDisplayValue}`)
-    : expression
-        .replace(/(\d*\.?\d+)%/gi, (match, p1) => `(${currentDisplayValue}*${p1}/100)`)
-        .replace(/%(\d*\.?\d+)/gi, (match, p1) => `(${currentDisplayValue}*${p1}/100)`)
-        .replace(/(\d*\.?\d+)x/gi, (match, p1) => `(${currentDisplayValue}*${p1})`)
-        .replace(/x(\d*\.?\d+)/gi, (match, p1) => `(${currentDisplayValue}*${p1})`)
-        .replace(/(?<!\d)x(?!\d)/gi, `${currentDisplayValue}`);
+function toValueString(value: number, suffix: string | undefined) {
+  if (Number.isNaN(value)) {
+    return '';
+  }
+
+  return suffix ? `${value}${suffix}` : `${value}`;
+}
+
+function evaluateExpression(params: {
+  expression: string;
+  displayValue: number;
+  suffix?: string;
+  allowedUnits?: string[];
+}) {
+  const { displayValue, expression, suffix = '', allowedUnits = [] } = params;
+  const numberPattern = '(\\d*\\.?\\d+)';
+  const unitsPattern = `(?:${[...allowedUnits, suffix].join('|')})*`;
+
+  const modifiedExpression = expression
+    .replace(new RegExp(`${numberPattern}${unitsPattern}`, 'gi'), (_, p1) => p1)
+    .replace(new RegExp(`${unitsPattern}${numberPattern}`, 'gi'), (_, p1) => p1)
+    .replace(new RegExp(`${numberPattern}%`, 'gi'), (_, p1) => `(${displayValue}*${p1}/100)`)
+    .replace(new RegExp(`%${numberPattern}`, 'gi'), (_, p1) => `(${displayValue}*${p1}/100)`)
+    .replace(new RegExp(`${numberPattern}x`, 'gi'), (_, p1) => `(${displayValue}*${p1})`)
+    .replace(new RegExp(`x${numberPattern}`, 'gi'), (_, p1) => `(${displayValue}*${p1})`)
+    .replace(/(?<!\d)x(?!\d)/gi, `${displayValue}`)
+    .trim();
 
   const result = evaluate(modifiedExpression);
   if (result === null) {
