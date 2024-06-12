@@ -65,7 +65,7 @@ export const NumericWithIcon = () => {
       <Label>
         <AngleIcon />
       </Label>
-      <Numeric value={value} onChange={setValue} variant="base" suffix="°" />
+      <Numeric value={value} onChange={setValue} variant="base" suffix="°" smallNudge={-1} bigNudge={-15} />
     </Root>
   );
 };

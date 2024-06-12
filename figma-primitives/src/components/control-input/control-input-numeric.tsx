@@ -16,6 +16,8 @@ type NumericProps = Omit<InputProps, 'value' | 'onChange' | 'min' | 'max' | 'typ
   precision?: number;
   suffix?: string;
   allowedUnits?: string[];
+  smallNudge?: number;
+  bigNudge?: number;
 };
 
 type FormatterOptions = Pick<NumericProps, 'min' | 'max' | 'targetRange' | 'precision' | 'suffix' | 'allowedUnits'>;
