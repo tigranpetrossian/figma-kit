@@ -1,16 +1,16 @@
 import type { Meta } from '@storybook/react';
 import { useState } from 'react';
-import * as Tooltip from '@components/tooltip';
-import { Root, Label, Numeric } from './';
+import { Tooltip, TooltipProvider } from '@components/tooltip';
+import { Multi, Root, Label, Numeric } from './';
 
 const meta: Meta<typeof Numeric> = {
   component: Numeric,
   title: 'Components/Control Input',
   decorators: [
     (Story) => (
-      <Tooltip.TooltipProvider>
+      <TooltipProvider>
         <Story />
-      </Tooltip.TooltipProvider>
+      </TooltipProvider>
     ),
   ],
 } satisfies Meta<typeof Numeric>;
@@ -28,7 +28,7 @@ const AngleIcon = () => (
   </svg>
 );
 
-export const BasicNumericInput = () => {
+export const Basic = () => {
   const [value, setValue] = useState(12);
 
   return <Numeric value={value} onChange={setValue} />;
@@ -38,13 +38,23 @@ export const WithTooltip = () => {
   const [value, setValue] = useState(1);
 
   return (
-    <Tooltip.Tooltip content="what">
+    <Tooltip content="Tooltip">
       <Numeric value={value} onChange={setValue} />
-    </Tooltip.Tooltip>
+    </Tooltip>
   );
 };
 
-export const NumericWithLabel = () => {
+export const WithRoot = () => {
+  const [value, setValue] = useState(10);
+
+  return (
+    <Root>
+      <Numeric value={value} onChange={setValue} variant="base" />
+    </Root>
+  );
+};
+
+export const WithLabel = () => {
   const [value, setValue] = useState(10);
 
   return (
@@ -55,7 +65,7 @@ export const NumericWithLabel = () => {
   );
 };
 
-export const NumericWithIcon = () => {
+export const WithIcon = () => {
   const [value, setValue] = useState(0);
 
   return (
@@ -65,5 +75,76 @@ export const NumericWithIcon = () => {
       </Label>
       <Numeric value={value} onChange={setValue} variant="base" suffix="°" smallNudge={-1} bigNudge={-15} />
     </Root>
+  );
+};
+
+type RGBA = { r: number; g: number; b: number; a: number };
+
+export const Rgba = () => {
+  const [rgba, setRgba] = useState<RGBA>({ r: 1, g: 1, b: 1, a: 1 });
+
+  const handleRChange = (r: number) => {
+    setRgba((rgba) => ({ ...rgba, r }));
+  };
+  const handleGChange = (g: number) => {
+    setRgba((rgba) => ({ ...rgba, g }));
+  };
+  const handleBChange = (b: number) => {
+    setRgba((rgba) => ({ ...rgba, b }));
+  };
+  const handleAChange = (a: number) => {
+    setRgba((rgba) => ({ ...rgba, a }));
+  };
+
+  return (
+    <div style={{ width: 160 }}>
+      <Multi>
+        <Root>
+          <Numeric
+            value={rgba.r}
+            onChange={handleRChange}
+            variant="base"
+            min={0}
+            max={1}
+            targetRange={[0, 255]}
+            precision={0}
+          />
+        </Root>
+        <Root>
+          <Numeric
+            value={rgba.g}
+            onChange={handleGChange}
+            variant="base"
+            min={0}
+            max={1}
+            targetRange={[0, 255]}
+            precision={0}
+          />
+        </Root>
+        <Root>
+          <Numeric
+            value={rgba.b}
+            onChange={handleBChange}
+            variant="base"
+            min={0}
+            max={1}
+            targetRange={[0, 255]}
+            precision={0}
+          />
+        </Root>
+        <Root style={{ flex: '0 0 48px' }}>
+          <Numeric
+            value={rgba.a}
+            onChange={handleAChange}
+            variant="base"
+            min={0}
+            max={1}
+            targetRange={[0, 100]}
+            precision={2}
+            suffix="%"
+          />
+        </Root>
+      </Multi>
+    </div>
   );
 };
