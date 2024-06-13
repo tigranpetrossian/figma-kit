@@ -2,22 +2,20 @@
   display: flex;
   align-items: center;
   border-radius: var(--radius-base);
-  border: 1px solid transparent;
+  outline-offset: -1px;
+  padding: 0 1px;
   box-sizing: border-box;
 
   &:hover {
-    border-color: var(--figma-color-border);
+    outline: 1px solid var(--figma-color-border);
   }
 
   &:focus-within {
-    outline-offset: -1px;
     outline: 2px solid var(--figma-color-border-selected);
   }
 
   .fp-ControlInputBase {
-    margin-top: -1px;
-    margin-bottom: -1px;
-    background-clip: padding-box;
+    border-width: 0;
   }
 }
 
@@ -32,10 +30,47 @@
   flex-shrink: 0;
   fill: var(--figma-color-icon-secondary);
   color: var(--figma-color-text-secondary);
-  padding-left: calc(var(--size-3) - 1px);
-  padding-right: calc(var(--size-3) - 1px);
+  padding-left: calc(var(--size-2_5));
+  padding-right: calc(var(--size-2_5));
 
   & + .fp-ControlInputBase {
     padding-left: 0;
+  }
+}
+
+.fp-controlInputMulti {
+  display: flex;
+  border-radius: 2px;
+  outline-offset: -1px;
+  box-sizing: border-box;
+
+  &:hover {
+    outline: 1px solid var(--figma-color-border);
+  }
+
+  &:focus-within {
+    outline: 2px solid var(--figma-color-border-selected);
+  }
+
+  &:hover,
+  &:focus-within {
+    .fp-ControlInputRoot:nth-child(2n + 1) {
+      outline: 1px solid var(--figma-color-border);
+    }
+  }
+
+  .fp-ControlInputRoot {
+    outline: 0;
+    border-radius: 0;
+
+    &:first-child {
+      border-top-left-radius: var(--radius-base);
+      border-bottom-left-radius: var(--radius-base);
+    }
+
+    &:last-child {
+      border-top-right-radius: var(--radius-base);
+      border-bottom-right-radius: var(--radius-base);
+    }
   }
 }

@@ -22,5 +22,14 @@ const Label = React.forwardRef<LabelElement, LabelProps>((props, ref) => {
   );
 });
 
-export type { RootProps, LabelProps };
-export { Root, Label };
+type MultiElement = React.ElementRef<'div'>;
+type MultiProps = React.ComponentPropsWithoutRef<'div'>;
+
+const Multi = React.forwardRef<MultiElement, MultiProps>((props, ref) => {
+  const { className, ...multiProps } = props;
+
+  return <div ref={ref} className={cx(className, 'fp-controlInputMulti')} {...multiProps} />;
+});
+
+export type { RootProps, LabelProps, MultiProps };
+export { Root, Label, Multi };
