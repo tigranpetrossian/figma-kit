@@ -1,5 +1,7 @@
+@import 'tokens/fonts.css';
 @import 'tokens/space.css';
 @import 'tokens/radii.css';
+@import 'tokens/components.css';
 @import '../components/input-base/input-base.css';
 @import '../components/control-input/control-input.css';
 @import '../components/tooltip/tooltip.css';
