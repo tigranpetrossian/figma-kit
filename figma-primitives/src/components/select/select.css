@@ -1,0 +1,120 @@
+.fp-SelectTrigger {
+  all: unset;
+  appearance: none;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--size-1);
+  width: 100%;
+  padding: 0 calc(var(--size-2) - 1px);
+  height: var(--size-7);
+  border: 1px solid transparent;
+  border-radius: var(--radius-base);
+
+  &:hover {
+    justify-content: space-between;
+    border-color: var(--figma-color-border);
+  }
+}
+
+.fp-SelectTriggerIcon svg {
+  fill: var(--figma-color-icon-tertiary);
+
+  .fp-SelectTrigger:hover & {
+    fill: var(--figma-color-icon);
+  }
+}
+
+.fp-SelectContent {
+  box-sizing: border-box;
+  background-color: var(--fp-color-bg-menu);
+  border-radius: var(--radius-base);
+  cursor: default;
+  padding: var(--size-2) 0;
+
+  font-size: var(--fp-font-size-menu);
+  /* TODO: In Figma, antialiasing is only enabled for negative text on high resolution screens
+           Worth. extracting this into a reusable class */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.fp-SelectScrollUpButton,
+.fp-SelectScrollDownButton {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--size-4);
+  background-color: var(--fp-color-bg-menu);
+
+  svg {
+    display: block;
+    fill: var(--fp-color-icon-menu);
+  }
+}
+
+.fp-SelectScrollUpButton {
+  top: 0;
+}
+
+.fp-SelectScrollDownButton {
+  bottom: 0;
+}
+
+.fp-SelectItem {
+  display: flex;
+  align-items: center;
+  height: var(--size-6);
+  padding-left: var(--size-8);
+  color: var(--fp-color-text-menu);
+
+  &:focus {
+    outline: 0;
+    background-color: var(--fp-color-bg-menu-selected);
+  }
+}
+
+.fp-SelectItemCheckmark {
+  position: absolute;
+  left: var(--size-2);
+  display: block;
+
+  svg {
+    display: block;
+    fill: var(--fp-color-icon-menu);
+  }
+}
+
+.fp-SelectSeparator {
+  margin: var(--size-2) 0;
+  height: 1px;
+  background-color: var(--fp-color-border-menu);
+}
+
+.fp-SelectGroup {
+  padding: var(--size-2) 0;
+
+  &:first-child {
+    padding-top: 0;
+  }
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+
+  &:not(:first-child) {
+    border-top: 1px solid var(--fp-color-border-menu);
+  }
+}
+
+.fp-SelectLabel {
+  display: flex;
+  align-items: center;
+  height: var(--size-6);
+  padding-left: var(--size-8);
+  color: var(--fp-color-text-menu-tertiary);
+}
