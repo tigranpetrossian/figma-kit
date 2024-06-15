@@ -1,0 +1,59 @@
+.fp-switchRoot {
+  appearance: none;
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  width: var(--size-6);
+  height: var(--size-3);
+  padding: 0;
+  background: linear-gradient(90deg, var(--figma-color-bg-brand) 0px 24px, var(--figma-color-icon-tertiary) 24px 48px);
+  background-repeat: no-repeat;
+  background-size: 200% 100%;
+  background-clip: padding-box;
+  border-radius: var(--radius-full);
+  border: 0;
+  transition: background-position 0.1s ease-out;
+
+  &:focus-visible {
+    outline-offset: 2px;
+    outline: 2px solid var(--figma-color-border-selected);
+  }
+
+  &[data-disabled] {
+    background: var(--figma-color-icon-disabled);
+    border-color: var(--figma-color-icon-disabled);
+  }
+
+  &[data-state='unchecked'] {
+    background-position: -24px;
+  }
+
+  &[data-state='checked'] {
+    background-position: 0;
+  }
+}
+
+.fp-switchThumb {
+  box-sizing: border-box;
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  height: var(--size-2_5);
+  width: var(--size-2_5);
+  border-radius: var(--radius-full);
+  background: var(--figma-color-icon-onbrand);
+  transition: all 0.1s ease-out;
+
+  &[data-disabled] {
+    background-color: var(--figma-color-bg);
+    border-color: var(--figma-color-bg);
+  }
+
+  &[data-state='unchecked'] {
+    left: 1px;
+  }
+
+  &[data-state='checked'] {
+    left: calc(100% - var(--size-2_5) - 1px);
+  }
+}
