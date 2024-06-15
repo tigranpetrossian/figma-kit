@@ -27,12 +27,12 @@
 
 .fp-SelectContent {
   box-sizing: border-box;
-  background-color: var(--fp-color-bg-menu);
+  background-color: var(--color-bg-menu);
   border-radius: var(--radius-base);
   cursor: default;
   padding: var(--size-2) 0;
 
-  font-size: var(--fp-font-size-menu);
+  font-size: var(--font-size-menu);
   /* TODO: In Figma, antialiasing is only enabled for negative text on high resolution screens
            Worth. extracting this into a reusable class */
   -webkit-font-smoothing: antialiased;
@@ -49,11 +49,11 @@
   align-items: center;
   justify-content: center;
   height: var(--size-4);
-  background-color: var(--fp-color-bg-menu);
+  background-color: var(--color-bg-menu);
 
   svg {
     display: block;
-    fill: var(--fp-color-icon-menu);
+    fill: var(--color-icon-menu);
   }
 }
 
@@ -70,11 +70,11 @@
   align-items: center;
   height: var(--size-6);
   padding-left: var(--size-8);
-  color: var(--fp-color-text-menu);
+  color: var(--color-text-menu);
 
   &:focus {
     outline: 0;
-    background-color: var(--fp-color-bg-menu-selected);
+    background-color: var(--color-bg-menu-selected);
   }
 }
 
@@ -85,14 +85,14 @@
 
   svg {
     display: block;
-    fill: var(--fp-color-icon-menu);
+    fill: var(--color-icon-menu);
   }
 }
 
 .fp-SelectSeparator {
   margin: var(--size-2) 0;
   height: 1px;
-  background-color: var(--fp-color-border-menu);
+  background-color: var(--color-border-menu);
 }
 
 .fp-SelectGroup {
@@ -107,7 +107,7 @@
   }
 
   &:not(:first-child) {
-    border-top: 1px solid var(--fp-color-border-menu);
+    border-top: 1px solid var(--color-border-menu);
   }
 }
 
@@ -116,5 +116,5 @@
   align-items: center;
   height: var(--size-6);
   padding-left: var(--size-8);
-  color: var(--fp-color-text-menu-tertiary);
+  color: var(--color-text-menu-tertiary);
 }

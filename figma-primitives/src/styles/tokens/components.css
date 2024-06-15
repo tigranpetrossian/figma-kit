@@ -1,10 +1,10 @@
 :root {
-  --fp-color-bg-menu: #1e1e1e;
-  --fp-color-bg-menu-selected: var(--figma-color-bg-selected-strong);
-  --fp-color-text-menu: var(--figma-color-text-oncomponent);
-  --fp-color-text-menu-secondary: var(--figma-color-text-oncomponent-secondary);
-  --fp-color-text-menu-tertiary: var(--figma-color-text-oncomponent-tertiary);
-  --fp-color-icon-menu: var(--figma-color-icon-oncomponent);
-  --fp-color-border-menu: #383838;
-  --fp-font-size-menu: 12px;
+  --color-bg-menu: #1e1e1e;
+  --color-bg-menu-selected: var(--figma-color-bg-selected-strong);
+  --color-text-menu: var(--figma-color-text-oncomponent);
+  --color-text-menu-secondary: var(--figma-color-text-oncomponent-secondary);
+  --color-text-menu-tertiary: var(--figma-color-text-oncomponent-tertiary);
+  --color-icon-menu: var(--figma-color-icon-oncomponent);
+  --color-border-menu: #383838;
+  --font-size-menu: 12px;
 }
