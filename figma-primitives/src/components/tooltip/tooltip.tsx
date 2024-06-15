@@ -23,12 +23,10 @@ const Arrow = (props: ArrowProps) => {
 };
 
 type TooltipElement = React.ElementRef<typeof RadixTooltip.Content>;
-type TooltipProps = RadixTooltip.TooltipProps &
-  RadixTooltip.PortalProps &
-  ContentProps & {
-    children: React.ReactNode;
-    content: React.ReactNode;
-  };
+type TooltipProps = Omit<RadixTooltip.TooltipProps & RadixTooltip.PortalProps & ContentProps, 'content'> & {
+  children: React.ReactNode;
+  content: React.ReactNode;
+};
 
 const Tooltip = React.forwardRef<TooltipElement, TooltipProps>((props, ref) => {
   const {
