@@ -5,6 +5,7 @@ type Story = StoryObj<typeof Input>;
 
 const meta: Meta<typeof Input> = {
   component: Input,
+  title: 'Components/Input',
   args: {
     variant: 'normal',
     value: '',

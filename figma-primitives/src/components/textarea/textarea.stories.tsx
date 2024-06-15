@@ -5,6 +5,7 @@ type Story = StoryObj<typeof Textarea>;
 
 const meta: Meta<typeof Textarea> = {
   component: Textarea,
+  title: 'Components/Textarea',
 };
 
 export default meta;

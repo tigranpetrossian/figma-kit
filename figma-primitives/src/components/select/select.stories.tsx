@@ -5,7 +5,7 @@ type Story = StoryObj<typeof Root>;
 
 const meta: Meta<typeof Root> = {
   component: Root,
-  title: 'Select',
+  title: 'Components/Select',
 } satisfies Meta<typeof Root>;
 
 export default meta;
