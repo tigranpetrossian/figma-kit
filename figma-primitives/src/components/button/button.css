@@ -1,0 +1,152 @@
+.fp-buttonBase {
+  box-sizing: border-box;
+  background-clip: border-box;
+  background-color: transparent;
+  user-select: none;
+  appearance: none;
+  border: 0;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--size-1_5);
+  flex-shrink: 0;
+  width: fit-content;
+  height: var(--size-8);
+  padding: 0 calc(var(--size-3) + 1px);
+  border-radius: var(--radius-medium);
+  outline-width: 1px;
+  outline-style: solid;
+  outline-color: red;
+  outline-offset: -1px;
+  font-family: var(--font-family-default);
+  font-size: 11px;
+  font-weight: 400;
+
+  &:focus-visible {
+    outline-offset: -2px;
+    outline-width: 2px;
+  }
+}
+
+.fp-buttonBase {
+  background-color: var(--button-color-bg);
+  outline-color: var(--button-color-border);
+  color: var(--button-color-text);
+  fill: var(--button-color-icon);
+
+  &:active {
+    background-color: var(--button-color-bg-pressed);
+  }
+
+  &:focus-visible {
+    outline-color: var(--button-color-border-selected);
+  }
+
+  &:disabled {
+    background-color: var(--button-color-bg-disabled);
+    outline-color: var(--button-color-border-disabled);
+    color: var(--button-color-text-disabled);
+    fill: var(--button-color-icon-disabled);
+  }
+}
+
+.fp-buttonPrimary {
+  --button-color-bg: var(--figma-color-bg-brand);
+  --button-color-border: transparent;
+  --button-color-text: var(--figma-color-text-onbrand);
+  --button-color-icon: var(--figma-color-icon-onbrand);
+  --button-color-bg-pressed: var(--figma-color-bg-brand-pressed);
+  --button-color-border-selected: var(--figma-color-border-selected-strong);
+  --button-color-bg-disabled: var(--figma-color-bg-disabled);
+  --button-color-border-disabled: transparent;
+  --button-color-text-disabled: var(--figma-color-text-ondisabled);
+  --button-color-icon-disabled: var(--figma-color-icon-ondisabled);
+}
+
+.fp-buttonSecondary {
+  --button-color-bg: transparent;
+  --button-color-border: var(--figma-color-border-strong);
+  --button-color-text: var(--figma-color-text);
+  --button-color-icon: var(--figma-color-icon);
+  --button-color-bg-pressed: var(--figma-color-bg-pressed);
+  --button-color-border-selected: var(--figma-color-border-selected);
+  --button-color-bg-disabled: transparent;
+  --button-color-border-disabled: var(--figma-color-border-disabled-strong);
+  --button-color-text-disabled: var(--figma-color-text-disabled);
+  --button-color-icon-disabled: var(--figma-color-icon-disabled);
+}
+
+.fp-buttonDestructive {
+  --button-color-bg: var(--figma-color-bg-danger);
+  --button-color-border: transparent;
+  --button-color-text: var(--figma-color-text-ondanger);
+  --button-color-icon: var(--figma-color-icon-ondanger);
+  --button-color-bg-pressed: var(--figma-color-bg-danger-pressed);
+  --button-color-border-selected: var(--figma-color-border-danger-strong);
+  --button-color-bg-disabled: var(--figma-color-bg-disabled);
+  --button-color-border-disabled: transparent;
+  --button-color-text-disabled: var(--figma-color-text-ondisabled);
+  --button-color-icon-disabled: var(--figma-color-icon-ondisabled);
+}
+
+.fp-buttonDestructiveSecondary {
+  --button-color-bg: transparent;
+  --button-color-border: var(--figma-color-border-danger-strong);
+  --button-color-text: var(--figma-color-text-danger);
+  --button-color-icon: var(--figma-color-text-danger);
+  --button-color-bg-pressed: var(--figma-color-bg-pressed);
+  --button-color-border-selected: var(--figma-color-border-danger-strong);
+  --button-color-bg-disabled: transparent;
+  --button-color-border-disabled: var(--figma-color-border-disabled-strong);
+  --button-color-text-disabled: var(--figma-color-text-disabled);
+  --button-color-icon-disabled: var(--figma-color-icon-disabled);
+}
+
+.fp-buttonSuccess {
+  --button-color-bg: var(--figma-color-bg-success);
+  --button-color-border: transparent;
+  --button-color-text: var(--figma-color-text-onsuccess);
+  --button-color-icon: var(--figma-color-icon-onsuccess);
+  --button-color-bg-pressed: var(--figma-color-bg-success-pressed);
+  --button-color-border-selected: var(--figma-color-border-success-strong);
+  --button-color-bg-disabled: var(--figma-color-bg-disabled);
+  --button-color-border-disabled: transparent;
+  --button-color-text-disabled: var(--figma-color-text-ondisabled);
+  --button-color-icon-disabled: var(--figma-color-icon-ondisabled);
+}
+
+.fp-buttonInverse {
+  --button-color-bg: var(--figma-color-bg-inverse);
+  --button-color-border: transparent;
+  --button-color-text: var(--figma-color-text-oninverse);
+  --button-color-icon: var(--figma-color-icon-oninverse);
+  --button-color-bg-pressed: var(--figma-color-bg-inverse);
+  --button-color-border-selected: var(--figma-color-border-selected-strong);
+  --button-color-bg-disabled: var(--figma-color-bg-disabled);
+  --button-color-border-disabled: transparent;
+  --button-color-text-disabled: var(--figma-color-text-ondisabled);
+  --button-color-icon-disabled: var(--figma-color-icon-ondisabled);
+}
+
+.fp-buttonText {
+  --button-color-bg: transparent;
+  --button-color-border: transparent;
+  --button-color-text: var(--figma-color-text);
+  --button-color-icon: var(--figma-color-icon);
+  --button-color-bg-pressed: var(--figma-color-bg-pressed);
+  --button-color-border-selected: var(--figma-color-border-selected);
+  --button-color-bg-disabled: transparent;
+  --button-color-border-disabled: transparent;
+  --button-color-text-disabled: var(--figma-color-text-disabled);
+  --button-color-icon-disabled: var(--figma-color-icon-disabled);
+}
+
+.fp-buttonText:hover:not(:disabled) {
+  background-color: var(--figma-color-bg-pressed);
+}
+
+.fp-buttonFullWidth {
+  width: 100%;
+  max-width: 100%;
+}
