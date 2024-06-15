@@ -5,8 +5,9 @@
   width: 100%;
   height: var(--size-7);
   padding: 0 0 0 0.4375rem;
-  font-family: inherit;
-  font-size: inherit;
+  font-family: var(--font-family-default);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-base);
   background-color: var(--figma-color-bg);
   color: var(--figma-color-text);
   border-radius: var(--radius-base);

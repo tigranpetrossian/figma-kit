@@ -6,5 +6,9 @@
   --color-text-menu-tertiary: var(--figma-color-text-oncomponent-tertiary);
   --color-icon-menu: var(--figma-color-icon-oncomponent);
   --color-border-menu: #383838;
+
+  --color-bg-tooltip: #1e1e1e;
+  --color-text-tooltip: #fff;
+
   --font-size-menu: 12px;
 }

@@ -1,18 +1,19 @@
-:root {
-  --color-tooltip-background: #1e1e1e;
-  --color-tooltip-text: #fff;
-}
-
 .fp-tooltip {
+  box-sizing: border-box;
   padding: var(--size-1_5) var(--size-2);
-  background-color: var(--color-tooltip-background);
-  color: var(--color-tooltip-text);
-  border-radius: var(--radius-base);
-  box-shadow: var(--elevation-300-tooltip, 0 2px 7px rgba(0, 0, 0, 0.15));
+  background-color: var(--color-bg-tooltip);
+  font-family: var(--font-family-default);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-base);
+  line-height: var(--size-4);
+  height: var(--size-7);
+  color: var(--color-text-tooltip);
   white-space: pre-wrap;
   word-break: break-word;
+  border-radius: var(--radius-base);
+  box-shadow: var(--elevation-300-tooltip, 0 2px 7px rgba(0, 0, 0, 0.15));
 }
 
 .fp-arrow {
-  fill: var(--color-tooltip-background);
+  fill: var(--color-bg-tooltip);
 }

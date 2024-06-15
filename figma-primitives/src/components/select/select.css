@@ -10,6 +10,10 @@
   height: var(--size-7);
   border: 1px solid transparent;
   border-radius: var(--radius-base);
+  font-family: var(--font-family-default);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-base);
+  color: var(--figma-color-text);
 
   &:hover {
     justify-content: space-between;

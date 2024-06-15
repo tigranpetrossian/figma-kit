@@ -1,6 +1,8 @@
 @import 'tokens/fonts.css';
 @import 'tokens/space.css';
 @import 'tokens/radii.css';
+@import 'tokens/font-sizes.css';
+@import 'tokens/font-weights.css';
 @import 'tokens/components.css';
 @import '../components/input-base/input-base.css';
 @import '../components/control-input/control-input.css';
