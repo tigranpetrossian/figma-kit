@@ -86,7 +86,7 @@ const Base = <V,>(props: BaseProps<V>) => {
       // Delegate selection to the next tick to make sure it happens after value is set.
       requestAnimationFrame(() => {
         if (incrementTargets && formatter.getIncrementSelection) {
-          const [start, end] = formatter.getIncrementSelection();
+          const [start, end] = formatter.getIncrementSelection(incrementTargets);
           inputElement.setSelectionRange(start, end);
         } else {
           inputElement.select();

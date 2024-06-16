@@ -1,7 +1,7 @@
 import type { Meta } from '@storybook/react';
 import { useState } from 'react';
 import { Tooltip, TooltipProvider } from '@components/tooltip';
-import { Multi, Root, Label, Numeric } from './';
+import { Multi, Root, Label, Numeric, Hex } from './';
 
 const meta: Meta<typeof Numeric> = {
   component: Numeric,
@@ -142,6 +142,42 @@ export const Rgba = () => {
             targetRange={[0, 100]}
             precision={2}
             suffix="%"
+          />
+        </Root>
+      </Multi>
+    </div>
+  );
+};
+
+export const BasicHex = () => {
+  const [rgba, setRgba] = useState<RGBA>({ r: 0.15, g: 0.15, b: 0.15, a: 1 });
+
+  return <Hex value={rgba} onChange={setRgba} ignoreAlpha />;
+};
+
+export const HexWithAlpha = () => {
+  const [rgba, setRgba] = useState<RGBA>({ r: 1, g: 1, b: 1, a: 1 });
+
+  const setAlpha = (alpha: number) => {
+    setRgba(({ r, g, b }) => ({ r, g, b, a: alpha }));
+  };
+
+  return (
+    <div style={{ width: 160 }}>
+      <Multi>
+        <Root>
+          <Hex value={rgba} onChange={setRgba} variant="base" />
+        </Root>
+        <Root style={{ flex: '0 0 48px' }}>
+          <Numeric
+            value={rgba.a}
+            onChange={setAlpha}
+            min={0}
+            max={1}
+            targetRange={[0, 100]}
+            suffix="%"
+            variant="base"
+            precision={2}
           />
         </Root>
       </Multi>

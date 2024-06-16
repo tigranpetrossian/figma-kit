@@ -14,7 +14,9 @@ type Formatter<V> = {
   format: (value: V) => string;
   incrementBy?: (value: V, amount: number, incrementTargets: IncrementTargets) => V;
   getIncrementTargets?: (element: HTMLInputElement) => IncrementTargets;
-  getIncrementSelection?: () => [start: number, end: number];
+  getIncrementSelection?: (incrementTargets: IncrementTargets) => [start: number, end: number];
 };
 
-export type { IncrementTargets, Formatter, ParserResult };
+type RGBA = { r: number; g: number; b: number; a: number };
+
+export type { IncrementTargets, Formatter, ParserResult, RGBA };

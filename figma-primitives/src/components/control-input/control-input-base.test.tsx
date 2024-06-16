@@ -88,6 +88,6 @@ describe('given a basic field', () => {
   });
 
   it.todo("doesn't close parent modal on Escape"); // feature unimplemented
-
   it.todo('increments correctly');
+  it.todo('selects value on  click');
 });
