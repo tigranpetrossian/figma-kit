@@ -1,14 +1,15 @@
 :root {
   --color-bg-menu: #1e1e1e;
   --color-bg-menu-selected: var(--figma-color-bg-selected-strong);
+  --color-border-menu: #383838;
   --color-text-menu: var(--figma-color-text-oncomponent);
   --color-text-menu-secondary: var(--figma-color-text-oncomponent-secondary);
   --color-text-menu-tertiary: var(--figma-color-text-oncomponent-tertiary);
   --color-icon-menu: var(--figma-color-icon-oncomponent);
-  --color-border-menu: #383838;
+  --shadow-menu: var(--elevation-400);
+  --font-size-menu: 12px;
 
   --color-bg-tooltip: #1e1e1e;
   --color-text-tooltip: #fff;
-
-  --font-size-menu: 12px;
+  --shadow-tooltip: var(--elevation-300);
 }
