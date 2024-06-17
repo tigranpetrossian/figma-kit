@@ -3,6 +3,7 @@
 @import 'tokens/radii.css';
 @import 'tokens/font-sizes.css';
 @import 'tokens/font-weights.css';
+@import 'tokens/shadow.css';
 @import 'tokens/components.css';
 @import '../components/input-base/input-base.css';
 @import '../components/control-input/control-input.css';
