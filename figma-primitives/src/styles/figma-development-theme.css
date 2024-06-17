@@ -6,14 +6,9 @@
 */
 
 body {
-  font-family: var(--font-family-default);
-  font-size: 11px;
-  line-height: 16px;
-  font-weight: 400;
   font-feature-settings:
     'liga' 1,
     'calt' 1;
-  color: var(--figma-color-text);
 }
 
 :root,

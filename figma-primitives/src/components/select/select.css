@@ -36,7 +36,10 @@
   cursor: default;
   padding: var(--size-2) 0;
 
+  font-family: var(--font-family-default);
+  font-weight: var(--font-weight-base);
   font-size: var(--font-size-menu);
+  color: var(--figma-color-text);
   /* TODO: In Figma, antialiasing is only enabled for negative text on high resolution screens
            Worth. extracting this into a reusable class */
   -webkit-font-smoothing: antialiased;
