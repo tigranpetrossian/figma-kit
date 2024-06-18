@@ -4,6 +4,8 @@
   border-radius: var(--radius-base);
   outline-offset: -1px;
   padding: 0 1px;
+  font-family: var(--font-family-default);
+  font-size: var(--font-size-base);
   box-sizing: border-box;
 
   &:hover {
