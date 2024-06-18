@@ -23,8 +23,9 @@ const Arrow = (props: ArrowProps) => {
 };
 
 type TooltipElement = React.ElementRef<typeof RadixTooltip.Content>;
-type TooltipProps = Omit<RadixTooltip.TooltipProps & RadixTooltip.PortalProps & ContentProps, 'content'> & {
+type TooltipProps = Omit<RadixTooltip.TooltipProps & ContentProps, 'content'> & {
   children: React.ReactNode;
+  container?: HTMLElement | null | undefined;
   content: React.ReactNode;
 };
 
