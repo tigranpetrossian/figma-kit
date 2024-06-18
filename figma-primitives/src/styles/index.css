@@ -5,6 +5,7 @@
 @import 'tokens/font-weight.css';
 @import 'tokens/shadow.css';
 @import 'tokens/components.css';
+@import '../components/icon/icon.css';
 @import '../components/input-base/input-base.css';
 @import '../components/control-input/control-input.css';
 @import '../components/tooltip/tooltip.css';
