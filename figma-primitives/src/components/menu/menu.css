@@ -1,0 +1,80 @@
+.fp-MenuContent {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  cursor: default;
+  padding: var(--size-2) 0;
+  background-color: var(--color-bg-menu);
+  border-radius: var(--radius-base);
+  font-family: var(--font-family-default);
+  font-weight: var(--font-weight-base);
+  font-size: var(--font-size-menu);
+  color: var(--color-text-menu);
+  box-shadow: var(--elevation-400);
+}
+
+.fp-MenuItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: var(--size-6);
+  padding: 0 var(--size-4);
+  fill: var(--color-icon-menu);
+  color: var(--color-text-menu);
+  white-space: nowrap;
+
+  &[data-highlighted] {
+    outline: 0;
+    background-color: var(--color-bg-menu-selected);
+  }
+
+  &[data-disabled] {
+    color: var(--color-text-menu-tertiary);
+  }
+}
+
+.fp-MenuSeparator {
+  margin: var(--size-2) 0;
+  height: 1px;
+  background-color: var(--color-border-menu);
+}
+
+.fp-MenuLabel {
+  display: flex;
+  align-items: center;
+  height: var(--size-6);
+  padding: 0 var(--size-4);
+  color: var(--color-text-menu-tertiary);
+}
+
+.fp-MenuGroup {
+  padding: var(--size-2) 0;
+
+  &:first-child {
+    padding-top: 0;
+  }
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+
+  &:not(:first-child) {
+    border-top: 1px solid var(--color-border-menu);
+  }
+}
+
+.fp-MenuSubtriggerCaret {
+  margin-left: auto;
+  margin-right: calc(-1 * var(--size-1));
+  padding-left: var(--size-6);
+}
+
+.fp-MenuCheckboxItem,
+.fp-MenuRadioItem {
+  padding-left: var(--size-8);
+}
+
+.fp-MenuItemIndicator {
+  position: absolute;
+  left: var(--size-2);
+}

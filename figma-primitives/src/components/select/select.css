@@ -21,29 +21,12 @@
   }
 }
 
-.fp-SelectTriggerIcon svg {
+.fp-SelectTriggerIcon .fp-Icon {
   fill: var(--figma-color-icon-tertiary);
 
   .fp-SelectTrigger:hover & {
     fill: var(--figma-color-icon);
   }
-}
-
-.fp-SelectContent {
-  box-sizing: border-box;
-  background-color: var(--color-bg-menu);
-  border-radius: var(--radius-base);
-  cursor: default;
-  padding: var(--size-2) 0;
-
-  font-family: var(--font-family-default);
-  font-weight: var(--font-weight-base);
-  font-size: var(--font-size-menu);
-  color: var(--figma-color-text);
-  /* TODO: In Figma, antialiasing is only enabled for negative text on high resolution screens
-           Worth. extracting this into a reusable class */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 .fp-SelectScrollUpButton,
@@ -57,11 +40,6 @@
   justify-content: center;
   height: var(--size-4);
   background-color: var(--color-bg-menu);
-
-  svg {
-    display: block;
-    fill: var(--color-icon-menu);
-  }
 }
 
 .fp-SelectScrollUpButton {
@@ -70,58 +48,4 @@
 
 .fp-SelectScrollDownButton {
   bottom: 0;
-}
-
-.fp-SelectItem {
-  display: flex;
-  align-items: center;
-  height: var(--size-6);
-  padding-left: var(--size-8);
-  color: var(--color-text-menu);
-
-  &:focus {
-    outline: 0;
-    background-color: var(--color-bg-menu-selected);
-  }
-}
-
-.fp-SelectItemCheckmark {
-  position: absolute;
-  left: var(--size-2);
-  display: block;
-
-  svg {
-    display: block;
-    fill: var(--color-icon-menu);
-  }
-}
-
-.fp-SelectSeparator {
-  margin: var(--size-2) 0;
-  height: 1px;
-  background-color: var(--color-border-menu);
-}
-
-.fp-SelectGroup {
-  padding: var(--size-2) 0;
-
-  &:first-child {
-    padding-top: 0;
-  }
-
-  &:last-child {
-    padding-bottom: 0;
-  }
-
-  &:not(:first-child) {
-    border-top: 1px solid var(--color-border-menu);
-  }
-}
-
-.fp-SelectLabel {
-  display: flex;
-  align-items: center;
-  height: var(--size-6);
-  padding-left: var(--size-8);
-  color: var(--color-text-menu-tertiary);
 }

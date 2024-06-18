@@ -16,7 +16,9 @@ export const Basic: Story = {
       <Trigger style={{ width: 120 }}>Dogs</Trigger>
       <Content>
         <Item value="one">Pass through</Item>
-        <Item value="two">Normal</Item>
+        <Item value="two" disabled>
+          Normal
+        </Item>
         <Separator />
         <Item value="three">Darken</Item>
         <Item value="three">Multiply</Item>
