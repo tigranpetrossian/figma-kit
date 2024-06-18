@@ -1,29 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Root, Thumb } from './switch';
+import { Switch } from './switch';
 
-type Story = StoryObj<typeof Root>;
+type Story = StoryObj<typeof Switch>;
 
-const meta: Meta<typeof Root> = {
-  component: Root,
+const meta: Meta<typeof Switch> = {
+  component: Switch,
   title: 'Components/Switch',
 };
 
 export default meta;
 
 // Limitation - no Mixed state support
-
 export const Basic: Story = {
-  render: () => (
-    <Root>
-      <Thumb />
-    </Root>
-  ),
+  render: () => <Switch />,
 };
 
 export const Disabled: Story = {
-  render: () => (
-    <Root checked={true} disabled>
-      <Thumb />
-    </Root>
-  ),
+  render: () => <Switch checked={true} disabled />,
 };
