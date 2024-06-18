@@ -2,7 +2,7 @@ import type { StorybookConfig } from '@storybook/react-vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 const config: StorybookConfig = {
-  stories: ['../figma-primitives/src/**/*.mdx', '../figma-primitives/src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  stories: ['../figma-kit/src/**/*.mdx', '../figma-kit/src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',

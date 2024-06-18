@@ -10,7 +10,7 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "figma-primitives": "workspace:*",
+    "figma-kit": "workspace:*",
     "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {

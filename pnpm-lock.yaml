@@ -120,7 +120,7 @@ importers:
         specifier: ^1.5.0
         version: 1.5.0(@types/node@20.12.12)(happy-dom@14.11.0)
 
-  figma-primitives:
+  figma-kit:
     dependencies:
       '@emmetio/math-expression':
         specifier: ^1.0.5
@@ -168,9 +168,9 @@ importers:
 
   website:
     dependencies:
-      figma-primitives:
+      figma-kit:
         specifier: workspace:*
-        version: link:../figma-primitives
+        version: link:../figma-kit
       react:
         specifier: ^18.2.0
         version: 18.3.1

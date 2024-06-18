@@ -19,7 +19,7 @@ export default defineConfig((env) => {
       lib: {
         entry: 'src/index.ts',
         formats: ['es', 'cjs'],
-        name: 'figma-primitives',
+        name: 'figma-kit',
         fileName: (format, entryName) => {
           return `${entryName}.${extensions[format]}`;
         },

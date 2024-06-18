@@ -1,12 +1,12 @@
 {
-  "name": "figma-primitives-root",
+  "name": "figma-kit-root",
   "private": true,
   "scripts": {
     "site:dev": "pnpm --filter website dev",
-    "dev": "pnpm --filter figma-primitives dev",
-    "build": "pnpm --filter figma-primitives build",
+    "dev": "pnpm --filter figma-kit dev",
+    "build": "pnpm --filter figma-kit build",
     "lint": "eslint \"**/{src,test}/**/*.{ts,tsx}\" --ext ts,tsx --fix --max-warnings 0",
-    "test": "pnpm --filter figma-primitives test",
+    "test": "pnpm --filter figma-kit test",
     "prepare": "husky",
     "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build"

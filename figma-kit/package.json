@@ -1,16 +1,17 @@
 {
-  "name": "figma-primitives",
-  "description": "Headless multi-checkbox management library",
+  "name": "figma-kit",
+  "description": "A set of React components for building Figma plugins.",
   "version": "0.0.0-semantic-release",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tigranpetrossian/figma-primitives"
+    "url": "https://github.com/tigranpetrossian/figma-kit"
   },
   "keywords": [
-    "checkbox-list",
-    "checkbox",
     "react",
+    "figma",
+    "figma react components",
+    "figma design system",
     "hook"
   ],
   "type": "module",

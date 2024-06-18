@@ -1,7 +1,7 @@
 import type { Preview } from '@storybook/react';
 import './storybook-reset.css';
-import '../figma-primitives/src/styles/figma-development-theme.css';
-import '../figma-primitives/src/styles/index.css';
+import '../figma-kit/src/styles/figma-development-theme.css';
+import '../figma-kit/src/styles/index.css';
 
 const preview: Preview = {
   parameters: {
