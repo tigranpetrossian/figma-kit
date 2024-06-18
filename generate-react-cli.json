@@ -1,0 +1,22 @@
+{
+  "usesTypeScript": true,
+  "usesStyledComponents": false,
+  "usesCssModule": false,
+  "cssPreprocessor": "css",
+  "testLibrary": "Testing Library",
+  "component": {
+    "default": {
+      "customTemplates": {
+        "index": "./generator-templates/default/index.ts",
+        "component": "./generator-templates/default/template-name.tsx",
+        "story": "./generator-templates/default/template-name.stories.tsx"
+      },
+      "path": "figma-kit/src/components",
+      "withIndex": true,
+      "withStyle": false,
+      "withTest": false,
+      "withStory": true,
+      "withLazy": false
+    }
+  }
+}

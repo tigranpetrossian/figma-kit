@@ -3,18 +3,27 @@ import { Switch } from './switch';
 
 type Story = StoryObj<typeof Switch>;
 
-const meta: Meta<typeof Switch> = {
+const meta = {
   component: Switch,
   title: 'Components/Switch',
-};
+} satisfies Meta<typeof Switch>;
 
 export default meta;
 
 // Limitation - no Mixed state support
-export const Basic: Story = {
-  render: () => <Switch />,
+export const Unchecked: Story = {
+  args: {},
+};
+
+export const Checked: Story = {
+  args: {
+    checked: true,
+  },
 };
 
 export const Disabled: Story = {
-  render: () => <Switch checked={true} disabled />,
+  args: {
+    checked: true,
+    disabled: true,
+  },
 };

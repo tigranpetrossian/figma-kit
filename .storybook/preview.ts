@@ -5,6 +5,11 @@ import '../figma-kit/src/styles/index.css';
 
 const preview: Preview = {
   parameters: {
+    options: {
+      storySort: {
+        order: ['Components', ['Button', 'Icon Button', 'Switch', 'Input', 'Textarea', 'Control Input']],
+      },
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,

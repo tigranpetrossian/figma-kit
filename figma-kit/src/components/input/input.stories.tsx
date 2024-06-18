@@ -16,7 +16,6 @@ const meta: Meta<typeof Input> = {
     value: {
       type: 'string',
       control: 'text',
-      defaultValue: '',
     },
     variant: {
       options: ['normal', 'ghost', 'underline'],

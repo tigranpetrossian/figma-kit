@@ -2,6 +2,12 @@ import type { StorybookConfig } from '@storybook/react-vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 const config: StorybookConfig = {
+  typescript: {
+    reactDocgen: 'react-docgen-typescript',
+    reactDocgenTypescriptOptions: {
+      tsconfigPath: './figma-kit/tsconfig.json',
+    },
+  },
   stories: ['../figma-kit/src/**/*.mdx', '../figma-kit/src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [
     '@storybook/addon-links',

@@ -5,24 +5,24 @@ import * as DropdownMenu from './dropdown-menu';
 
 type Story = StoryObj<typeof DropdownMenu.Root>;
 
-const meta: Meta<typeof DropdownMenu.Root> = {
+const meta = {
   component: DropdownMenu.Root,
   title: 'Components/Dropdown Menu',
   decorators: [
     (Story) => (
-      <div style={{ padding: 100 }}>
+      <div style={{ padding: '0 100px' }}>
         <Story />
       </div>
     ),
   ],
-};
+} satisfies Meta<typeof DropdownMenu.Root>;
 
 export default meta;
 
 export const Story: Story = {
-  render() {
+  render: (args) => {
     return (
-      <DropdownMenu.Root>
+      <DropdownMenu.Root {...args}>
         <DropdownMenu.Trigger asChild>
           <Button>Menu</Button>
         </DropdownMenu.Trigger>
