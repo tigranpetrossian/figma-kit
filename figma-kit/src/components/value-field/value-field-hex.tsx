@@ -10,8 +10,9 @@ type HexProps = Omit<InputProps, 'value' | 'onChange'> & {
   value: RGBA;
   /** Callback to call upon submission. */
   onChange: (value: RGBA) => void;
-  /** Ignore alpha triplet in user input. Useful when rendering without accompanying alpha field.
-   * results in 'onChange' always being called with 'a' of 1.
+  /**
+   * Ignores the alpha channel in user input, treating it as opaque. Useful when rendering without an alpha field.
+   * Results in 'onChange' always being called with an alpha value of 1.
    * @default false
    * */
   ignoreAlpha?: boolean;

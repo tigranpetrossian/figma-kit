@@ -1,0 +1,84 @@
+import {
+  Meta,
+  Story,
+  Source,
+  CodeOrSourceMdx,
+  Canvas,
+  ArgTypes,
+  Controls,
+  Description
+} from '@storybook/blocks';
+import * as ValueFieldStories from './value-field.stories.tsx'
+
+<Meta of={ValueFieldStories} />
+
+# Value Field
+####  Resilient input for controlling various properties
+<br/>
+
+## Overview
+
+The Value Field, despite its simple appearance, is one of the most complex components in Figma.
+In many ways, it was the main reason this library was conceived in the first place.
+
+The component allows users to adjust various properties of different elements such as color,
+width, height, angle, font size, and more. It is designed to be extremely resilient to incorrect input.
+
+## Building blocks
+The Value Field doesn't ship as a set of ready-made components as they appear in Figma. Instead,
+it provides the necessary primitives to create the variations needed for your plugin. The
+following sections describe these primitives in detail.
+
+
+## Numeric
+
+Basic numeric input. Most value fields (opacity, color channels, width, height) can be built
+using this input in combination with other elements from ValueField.
+
+Similar to Figma's property fields, and unlike regular form input, Numeric field commits the
+value by calling `onChange` on <kbd>Enter</kbd> or `blur`, and reverts on `Escape`.
+
+Numeric input is a controlled component, meaning `value` and `onChange` props are required for
+it to function.
+
+
+<Canvas layout="centered" of={ValueFieldStories.Numeric}/>
+<ArgTypes of={ValueFieldStories.Numeric} />
+
+## Icons and labels
+
+Use a combination of `Root` and `Label` to create value fields with icons or labels
+
+### With label
+<Canvas layout="centered" of={ValueFieldStories.WithLabel}/>
+
+### With icon
+<Canvas layout="centered" of={ValueFieldStories.WithIcon}/>
+
+
+## Multi-value inputs
+
+Creates multi-value inputs by using `Multi` wrapper. The following example replicates Figma's
+RGBA input by using 4 numeric inputs in a `Multi`.
+<Canvas layout="centered" of={ValueFieldStories.MultiInput}/>
+
+Notice the usage of `targetRange`, `min`, and `max` props in the code above. Figma natively stores
+colors in `RGBA` format with channel values normalized to 0-1 range. Using `targetRange`
+of 0-255 native values are converted to the correct display range internally.
+
+## Hex
+
+This component replicates the hex input functionality in Figma. It accepts user input and
+adjusts to the nearest valid hex value. Values Users can increment and decrement values using the
+keyboard, either for the entire input or individual color channels.
+
+The hex input can be used  can be used in conjunction with numeric input to create a primary
+color input similar to the one in Figma.
+
+<Canvas layout="centered" of={ValueFieldStories.Hex}/>
+<ArgTypes of={ValueFieldStories.Hex} />
+
+## Hex with alpha
+
+<Canvas layout="centered" of={ValueFieldStories.HexWithAlpha}/>
+
