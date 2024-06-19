@@ -2,8 +2,8 @@ import { describe, it, expect, vi } from 'vitest';
 import { render } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { useState } from 'react';
-import { Numeric } from '@components/control-input/control-input-numeric';
-import type { NumericProps } from '@components/control-input/control-input-numeric';
+import { Numeric } from '@components/value-field/value-field-numeric';
+import type { NumericProps } from '@components/value-field/value-field-numeric';
 
 const LABEL = 'label';
 
@@ -56,7 +56,7 @@ describe('formatting', () => {
   });
 });
 
-// Expression evaluations are tested separately in ./control-input-numeric-evaluator.test.ts,
+// Expression evaluations are tested separately in ./value-field-numeric-evaluator.test.ts,
 // as they add a significant overhead to test suite duration when done via @testing-library.
 describe('interactions', () => {
   const TestNumeric = (props: Partial<Omit<NumericProps, 'value'>> & { initialValue: number }) => {

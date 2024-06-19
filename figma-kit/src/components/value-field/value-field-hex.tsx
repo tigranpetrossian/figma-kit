@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { clamp, pipe } from 'remeda';
 import type { InputProps } from '@components/input';
-import { Base } from './control-input-base';
+import { Base } from './value-field-base';
 import type { Formatter, RGBA } from './types';
 
 type HexElement = React.ElementRef<'input'>;

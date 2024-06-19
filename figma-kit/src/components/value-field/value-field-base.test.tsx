@@ -2,8 +2,8 @@ import { describe, it, expect, vi } from 'vitest';
 import { useState } from 'react';
 import { render } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import type { Formatter } from '@components/control-input/types';
-import * as ControlInput from './control-input-base';
+import type { Formatter } from '@components/value-field/types';
+import * as ControlInput from './value-field-base';
 
 const LABEL = 'test-field';
 const INITIAL_VALUE = 30;

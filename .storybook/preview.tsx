@@ -17,7 +17,7 @@ const preview: Preview = {
   parameters: {
     options: {
       storySort: {
-        order: ['Components', ['Button', 'Icon Button', 'Switch', 'Input', 'Textarea', 'Control Input']],
+        order: ['Components', ['Button', 'Icon Button', 'Switch', 'Input', 'Textarea', 'Value Field']],
       },
     },
     controls: {

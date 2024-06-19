@@ -5,7 +5,7 @@ import { Multi, Root, Label, Numeric, Hex } from './';
 
 const meta: Meta<typeof Numeric> = {
   component: Numeric,
-  title: 'Components/Control Input',
+  title: 'Components/Value Field',
   decorators: [
     (Story) => (
       <TooltipProvider>

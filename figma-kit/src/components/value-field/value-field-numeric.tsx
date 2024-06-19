@@ -3,7 +3,7 @@ import { clamp, pipe, round } from 'remeda';
 import evaluate from '@emmetio/math-expression';
 import type { InputProps } from '@components/input';
 import type { Formatter } from './types';
-import { Base } from './control-input-base';
+import { Base } from './value-field-base';
 
 const MAX_SUPPORTED_PRECISION = 15;
 

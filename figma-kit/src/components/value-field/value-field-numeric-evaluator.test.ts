@@ -1,5 +1,5 @@
 import { it, describe, expect } from 'vitest';
-import { evaluateExpression } from './control-input-numeric';
+import { evaluateExpression } from './value-field-numeric';
 
 describe('treat percentage as value', () => {
   const displayValue = 1;

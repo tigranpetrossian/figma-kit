@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { userEvent } from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
-import type { RGBA } from '@components/control-input/types';
-import type { HexProps } from '@components/control-input/control-input-hex';
+import type { RGBA } from '@components/value-field/types';
+import type { HexProps } from '@components/value-field/value-field-hex';
 import { Hex, Root, Multi, Numeric } from './';
 
 const HEX_INPUT_LABEL = 'hex';
