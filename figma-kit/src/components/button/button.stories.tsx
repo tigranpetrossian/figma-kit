@@ -12,11 +12,6 @@ const meta = {
     variant: undefined,
   },
   argTypes: {
-    children: {
-      table: {
-        disable: true,
-      },
-    },
     variant: {
       description: 'Contextual variant of the button.',
       type: 'string',

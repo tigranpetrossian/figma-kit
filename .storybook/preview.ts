@@ -4,6 +4,13 @@ import '../figma-kit/src/styles/figma-development-theme.css';
 import '../figma-kit/src/styles/index.css';
 
 const preview: Preview = {
+  argTypes: {
+    children: {
+      table: {
+        disable: true,
+      },
+    },
+  },
   parameters: {
     options: {
       storySort: {
