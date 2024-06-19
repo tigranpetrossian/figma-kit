@@ -4,7 +4,7 @@ import { userEvent } from '@testing-library/user-event';
 import { render, screen } from '@testing-library/react';
 import type { RGBA } from '@components/value-field/types';
 import type { HexProps } from '@components/value-field/value-field-hex';
-import { Hex, Root, Multi, Numeric } from './';
+import { Hex, Root, Multi, Numeric } from '@components/value-field';
 
 const HEX_INPUT_LABEL = 'hex';
 const ALPHA_INPUT_LABEL = 'alpha';

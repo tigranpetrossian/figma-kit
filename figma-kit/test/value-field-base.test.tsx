@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { render } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import type { Formatter } from '@components/value-field/types';
-import * as ControlInput from './value-field-base';
+import * as ValueField from '@components/value-field//value-field-base';
 
 const LABEL = 'test-field';
 const INITIAL_VALUE = 30;
@@ -32,7 +32,7 @@ describe('given a basic field', () => {
       setValue(value);
     };
 
-    return <ControlInput.Base aria-label={LABEL} value={value} onChange={handleChange} formatter={formatter} />;
+    return <ValueField.Base aria-label={LABEL} value={value} onChange={handleChange} formatter={formatter} />;
   };
 
   it('formats correctly', () => {
