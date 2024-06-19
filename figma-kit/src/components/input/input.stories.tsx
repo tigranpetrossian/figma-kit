@@ -6,6 +6,7 @@ type Story = StoryObj<typeof Input>;
 const meta: Meta<typeof Input> = {
   component: Input,
   title: 'Components/Input',
+  tags: ['autodocs'],
   args: {
     variant: 'normal',
     value: '',
@@ -13,12 +14,8 @@ const meta: Meta<typeof Input> = {
     disabled: false,
   },
   argTypes: {
-    value: {
-      type: 'string',
-      control: 'text',
-    },
     variant: {
-      options: ['normal', 'ghost', 'underline'],
+      options: ['normal', 'ghost', 'underline', 'base'],
       control: { type: 'radio' },
     },
     disabled: {

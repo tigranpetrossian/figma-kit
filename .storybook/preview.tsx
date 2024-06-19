@@ -2,7 +2,7 @@ import type { Preview } from '@storybook/react';
 import './storybook-reset.css';
 import '../figma-kit/src/styles/figma-development-theme.css';
 import '../figma-kit/src/styles/index.css';
-import { Controls, Description, Primary, Subtitle, Title } from '@storybook/blocks';
+import { Controls, Description, Primary, Stories, Subtitle, Title } from '@storybook/blocks';
 // @ts-ignore
 import React from 'react';
 
@@ -38,10 +38,11 @@ const preview: Preview = {
           // @ts-ignore
           <>
             <Title />
-            <Description />
             <Subtitle />
+            <Description />
             <Primary />
             <Controls />
+            <Stories />
           </>
         );
       },
