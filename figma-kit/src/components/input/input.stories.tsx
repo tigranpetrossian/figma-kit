@@ -18,9 +18,9 @@ const meta: Meta<typeof Input> = {
       options: ['normal', 'ghost', 'underline', 'base'],
       control: { type: 'radio' },
     },
-    disabled: {
-      control: { type: 'boolean' },
+    selectOnClick: {
       type: 'boolean',
+      description: 'Enable content selection on click.',
     },
   },
 };

@@ -6,6 +6,14 @@ type Story = StoryObj<typeof Textarea>;
 const meta: Meta<typeof Textarea> = {
   component: Textarea,
   title: 'Components/Textarea',
+  tags: ['autodocs'],
+  parameters: {
+    docs: {
+      description: {
+        component: 'Textarea that grows vertically to accommodate content.',
+      },
+    },
+  },
 };
 
 export default meta;
