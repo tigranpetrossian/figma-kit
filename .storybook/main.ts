@@ -3,6 +3,9 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 const config: StorybookConfig = {
   stories: ['../figma-kit/src/**/*.mdx', '../figma-kit/src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  docs: {
+    defaultName: 'Documentation',
+  },
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
