@@ -4,7 +4,7 @@ import { Button } from './button';
 
 type Story = StoryObj<typeof Button>;
 
-const meta: Meta<typeof Button> = {
+const meta = {
   component: Button,
   title: 'Components/Button',
   tags: ['autodocs'],
@@ -31,8 +31,15 @@ const meta: Meta<typeof Button> = {
       options: ['primary', 'secondary', 'inverse', 'destructive', 'destructiveSecondary', 'success', 'text'],
       control: { type: 'radio' },
     },
+    fullWidth: {
+      description: 'Set to `true`, for the button to fill its parent',
+      type: 'boolean',
+    },
+    disabled: {
+      type: 'boolean',
+    },
   },
-};
+} satisfies Meta<typeof Button>;
 
 export default meta;
 

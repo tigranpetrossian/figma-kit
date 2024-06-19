@@ -27,9 +27,9 @@ type ButtonElement = React.ElementRef<'button'>;
 type ButtonProps = React.ComponentPropsWithoutRef<'button'> & VariantProps<typeof button>;
 
 const Button = React.forwardRef<ButtonElement, ButtonProps>((props, ref) => {
-  const { className, variant, ...buttonProps } = props;
+  const { className, variant, fullWidth, ...buttonProps } = props;
 
-  return <button ref={ref} className={button({ className, variant })} {...buttonProps} />;
+  return <button ref={ref} className={button({ className, variant, fullWidth })} {...buttonProps} />;
 });
 
 export type { ButtonProps };
