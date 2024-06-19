@@ -1,6 +1,7 @@
 {
   "name": "figma-kit",
   "description": "A set of React components for building Figma plugins.",
+  "homepage": "https://figma-kit.dev",
   "version": "0.0.0-semantic-release",
   "license": "MIT",
   "repository": {
