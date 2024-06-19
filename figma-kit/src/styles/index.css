@@ -6,7 +6,7 @@
 @import 'tokens/shadow.css';
 @import 'tokens/components.css';
 @import '../components/icon/icon.css';
-@import '../components/input-base/input-base.css';
+@import '../components/input/input.css';
 @import '../components/value-field/value-field.css';
 @import '../components/tooltip/tooltip.css';
 @import '../components/textarea/textarea.css';
