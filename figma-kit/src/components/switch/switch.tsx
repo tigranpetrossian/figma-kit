@@ -3,7 +3,7 @@ import React from 'react';
 import { cx } from 'class-variance-authority';
 
 type SwitchElement = React.ElementRef<typeof RadixSwitch.Switch>;
-type SwitchProps = RadixSwitch.SwitchProps;
+type SwitchProps = Omit<RadixSwitch.SwitchProps, 'asChild'>;
 
 const Switch = React.forwardRef<SwitchElement, SwitchProps>((props, ref) => {
   const { className, ...switchProps } = props;
