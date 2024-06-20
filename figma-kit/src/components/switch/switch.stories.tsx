@@ -7,6 +7,9 @@ const meta = {
   component: Switch,
   title: 'Components/Switch',
   tags: ['autodocs'],
+  parameters: {
+    radixComponent: true,
+  },
   argTypes: {
     defaultChecked: {
       type: 'boolean',

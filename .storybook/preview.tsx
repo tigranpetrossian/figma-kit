@@ -2,9 +2,7 @@ import type { Preview } from '@storybook/react';
 import './storybook-reset.css';
 import '../figma-kit/src/styles/figma-development-theme.css';
 import '../figma-kit/src/styles/index.css';
-import { Controls, Description, Primary, Stories, Subtitle, Title } from '@storybook/blocks';
-// @ts-ignore
-import React from 'react';
+import { DocTemplate } from './DocTemplate';
 
 const preview: Preview = {
   argTypes: {
@@ -33,19 +31,7 @@ const preview: Preview = {
       stylePreview: true,
     },
     docs: {
-      page: () => {
-        return (
-          // @ts-ignore
-          <>
-            <Title />
-            <Subtitle />
-            <Description />
-            <Primary />
-            <Controls />
-            <Stories />
-          </>
-        );
-      },
+      page: DocTemplate,
     },
   },
 };
