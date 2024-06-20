@@ -19,6 +19,7 @@ List of components:
 - [x] Select
 - [x] Dropdown Menu
 - [x] Context Menu
+- [x] Tooltip
 - [x] Switch
 - [ ] Text
 - [ ] Tabs
