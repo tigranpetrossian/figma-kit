@@ -8,7 +8,8 @@ const meta = {
   title: 'Components/Switch',
   tags: ['autodocs'],
   parameters: {
-    radixComponent: true,
+    radixUrl: 'https://www.radix-ui.com/primitives/docs/components/switch',
+    radixComponentName: 'Switch',
   },
   argTypes: {
     defaultChecked: {
