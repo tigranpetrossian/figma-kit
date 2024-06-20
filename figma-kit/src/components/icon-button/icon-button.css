@@ -11,8 +11,8 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: var(--size-8);
-  height: var(--size-8);
+  width: var(--space-8);
+  height: var(--space-8);
   border-radius: var(--radius-extra-small);
   fill: var(--button-color-icon);
 

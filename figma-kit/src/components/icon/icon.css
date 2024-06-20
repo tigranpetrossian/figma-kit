@@ -4,42 +4,42 @@
   pointer-events: none;
 
   &.size-1 {
-    width: var(--size-1);
+    width: var(--space-1);
   }
 
   &.size-2 {
-    width: var(--size-2);
+    width: var(--space-2);
   }
 
   &.size-2_5 {
-    width: var(--size-2_5);
+    width: var(--space-2_5);
   }
 
   &.size-3 {
-    width: var(--size-3);
+    width: var(--space-3);
   }
 
   &.size-3_5 {
-    width: var(--size-3_5);
+    width: var(--space-3_5);
   }
 
   &.size-4 {
-    width: var(--size-4);
+    width: var(--space-4);
   }
 
   &.size-5 {
-    width: var(--size-5);
+    width: var(--space-5);
   }
 
   &.size-6 {
-    width: var(--size-6);
+    width: var(--space-6);
   }
 
   &.size-7 {
-    width: var(--size-7);
+    width: var(--space-7);
   }
 
   &.size-8 {
-    width: var(--size-8);
+    width: var(--space-8);
   }
 }

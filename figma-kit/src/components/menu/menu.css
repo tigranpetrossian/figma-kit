@@ -3,7 +3,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   cursor: default;
-  padding: var(--size-2) 0;
+  padding: var(--space-2) 0;
   background-color: var(--color-bg-menu);
   border-radius: var(--radius-base);
   font-family: var(--font-family-default);
@@ -17,8 +17,8 @@
   position: relative;
   display: flex;
   align-items: center;
-  height: var(--size-6);
-  padding: 0 var(--size-4);
+  height: var(--space-6);
+  padding: 0 var(--space-4);
   fill: var(--color-icon-menu);
   color: var(--color-text-menu);
   white-space: nowrap;
@@ -34,7 +34,7 @@
 }
 
 .fp-MenuSeparator {
-  margin: var(--size-2) 0;
+  margin: var(--space-2) 0;
   height: 1px;
   background-color: var(--color-border-menu);
 }
@@ -42,13 +42,13 @@
 .fp-MenuLabel {
   display: flex;
   align-items: center;
-  height: var(--size-6);
-  padding: 0 var(--size-4);
+  height: var(--space-6);
+  padding: 0 var(--space-4);
   color: var(--color-text-menu-tertiary);
 }
 
 .fp-MenuGroup {
-  padding: var(--size-2) 0;
+  padding: var(--space-2) 0;
 
   &:first-child {
     padding-top: 0;
@@ -65,16 +65,16 @@
 
 .fp-MenuSubtriggerCaret {
   margin-left: auto;
-  margin-right: calc(-1 * var(--size-1));
-  padding-left: var(--size-6);
+  margin-right: calc(-1 * var(--space-1));
+  padding-left: var(--space-6);
 }
 
 .fp-MenuCheckboxItem,
 .fp-MenuRadioItem {
-  padding-left: var(--size-8);
+  padding-left: var(--space-8);
 }
 
 .fp-MenuItemIndicator {
   position: absolute;
-  left: var(--size-2);
+  left: var(--space-2);
 }

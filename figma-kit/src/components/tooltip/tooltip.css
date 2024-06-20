@@ -1,12 +1,12 @@
 .fp-tooltip {
   box-sizing: border-box;
-  padding: var(--size-1_5) var(--size-2);
+  padding: var(--space-1_5) var(--space-2);
   background-color: var(--color-bg-tooltip);
   font-family: var(--font-family-default);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-base);
-  line-height: var(--size-4);
-  height: var(--size-7);
+  line-height: var(--space-4);
+  height: var(--space-7);
   color: var(--color-text-tooltip);
   white-space: pre-wrap;
   word-break: break-word;

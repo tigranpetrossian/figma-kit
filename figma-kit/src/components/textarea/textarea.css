@@ -4,7 +4,7 @@
   display: block;
   width: 100%;
   min-height: 28px;
-  padding: calc(var(--size-1_5) - 1px) calc(var(--size-2) - 1px);
+  padding: calc(var(--space-1_5) - 1px) calc(var(--space-2) - 1px);
   font-family: var(--font-family-default);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-base);

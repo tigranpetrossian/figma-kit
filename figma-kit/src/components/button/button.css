@@ -9,11 +9,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--size-1_5);
+  gap: var(--space-1_5);
   flex-shrink: 0;
   width: fit-content;
-  height: var(--size-8);
-  padding: 0 calc(var(--size-3) + 1px);
+  height: var(--space-8);
+  padding: 0 calc(var(--space-3) + 1px);
   border-radius: var(--radius-medium);
   outline-width: 1px;
   outline-style: solid;

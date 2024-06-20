@@ -3,8 +3,8 @@
   box-sizing: border-box;
   position: relative;
   display: block;
-  width: var(--size-6);
-  height: var(--size-3);
+  width: var(--space-6);
+  height: var(--space-3);
   padding: 0;
   background: linear-gradient(90deg, var(--figma-color-bg-brand) 0px 24px, var(--figma-color-icon-tertiary) 24px 48px);
   background-repeat: no-repeat;
@@ -38,8 +38,8 @@
   position: absolute;
   top: 1px;
   left: 1px;
-  height: var(--size-2_5);
-  width: var(--size-2_5);
+  height: var(--space-2_5);
+  width: var(--space-2_5);
   border-radius: var(--radius-full);
   background: var(--figma-color-icon-onbrand);
   transition: all 0.1s ease-out;
@@ -54,6 +54,6 @@
   }
 
   &[data-state='checked'] {
-    left: calc(100% - var(--size-2_5) - 1px);
+    left: calc(100% - var(--space-2_5) - 1px);
   }
 }

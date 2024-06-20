@@ -32,8 +32,8 @@
   flex-shrink: 0;
   fill: var(--figma-color-icon-secondary);
   color: var(--figma-color-text-secondary);
-  padding-left: calc(var(--size-2_5));
-  padding-right: calc(var(--size-2_5));
+  padding-left: calc(var(--space-2_5));
+  padding-right: calc(var(--space-2_5));
 
   & + .fp-ControlInputBase {
     padding-left: 0;
