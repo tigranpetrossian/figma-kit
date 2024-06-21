@@ -16,6 +16,90 @@ const meta: Meta<typeof Slider> = {
       );
     },
   ],
+  argTypes: {
+    defaultValue: {
+      //type: 'number[]',
+      description: 'The initial value of the slider when it is first rendered.',
+      table: {
+        type: {
+          summary: 'number[]',
+        },
+      },
+      control: {
+        type: 'object',
+      },
+    },
+    value: {
+      table: {
+        type: {
+          summary: 'number[]',
+        },
+      },
+      description: 'The controlled value of the slider.',
+    },
+    onValueChange: {
+      type: 'function',
+      description: 'Event handler called when the value of the slider changes.',
+    },
+    onValueCommit: {
+      type: 'function',
+      description: 'Event handler called when the user is done changing the value.',
+    },
+    name: {
+      type: 'string',
+      description: 'The name of the input field in a form.',
+    },
+    disabled: {
+      type: 'boolean',
+      description: 'When true, prevents the user from interacting with the slider.',
+    },
+    orientation: {
+      options: ['horizontal', 'vertical'],
+      control: { type: 'radio' },
+      table: {
+        defaultValue: { summary: 'horizontal' },
+        type: { summary: 'enum' },
+      },
+      description: 'The orientation of the slider, either "horizontal" or "vertical".',
+    },
+    dir: {
+      options: ['ltr', 'rtl'],
+      control: { type: 'radio' },
+      table: {
+        defaultValue: { summary: 'ltr' },
+        type: { summary: 'enum' },
+      },
+      description: 'The text direction of the slider, either "ltr" or "rtl".',
+    },
+    inverted: {
+      type: 'boolean',
+      description: 'When true, inverts the slider values.',
+    },
+    min: {
+      type: 'number',
+      description: 'The minimum value of the slider.',
+    },
+    max: {
+      type: 'number',
+      description: 'The maximum value of the slider.',
+    },
+    step: {
+      type: 'number',
+      description: 'The step value of the slider.',
+    },
+    minStepsBetweenThumbs: {
+      type: 'number',
+      description: 'The minimum steps between slider thumbs.',
+    },
+    range: {
+      type: 'boolean',
+      description: 'When true, displays range element.',
+    },
+    rangeAnchor: {
+      type: 'number',
+      description: 'The starting point of the range. Defaults to min.',
+    },
+  },
 };
 
 export default meta;

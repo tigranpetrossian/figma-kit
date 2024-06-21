@@ -9,7 +9,7 @@ Figma Kit aims to is under active development and is expected to be published so
 The library attempts to replicate Figma's user interface look & feel with near-100% feature parity,
 to get the UI engineering out of the way of building great plugins.
 
-List of components:
+### List of components:
 
 - [x] Button
 - [x] Icon Button
@@ -21,10 +21,10 @@ List of components:
 - [x] Context Menu
 - [x] Tooltip
 - [x] Switch
+- [x] Slider
 - [ ] Text
 - [ ] Tabs
 - [ ] Checkbox & Radio
 - [ ] Toggle group
-- [ ] Slider
 - [ ] Dialog
 - [ ] Popover
