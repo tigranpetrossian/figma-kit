@@ -47,3 +47,34 @@ export const Vertical: Story = {
     orientation: 'vertical',
   },
 };
+
+export const HorizontalWithRange: Story = {
+  decorators: [
+    (Story) => {
+      return (
+        <div style={{ width: 200 }}>
+          <Story />
+        </div>
+      );
+    },
+  ],
+  args: {
+    range: true,
+  },
+};
+
+export const VerticalWithRange: Story = {
+  decorators: [
+    (Story) => {
+      return (
+        <div style={{ display: 'flex', flexDirection: 'column', height: 200 }}>
+          <Story />
+        </div>
+      );
+    },
+  ],
+  args: {
+    orientation: 'vertical',
+    range: true,
+  },
+};

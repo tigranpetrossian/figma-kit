@@ -1,6 +1,6 @@
 :root {
-  --slider-root-size: var(--space-3);
-  --slider-track-size: var(--space-px);
+  --fp-slider-root-size: var(--space-3);
+  --fp-slider-track-size: var(--space-px);
 }
 
 .fp-sliderRoot {
@@ -11,26 +11,27 @@
   outline: 0;
 
   &[data-orientation='horizontal'] {
-    height: var(--slider-root-size);
+    height: var(--fp-slider-root-size);
   }
 
   &[data-orientation='vertical'] {
     flex-direction: column;
-    width: var(--slider-root-size);
+    width: var(--fp-slider-root-size);
   }
 }
 
 .fp-sliderTrack {
+  overflow: hidden;
   position: relative;
   background-color: var(--figma-color-icon-tertiary);
   flex-grow: 1;
 
   &[data-orientation='horizontal'] {
-    height: var(--slider-track-size);
+    height: var(--fp-slider-track-size);
   }
 
   &[data-orientation='vertical'] {
-    width: var(--slider-track-size);
+    width: var(--fp-slider-track-size);
   }
 }
 
@@ -40,11 +41,11 @@
   background-color: var(--figma-color-border-strong);
 
   &[data-orientation='horizontal'] {
-    height: var(--slider-track-size);
+    height: var(--fp-slider-track-size);
   }
 
   &[data-orientation='vertical'] {
-    width: var(--slider-track-size);
+    width: var(--fp-slider-track-size);
   }
 }
 
