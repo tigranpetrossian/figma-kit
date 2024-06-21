@@ -56,7 +56,7 @@
   background-color: var(--figma-color-icon);
   outline: 0;
 
-  &:focus-visible:not(.fp-sliderThumb-pointerDown) {
+  &.fp-sliderThumb-focusVisible:focus-visible {
     outline: 1px solid var(--figma-color-border-selected);
     outline-offset: 2px;
   }
