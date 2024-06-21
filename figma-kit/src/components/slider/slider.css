@@ -1,0 +1,63 @@
+:root {
+  --slider-root-size: var(--space-3);
+  --slider-track-size: var(--space-px);
+}
+
+.fp-sliderRoot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  outline: 0;
+
+  &[data-orientation='horizontal'] {
+    height: var(--slider-root-size);
+  }
+
+  &[data-orientation='vertical'] {
+    flex-direction: column;
+    width: var(--slider-root-size);
+  }
+}
+
+.fp-sliderTrack {
+  position: relative;
+  background-color: var(--figma-color-icon-tertiary);
+  flex-grow: 1;
+
+  &[data-orientation='horizontal'] {
+    height: var(--slider-track-size);
+  }
+
+  &[data-orientation='vertical'] {
+    width: var(--slider-track-size);
+  }
+}
+
+.fp-sliderRange {
+  position: absolute;
+  display: block;
+  background-color: var(--figma-color-border-strong);
+
+  &[data-orientation='horizontal'] {
+    height: var(--slider-track-size);
+  }
+
+  &[data-orientation='vertical'] {
+    width: var(--slider-track-size);
+  }
+}
+
+.fp-sliderThumb {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background-color: var(--figma-color-icon);
+  outline: 0;
+
+  &:focus-visible:not(.fp-sliderThumb-pointerDown) {
+    outline: 1px solid var(--figma-color-border-selected);
+    outline-offset: 2px;
+  }
+}
