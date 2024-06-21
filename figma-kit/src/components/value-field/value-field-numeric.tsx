@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { clamp, pipe, round } from 'remeda';
 import evaluate from '@emmetio/math-expression';
 import type { InputProps } from '@components/input';
+import { normalize } from '@lib/number/normalize';
 import type { Formatter } from './types';
 import { Base } from './value-field-base';
 
@@ -58,8 +59,7 @@ type FormatterOptions = Pick<NumericProps, 'min' | 'max' | 'targetRange' | 'prec
 
 function createFormatter(options: FormatterOptions = {}): Formatter<number> {
   const { min, max, targetRange, precision = MAX_SUPPORTED_PRECISION, suffix, allowedUnits = [] } = options;
-  const toDisplayValue = normalize({ min, max, targetRange });
-  const fromDisplayValue = denormalize({ min, max, targetRange });
+  const { toDisplayValue, fromDisplayValue } = getValueTransformers({ min, max, targetRange });
 
   return {
     parse: (input: string, currentValue: number) => {
@@ -80,7 +80,7 @@ function createFormatter(options: FormatterOptions = {}): Formatter<number> {
             clamp({ min, max })
           ),
         };
-      } catch (e) {
+      } catch {
         return { valid: false };
       }
     },
@@ -95,58 +95,27 @@ function createFormatter(options: FormatterOptions = {}): Formatter<number> {
   };
 }
 
-// TODO Extract into a single decoupled helper, validate prop combinations from within the component instead.
-/**
- * Map a value to a specified range.
- *
- * @param {number} [params.min] - The minimum value of the input range.
- * @param {number} [params.max] - The maximum value of the input range.
- * @param {[number, number]} [params.targetRange] - The target range to map the value to.
- * @return {function(number): number} A function that takes a number and maps it to the specified range.
- *
- * @example:
- * normalize(0, 1, [0, 100])(0.5) -> 50
- * normalize(0, 1, [0, 255])(1) -> 255
- */
-function normalize(params: { min?: number; max?: number; targetRange?: [number, number] }): (value: number) => number {
-  const { min, max, targetRange } = params;
+function getValueTransformers(props: Pick<NumericProps, 'min' | 'max' | 'targetRange'>) {
+  const { min, max, targetRange } = props;
 
-  return function (value: number) {
-    if (!targetRange) {
-      return value;
-    }
+  if (!targetRange) {
+    return {
+      toDisplayValue: (value: number) => value,
+      fromDisplayValue: (value: number) => value,
+    };
+  }
 
-    if (typeof min !== 'number' || typeof max !== 'number') {
-      throw Error("'targetRange' requires specifying 'min' and 'max'.");
-    }
+  if (typeof min !== 'number' || typeof max !== 'number') {
+    throw Error("'targetRange' requires specifying 'min' and 'max'.");
+  }
 
-    if (min === max) {
-      throw Error("'min' and 'max' cannot be equal.");
-    }
+  if (min === max) {
+    throw Error("'min' and 'max' cannot be equal.");
+  }
 
-    const [targetMin, targetMax] = targetRange;
-    return ((value - min) / (max - min)) * (targetMax - targetMin) + targetMin;
-  };
-}
-
-/**
- * Denormalize value from target range
- * */
-function denormalize(params: {
-  min?: number;
-  max?: number;
-  targetRange?: [number, number];
-}): (value: number) => number {
-  const { min, max, targetRange } = params;
-
-  return function (value: number) {
-    // Mostly to appease TS. This would be an extreme edge case of formatter options changing while user was typing.
-    if (!targetRange || typeof min !== 'number' || typeof max !== 'number' || min === max) {
-      return value;
-    }
-
-    const [targetMin, targetMax] = targetRange;
-    return ((value - targetMin) / (targetMax - targetMin)) * (max - min) + min;
+  return {
+    toDisplayValue: normalize([min, max], targetRange),
+    fromDisplayValue: normalize(targetRange, [min, max]),
   };
 }
 
