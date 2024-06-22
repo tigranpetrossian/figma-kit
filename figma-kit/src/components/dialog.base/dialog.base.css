@@ -1,0 +1,50 @@
+.fp-DialogContent {
+  font-family: var(--font-family-default);
+  color: var(--figma-color-text);
+  min-width: 160px;
+  border-radius: var(--radius-base);
+  box-shadow: var(--elevation-500);
+}
+
+.fp-DialogHeader {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  height: calc(var(--space-10) + 1px);
+  padding: var(--space-1) var(--space-2);
+  border-bottom: 1px solid var(--figma-color-border);
+  background-color: var(--figma-color-bg);
+  border-radius: var(--radius-extra-small) var(--radius-extra-small) 0 0;
+}
+
+.fp-DialogTitle {
+  /* TODO: Replace with text */
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--space-4);
+  padding: 0 var(--space-1) 0 var(--space-2);
+}
+
+.fp-DialogControls {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.fp-DialogSection {
+  box-sizing: border-box;
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--figma-color-border);
+
+  &:where(:last-child) {
+    border-bottom: 0;
+  }
+
+  &:where(.fp-DialogSection-base) {
+    padding: var(--space-4);
+  }
+
+  &:where(.fp-DialogSection-small) {
+    padding: var(--space-2) var(--space-4);
+  }
+}
