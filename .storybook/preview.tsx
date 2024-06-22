@@ -3,6 +3,8 @@ import './storybook-reset.css';
 import '../figma-kit/src/styles/figma-development-theme.css';
 import '../figma-kit/src/styles/index.css';
 import { DocTemplate } from './DocTemplate';
+import { TooltipProvider } from '../figma-kit/src/components/tooltip';
+import React from 'react';
 
 const preview: Preview = {
   argTypes: {
@@ -12,6 +14,13 @@ const preview: Preview = {
       },
     },
   },
+  decorators: [
+    (Story) => (
+      <TooltipProvider>
+        <Story />
+      </TooltipProvider>
+    ),
+  ],
   parameters: {
     backgrounds: {
       grid: {
