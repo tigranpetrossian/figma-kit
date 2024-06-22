@@ -11,6 +11,7 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  color: var(--figma-color-icon);
   width: var(--space-8);
   height: var(--space-8);
   border-radius: var(--radius-extra-small);
