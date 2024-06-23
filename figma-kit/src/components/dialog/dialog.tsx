@@ -18,12 +18,19 @@ const Trigger = React.forwardRef<TriggerElement, TriggerProps>((props, ref) => {
 const content = cva(['fp-DialogBaseContent', 'fp-DialogContent'], {
   variants: {
     size: {
-      default: 'fp-size-default',
+      '1': 'fp-size-1',
+      '2': 'fp-size-2',
+      '3': 'fp-size-3',
       fullscreen: 'fp-size-fullscreen',
+    },
+    placement: {
+      center: 'fp-placement-center',
+      top: 'fp-placement-top',
     },
   },
   defaultVariants: {
-    size: 'default',
+    size: '2',
+    placement: 'top',
   },
 });
 
@@ -36,13 +43,13 @@ type ContentProps = RadixDialog.DialogContentProps &
   };
 
 const Content = React.forwardRef<ContentElement, ContentProps>((props, ref) => {
-  const { children, className, size, overlay = false, portal, portalContainer, ...contentProps } = props;
+  const { children, className, size, placement, overlay = false, portal, portalContainer, ...contentProps } = props;
   const contentElement = (
     <>
       {overlay ? <RadixDialog.Overlay className="fp-DialogBaseOverlay" /> : null}
       <RadixDialog.Content
         ref={ref}
-        className={content({ className, size })}
+        className={content({ className, size, placement })}
         // Majority figma dialogs typically don't have descriptions. Users can override this as needed.
         aria-describedby={undefined}
         {...contentProps}

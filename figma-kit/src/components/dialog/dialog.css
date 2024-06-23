@@ -1,13 +1,30 @@
 .fp-DialogContent {
   position: fixed;
+  max-width: calc(100vw - 32px);
+  max-height: 80%;
 
-  &:where(.fp-size-default) {
+  &:where(.fp-placement-center) {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    max-width: calc(100vw - 32px);
-    width: 360px;
-    max-height: 80%;
+  }
+
+  &:where(.fp-placement-top) {
+    top: min(10vh, 80px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &:where(.fp-size-1) {
+    width: 288px;
+  }
+
+  &:where(.fp-size-2) {
+    width: 352px;
+  }
+
+  &:where(.fp-size-3) {
+    width: 448px;
   }
 
   &:where(.fp-size-fullscreen) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import * as RadixAlertDialog from '@radix-ui/react-alert-dialog';
-import { cx } from 'class-variance-authority';
+import { cva, cx, type VariantProps } from 'class-variance-authority';
 
 type RootProps = RadixAlertDialog.AlertDialogProps;
 const Root = RadixAlertDialog.Root;
@@ -12,23 +12,38 @@ const Trigger = React.forwardRef<TriggerElement, TriggerProps>((props, ref) => {
   return <RadixAlertDialog.Trigger ref={ref} {...props} asChild />;
 });
 
+const content = cva(['fp-DialogBaseContent', 'fp-AlertDialogContent'], {
+  variants: {
+    size: {
+      '1': 'fp-size-1',
+      '2': 'fp-size-2',
+      '3': 'fp-size-3',
+    },
+    placement: {
+      center: 'fp-placement-center',
+      top: 'fp-placement-top',
+    },
+  },
+  defaultVariants: {
+    size: '2',
+    placement: 'top',
+  },
+});
+
 type ContentElement = React.ElementRef<typeof RadixAlertDialog.Content>;
-type ContentProps = RadixAlertDialog.AlertDialogContentProps & {
-  overlay?: boolean;
-  portal?: boolean;
-  portalContainer?: RadixAlertDialog.AlertDialogPortalProps['container'];
-};
+type ContentProps = RadixAlertDialog.AlertDialogContentProps &
+  VariantProps<typeof content> & {
+    overlay?: boolean;
+    portal?: boolean;
+    portalContainer?: RadixAlertDialog.AlertDialogPortalProps['container'];
+  };
 
 const Content = React.forwardRef<ContentElement, ContentProps>((props, ref) => {
-  const { children, className, overlay = true, portal, portalContainer, ...contentProps } = props;
+  const { children, className, size, placement, overlay = true, portal, portalContainer, ...contentProps } = props;
   const contentElement = (
     <>
       {overlay ? <RadixAlertDialog.Overlay className="fp-DialogBaseOverlay" /> : null}
-      <RadixAlertDialog.Content
-        ref={ref}
-        className={cx(className, 'fp-DialogBaseContent', 'fp-AlertDialogContent')}
-        {...contentProps}
-      >
+      <RadixAlertDialog.Content ref={ref} className={content({ className, size, placement })} {...contentProps}>
         {children}
       </RadixAlertDialog.Content>
     </>
