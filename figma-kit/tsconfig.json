@@ -9,5 +9,5 @@
       "@lib/*": ["src/lib/*"]
     }
   },
-  "include": ["src", "test"]
+  "include": ["src", "test"],
 }

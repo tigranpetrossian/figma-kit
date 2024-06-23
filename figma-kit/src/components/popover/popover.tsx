@@ -1,13 +1,20 @@
 import React from 'react';
 import * as RadixPopover from '@radix-ui/react-popover';
-import type { VariantProps } from 'class-variance-authority';
-import { cva, cx } from 'class-variance-authority';
+import { cx } from 'class-variance-authority';
 import { IconButton } from '@components/icon-button';
 import { CloseIcon } from '@components/icons';
 
+type RootProps = RadixPopover.PopoverProps;
+type AnchorProps = RadixPopover.PopoverAnchorProps;
 const Root = RadixPopover.Root;
-const Trigger = RadixPopover.Trigger;
 const Anchor = RadixPopover.Anchor;
+
+type TriggerElement = React.ElementRef<typeof RadixPopover.Trigger>;
+type TriggerProps = Omit<RadixPopover.PopoverTriggerProps, 'asChild'>;
+
+const Trigger = React.forwardRef<TriggerElement, TriggerProps>((props, ref) => {
+  return <RadixPopover.Trigger ref={ref} {...props} asChild />;
+});
 
 type ContentElement = React.ElementRef<typeof RadixPopover.Content>;
 type ContentProps = RadixPopover.PopoverContentProps & {
@@ -17,27 +24,16 @@ type ContentProps = RadixPopover.PopoverContentProps & {
 
 const Content = React.forwardRef<ContentElement, ContentProps>((props, ref) => {
   const { children, className, portal, portalContainer, ...contentProps } = props;
-  const Wrapper = portal ? RadixPopover.Portal : React.Fragment;
-
-  return (
-    <Wrapper container={portalContainer}>
-      <RadixPopover.Content ref={ref} className={cx(className, 'fp-DialogContent')} {...contentProps}>
-        {children}
-      </RadixPopover.Content>
-    </Wrapper>
-  );
-});
-
-type HeaderElement = React.ElementRef<'header'>;
-type HeaderProps = React.ComponentPropsWithoutRef<'header'>;
-
-const Header = React.forwardRef<HeaderElement, HeaderProps>((props, ref) => {
-  const { children, className, ...closeProps } = props;
-
-  return (
-    <header ref={ref} className={cx(className, 'fp-DialogHeader')} {...closeProps}>
+  const contentElement = (
+    <RadixPopover.Content ref={ref} className={cx(className, 'fp-DialogBaseContent')} {...contentProps}>
       {children}
-    </header>
+    </RadixPopover.Content>
+  );
+
+  return portal ? (
+    <RadixPopover.Portal container={portalContainer}>{contentElement}</RadixPopover.Portal>
+  ) : (
+    contentElement
   );
 });
 
@@ -48,24 +44,14 @@ const Title = React.forwardRef<TitleElement, TitleProps>((props, ref) => {
   const { children, className, ...closeProps } = props;
 
   return (
-    <div ref={ref} className={cx(className, 'fp-DialogTitle')} {...closeProps}>
+    <div ref={ref} className={cx(className, 'fp-DialogBaseTitle')} {...closeProps}>
       {children}
     </div>
   );
 });
 
-type ControlsElement = React.ElementRef<'div'>;
-type ControlsProps = React.ComponentPropsWithoutRef<'div'>;
-
-const Controls = React.forwardRef<ControlsElement, ControlsProps>((props, ref) => {
-  const { className, ...controlProps } = props;
-
-  return <div ref={ref} className={cx(className, 'fp-DialogControls')} {...controlProps} />;
-});
-
 type CloseElement = React.ElementRef<typeof RadixPopover.Close>;
-
-type CloseProps = Omit<React.ComponentPropsWithoutRef<typeof RadixPopover.Close>, 'asChild'>;
+type CloseProps = Omit<RadixPopover.PopoverCloseProps, 'asChild'>;
 
 const Close = React.forwardRef<CloseElement, CloseProps>((props, ref) => {
   const { children, ...closeProps } = props;
@@ -80,26 +66,27 @@ const Close = React.forwardRef<CloseElement, CloseProps>((props, ref) => {
     </RadixPopover.Close>
   );
 });
-type SectionElement = React.ElementRef<'div'>;
 
-type SectionProps = React.ComponentPropsWithoutRef<'div'> & VariantProps<typeof section>;
-const Section = React.forwardRef<SectionElement, SectionProps>((props, ref) => {
-  const { className, size, ...sectionProps } = props;
+export {
+  Root,
+  Trigger,
+  Content,
+  Title,
+  Close,
+  Anchor,
+  type RootProps,
+  type TriggerProps,
+  type ContentProps,
+  type TitleProps,
+  type CloseProps,
+  type AnchorProps,
+};
 
-  return <div ref={ref} className={section({ className, size })} {...sectionProps} />;
-});
-
-const section = cva('fp-DialogSection', {
-  variants: {
-    size: {
-      base: 'fp-DialogSection-base',
-      small: 'fp-DialogSection-small',
-    },
-  },
-  defaultVariants: {
-    size: 'base',
-  },
-});
-
-export type { ContentProps };
-export { Root, Trigger, Content, Header, Title, Controls, Section, Close, Anchor };
+export {
+  Header,
+  Section,
+  Controls,
+  type HeaderProps,
+  type SectionProps,
+  type ControlsProps,
+} from '@components/dialog.base/';

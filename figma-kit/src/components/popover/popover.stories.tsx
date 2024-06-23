@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import { IconButton } from '@components/icon-button';
-import { PlusIcon, StylesIcon } from '@components/icons';
+import { IconButton } from '../icon-button';
+import { PlusIcon, StylesIcon } from '../icons';
 import * as Popover from './popover';
 
 type Story = StoryObj<typeof Popover.Root>;
@@ -18,7 +18,7 @@ export const Story: Story = {
   render: () => {
     return (
       <Popover.Root>
-        <Popover.Trigger asChild>
+        <Popover.Trigger>
           <IconButton aria-label="Styles and variables">
             <StylesIcon />
           </IconButton>

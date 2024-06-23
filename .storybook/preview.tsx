@@ -33,7 +33,24 @@ const preview: Preview = {
     },
     options: {
       storySort: {
-        order: ['Components', ['Button', 'Icon Button', 'Switch', 'Input', 'Textarea', 'Value Field']],
+        order: [
+          'Components',
+          [
+            'Button',
+            'Icon Button',
+            'Switch',
+            'Input',
+            'Textarea',
+            'Value Field',
+            'Select',
+            'Dropdown Menu',
+            'Context Menu',
+            'Slider',
+            'Popover',
+            'Dialog',
+            'Alert Dialog',
+          ],
+        ],
       },
     },
     controls: {

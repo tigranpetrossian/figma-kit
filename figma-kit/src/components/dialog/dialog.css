@@ -1,0 +1,16 @@
+.fp-DialogContent {
+  position: fixed;
+
+  &:where(.fp-size-default) {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: calc(100vw - 32px);
+    width: 360px;
+    max-height: 80%;
+  }
+
+  &:where(.fp-size-fullscreen) {
+    inset: 0;
+  }
+}
