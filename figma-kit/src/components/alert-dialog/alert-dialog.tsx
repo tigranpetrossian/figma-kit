@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import React from 'react';
 import * as RadixAlertDialog from '@radix-ui/react-alert-dialog';
 import { cva, cx, type VariantProps } from 'class-variance-authority';
@@ -33,12 +34,22 @@ const content = cva(['fp-DialogBaseContent', 'fp-AlertDialogContent'], {
 });
 
 type ContentElement = React.ElementRef<typeof RadixAlertDialog.Content>;
-type ContentProps = RadixAlertDialog.AlertDialogContentProps & VariantProps<typeof content>;
+type ContentProps = RadixAlertDialog.AlertDialogContentProps &
+  VariantProps<typeof content> & {
+    width?: CSSProperties['width'];
+  };
 
 const Content = React.forwardRef<ContentElement, ContentProps>((props, ref) => {
-  const { className, size, placement, ...contentProps } = props;
+  const { className, size, placement, style, width, ...contentProps } = props;
 
-  return <RadixAlertDialog.Content ref={ref} className={content({ className, size, placement })} {...contentProps} />;
+  return (
+    <RadixAlertDialog.Content
+      ref={ref}
+      className={content({ className, size, placement })}
+      style={{ ...style, width }}
+      {...contentProps}
+    />
+  );
 });
 
 type OverlayElement = React.ElementRef<typeof RadixAlertDialog.Overlay>;

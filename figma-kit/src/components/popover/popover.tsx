@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import React from 'react';
 import * as RadixPopover from '@radix-ui/react-popover';
 import { cx } from 'class-variance-authority';
@@ -19,12 +20,21 @@ const Trigger = React.forwardRef<TriggerElement, TriggerProps>((props, ref) => {
 });
 
 type ContentElement = React.ElementRef<typeof RadixPopover.Content>;
-type ContentProps = RadixPopover.PopoverContentProps;
+type ContentProps = RadixPopover.PopoverContentProps & {
+  width?: CSSProperties['width'];
+};
 
 const Content = React.forwardRef<ContentElement, ContentProps>((props, ref) => {
-  const { className, ...contentProps } = props;
+  const { className, style, width, ...contentProps } = props;
 
-  return <RadixPopover.Content ref={ref} className={cx(className, 'fp-DialogBaseContent')} {...contentProps} />;
+  return (
+    <RadixPopover.Content
+      ref={ref}
+      className={cx(className, 'fp-DialogBaseContent')}
+      style={{ ...style, width }}
+      {...contentProps}
+    />
+  );
 });
 
 type TitleElement = React.ElementRef<'div'>;
