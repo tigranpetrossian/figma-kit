@@ -5,7 +5,7 @@
 
 ## Overview
 
-Figma Kit aims to is under active development and is expected to be published some time in Aug 2024.
+Figma Kit is under active development and is expected to be published some time in Aug 2024.
 The library attempts to replicate Figma's user interface look & feel with near-100% feature parity,
 to get the UI engineering out of the way of building great plugins.
 
@@ -22,9 +22,10 @@ to get the UI engineering out of the way of building great plugins.
 - [x] Tooltip
 - [x] Switch
 - [x] Slider
+- [x] Dialog
+- [x] AlertDialog
+- [x] Popover
 - [ ] Text
 - [ ] Tabs
 - [ ] Checkbox & Radio
 - [ ] Toggle group
-- [ ] Dialog
-- [ ] Popover
