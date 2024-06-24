@@ -19,6 +19,7 @@ export const Story: Story = {
         <AlertDialog.Trigger>
           <Button variant="destructiveSecondary">Delete user</Button>
         </AlertDialog.Trigger>
+        <AlertDialog.Overlay />
         <AlertDialog.Content>
           <AlertDialog.Title>Dialog with primary destructive action</AlertDialog.Title>
           <AlertDialog.Description>

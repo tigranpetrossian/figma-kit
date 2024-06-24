@@ -4,6 +4,8 @@ import { cva, cx, type VariantProps } from 'class-variance-authority';
 
 type RootProps = RadixAlertDialog.AlertDialogProps;
 const Root = RadixAlertDialog.Root;
+type PortalProps = RadixAlertDialog.AlertDialogPortalProps;
+const Portal = RadixAlertDialog.Portal;
 
 type TriggerElement = React.ElementRef<typeof RadixAlertDialog.Trigger>;
 type TriggerProps = Omit<RadixAlertDialog.AlertDialogTriggerProps, 'asChild'>;
@@ -31,54 +33,40 @@ const content = cva(['fp-DialogBaseContent', 'fp-AlertDialogContent'], {
 });
 
 type ContentElement = React.ElementRef<typeof RadixAlertDialog.Content>;
-type ContentProps = RadixAlertDialog.AlertDialogContentProps &
-  VariantProps<typeof content> & {
-    overlay?: boolean;
-    portal?: boolean;
-    portalContainer?: RadixAlertDialog.AlertDialogPortalProps['container'];
-  };
+type ContentProps = RadixAlertDialog.AlertDialogContentProps & VariantProps<typeof content>;
 
 const Content = React.forwardRef<ContentElement, ContentProps>((props, ref) => {
-  const { children, className, size, placement, overlay = true, portal, portalContainer, ...contentProps } = props;
-  const contentElement = (
-    <>
-      {overlay ? <RadixAlertDialog.Overlay className="fp-DialogBaseOverlay" /> : null}
-      <RadixAlertDialog.Content ref={ref} className={content({ className, size, placement })} {...contentProps}>
-        {children}
-      </RadixAlertDialog.Content>
-    </>
-  );
+  const { className, size, placement, ...contentProps } = props;
 
-  return portal ? (
-    <RadixAlertDialog.Portal container={portalContainer}>{contentElement}</RadixAlertDialog.Portal>
-  ) : (
-    contentElement
-  );
+  return <RadixAlertDialog.Content ref={ref} className={content({ className, size, placement })} {...contentProps} />;
+});
+
+type OverlayElement = React.ElementRef<typeof RadixAlertDialog.Overlay>;
+type OverlayProps = Omit<RadixAlertDialog.AlertDialogOverlayProps, 'asChild'>;
+
+const Overlay = React.forwardRef<OverlayElement, OverlayProps>((props, ref) => {
+  const { className, ...overlayProps } = props;
+
+  return <RadixAlertDialog.Overlay ref={ref} className={cx(className, 'fp-DialogBaseOverlay')} {...overlayProps} />;
 });
 
 type TitleElement = React.ElementRef<typeof RadixAlertDialog.Title>;
 type TitleProps = Omit<RadixAlertDialog.AlertDialogTitleProps, 'asChild'>;
 
 const Title = React.forwardRef<TitleElement, TitleProps>((props, ref) => {
-  const { children, className, ...closeProps } = props;
+  const { className, ...closeProps } = props;
 
-  return (
-    <RadixAlertDialog.Title ref={ref} className={cx(className, 'fp-AlertDialogTitle')} {...closeProps}>
-      {children}
-    </RadixAlertDialog.Title>
-  );
+  return <RadixAlertDialog.Title ref={ref} className={cx(className, 'fp-AlertDialogTitle')} {...closeProps} />;
 });
 
 type DescriptionElement = React.ElementRef<typeof RadixAlertDialog.Description>;
 type DescriptionProps = Omit<RadixAlertDialog.AlertDialogDescriptionProps, 'asChild'>;
 
 const Description = React.forwardRef<DescriptionElement, DescriptionProps>((props, ref) => {
-  const { children, className, ...closeProps } = props;
+  const { className, ...closeProps } = props;
 
   return (
-    <RadixAlertDialog.Description ref={ref} className={cx(className, 'fp-AlertDialogDescription')} {...closeProps}>
-      {children}
-    </RadixAlertDialog.Description>
+    <RadixAlertDialog.Description ref={ref} className={cx(className, 'fp-AlertDialogDescription')} {...closeProps} />
   );
 });
 
@@ -111,6 +99,8 @@ export {
   Root,
   Trigger,
   Content,
+  Overlay,
+  Portal,
   Title,
   Description,
   Actions,
@@ -119,6 +109,8 @@ export {
   type RootProps,
   type TriggerProps,
   type ContentProps,
+  type OverlayProps,
+  type PortalProps,
   type TitleProps,
   type DescriptionProps,
   type ActionsProps,

@@ -7,6 +7,8 @@ import { CloseIcon } from '@components/icons';
 
 type RootProps = RadixDialog.DialogProps;
 const Root = RadixDialog.Root;
+type PortalProps = RadixDialog.DialogPortalProps;
+const Portal = RadixDialog.Portal;
 
 type TriggerElement = React.ElementRef<typeof RadixDialog.Trigger>;
 type TriggerProps = Omit<RadixDialog.DialogTriggerProps, 'asChild'>;
@@ -35,35 +37,31 @@ const content = cva(['fp-DialogBaseContent', 'fp-DialogContent'], {
 });
 
 type ContentElement = React.ElementRef<typeof RadixDialog.Content>;
-type ContentProps = RadixDialog.DialogContentProps &
-  VariantProps<typeof content> & {
-    overlay?: boolean;
-    portal?: boolean;
-    portalContainer?: RadixDialog.DialogPortalProps['container'];
-  };
+type ContentProps = RadixDialog.DialogContentProps & VariantProps<typeof content>;
 
 const Content = React.forwardRef<ContentElement, ContentProps>((props, ref) => {
-  const { children, className, size, placement, overlay = false, portal, portalContainer, ...contentProps } = props;
-  const contentElement = (
-    <>
-      {overlay ? <RadixDialog.Overlay className="fp-DialogBaseOverlay" /> : null}
-      <RadixDialog.Content
-        ref={ref}
-        className={content({ className, size, placement })}
-        // Majority figma dialogs typically don't have descriptions. Users can override this as needed.
-        aria-describedby={undefined}
-        {...contentProps}
-      >
-        {children}
-      </RadixDialog.Content>
-    </>
-  );
+  const { children, className, size, placement, ...contentProps } = props;
 
-  return portal ? (
-    <RadixDialog.Portal container={portalContainer}>{contentElement}</RadixDialog.Portal>
-  ) : (
-    contentElement
+  return (
+    <RadixDialog.Content
+      ref={ref}
+      className={content({ className, size, placement })}
+      // Majority figma dialogs typically don't have descriptions. Users can override this as needed.
+      aria-describedby={undefined}
+      {...contentProps}
+    >
+      {children}
+    </RadixDialog.Content>
   );
+});
+
+type OverlayElement = React.ElementRef<typeof RadixDialog.Overlay>;
+type OverlayProps = Omit<RadixDialog.DialogOverlayProps, 'asChild'>;
+
+const Overlay = React.forwardRef<OverlayElement, OverlayProps>((props, ref) => {
+  const { className, ...overlayProps } = props;
+
+  return <RadixDialog.Overlay ref={ref} className={cx(className, 'fp-DialogBaseOverlay')} {...overlayProps} />;
 });
 
 type TitleElement = React.ElementRef<typeof RadixDialog.Title>;
@@ -99,12 +97,16 @@ const Close = React.forwardRef<CloseElement, CloseProps>((props, ref) => {
 export {
   Root,
   Trigger,
+  Portal,
   Content,
+  Overlay,
   Title,
   Close,
   type RootProps,
   type TriggerProps,
+  type PortalProps,
   type ContentProps,
+  type OverlayProps,
   type TitleProps,
   type CloseProps,
 };

@@ -137,22 +137,23 @@ export const Story: Story = {
         <Dialog.Trigger>
           <Button>Open Dialog</Button>
         </Dialog.Trigger>
-        <Dialog.Content overlay>
-          <Dialog.Header>
-            <Dialog.Title>
-              <div>dogs</div>
-            </Dialog.Title>
-            <Dialog.Controls>
-              <Dialog.Close />
-            </Dialog.Controls>
-          </Dialog.Header>
-          <OnboardingIllustration />
-          <Dialog.Section>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-              <Button>Next</Button>
-            </div>
-          </Dialog.Section>
-        </Dialog.Content>
+        <Dialog.Overlay />
+        <Dialog.Portal>
+          <Dialog.Content>
+            <Dialog.Header>
+              <Dialog.Title>Onboarding</Dialog.Title>
+              <Dialog.Controls>
+                <Dialog.Close />
+              </Dialog.Controls>
+            </Dialog.Header>
+            <OnboardingIllustration />
+            <Dialog.Section>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                <Button>Next</Button>
+              </div>
+            </Dialog.Section>
+          </Dialog.Content>
+        </Dialog.Portal>
       </Dialog.Root>
     );
   },

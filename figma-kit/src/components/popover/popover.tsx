@@ -8,6 +8,8 @@ type RootProps = RadixPopover.PopoverProps;
 type AnchorProps = RadixPopover.PopoverAnchorProps;
 const Root = RadixPopover.Root;
 const Anchor = RadixPopover.Anchor;
+type PortalProps = RadixPopover.PopoverPortalProps;
+const Portal = RadixPopover.Portal;
 
 type TriggerElement = React.ElementRef<typeof RadixPopover.Trigger>;
 type TriggerProps = Omit<RadixPopover.PopoverTriggerProps, 'asChild'>;
@@ -17,37 +19,21 @@ const Trigger = React.forwardRef<TriggerElement, TriggerProps>((props, ref) => {
 });
 
 type ContentElement = React.ElementRef<typeof RadixPopover.Content>;
-type ContentProps = RadixPopover.PopoverContentProps & {
-  portal?: boolean;
-  portalContainer?: RadixPopover.PopoverPortalProps['container'];
-};
+type ContentProps = RadixPopover.PopoverContentProps;
 
 const Content = React.forwardRef<ContentElement, ContentProps>((props, ref) => {
-  const { children, className, portal, portalContainer, ...contentProps } = props;
-  const contentElement = (
-    <RadixPopover.Content ref={ref} className={cx(className, 'fp-DialogBaseContent')} {...contentProps}>
-      {children}
-    </RadixPopover.Content>
-  );
+  const { className, ...contentProps } = props;
 
-  return portal ? (
-    <RadixPopover.Portal container={portalContainer}>{contentElement}</RadixPopover.Portal>
-  ) : (
-    contentElement
-  );
+  return <RadixPopover.Content ref={ref} className={cx(className, 'fp-DialogBaseContent')} {...contentProps} />;
 });
 
 type TitleElement = React.ElementRef<'div'>;
 type TitleProps = React.ComponentPropsWithoutRef<'div'>;
 
 const Title = React.forwardRef<TitleElement, TitleProps>((props, ref) => {
-  const { children, className, ...closeProps } = props;
+  const { className, ...closeProps } = props;
 
-  return (
-    <div ref={ref} className={cx(className, 'fp-DialogBaseTitle')} {...closeProps}>
-      {children}
-    </div>
-  );
+  return <div ref={ref} className={cx(className, 'fp-DialogBaseTitle')} {...closeProps} />;
 });
 
 type CloseElement = React.ElementRef<typeof RadixPopover.Close>;
@@ -71,11 +57,13 @@ export {
   Root,
   Trigger,
   Content,
+  Portal,
   Title,
   Close,
   Anchor,
   type RootProps,
   type TriggerProps,
+  type PortalProps,
   type ContentProps,
   type TitleProps,
   type CloseProps,
