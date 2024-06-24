@@ -57,7 +57,7 @@ const Content = React.forwardRef<ContentElement, ContentProps>((props, ref) => {
 });
 
 type TitleElement = React.ElementRef<typeof RadixAlertDialog.Title>;
-type TitleProps = RadixAlertDialog.AlertDialogTitleProps;
+type TitleProps = Omit<RadixAlertDialog.AlertDialogTitleProps, 'asChild'>;
 
 const Title = React.forwardRef<TitleElement, TitleProps>((props, ref) => {
   const { children, className, ...closeProps } = props;
@@ -70,7 +70,7 @@ const Title = React.forwardRef<TitleElement, TitleProps>((props, ref) => {
 });
 
 type DescriptionElement = React.ElementRef<typeof RadixAlertDialog.Description>;
-type DescriptionProps = RadixAlertDialog.AlertDialogDescriptionProps;
+type DescriptionProps = Omit<RadixAlertDialog.AlertDialogDescriptionProps, 'asChild'>;
 
 const Description = React.forwardRef<DescriptionElement, DescriptionProps>((props, ref) => {
   const { children, className, ...closeProps } = props;

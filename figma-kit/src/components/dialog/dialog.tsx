@@ -67,7 +67,7 @@ const Content = React.forwardRef<ContentElement, ContentProps>((props, ref) => {
 });
 
 type TitleElement = React.ElementRef<typeof RadixDialog.Title>;
-type TitleProps = RadixDialog.DialogTitleProps;
+type TitleProps = Omit<RadixDialog.DialogTitleProps, 'asChild'>;
 
 const Title = React.forwardRef<TitleElement, TitleProps>((props, ref) => {
   const { children, className, ...closeProps } = props;
