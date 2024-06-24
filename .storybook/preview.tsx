@@ -36,6 +36,7 @@ const preview: Preview = {
         order: [
           'Components',
           [
+            'Text',
             'Button',
             'Icon Button',
             'Switch',

@@ -6,6 +6,7 @@
 @import 'tokens/line-height.css';
 @import 'tokens/shadow.css';
 @import 'tokens/components.css';
+@import '../components/text/text.css';
 @import '../components/icon/icon.css';
 @import '../components/input/input.css';
 @import '../components/value-field/value-field.css';
