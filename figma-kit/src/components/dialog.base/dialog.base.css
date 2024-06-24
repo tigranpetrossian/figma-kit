@@ -24,7 +24,7 @@
 /* TODO: Replace with text */
 .fp-DialogBaseTitle {
   font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-strong);
   line-height: var(--space-4);
 }
 

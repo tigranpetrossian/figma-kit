@@ -3,6 +3,7 @@
 @import 'tokens/radius.css';
 @import 'tokens/font-size.css';
 @import 'tokens/font-weight.css';
+@import 'tokens/line-height.css';
 @import 'tokens/shadow.css';
 @import 'tokens/components.css';
 @import '../components/icon/icon.css';
