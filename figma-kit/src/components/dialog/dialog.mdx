@@ -1,0 +1,80 @@
+import {
+  Meta,
+  Story,
+  Source,
+  CodeOrSourceMdx,
+  Canvas,
+  ArgTypes,
+  Controls,
+  Description,
+  Subtitle,
+} from '@storybook/blocks';
+import * as DialogStories from './dialog.stories.tsx';
+import { RadixNotice } from '../../../../.storybook/DocTemplate.tsx';
+
+<Meta of={DialogStories} />
+
+<RadixNotice />
+
+# Dialog
+
+<Subtitle />
+
+<Story of={DialogStories.Story} inline />
+
+<Source
+  code={`
+<Dialog.Root>
+  <Dialog.Trigger>
+    <Button>Open Dialog</Button>
+  </Dialog.Trigger>
+  <Dialog.Content overlay>
+    <Dialog.Header>
+      <Dialog.Title>Onboarding</Dialog.Title>
+      <Dialog.Controls>
+        <Dialog.Close />
+      </Dialog.Controls>
+    </Dialog.Header>
+    <OnboardingIllustration />
+    <Dialog.Section>
+      <Flex justifyContent="end">
+        <Button>Next</Button>
+      </Flex>
+    </Dialog.Section>
+  </Dialog.Content>
+</Dialog.Root>
+`}
+  dark
+/>
+
+## Root
+
+<ArgTypes of={DialogStories.Root} />
+
+## Trigger
+
+<ArgTypes of={DialogStories.Trigger} />
+
+## Content
+
+<ArgTypes of={DialogStories.Content} />
+
+## Close
+
+The button that closes the dialog.
+
+The Close primitive is a slot. Provide it with your own component as children. When no children
+are specified, the default icon button will be displayed.
+
+## Header
+
+Header of the dialog. Usually contains a title and some primary controls.
+
+## Title
+
+An accessible title to be announced when the dialog is opened.
+
+## Controls
+
+A container for primary controls shown on the right side of the header. Typically at least
+contains a close icon button.
