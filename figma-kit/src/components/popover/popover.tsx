@@ -63,28 +63,8 @@ const Close = React.forwardRef<CloseElement, CloseProps>((props, ref) => {
   );
 });
 
-export {
-  Root,
-  Trigger,
-  Content,
-  Portal,
-  Title,
-  Close,
-  Anchor,
-  type RootProps,
-  type TriggerProps,
-  type PortalProps,
-  type ContentProps,
-  type TitleProps,
-  type CloseProps,
-  type AnchorProps,
-};
+export type { RootProps, TriggerProps, PortalProps, ContentProps, TitleProps, CloseProps, AnchorProps };
+export { Root, Trigger, Content, Portal, Title, Close, Anchor };
 
-export {
-  Header,
-  Section,
-  Controls,
-  type HeaderProps,
-  type SectionProps,
-  type ControlsProps,
-} from '@components/dialog.base/';
+export type { HeaderProps, SectionProps, ControlsProps } from '@components/dialog.base/';
+export { Header, Section, Controls } from '@components/dialog.base/';

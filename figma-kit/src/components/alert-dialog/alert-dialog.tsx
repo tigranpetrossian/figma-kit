@@ -106,25 +106,16 @@ const Action = React.forwardRef<ActionElement, ActionProps>((props, ref) => {
   return <RadixAlertDialog.Action ref={ref} asChild {...props} />;
 });
 
-export {
-  Root,
-  Trigger,
-  Content,
-  Overlay,
-  Portal,
-  Title,
-  Description,
-  Actions,
-  Cancel,
-  Action,
-  type RootProps,
-  type TriggerProps,
-  type ContentProps,
-  type OverlayProps,
-  type PortalProps,
-  type TitleProps,
-  type DescriptionProps,
-  type ActionsProps,
-  type CancelProps,
-  type ActionProps,
+export type {
+  RootProps,
+  TriggerProps,
+  ContentProps,
+  OverlayProps,
+  PortalProps,
+  TitleProps,
+  DescriptionProps,
+  ActionsProps,
+  CancelProps,
+  ActionProps,
 };
+export { Root, Trigger, Content, Overlay, Portal, Title, Description, Actions, Cancel, Action };

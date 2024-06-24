@@ -2,10 +2,8 @@ import React from 'react';
 import * as RadixTooltip from '@radix-ui/react-tooltip';
 import { cx } from 'class-variance-authority';
 
-const TooltipProvider = RadixTooltip.TooltipProvider;
-const Root = RadixTooltip.Root;
-const Portal = RadixTooltip.Portal;
-const Trigger = RadixTooltip.Trigger;
+const { TooltipProvider } = RadixTooltip;
+type TooltipProviderProps = RadixTooltip.TooltipProviderProps;
 
 type ContentElement = React.ElementRef<typeof RadixTooltip.Content>;
 type ContentProps = RadixTooltip.TooltipContentProps;
@@ -45,17 +43,17 @@ const Tooltip = React.forwardRef<TooltipElement, TooltipProps>((props, ref) => {
   const rootProps = { open, defaultOpen, onOpenChange, delayDuration, disableHoverableContent };
 
   return (
-    <Root {...rootProps}>
-      <Trigger asChild>{children}</Trigger>
-      <Portal forceMount={forceMount} container={container}>
+    <RadixTooltip.Root {...rootProps}>
+      <RadixTooltip.Trigger asChild>{children}</RadixTooltip.Trigger>
+      <RadixTooltip.Portal forceMount={forceMount} container={container}>
         <Content ref={ref} {...contentProps}>
           {content}
           <Arrow />
         </Content>
-      </Portal>
-    </Root>
+      </RadixTooltip.Portal>
+    </RadixTooltip.Root>
   );
 });
 
-export { TooltipProvider, Tooltip, Root, Portal, Trigger, Content, Arrow };
-export type { TooltipProps, ContentProps };
+export { TooltipProvider, Tooltip };
+export type { TooltipProps, TooltipProviderProps };

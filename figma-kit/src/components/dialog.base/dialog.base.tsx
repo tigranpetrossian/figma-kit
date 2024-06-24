@@ -44,4 +44,5 @@ const section = cva('fp-DialogBaseSection', {
   },
 });
 
-export { Header, Section, Controls, type HeaderProps, type SectionProps, type ControlsProps };
+export { Header, Section, Controls };
+export type { HeaderProps, SectionProps, ControlsProps };
