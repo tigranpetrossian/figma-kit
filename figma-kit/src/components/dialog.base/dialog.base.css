@@ -7,6 +7,7 @@
   box-shadow: var(--elevation-500);
   overflow-y: auto;
   outline: 0;
+  z-index: 1;
 }
 
 .fp-DialogBaseHeader {
@@ -56,4 +57,5 @@
   position: fixed;
   inset: 0;
   background-color: var(--color-dialog-overlay);
+  z-index: 1;
 }
