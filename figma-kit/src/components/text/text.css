@@ -78,7 +78,7 @@
 
   /* Naming here is in anticipation of UI3 */
   &:where(.fp-weight-default) {
-    font-weight: var(--font-weight-base);
+    font-weight: var(--font-weight-default);
   }
   &:where(.fp-weight-medium) {
     font-weight: var(--font-weight-medium);

@@ -3,14 +3,14 @@
   padding: var(--space-1_5) var(--space-2);
   background-color: var(--color-bg-tooltip);
   font-family: var(--font-family-default);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-base);
+  font-size: var(--font-size-default);
+  font-weight: var(--font-weight-default);
   line-height: var(--space-4);
   height: var(--space-7);
   color: var(--color-text-tooltip);
   white-space: pre-wrap;
   word-break: break-word;
-  border-radius: var(--radius-base);
+  border-radius: var(--radius-default);
   box-shadow: var(--elevation-300-tooltip, 0 2px 7px rgba(0, 0, 0, 0.15));
 }
 

@@ -1,11 +1,11 @@
 .fp-ControlInputRoot {
   display: flex;
   align-items: center;
-  border-radius: var(--radius-base);
+  border-radius: var(--radius-default);
   outline-offset: -1px;
   padding: 0 1px;
   font-family: var(--font-family-default);
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-default);
   box-sizing: border-box;
 
   &:hover {
@@ -70,13 +70,13 @@
     border-radius: 0;
 
     &:first-child {
-      border-top-left-radius: var(--radius-base);
-      border-bottom-left-radius: var(--radius-base);
+      border-top-left-radius: var(--radius-default);
+      border-bottom-left-radius: var(--radius-default);
     }
 
     &:last-child {
-      border-top-right-radius: var(--radius-base);
-      border-bottom-right-radius: var(--radius-base);
+      border-top-right-radius: var(--radius-default);
+      border-bottom-right-radius: var(--radius-default);
     }
   }
 }

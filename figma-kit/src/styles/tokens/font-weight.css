@@ -2,6 +2,6 @@
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
-  --font-weight-base: var(--font-weight-normal);
+  --font-weight-default: var(--font-weight-normal);
   --font-weight-strong: var(--font-weight-semibold);
 }

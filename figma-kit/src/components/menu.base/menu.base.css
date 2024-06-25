@@ -5,9 +5,9 @@
   cursor: default;
   padding: var(--space-2) 0;
   background-color: var(--color-bg-menu);
-  border-radius: var(--radius-base);
+  border-radius: var(--radius-default);
   font-family: var(--font-family-default);
-  font-weight: var(--font-weight-base);
+  font-weight: var(--font-weight-default);
   font-size: var(--font-size-menu);
   color: var(--color-text-menu);
   box-shadow: var(--elevation-400);

@@ -20,8 +20,8 @@
   outline-color: red;
   outline-offset: -1px;
   font-family: var(--font-family-default);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-base);
+  font-size: var(--font-size-default);
+  font-weight: var(--font-weight-default);
 
   &:focus-visible {
     outline-offset: -2px;
