@@ -1,0 +1,40 @@
+.fp-TabsList {
+  display: flex;
+  overflow-y: auto;
+}
+
+.fp-TabsTrigger {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--space-6);
+  gap: var(--space-1);
+  font-family: var(--font-family-default);
+  font-weight: var(--font-weight-medium);
+
+  &:where([data-state='inactive']) {
+    color: var(--figma-color-text-secondary);
+  }
+
+  &:where([data-state='active']) {
+    color: var(--figma-color-text);
+    font-weight: var(--font-weight-strong);
+  }
+
+  &:where(:hover) {
+    color: var(--figma-color-text);
+  }
+
+  &:where(.fp-TabsList.fp-size-1 > &) {
+    font-size: var(--font-size-default);
+    padding: 0 var(--space-2);
+  }
+
+  &:where(.fp-TabsList.fp-size-2 > &) {
+    font-size: var(--font-size-5);
+    line-height: var(--line-height-5);
+    padding: 0 var(--space-3);
+  }
+}

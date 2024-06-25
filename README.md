@@ -26,6 +26,6 @@ to get the UI engineering out of the way of building great plugins.
 - [x] AlertDialog
 - [x] Popover
 - [x] Text
-- [ ] Tabs
+- [x] Tabs
 - [ ] Checkbox & Radio
 - [ ] Toggle group
