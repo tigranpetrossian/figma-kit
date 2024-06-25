@@ -21,11 +21,7 @@
   border-radius: var(--radius-extra-small) var(--radius-extra-small) 0 0;
 }
 
-/* TODO: Replace with text */
 .fp-DialogBaseTitle {
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-strong);
-  line-height: var(--space-4);
 }
 
 .fp-DialogBaseControls {

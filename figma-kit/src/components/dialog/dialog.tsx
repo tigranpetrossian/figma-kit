@@ -5,6 +5,7 @@ import type { VariantProps } from 'class-variance-authority';
 import { cva, cx } from 'class-variance-authority';
 import { IconButton } from '@components/icon-button';
 import { CloseIcon } from '@components/icons';
+import { Text } from '@components/text';
 
 type RootProps = RadixDialog.DialogProps;
 const Root = RadixDialog.Root;
@@ -76,8 +77,8 @@ const Title = React.forwardRef<TitleElement, TitleProps>((props, ref) => {
   const { children, className, ...closeProps } = props;
 
   return (
-    <RadixDialog.Title ref={ref} className={cx(className, 'fp-DialogBaseTitle')} {...closeProps}>
-      {children}
+    <RadixDialog.Title ref={ref} className={cx(className, 'fp-DialogBaseTitle')} {...closeProps} asChild>
+      <Text weight="strong">{children}</Text>
     </RadixDialog.Title>
   );
 });

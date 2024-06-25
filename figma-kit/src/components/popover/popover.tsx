@@ -4,6 +4,7 @@ import * as RadixPopover from '@radix-ui/react-popover';
 import { cx } from 'class-variance-authority';
 import { IconButton } from '@components/icon-button';
 import { CloseIcon } from '@components/icons';
+import { Text } from '@components/text';
 
 type RootProps = RadixPopover.PopoverProps;
 type AnchorProps = RadixPopover.PopoverAnchorProps;
@@ -37,13 +38,14 @@ const Content = React.forwardRef<ContentElement, ContentProps>((props, ref) => {
   );
 });
 
-type TitleElement = React.ElementRef<'div'>;
-type TitleProps = React.ComponentPropsWithoutRef<'div'>;
+type TitleElement = React.ElementRef<typeof Text>;
+type TitleProps = React.ComponentPropsWithoutRef<typeof Text>;
 
+// TODO: needs an implementation of `aria-labelledby`
 const Title = React.forwardRef<TitleElement, TitleProps>((props, ref) => {
   const { className, ...closeProps } = props;
 
-  return <div ref={ref} className={cx(className, 'fp-DialogBaseTitle')} {...closeProps} />;
+  return <Text ref={ref} className={cx(className, 'fp-DialogBaseTitle')} weight="strong" {...closeProps} />;
 });
 
 type CloseElement = React.ElementRef<typeof RadixPopover.Close>;

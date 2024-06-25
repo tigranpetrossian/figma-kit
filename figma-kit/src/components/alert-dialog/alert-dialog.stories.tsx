@@ -17,7 +17,7 @@ export const Story: Story = {
     return (
       <AlertDialog.Root>
         <AlertDialog.Trigger>
-          <Button variant="destructiveSecondary">Delete user</Button>
+          <Button variant="destructiveSecondary">Delete File</Button>
         </AlertDialog.Trigger>
         <AlertDialog.Overlay />
         <AlertDialog.Content>

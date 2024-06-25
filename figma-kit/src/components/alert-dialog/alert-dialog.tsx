@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react';
 import React from 'react';
 import * as RadixAlertDialog from '@radix-ui/react-alert-dialog';
 import { cva, cx, type VariantProps } from 'class-variance-authority';
+import { Text } from '@components/text';
 
 type RootProps = RadixAlertDialog.AlertDialogProps;
 const Root = RadixAlertDialog.Root;
@@ -65,19 +66,30 @@ type TitleElement = React.ElementRef<typeof RadixAlertDialog.Title>;
 type TitleProps = Omit<RadixAlertDialog.AlertDialogTitleProps, 'asChild'>;
 
 const Title = React.forwardRef<TitleElement, TitleProps>((props, ref) => {
-  const { className, ...closeProps } = props;
+  const { children, className, ...closeProps } = props;
 
-  return <RadixAlertDialog.Title ref={ref} className={cx(className, 'fp-AlertDialogTitle')} {...closeProps} />;
+  return (
+    <RadixAlertDialog.Title ref={ref} className={cx(className, 'fp-AlertDialogTitle')} {...closeProps} asChild>
+      <Text weight="strong">{children}</Text>
+    </RadixAlertDialog.Title>
+  );
 });
 
 type DescriptionElement = React.ElementRef<typeof RadixAlertDialog.Description>;
 type DescriptionProps = Omit<RadixAlertDialog.AlertDialogDescriptionProps, 'asChild'>;
 
 const Description = React.forwardRef<DescriptionElement, DescriptionProps>((props, ref) => {
-  const { className, ...closeProps } = props;
+  const { children, className, ...closeProps } = props;
 
   return (
-    <RadixAlertDialog.Description ref={ref} className={cx(className, 'fp-AlertDialogDescription')} {...closeProps} />
+    <RadixAlertDialog.Description
+      ref={ref}
+      className={cx(className, 'fp-AlertDialogDescription')}
+      {...closeProps}
+      asChild
+    >
+      <Text>{children}</Text>
+    </RadixAlertDialog.Description>
   );
 });
 
