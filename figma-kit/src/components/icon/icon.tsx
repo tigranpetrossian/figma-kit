@@ -11,16 +11,16 @@ type Options = {
 const icon = cva('fp-Icon', {
   variants: {
     size: {
-      '1': 'size-1',
-      '2': 'size-2',
-      '2_5': 'size-2_5',
-      '3': 'size-3',
-      '3_5': 'size-3_5',
-      '4': 'size-4',
-      '5': 'size-5',
-      '6': 'size-6',
-      '7': 'size-7',
-      '8': 'size-8',
+      '1': 'fp-size-1',
+      '2': 'fp-size-2',
+      '2_5': 'fp-size-2_5',
+      '3': 'fp-size-3',
+      '3_5': 'fp-size-3_5',
+      '4': 'fp-size-4',
+      '5': 'fp-size-5',
+      '6': 'fp-size-6',
+      '7': 'fp-size-7',
+      '8': 'fp-size-8',
     },
   },
   defaultVariants: {

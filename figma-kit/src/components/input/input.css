@@ -27,19 +27,19 @@
     color: var(--figma-color-text-tertiary);
   }
 
-  &.base {
+  &:where(.fp-base) {
     border-color: transparent;
 
-    &:focus {
+    &:where(:focus) {
       outline: none;
     }
   }
 
-  &.normal {
+  &:where(.fp-normal) {
     border-color: var(--figma-color-border);
   }
 
-  &.ghost {
+  &:where(.fp-ghost) {
     border-color: transparent;
 
     &:not(:disabled):hover {
@@ -47,7 +47,7 @@
     }
   }
 
-  &.underline {
+  &:where(.fp-underline) {
     border-color: transparent;
     background: linear-gradient(to right, transparent 6px, var(--figma-color-border) 6px);
     background-size: calc(100% - 6px) 1px;

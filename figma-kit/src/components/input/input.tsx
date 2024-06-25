@@ -10,19 +10,19 @@ const inputBase = cva('fp-inputBase', {
       /**
        * Unstyled variant for constructing mode complex fields.
        * */
-      base: 'base',
+      base: 'fp-base',
       /**
        * Borderless, unless interacted with.
        * */
-      ghost: 'ghost',
+      ghost: 'fp-ghost',
       /**
        * Common bordered input.
        * */
-      normal: 'normal',
+      normal: 'fp-normal',
       /*
        * Bottom border only, unless interacted with.
        * */
-      underline: 'underline',
+      underline: 'fp-underline',
     },
   },
   defaultVariants: {

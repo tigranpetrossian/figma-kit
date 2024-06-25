@@ -3,43 +3,43 @@
   flex-shrink: 0;
   pointer-events: none;
 
-  &.size-1 {
+  &:where(.fp-size-1) {
     width: var(--space-1);
   }
 
-  &.size-2 {
+  &:where(.fp-size-2) {
     width: var(--space-2);
   }
 
-  &.size-2_5 {
+  &:where(.fp-size-2_5) {
     width: var(--space-2_5);
   }
 
-  &.size-3 {
+  &:where(.fp-size-3) {
     width: var(--space-3);
   }
 
-  &.size-3_5 {
+  &:where(.fp-size-3_5) {
     width: var(--space-3_5);
   }
 
-  &.size-4 {
+  &:where(.fp-size-4) {
     width: var(--space-4);
   }
 
-  &.size-5 {
+  &:where(.fp-size-5) {
     width: var(--space-5);
   }
 
-  &.size-6 {
+  &:where(.fp-size-6) {
     width: var(--space-6);
   }
 
-  &.size-7 {
+  &:where(.fp-size-7) {
     width: var(--space-7);
   }
 
-  &.size-8 {
+  &:where(.fp-size-8) {
     width: var(--space-8);
   }
 }

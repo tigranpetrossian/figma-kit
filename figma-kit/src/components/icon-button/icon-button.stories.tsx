@@ -40,6 +40,7 @@ export default meta;
 
 export const Story: Story = {
   args: {
+    'aria-label': 'New style',
     children: <PlusIcon />,
   },
 };
