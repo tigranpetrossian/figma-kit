@@ -17,7 +17,7 @@
   border-radius: var(--radius-extra-small);
   fill: var(--button-color-icon);
 
-  &:hover:not(:disabled) {
+  &:where(:hover:not(:disabled)) {
     background-color: var(--figma-color-bg-pressed);
   }
 
@@ -28,5 +28,16 @@
 
   &:disabled {
     fill: var(--figma-color-icon-disabled);
+  }
+
+  /* Trigger-specific tweaks */
+  &[aria-haspopup] {
+    /* A little Figmaesque. Won't be necessary in UI3 */
+    border-radius: 3px;
+  }
+
+  &[data-state='open'] {
+    background-color: var(--figma-color-bg-brand-pressed);
+    color: var(--figma-color-text-onbrand);
   }
 }
