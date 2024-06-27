@@ -40,12 +40,18 @@
   justify-content: center;
   height: var(--space-4);
   background-color: var(--color-bg-menu);
+
+  &:hover {
+    background-color: var(--color-bg-menu-hover);
+  }
 }
 
 .fp-SelectScrollUpButton {
   top: 0;
+  border-radius: var(--radius-large) var(--radius-large) 0 0;
 }
 
 .fp-SelectScrollDownButton {
   bottom: 0;
+  border-radius: 0 0 var(--radius-large) var(--radius-large);
 }

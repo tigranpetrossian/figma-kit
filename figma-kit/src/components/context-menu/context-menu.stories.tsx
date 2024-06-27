@@ -23,6 +23,53 @@ const meta: Meta<typeof ContextMenu.Root> = {
 
 export default meta;
 
+export const Simple: Story = {
+  render() {
+    return (
+      <ContextMenu.Root>
+        <ContextMenu.Trigger asChild>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 200,
+              height: 80,
+              border: '1px solid black',
+              borderRadius: 2,
+            }}
+          >
+            Right click here
+          </div>
+        </ContextMenu.Trigger>
+        <ContextMenu.Content style={{ minWidth: 200 }}>
+          <ContextMenu.Item>Paste here</ContextMenu.Item>
+          <ContextMenu.Separator />
+          <ContextMenu.Item>Show/Hide UI</ContextMenu.Item>
+          <ContextMenu.Item>Show/Hide comments</ContextMenu.Item>
+          <ContextMenu.Separator />
+          <ContextMenu.Item>Cursor chat</ContextMenu.Item>
+          <ContextMenu.Item>Quick actions</ContextMenu.Item>
+          <ContextMenu.Sub>
+            <ContextMenu.SubTrigger>Plugins</ContextMenu.SubTrigger>
+            <ContextMenu.SubContent>
+              <ContextMenu.CheckboxItem checked>Display P3</ContextMenu.CheckboxItem>
+              <ContextMenu.CheckboxItem>Change to sRGB</ContextMenu.CheckboxItem>
+            </ContextMenu.SubContent>
+          </ContextMenu.Sub>
+          <ContextMenu.Sub>
+            <ContextMenu.SubTrigger>Widgets</ContextMenu.SubTrigger>
+            <ContextMenu.SubContent>
+              <ContextMenu.CheckboxItem checked>Display P3</ContextMenu.CheckboxItem>
+              <ContextMenu.CheckboxItem>Change to sRGB</ContextMenu.CheckboxItem>
+            </ContextMenu.SubContent>
+          </ContextMenu.Sub>
+        </ContextMenu.Content>
+      </ContextMenu.Root>
+    );
+  },
+};
+
 export const Story: Story = {
   render() {
     return (

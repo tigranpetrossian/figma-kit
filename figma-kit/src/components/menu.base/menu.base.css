@@ -3,9 +3,9 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   cursor: default;
-  padding: var(--space-2) 0;
+  padding: var(--space-2);
   background-color: var(--color-bg-menu);
-  border-radius: var(--radius-default);
+  border-radius: var(--radius-large);
   font-family: var(--font-family-default);
   font-weight: var(--font-weight-default);
   font-size: var(--font-size-menu);
@@ -18,10 +18,11 @@
   display: flex;
   align-items: center;
   height: var(--space-6);
-  padding: 0 var(--space-4);
+  padding: 0 var(--space-2);
   fill: var(--color-icon-menu);
   color: var(--color-text-menu);
   white-space: nowrap;
+  border-radius: var(--radius-medium);
 
   &[data-highlighted] {
     outline: 0;
@@ -65,7 +66,7 @@
 
 .fp-MenuSubtriggerCaret {
   margin-left: auto;
-  margin-right: calc(-1 * var(--space-1));
+  margin-right: calc(-1 * var(--space-2));
   padding-left: var(--space-6);
 }
 

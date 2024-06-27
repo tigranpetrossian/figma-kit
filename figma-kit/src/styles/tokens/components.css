@@ -1,5 +1,6 @@
 :root {
   --color-bg-menu: #1e1e1e;
+  --color-bg-menu-hover: #2c2c2c;
   --color-bg-menu-selected: var(--figma-color-bg-selected-strong);
   --color-border-menu: #383838;
   --color-text-menu: var(--figma-color-text-oncomponent);
