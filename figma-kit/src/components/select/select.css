@@ -6,7 +6,7 @@
   align-items: center;
   gap: var(--space-1);
   width: 100%;
-  padding: 0 var(--space-2);
+  padding: 0 0 0 var(--space-2);
   height: var(--space-6);
   border: 1px solid var(--figma-color-border);
   border-radius: var(--radius-medium);
@@ -30,7 +30,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: var(--space-4);
+  height: var(--space-6);
   background-color: var(--color-bg-menu);
 
   &:hover {
@@ -46,4 +46,12 @@
 .fp-SelectScrollDownButton {
   bottom: 0;
   border-radius: 0 0 var(--radius-large) var(--radius-large);
+}
+
+.parent {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  border: 1px solid red;
 }

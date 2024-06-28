@@ -1,8 +1,9 @@
 import React from 'react';
 import * as RadixMenu from '@radix-ui/react-dropdown-menu';
 import { cx } from 'class-variance-authority';
-import { CaretRightIcon, CircleIcon } from '@components/icons';
+import { CircleIcon } from '@components/icons';
 import { CheckmarkIcon } from '@components/icons/checkmark';
+import { ChevronRightIcon } from '@components/icons/chevron-right';
 
 type RootProps = RadixMenu.DropdownMenuProps;
 const Root = RadixMenu.Root;
@@ -71,7 +72,7 @@ const SubTrigger = React.forwardRef<SubTriggerElement, SubTriggerProps>((props, 
   return (
     <RadixMenu.SubTrigger ref={ref} {...subTriggerProps} className={cx(className, 'fp-MenuItem')}>
       {children}
-      <CaretRightIcon className="fp-MenuSubtriggerCaret" />
+      <ChevronRightIcon className="fp-MenuSubtriggerCaret" />
     </RadixMenu.SubTrigger>
   );
 });
@@ -103,7 +104,7 @@ const CheckboxItem = React.forwardRef<CheckboxItemElement, CheckboxItemProps>((p
   return (
     <RadixMenu.CheckboxItem ref={ref} {...itemProps} className={cx(className, 'fp-MenuItem fp-MenuCheckboxItem')}>
       <RadixMenu.ItemIndicator className="fp-MenuItemIndicator">
-        <CheckmarkIcon />
+        <CheckmarkIcon size="4" />
       </RadixMenu.ItemIndicator>
       {children}
     </RadixMenu.CheckboxItem>
@@ -119,7 +120,7 @@ const RadioItem = React.forwardRef<RadioItemElement, RadioItemProps>((props, ref
   return (
     <RadixMenu.RadioItem ref={ref} {...itemProps} className={cx(className, 'fp-MenuItem fp-MenuRadioItem')}>
       <RadixMenu.ItemIndicator className="fp-MenuItemIndicator">
-        <CircleIcon />
+        <CircleIcon size="4" />
       </RadixMenu.ItemIndicator>
       {children}
     </RadixMenu.RadioItem>

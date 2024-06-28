@@ -2,5 +2,6 @@ import { createIcon } from '@components/icon';
 
 export const CircleIcon = createIcon({
   displayName: 'Circle',
-  path: <circle cx="8" cy="8" r="3" />,
+  viewBox: '0 0 16 16',
+  path: <circle fill="currentColor" cx="8" cy="8" r="3" />,
 });

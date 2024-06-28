@@ -2,6 +2,9 @@ import React from 'react';
 import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
 
+const DEFAULT_SIZE = '6';
+const DEFAULT_VIEWBOX = '0 0 24 24';
+
 type Options = {
   path: React.ReactElement;
   displayName?: string;
@@ -24,21 +27,18 @@ const icon = cva('fp-Icon', {
     },
   },
   defaultVariants: {
-    size: '4',
+    size: DEFAULT_SIZE,
   },
 });
 
 type IconElement = React.ElementRef<'svg'>;
-type IconProps = React.ComponentPropsWithoutRef<'svg'> &
-  VariantProps<typeof icon> & {
-    color?: string;
-  };
+type IconProps = React.ComponentPropsWithoutRef<'svg'> & VariantProps<typeof icon>;
 
 function createIcon(options: Options) {
-  const { path, viewBox = '0 0 16 16', displayName } = options;
+  const { path, viewBox = DEFAULT_VIEWBOX, displayName } = options;
 
   const Component = React.forwardRef<IconElement, IconProps>((props, ref) => {
-    const { size, color = 'currentColor', className, ...iconProps } = props;
+    const { size, className, ...iconProps } = props;
 
     return (
       <svg
@@ -46,7 +46,7 @@ function createIcon(options: Options) {
         ref={ref}
         viewBox={viewBox}
         className={icon({ className, size })}
-        fill={color}
+        fill="none"
         {...iconProps}
       >
         {path}

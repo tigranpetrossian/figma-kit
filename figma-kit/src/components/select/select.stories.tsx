@@ -15,10 +15,24 @@ const meta: Meta<typeof Root> = {
 
 export default meta;
 
-export const Basic: Story = {
+export const Simple: Story = {
+  render: () => (
+    <Root value="drop-shadow">
+      <Trigger style={{ width: 125 }} />
+      <Content>
+        <Item value="inner-shadow">Inner shadow</Item>
+        <Item value="drop-shadow">Drop shadow</Item>
+        <Item value="layer-blur">Layer blur</Item>
+        <Item value="background-blur">Background blur</Item>
+      </Content>
+    </Root>
+  ),
+};
+
+export const Separators: Story = {
   render: () => (
     <Root value="one">
-      <Trigger style={{ width: 120 }}>Dogs</Trigger>
+      <Trigger style={{ width: 120 }} />
       <Content>
         <Item value="one">Pass through</Item>
         <Item value="two" disabled>
@@ -51,10 +65,10 @@ export const Basic: Story = {
   ),
 };
 
-export const WithGroups: Story = {
+export const GroupsAndLabels: Story = {
   render: () => (
     <Root value="passthrough">
-      <Trigger style={{ width: 120 }}>Dogs</Trigger>
+      <Trigger style={{ width: 120 }} />
       <Content>
         <Group>
           <Item value="passthrough">Pass through</Item>

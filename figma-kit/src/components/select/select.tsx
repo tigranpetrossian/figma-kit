@@ -21,7 +21,7 @@ const Trigger = React.forwardRef<TriggerElement, TriggerProps>((props, ref) => {
     <RadixSelect.Trigger ref={ref} {...triggerProps} className={cx(className, 'fp-SelectTrigger')}>
       <RadixSelect.Value placeholder={placeholder} />
       <RadixSelect.Icon className="fp-SelectTriggerIcon">
-        <ChevronDownIcon size="2" />
+        <ChevronDownIcon />
       </RadixSelect.Icon>
     </RadixSelect.Trigger>
   );
@@ -40,11 +40,11 @@ const Content = React.forwardRef<ContentElement, ContentProps>((props, ref) => {
     <Wrapper>
       <RadixSelect.Content ref={ref} {...contentProps} className={cx(className, 'fp-MenuContent')}>
         <RadixSelect.ScrollUpButton className="fp-SelectScrollUpButton">
-          <ChevronUpIcon size="2" />
+          <ChevronUpIcon />
         </RadixSelect.ScrollUpButton>
         <RadixSelect.Viewport>{children}</RadixSelect.Viewport>
         <RadixSelect.ScrollDownButton className="fp-SelectScrollDownButton">
-          <ChevronDownIcon size="2" />
+          <ChevronDownIcon />
         </RadixSelect.ScrollDownButton>
       </RadixSelect.Content>
     </Wrapper>
@@ -60,7 +60,7 @@ const Item = React.forwardRef<ItemElement, ItemProps>((props, ref) => {
   return (
     <RadixSelect.Item ref={ref} {...itemProps} className={cx(className, 'fp-MenuItem fp-MenuCheckboxItem')}>
       <RadixSelect.ItemIndicator className="fp-MenuItemIndicator">
-        <CheckmarkIcon />
+        <CheckmarkIcon size="4" />
       </RadixSelect.ItemIndicator>
       <RadixSelect.ItemText>{children}</RadixSelect.ItemText>
     </RadixSelect.Item>
