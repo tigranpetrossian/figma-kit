@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { PlusIcon } from '@components/icons';
 import { Button } from './button';
 
 type Story = StoryObj<typeof Button>;
@@ -7,9 +6,13 @@ type Story = StoryObj<typeof Button>;
 const meta = {
   component: Button,
   title: 'Components/Button',
-  tags: ['autodocs'],
   args: {
     variant: undefined,
+  },
+  parameters: {
+    controls: {
+      expanded: true,
+    },
   },
   argTypes: {
     variant: {
@@ -26,11 +29,26 @@ const meta = {
       options: ['primary', 'secondary', 'inverse', 'destructive', 'destructiveSecondary', 'success', 'text'],
       control: { type: 'radio' },
     },
+    size: {
+      description: 'Size of the button.',
+      type: 'string',
+      table: {
+        type: {
+          summary: 'enum',
+        },
+        defaultValue: {
+          summary: 'small',
+        },
+      },
+      options: ['small', 'medium'],
+      control: { type: 'radio' },
+    },
     fullWidth: {
-      description: 'Set to `true`, for the button to fill its parent',
+      description: 'Set to `true` for the button to fill its parent container.',
       type: 'boolean',
     },
     disabled: {
+      description: 'Set to `true` to disable the button.',
       type: 'boolean',
     },
   },
@@ -38,16 +56,17 @@ const meta = {
 
 export default meta;
 
-export const Secondary: Story = {
-  args: {
-    variant: 'secondary',
-    children: 'Secondary',
-  },
-};
 export const Primary: Story = {
   args: {
     variant: 'primary',
     children: 'Primary',
+  },
+};
+
+export const Secondary: Story = {
+  args: {
+    variant: 'secondary',
+    children: 'Secondary',
   },
 };
 
@@ -57,51 +76,24 @@ export const Destructive: Story = {
     children: 'Destructive',
   },
 };
-export const DestructiveSecondary: Story = {
-  args: {
-    variant: 'destructiveSecondary',
-    children: 'Destructive Secondary',
-  },
-};
+
 export const Success: Story = {
   args: {
     variant: 'success',
     children: 'Success',
   },
 };
+
 export const Inverse: Story = {
   args: {
     variant: 'inverse',
     children: 'Inverse',
   },
 };
+
 export const Text: Story = {
   args: {
     variant: 'text',
     children: 'Text',
-  },
-};
-export const IconLeft: Story = {
-  name: 'Icon on the left',
-  args: {
-    variant: 'secondary',
-    children: (
-      <>
-        <PlusIcon size="3" />
-        With icon
-      </>
-    ),
-  },
-};
-export const IconRight: Story = {
-  name: 'Icon on the right',
-  args: {
-    variant: 'secondary',
-    children: (
-      <>
-        With icon
-        <PlusIcon size="3" />
-      </>
-    ),
   },
 };
