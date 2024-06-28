@@ -52,6 +52,6 @@
 .fp-DialogBaseOverlay {
   position: fixed;
   inset: 0;
-  background-color: var(--color-dialog-overlay);
+  background-color: var(--color-overlay-dialog);
   z-index: 1;
 }

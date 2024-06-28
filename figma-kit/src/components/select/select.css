@@ -13,6 +13,7 @@
   font-family: var(--font-family-default);
   font-size: var(--font-size-default);
   font-weight: var(--font-weight-default);
+  letter-spacing: var(--letter-spacing-default);
   color: var(--figma-color-text);
 }
 

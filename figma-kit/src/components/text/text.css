@@ -3,82 +3,28 @@
   font-family: var(--font-family-default);
   color: var(--figma-color-text);
 
-  &:where(.fp-size-1) {
+  &:where(.fp-size-small) {
     font-size: var(--font-size-1);
     line-height: var(--line-height-1);
+    letter-spacing: var(--letter-spacing-1);
   }
-  &:where(.fp-size-2) {
-    font-size: var(--font-size-2);
-    line-height: var(--line-height-2);
-  }
-  &:where(.fp-size-3) {
+
+  &:where(.fp-size-medium) {
     font-size: var(--font-size-3);
     line-height: var(--line-height-3);
+    letter-spacing: var(--letter-spacing-3);
   }
-  &:where(.fp-size-4) {
-    font-size: var(--font-size-4);
-    line-height: var(--line-height-4);
-  }
-  &:where(.fp-size-5) {
+
+  &:where(.fp-size-large) {
     font-size: var(--font-size-5);
     line-height: var(--line-height-5);
-  }
-  &:where(.fp-size-6) {
-    font-size: var(--font-size-6);
-    line-height: var(--line-height-6);
-  }
-  &:where(.fp-size-7) {
-    font-size: var(--font-size-7);
-    line-height: var(--line-height-7);
-  }
-  &:where(.fp-size-8) {
-    font-size: var(--font-size-8);
-    line-height: var(--line-height-8);
-  }
-  &:where(.fp-size-9) {
-    font-size: var(--font-size-9);
-    line-height: var(--line-height-9);
-  }
-  &:where(.fp-size-10) {
-    font-size: var(--font-size-10);
-    line-height: var(--line-height-10);
-  }
-  &:where(.fp-size-11) {
-    font-size: var(--font-size-11);
-    line-height: var(--line-height-11);
-  }
-  &:where(.fp-size-12) {
-    font-size: var(--font-size-12);
-    line-height: var(--line-height-12);
-  }
-  &:where(.fp-size-13) {
-    font-size: var(--font-size-13);
-    line-height: var(--line-height-13);
-  }
-  &:where(.fp-size-14) {
-    font-size: var(--font-size-14);
-    line-height: var(--line-height-14);
-  }
-  &:where(.fp-size-15) {
-    font-size: var(--font-size-15);
-    line-height: var(--line-height-15);
-  }
-  &:where(.fp-size-16) {
-    font-size: var(--font-size-16);
-    line-height: var(--line-height-16);
-  }
-  &:where(.fp-size-17) {
-    font-size: var(--font-size-17);
-    line-height: var(--line-height-17);
-  }
-  &:where(.fp-size-18) {
-    font-size: var(--font-size-18);
-    line-height: var(--line-height-18);
+    letter-spacing: var(--letter-spacing-5);
   }
 
   &:where(.fp-weight-default) {
     font-weight: var(--font-weight-default);
   }
+
   &:where(.fp-weight-strong) {
     font-weight: var(--font-weight-strong);
   }
@@ -86,9 +32,11 @@
   &:where(.fp-align-start) {
     text-align: start;
   }
+
   &:where(.fp-align-center) {
     text-align: center;
   }
+
   &:where(.fp-align-end) {
     text-align: end;
   }
@@ -103,8 +51,8 @@
 
   & code {
     font-family: var(--font-family-monospace);
+    font-size: var(--font-size-2);
     background-color: var(--figma-color-bg-brand-tertiary);
-    font-size: 0.9em;
     padding: 0.05rem 0.15rem;
     border-radius: var(--radius-extra-small);
   }

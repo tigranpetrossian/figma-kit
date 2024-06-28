@@ -14,5 +14,5 @@
   --color-text-tooltip: #fff;
   --shadow-tooltip: var(--elevation-300);
 
-  --color-dialog-overlay: #00000080;
+  --color-overlay-dialog: #00000080;
 }

@@ -8,6 +8,7 @@
   font-family: var(--font-family-default);
   font-size: var(--font-size-default);
   font-weight: var(--font-weight-default);
+  letter-spacing: var(--letter-spacing-default);
   background-color: var(--figma-color-bg);
   color: var(--figma-color-text);
   border-radius: var(--radius-default);

@@ -17,14 +17,14 @@ const meta = {
   argTypes: {
     size: {
       control: 'select',
-      options: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18'],
+      options: ['small', 'medium', 'large'],
       table: {
         defaultValue: { summary: '3' },
       },
     },
     weight: {
       control: 'radio',
-      options: ['default', 'medium', 'strong'],
+      options: ['default', 'strong'],
       table: {
         defaultValue: { summary: 'default' },
       },
@@ -34,6 +34,12 @@ const meta = {
       options: ['start', 'center', 'end'],
       table: {
         defaultValue: { summary: 'start' },
+      },
+    },
+    block: {
+      control: 'boolean',
+      table: {
+        defaultValue: { summary: 'false' },
       },
     },
     asChild: {
@@ -46,6 +52,12 @@ const meta = {
 } satisfies Meta<typeof Text>;
 
 export default meta;
+
+export const Default: StoryObj<typeof Text> = {
+  args: {
+    children: 'Default text',
+  },
+};
 
 export const TextStory: StoryObj<typeof Text> = {
   args: {

@@ -5,7 +5,8 @@
   font-family: var(--font-family-default);
   font-size: var(--font-size-default);
   font-weight: var(--font-weight-default);
-  line-height: var(--space-4);
+  letter-spacing: var(--letter-spacing-default);
+  line-height: var(--line-height-default);
   height: var(--space-7);
   color: var(--color-text-tooltip);
   white-space: pre-wrap;

@@ -6,9 +6,10 @@
   padding: var(--space-2);
   background-color: var(--color-bg-menu);
   border-radius: var(--radius-large);
+  font-size: var(--font-size-menu);
   font-family: var(--font-family-default);
   font-weight: var(--font-weight-default);
-  font-size: var(--font-size-menu);
+  letter-spacing: var(--letter-spacing-default);
   color: var(--color-text-menu);
   box-shadow: var(--elevation-400);
 }
@@ -20,7 +21,7 @@
   height: var(--space-6);
   padding: 0 var(--space-2);
   color: var(--color-text-menu);
-  line-height: var(--space-4);
+  line-height: 1rem;
   white-space: nowrap;
   border-radius: var(--radius-medium);
 

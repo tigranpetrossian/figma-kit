@@ -1,0 +1,13 @@
+:root {
+  --letter-spacing-1: 0.00281rem;
+  --letter-spacing-2: 0.00625rem;
+  --letter-spacing-3: 0.00344rem;
+  --letter-spacing-4: 0;
+  --letter-spacing-5: -0.002rem;
+  --letter-spacing-6: -0.00525rem;
+  --letter-spacing-7: -0.00469rem;
+  --letter-spacing-8: -0.011rem;
+  --letter-spacing-9: -0.013812rem;
+  --letter-spacing-10: -0.0255rem;
+  --letter-spacing-default: var(--letter-spacing-3);
+}

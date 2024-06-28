@@ -6,6 +6,10 @@
   padding: 0 1px;
   font-family: var(--font-family-default);
   font-size: var(--font-size-default);
+  font-weight: var(--font-weight-default);
+  letter-spacing: var(--letter-spacing-default);
+  line-height: var(--line-height-default);
+
   box-sizing: border-box;
 
   &:hover {
