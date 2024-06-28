@@ -76,12 +76,8 @@
     line-height: var(--line-height-18);
   }
 
-  /* Naming here is in anticipation of UI3 */
   &:where(.fp-weight-default) {
     font-weight: var(--font-weight-default);
-  }
-  &:where(.fp-weight-medium) {
-    font-weight: var(--font-weight-medium);
   }
   &:where(.fp-weight-strong) {
     font-weight: var(--font-weight-strong);

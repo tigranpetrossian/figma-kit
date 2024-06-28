@@ -12,7 +12,7 @@
   height: var(--space-6);
   gap: var(--space-1);
   font-family: var(--font-family-default);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-strong);
 
   &:where([data-state='inactive']) {
     color: var(--figma-color-text-secondary);
