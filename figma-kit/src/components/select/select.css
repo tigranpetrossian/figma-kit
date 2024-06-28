@@ -6,27 +6,19 @@
   align-items: center;
   gap: var(--space-1);
   width: 100%;
-  padding: 0 calc(var(--space-2) - 1px);
-  height: var(--space-7);
-  border: 1px solid transparent;
-  border-radius: var(--radius-default);
+  padding: 0 var(--space-2);
+  height: var(--space-6);
+  border: 1px solid var(--figma-color-border);
+  border-radius: var(--radius-medium);
   font-family: var(--font-family-default);
   font-size: var(--font-size-default);
   font-weight: var(--font-weight-default);
   color: var(--figma-color-text);
-
-  &:hover {
-    justify-content: space-between;
-    border-color: var(--figma-color-border);
-  }
 }
 
-.fp-SelectTriggerIcon .fp-Icon {
-  fill: var(--figma-color-icon-tertiary);
-
-  .fp-SelectTrigger:hover & {
-    fill: var(--figma-color-icon);
-  }
+.fp-SelectTriggerIcon {
+  margin-left: auto;
+  color: var(--figma-color-icon);
 }
 
 .fp-SelectScrollUpButton,
