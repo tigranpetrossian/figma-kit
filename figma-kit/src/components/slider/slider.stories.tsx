@@ -133,7 +133,7 @@ export const Vertical: Story = {
   },
 };
 
-export const HorizontalWithRange: Story = {
+export const BaseValue: Story = {
   decorators: [
     (Story) => {
       return (
@@ -144,33 +144,42 @@ export const HorizontalWithRange: Story = {
     },
   ],
   args: {
-    range: true,
+    defaultValue: [50],
+    baseValue: 50,
   },
 };
-
-export const VerticalWithRange: Story = {
+export const RangeAnchor: Story = {
   decorators: [
     (Story) => {
       return (
-        <div style={{ display: 'flex', flexDirection: 'column', height: 200 }}>
+        <div style={{ width: 200 }}>
           <Story />
         </div>
       );
     },
   ],
   args: {
-    orientation: 'vertical',
-    range: true,
+    defaultValue: [50],
+    rangeAnchor: 50,
+    baseValue: 50,
   },
 };
 
-export const WithRangeAnchor = () => {
+export const Hints = () => {
   const [value, setValue] = useState([400]);
 
   return (
-    <div style={{ width: 200 }}>
-      <div>{value}</div>
-      <Slider range rangeAnchor={400} min={100} max={900} value={value} onValueChange={setValue} />
+    <div>
+      <div style={{ width: 200 }}>
+        <Slider
+          baseValue={400}
+          hints={[100, 200, 300, 400, 500, 600, 700, 800, 900]}
+          min={100}
+          max={900}
+          value={value}
+          onValueChange={setValue}
+        />
+      </div>
     </div>
   );
 };

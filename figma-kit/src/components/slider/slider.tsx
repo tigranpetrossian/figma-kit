@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as RadixSlider from '@radix-ui/react-slider';
 import { cx } from 'class-variance-authority';
 import { useComposedRefs } from '@lib/react/use-compose-refs';
@@ -9,6 +9,8 @@ type SliderElement = React.ElementRef<typeof RadixSlider.Root>;
 type SliderOwnProps = {
   range?: boolean;
   rangeAnchor?: number;
+  baseValue?: number;
+  hints?: number[];
 };
 type SliderProps = Omit<RadixSlider.SliderProps, 'asChild' | 'children'> & SliderOwnProps;
 
@@ -23,15 +25,29 @@ const Slider = React.forwardRef<SliderElement, SliderProps>((props, forwardedRef
     orientation = 'horizontal',
     dir = 'ltr',
     inverted,
-    range,
-    rangeAnchor,
     disabled,
+    range = true,
+    rangeAnchor,
+    baseValue,
+    hints,
     ...rootProps
   } = props;
   const rootRef = useRef<SliderElement>(null);
   const ref = useComposedRefs(rootRef, forwardedRef);
   const { onPointerDown, focusVisible } = useSliderVisibleFocus(rootRef);
   const [trackedValue, setTrackedValue] = useState(value ?? defaultValue);
+
+  useEffect(() => {
+    // Radix adjusts the thumb position by default to align with the track edges at min/max positions.
+    // This behavior is removed via a patch (see: patches/@radix-ui__react-slider@1.2.0.patch) and replaced it with a CSS solution.
+    // Additionally, we override the transform of the thumb to ensure it aligns with hints.
+    if (rootRef.current) {
+      rootRef.current.style.setProperty(
+        '--radix-slider-thumb-transform',
+        getThumbTransform(orientation, dir, inverted)
+      );
+    }
+  }, [rootRef, orientation, dir, inverted]);
 
   const handleValueChange = (value: number[]) => {
     onValueChange?.(value);
@@ -42,7 +58,7 @@ const Slider = React.forwardRef<SliderElement, SliderProps>((props, forwardedRef
     <RadixSlider.Root
       tabIndex={-1}
       ref={ref}
-      className={cx(className, 'fp-sliderRoot')}
+      className={cx(className, 'fp-SliderRoot')}
       defaultValue={defaultValue}
       value={value}
       onValueChange={handleValueChange}
@@ -55,26 +71,74 @@ const Slider = React.forwardRef<SliderElement, SliderProps>((props, forwardedRef
       disabled={disabled}
       {...rootProps}
     >
-      <RadixSlider.Track className="fp-sliderTrack">
-        {range && (
-          <Range
-            dir={dir}
-            value={trackedValue}
+      <RadixSlider.Track className="fp-SliderTrack" />
+
+      {range && (
+        <Range
+          dir={dir}
+          value={trackedValue}
+          min={min}
+          max={max}
+          orientation={orientation}
+          inverted={inverted}
+          rangeAnchor={rangeAnchor}
+          disabled={disabled}
+        />
+      )}
+
+      {hints &&
+        hints.map((hint) => (
+          <Hint
+            key={hint}
+            hint={hint}
+            baseValue={baseValue}
             min={min}
             max={max}
             orientation={orientation}
+            dir={dir}
             inverted={inverted}
-            rangeAnchor={rangeAnchor}
-            disabled={disabled}
           />
-        )}
-      </RadixSlider.Track>
-      {(value ?? defaultValue).map((v, i) => (
-        <RadixSlider.Thumb key={i} className={cx('fp-sliderThumb', { 'fp-sliderThumb-focusVisible': focusVisible })} />
+        ))}
+
+      {trackedValue.map((v, i) => (
+        <RadixSlider.Thumb
+          key={i}
+          className={cx('fp-SliderThumb', {
+            'fp-SliderThumb-focusVisible': focusVisible,
+            'fp-SliderThumb-modified': v !== baseValue,
+          })}
+        />
       ))}
     </RadixSlider.Root>
   );
 });
+
+type HintProps = {
+  hint: number;
+  baseValue?: number;
+  min: number;
+  max: number;
+  orientation: 'horizontal' | 'vertical';
+  dir: 'ltr' | 'rtl';
+  inverted?: boolean;
+};
+
+const Hint = (props: HintProps) => {
+  const { baseValue, dir, inverted, max, min, orientation, hint } = props;
+  const { startEdge } = getOrientationEdges(orientation, dir, inverted);
+  const offset = normalize([min, max], [0, 100])(hint);
+  const HINT_WIDTH = 4;
+
+  return (
+    <>
+      <span
+        className={cx('fp-SliderHint', { 'fp-SliderHint-baseValue': hint === baseValue })}
+        data-orientation={orientation}
+        style={{ [startEdge]: `calc(${offset}% - ${HINT_WIDTH / 2}px)` }}
+      />
+    </>
+  );
+};
 
 type RangeProps = {
   min: number;
@@ -96,13 +160,13 @@ const Range = (props: RangeProps) => {
   const edges = getOrientationEdges(orientation, dir, inverted);
 
   return (
-    <div
-      className="fp-sliderRange"
+    <span
+      className="fp-SliderRange"
       data-orientation={orientation}
       data-disabled={disabled ? '' : undefined}
       style={{
-        [edges.startEdge]: offsetStart + '%',
-        [edges.endEdge]: offsetEnd + '%',
+        [edges.startEdge]: `${offsetStart}%`,
+        [edges.endEdge]: `${offsetEnd}%`,
       }}
     />
   );
@@ -138,6 +202,21 @@ function getOrientationEdges(
   };
 
   return edges[orientation][inversion];
+}
+
+function getThumbTransform(orientation: 'horizontal' | 'vertical', dir: 'ltr' | 'rtl', inverted: boolean | undefined) {
+  const inversion = inverted ? 'inverted' : 'normal';
+  const transform = {
+    vertical: {
+      normal: 'translateY(50%)',
+      inverted: 'translateY(-50%)',
+    },
+    horizontal: {
+      normal: dir === 'ltr' ? 'translateX(-50%)' : 'translateX(50%)',
+      inverted: dir === 'ltr' ? 'translateX(50%)' : 'translateX(-50%)',
+    },
+  };
+  return transform[orientation][inversion];
 }
 
 /**
