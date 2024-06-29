@@ -54,7 +54,7 @@ export default meta;
 
 export const Story: Story = {
   args: {
-    'aria-label': 'New style',
+    'aria-label': 'Apply variable mode',
     children: <PlusIcon />,
   },
 };

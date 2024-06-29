@@ -25,7 +25,9 @@ type IconButtonProps = React.ComponentPropsWithoutRef<'button'> &
 
 const IconButton = React.forwardRef<IconButtonElement, IconButtonProps>((props, ref) => {
   const { className, variant, 'aria-label': ariaLabel, tooltipContent, disableTooltip, ...iconButtonProps } = props;
-  const buttonElement = <button ref={ref} className={iconButton({ className, variant })} {...iconButtonProps} />;
+  const buttonElement = (
+    <button ref={ref} className={iconButton({ className, variant })} aria-label={ariaLabel} {...iconButtonProps} />
+  );
 
   return disableTooltip ? buttonElement : <Tooltip content={tooltipContent ?? ariaLabel}>{buttonElement}</Tooltip>;
 });
