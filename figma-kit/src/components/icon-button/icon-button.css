@@ -1,4 +1,4 @@
-.fp-iconButton {
+.fp-IconButton {
   box-sizing: border-box;
   background-clip: border-box;
   background-color: transparent;
@@ -12,32 +12,38 @@
   justify-content: center;
   flex-shrink: 0;
   color: var(--figma-color-icon);
-  width: var(--space-8);
-  height: var(--space-8);
-  border-radius: var(--radius-extra-small);
-  fill: var(--button-color-icon);
+  border-radius: var(--radius-medium);
 
   &:where(:hover:not(:disabled)) {
     background-color: var(--figma-color-bg-pressed);
   }
 
   &:focus-visible {
-    outline-offset: -2px;
-    outline: 2px solid var(--figma-color-border-selected);
+    outline-offset: -1px;
+    outline: 1px solid var(--figma-color-border-selected);
   }
 
   &:disabled {
-    fill: var(--figma-color-icon-disabled);
+    color: var(--figma-color-icon-disabled);
   }
+}
 
-  /* Trigger-specific tweaks */
-  &[aria-haspopup] {
-    /* A little Figmaesque. Won't be necessary in UI3 */
-    border-radius: 3px;
+.fp-IconButton:where(.fp-variant-default) {
+  width: var(--space-6);
+  height: var(--space-6);
+
+  &[data-state='open'] {
+    background-color: var(--figma-color-bg-selected);
+    color: var(--figma-color-icon-brand);
   }
+}
+
+.fp-IconButton:where(.fp-variant-toolbar) {
+  width: var(--space-8);
+  height: var(--space-8);
 
   &[data-state='open'] {
     background-color: var(--figma-color-bg-brand-pressed);
-    color: var(--figma-color-text-onbrand);
+    color: var(--figma-color-icon-onbrand);
   }
 }

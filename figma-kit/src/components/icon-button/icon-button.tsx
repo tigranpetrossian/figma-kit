@@ -1,17 +1,31 @@
 import React from 'react';
-import { cx } from 'class-variance-authority';
+import type { VariantProps } from 'class-variance-authority';
+import { cva } from 'class-variance-authority';
 import { Tooltip } from '@components/tooltip';
 
+const iconButton = cva('fp-IconButton', {
+  variants: {
+    variant: {
+      default: 'fp-variant-default',
+      toolbar: 'fp-variant-toolbar',
+    },
+  },
+  defaultVariants: {
+    variant: 'default', // 👍
+  },
+});
+
 type IconButtonElement = React.ElementRef<'button'>;
-type IconButtonProps = React.ComponentPropsWithoutRef<'button'> & {
-  'aria-label': string;
-  tooltipContent?: React.ReactNode;
-  disableTooltip?: boolean;
-};
+type IconButtonProps = React.ComponentPropsWithoutRef<'button'> &
+  VariantProps<typeof iconButton> & {
+    'aria-label': string;
+    tooltipContent?: React.ReactNode;
+    disableTooltip?: boolean;
+  };
 
 const IconButton = React.forwardRef<IconButtonElement, IconButtonProps>((props, ref) => {
-  const { className, 'aria-label': ariaLabel, tooltipContent, disableTooltip, ...iconButtonProps } = props;
-  const buttonElement = <button ref={ref} className={cx(className, 'fp-iconButton')} {...iconButtonProps} />;
+  const { className, variant, 'aria-label': ariaLabel, tooltipContent, disableTooltip, ...iconButtonProps } = props;
+  const buttonElement = <button ref={ref} className={iconButton({ className, variant })} {...iconButtonProps} />;
 
   return disableTooltip ? buttonElement : <Tooltip content={tooltipContent ?? ariaLabel}>{buttonElement}</Tooltip>;
 });

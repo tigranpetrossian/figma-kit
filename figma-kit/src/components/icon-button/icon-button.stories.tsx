@@ -8,8 +8,8 @@ type Story = StoryObj<typeof IconButton>;
 
 const meta = {
   component: IconButton,
-  tags: ['autodocs'],
   title: 'Components/Icon Button',
+  parameters: { controls: { expanded: true } },
   argTypes: {
     'aria-label': {
       description: 'Text for screen readers, also used as tooltip text by default.',
@@ -17,6 +17,20 @@ const meta = {
         name: 'string',
         required: true,
       },
+    },
+    variant: {
+      description: 'Size of the button.',
+      type: 'string',
+      table: {
+        type: {
+          summary: 'enum',
+        },
+        defaultValue: {
+          summary: 'default',
+        },
+      },
+      options: ['default', 'toolbar'],
+      control: { type: 'radio' },
     },
     tooltipContent: {
       description: 'Custom content for the tooltip. Defaults to aria-label if not specified.',
