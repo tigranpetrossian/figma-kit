@@ -23,13 +23,12 @@ const meta: Meta<typeof ValueField.Numeric> = {
 export default meta;
 
 const AngleIcon = () => (
-  <svg className="svg" xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8">
+  <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
     <path
-      fillOpacity="1"
       fillRule="evenodd"
-      stroke="none"
-      d="M0 0v8h8V7H5c0-2.21-1.79-4-4-4V0H0zm1 4v3h3c0-1.657-1.343-3-3-3z"
-    />
+      clipRule="evenodd"
+      d="M8 7h8a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1ZM6 8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V8Zm9 1.5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1ZM13.5 11a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Zm-2 2a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Zm-2 2a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Zm1.5.5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm2-2a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm.5 1.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Zm2-4a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Zm-.5 2.5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm.5 1.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z"
+    ></path>
   </svg>
 );
 
@@ -187,8 +186,8 @@ const WithLabelComponent = () => {
 
   return (
     <ValueField.Root style={{ width: 100 }}>
-      <ValueField.Label>Blur</ValueField.Label>
-      <ValueField.Numeric value={value} onChange={setValue} variant="base" />
+      <ValueField.Label>X</ValueField.Label>
+      <ValueField.Numeric value={value} onChange={setValue} />
     </ValueField.Root>
   );
 };
@@ -205,8 +204,8 @@ const WithLabel = () => {
 
   return (
     <ValueField.Root>
-      <ValueField.Label>Blur</ValueField.Label>
-      <ValueField.Numeric value={value} onChange={setValue} variant="base" />
+      <ValueField.Label>X</ValueField.Label>
+      <ValueField.Numeric value={value} onChange={setValue}  />
     </ValueField.Root>
   );
 };
@@ -225,7 +224,7 @@ const WithIconComponent = () => {
       <ValueField.Label>
         <AngleIcon />
       </ValueField.Label>
-      <ValueField.Numeric value={value} onChange={setValue} variant="base" />
+      <ValueField.Numeric value={value} onChange={setValue} />
     </ValueField.Root>
   );
 };
@@ -245,7 +244,7 @@ const WithIcon = () => {
       <ValueField.Label>
         <AngleIcon />
       </ValueField.Label>
-      <ValueField.Numeric value={value} onChange={setValue} variant="base" />
+      <ValueField.Numeric value={value} onChange={setValue}  />
     </ValueField.Root>
   );
 };
@@ -279,7 +278,6 @@ export const Rgba = () => {
           <ValueField.Numeric
             value={rgba.r}
             onChange={handleRChange}
-            variant="base"
             min={0}
             max={1}
             targetRange={[0, 255]}
@@ -290,7 +288,6 @@ export const Rgba = () => {
           <ValueField.Numeric
             value={rgba.g}
             onChange={handleGChange}
-            variant="base"
             min={0}
             max={1}
             targetRange={[0, 255]}
@@ -301,7 +298,6 @@ export const Rgba = () => {
           <ValueField.Numeric
             value={rgba.b}
             onChange={handleBChange}
-            variant="base"
             min={0}
             max={1}
             targetRange={[0, 255]}
@@ -312,7 +308,6 @@ export const Rgba = () => {
           <ValueField.Numeric
             value={rgba.a}
             onChange={handleAChange}
-            variant="base"
             min={0}
             max={1}
             targetRange={[0, 100]}
@@ -352,7 +347,7 @@ export const Rgba = () => {
         <ValueField.Numeric
           value={rgba.r}
           onChange={handleRChange}
-          variant="base"
+          
           min={0}
           max={1}
           targetRange={[0, 255]}
@@ -363,7 +358,7 @@ export const Rgba = () => {
         <ValueField.Numeric
           value={rgba.g}
           onChange={handleGChange}
-          variant="base"
+          
           min={0}
           max={1}
           targetRange={[0, 255]}
@@ -374,7 +369,7 @@ export const Rgba = () => {
         <ValueField.Numeric
           value={rgba.b}
           onChange={handleBChange}
-          variant="base"
+          
           min={0}
           max={1}
           targetRange={[0, 255]}
@@ -385,7 +380,7 @@ export const Rgba = () => {
         <ValueField.Numeric
           value={rgba.a}
           onChange={handleAChange}
-          variant="base"
+          
           min={0}
           max={1}
           targetRange={[0, 100]}
@@ -415,19 +410,19 @@ const HexWithAlphaComponent = () => {
     <div style={{ width: 160 }}>
       <ValueField.Multi>
         <ValueField.Root>
-          <ValueField.Hex value={rgba} onChange={setRgba} variant="base" />
+          <ValueField.Hex value={rgba} onChange={setRgba} />
         </ValueField.Root>
-        <ValueField.Root style={{ flex: '0 0 48px' }}>
+        <ValueField.Root style={{ flex: '0 0 62px' }}>
           <ValueField.Numeric
             value={rgba.a}
             onChange={setAlpha}
             min={0}
             max={1}
             targetRange={[0, 100]}
-            suffix="%"
-            variant="base"
+            allowedUnits={['%']}
             precision={2}
           />
+          <ValueField.Label>%</ValueField.Label>
         </ValueField.Root>
       </ValueField.Multi>
     </div>
@@ -447,23 +442,23 @@ const HexWithAlpha = () => {
   };
 
   return (
-    <ValueField.Multi>
-      <ValueField.Root>
-        <ValueField.Hex value={rgba} onChange={setRgba} variant="base" />
-      </ValueField.Root>
-      <ValueField.Root >
-        <ValueField.Numeric
-          value={rgba.a}
-          onChange={setAlpha}
-          min={0}
-          max={1}
-          targetRange={[0, 100]}
-          suffix="%"
-          variant="base"
-          precision={2}
-        />
-      </ValueField.Root>
-    </ValueField.Multi>
+      <ValueField.Multi>
+        <ValueField.Root>
+          <ValueField.Hex value={rgba} onChange={setRgba} />
+        </ValueField.Root>
+        <ValueField.Root>
+          <ValueField.Numeric
+            value={rgba.a}
+            onChange={setAlpha}
+            min={0}
+            max={1}
+            targetRange={[0, 100]}
+            allowedUnits={['%']}
+            precision={2}
+          />
+          <ValueField.Label>%</ValueField.Label>
+        </ValueField.Root>
+      </ValueField.Multi>
   );
 };
         `,

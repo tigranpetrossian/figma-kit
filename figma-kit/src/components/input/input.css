@@ -4,7 +4,7 @@
   display: block;
   width: 100%;
   height: var(--space-6);
-  padding: var(--space-1) var(--space-2);
+  padding: var(--space-1) 0 var(--space-1) var(--space-2);
   background-color: var(--figma-color-bg-secondary);
   border-radius: var(--radius-medium);
   font-family: var(--font-family-default);

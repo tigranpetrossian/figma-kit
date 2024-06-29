@@ -1,86 +1,98 @@
-.fp-ControlInputRoot {
+.fp-ValueFieldRoot {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
-  border-radius: var(--radius-default);
-  outline-offset: -1px;
+  border-radius: var(--radius-medium);
   padding: 0 1px;
+  outline-offset: -1px;
+  background-color: var(--figma-color-bg-secondary);
   font-family: var(--font-family-default);
   font-size: var(--font-size-default);
   font-weight: var(--font-weight-default);
   letter-spacing: var(--letter-spacing-default);
   line-height: var(--line-height-default);
 
-  box-sizing: border-box;
-
   &:hover {
     outline: 1px solid var(--figma-color-border);
   }
 
   &:focus-within {
-    outline: 2px solid var(--figma-color-border-selected);
+    outline: 1px solid var(--figma-color-border-selected);
   }
 
-  .fp-ControlInputBase {
+  .fp-ValueFieldBase {
     border-width: 0;
   }
 }
 
-.fp-ControlInputBase {
+.fp-ValueFieldBase {
   cursor: default;
+  outline: 0;
 }
 
-.fp-controlInputLabel {
+.fp-ValueFieldLabel {
   display: flex;
   align-items: center;
+  justify-content: center;
   align-self: stretch;
   flex-shrink: 0;
-  fill: var(--figma-color-icon-secondary);
   color: var(--figma-color-text-secondary);
-  padding-left: calc(var(--space-2_5));
-  padding-right: calc(var(--space-2_5));
+  height: var(--space-6);
+  width: var(--space-6);
 
-  & + .fp-ControlInputBase {
+  /* Usually used for suffixes.
+  TODO: Replace with a variant.  */
+  &:last-child {
+    width: var(--space-5);
+  }
+
+  & + .fp-ValueFieldBase {
     padding-left: 0;
   }
 }
 
-.fp-controlInputMulti {
+.fp-ValueFieldMulti {
   display: flex;
-  border-radius: 2px;
+  border-radius: var(--radius-medium);
   outline-offset: -1px;
   box-sizing: border-box;
+  border: 1px solid transparent;
+  height: var(--space-6);
+  background-color: var(--figma-color-bg-secondary);
 
   &:hover {
-    outline: 1px solid var(--figma-color-border);
+    border: 1px solid var(--figma-color-border);
   }
 
   &:focus-within {
-    outline: 2px solid var(--figma-color-border-selected);
+    outline: 1px solid var(--figma-color-border-selected);
   }
 
-  .fp-ControlInputRoot {
+  .fp-ValueFieldRoot {
+    height: var(--space-6);
     flex-grow: 1;
-  }
-
-  &:hover,
-  &:focus-within {
-    .fp-ControlInputRoot:nth-child(2n + 1) {
-      outline: 1px solid var(--figma-color-border);
-    }
-  }
-
-  .fp-ControlInputRoot {
     outline: 0;
     border-radius: 0;
+    background-color: transparent;
+    margin-top: -1px;
+
+    &:not(:first-child) {
+      border-left: 1px solid var(--figma-color-bg);
+    }
 
     &:first-child {
-      border-top-left-radius: var(--radius-default);
-      border-bottom-left-radius: var(--radius-default);
+      border-top-left-radius: var(--radius-medium);
+      border-bottom-left-radius: var(--radius-medium);
     }
 
     &:last-child {
-      border-top-right-radius: var(--radius-default);
-      border-bottom-right-radius: var(--radius-default);
+      border-top-right-radius: var(--radius-medium);
+      border-bottom-right-radius: var(--radius-medium);
     }
+  }
+
+  .fp-ValueFieldBase {
+    background-color: transparent;
+    padding-left: calc(var(--space-2) - 1px);
   }
 }

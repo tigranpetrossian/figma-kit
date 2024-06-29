@@ -6,7 +6,7 @@ type RootProps = React.ComponentPropsWithoutRef<'label'>;
 
 const Root = React.forwardRef<RootElement, RootProps>((props, ref) => {
   const { className, ...rootProps } = props;
-  return <label ref={ref} className={cx(className, 'fp-ControlInputRoot')} {...rootProps} />;
+  return <label ref={ref} className={cx(className, 'fp-ValueFieldRoot')} {...rootProps} />;
 });
 
 type LabelElement = React.ElementRef<'span'>;
@@ -16,7 +16,7 @@ const Label = React.forwardRef<LabelElement, LabelProps>((props, ref) => {
   const { className, children, ...labelProps } = props;
 
   return (
-    <span ref={ref} className={cx(className, 'fp-controlInputLabel')} {...labelProps}>
+    <span ref={ref} className={cx(className, 'fp-ValueFieldLabel')} {...labelProps}>
       {children}
     </span>
   );
@@ -28,7 +28,7 @@ type MultiProps = React.ComponentPropsWithoutRef<'div'>;
 const Multi = React.forwardRef<MultiElement, MultiProps>((props, ref) => {
   const { className, ...multiProps } = props;
 
-  return <div ref={ref} className={cx(className, 'fp-controlInputMulti')} {...multiProps} />;
+  return <div ref={ref} className={cx(className, 'fp-ValueFieldMulti')} {...multiProps} />;
 });
 
 export type { RootProps, LabelProps, MultiProps };

@@ -25,7 +25,7 @@ const Base = <V,>(props: BaseProps<V>) => {
     smallNudge = DEFAULT_SMALL_NUDGE,
     bigNudge = DEFAULT_BIG_NUDGE,
     formatter,
-    ...controlInputProps
+    ...fieldProps
   } = props;
   const ref = useRef<HTMLInputElement>(null);
   const composedRef = useComposedRefs(forwardedRef, ref);
@@ -106,10 +106,10 @@ const Base = <V,>(props: BaseProps<V>) => {
       autoComplete="off"
       spellCheck="false"
       selectOnClick={true}
-      className={cx(className, 'fp-ControlInputBase')}
+      className={cx(className, 'fp-ValueFieldBase')}
       value={inputValue}
       onChange={handleChange}
-      {...mergeProps(controlInputProps, { onBlur: handleBlur, onKeyDown: handleKeyDown })}
+      {...mergeProps(fieldProps, { onBlur: handleBlur, onKeyDown: handleKeyDown })}
     />
   );
 };
