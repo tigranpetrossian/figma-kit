@@ -51,7 +51,7 @@ export const WithinPopover = () => {
         </Popover.Trigger>
         <Popover.Content side="right" align="start">
           <Popover.Header>
-            <Tabs.List style={{ marginLeft: -8 }}>
+            <Tabs.List>
               <Tabs.Trigger value="custom">Custom</Tabs.Trigger>
               <Tabs.Trigger value="libraries">Libraries</Tabs.Trigger>
               <Tabs.Trigger value="carburetors">Carburetors</Tabs.Trigger>

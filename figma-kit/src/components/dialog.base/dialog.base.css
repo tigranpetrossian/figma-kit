@@ -3,7 +3,7 @@
   color: var(--figma-color-text);
   min-width: 160px;
   background-color: var(--figma-color-bg);
-  border-radius: var(--radius-default);
+  border-radius: var(--radius-large);
   box-shadow: var(--elevation-500);
   overflow-y: auto;
   outline: 0;
@@ -14,21 +14,20 @@
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  height: calc(var(--space-10) + 1px);
-  padding: var(--space-1) var(--space-4);
+  height: var(--space-10);
+  padding: var(--space-1) var(--space-2);
   border-bottom: 1px solid var(--figma-color-border);
   background-color: var(--figma-color-bg);
-  border-radius: var(--radius-extra-small) var(--radius-extra-small) 0 0;
 }
 
 .fp-DialogBaseTitle {
+  padding-left: var(--space-2);
 }
 
 .fp-DialogBaseControls {
   display: flex;
   align-items: center;
   margin-left: auto;
-  margin-right: calc(var(--space-3) * -1);
 }
 
 .fp-DialogBaseSection {

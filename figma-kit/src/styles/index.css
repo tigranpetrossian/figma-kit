@@ -4,6 +4,7 @@
 @import 'tokens/font-size.css';
 @import 'tokens/font-weight.css';
 @import 'tokens/line-height.css';
+@import 'tokens/letter-spacing.css';
 @import 'tokens/shadow.css';
 @import 'tokens/components.css';
 @import '../components/text/text.css';
