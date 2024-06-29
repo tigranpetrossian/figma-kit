@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { useState } from 'react';
 import { Slider } from './slider';
 
 type Story = StoryObj<typeof Slider>;
@@ -161,4 +162,15 @@ export const VerticalWithRange: Story = {
     orientation: 'vertical',
     range: true,
   },
+};
+
+export const WithRangeAnchor = () => {
+  const [value, setValue] = useState([400]);
+
+  return (
+    <div style={{ width: 200 }}>
+      <div>{value}</div>
+      <Slider range rangeAnchor={400} min={100} max={900} value={value} onValueChange={setValue} />
+    </div>
+  );
 };

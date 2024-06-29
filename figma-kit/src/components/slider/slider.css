@@ -1,6 +1,14 @@
-:root {
-  --fp-slider-root-size: var(--space-3);
-  --fp-slider-track-size: var(--space-px);
+:root,
+.light,
+.light-theme {
+  --slider-root-size: var(--space-6);
+  --slider-track-size: var(--space-4);
+  --color-border-slider-track: #0000001a;
+}
+
+.dark,
+.dark-theme {
+  --color-border-slider-track: #ffffff1a;
 }
 
 .fp-sliderRoot {
@@ -11,54 +19,59 @@
   outline: 0;
 
   &[data-orientation='horizontal'] {
-    height: var(--fp-slider-root-size);
+    height: var(--slider-root-size);
   }
 
   &[data-orientation='vertical'] {
     flex-direction: column;
-    width: var(--fp-slider-root-size);
+    width: var(--slider-root-size);
   }
 }
 
 .fp-sliderTrack {
-  overflow: hidden;
+  box-sizing: border-box;
   position: relative;
-  background-color: var(--figma-color-icon-tertiary);
+  overflow: hidden;
   flex-grow: 1;
+  background-color: var(--figma-color-bg-secondary);
+  border-radius: var(--radius-full);
+  outline: 1px solid var(--figma-color-border);
+  outline-offset: -1px;
 
   &[data-orientation='horizontal'] {
-    height: var(--fp-slider-track-size);
+    height: var(--slider-track-size);
   }
 
   &[data-orientation='vertical'] {
-    width: var(--fp-slider-track-size);
+    width: var(--slider-track-size);
   }
 }
 
 .fp-sliderRange {
   position: absolute;
   display: block;
-  background-color: var(--figma-color-border-strong);
+  background-color: var(--figma-color-bg-brand);
+  border-radius: var(--radius-full);
 
   &[data-orientation='horizontal'] {
-    height: var(--fp-slider-track-size);
+    height: var(--slider-track-size);
   }
 
   &[data-orientation='vertical'] {
-    width: var(--fp-slider-track-size);
+    width: var(--slider-track-size);
   }
 }
 
 .fp-sliderThumb {
   display: block;
-  width: 8px;
-  height: 8px;
+  width: var(--slider-track-size);
+  height: var(--slider-track-size);
+  background-color: var(--figma-color-icon-onbrand);
   border-radius: var(--radius-full);
-  background-color: var(--figma-color-icon);
+  box-shadow: var(--elevation-200);
   outline: 0;
 
   &.fp-sliderThumb-focusVisible:focus-visible {
     outline: 1px solid var(--figma-color-border-selected);
-    outline-offset: 2px;
   }
 }
