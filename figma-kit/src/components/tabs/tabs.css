@@ -1,6 +1,7 @@
 .fp-TabsList {
   display: flex;
   overflow-y: auto;
+  gap: var(--space-2);
 }
 
 .fp-TabsTrigger {
@@ -10,31 +11,21 @@
   align-items: center;
   justify-content: center;
   height: var(--space-6);
-  gap: var(--space-1);
+  padding: 0 var(--space-2);
   font-family: var(--font-family-default);
-  font-weight: var(--font-weight-strong);
+  font-size: var(--font-size-default);
+  font-weight: var(--font-weight-default);
+  letter-spacing: var(--letter-spacing-default);
+  line-height: var(--line-height-default);
 
   &:where([data-state='inactive']) {
     color: var(--figma-color-text-secondary);
   }
 
   &:where([data-state='active']) {
+    border-radius: var(--radius-medium);
+    background: var(--figma-color-bg-secondary);
     color: var(--figma-color-text);
     font-weight: var(--font-weight-strong);
-  }
-
-  &:where(:hover) {
-    color: var(--figma-color-text);
-  }
-
-  &:where(.fp-TabsList.fp-size-1 > &) {
-    font-size: var(--font-size-default);
-    padding: 0 var(--space-2);
-  }
-
-  &:where(.fp-TabsList.fp-size-2 > &) {
-    font-size: var(--font-size-5);
-    line-height: var(--line-height-5);
-    padding: 0 var(--space-3);
   }
 }

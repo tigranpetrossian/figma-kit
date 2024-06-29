@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import * as RadixTabs from '@radix-ui/react-tabs';
-import type { VariantProps } from 'class-variance-authority';
-import { cva, cx } from 'class-variance-authority';
+import { cx } from 'class-variance-authority';
 import { composeRefs } from '@lib/react/use-compose-refs';
 
 type RootElement = React.ElementRef<typeof RadixTabs.Root>;
@@ -12,24 +11,12 @@ const Root = React.forwardRef<RootElement, RootProps>((props, ref) => {
   return <RadixTabs.Root ref={ref} className={cx(className, 'fp-TabsRoot')} {...rootProps} />;
 });
 
-const list = cva('fp-TabsList', {
-  variants: {
-    size: {
-      '1': 'fp-size-1',
-      '2': 'fp-size-2',
-    },
-  },
-  defaultVariants: {
-    size: '1',
-  },
-});
-
 type ListElement = React.ElementRef<typeof RadixTabs.List>;
-type ListProps = RadixTabs.TabsProps & VariantProps<typeof list>;
+type ListProps = RadixTabs.TabsListProps;
 
 const List = React.forwardRef<ListElement, ListProps>((props, ref) => {
-  const { className, size, ...listProps } = props;
-  return <RadixTabs.List ref={ref} className={list({ className, size })} {...listProps} />;
+  const { className, ...listProps } = props;
+  return <RadixTabs.List ref={ref} className={cx(className, 'fp-TabsList')} {...listProps} />;
 });
 
 type TriggerElement = React.ElementRef<typeof RadixTabs.Trigger>;
