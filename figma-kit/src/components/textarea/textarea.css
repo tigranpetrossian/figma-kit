@@ -3,25 +3,25 @@
   box-sizing: border-box;
   display: block;
   width: 100%;
-  min-height: 28px;
-  padding: calc(var(--space-1_5) - 1px) calc(var(--space-2) - 1px);
+  height: var(--space-6);
+  padding: var(--space-1) var(--space-2);
+  background-color: var(--figma-color-bg-secondary);
+  border-radius: var(--radius-medium);
   font-family: var(--font-family-default);
   font-size: var(--font-size-default);
   font-weight: var(--font-weight-default);
   letter-spacing: var(--letter-spacing-default);
   line-height: var(--line-height-default);
-  background-color: var(--figma-color-bg);
   color: var(--figma-color-text);
-  border-radius: var(--radius-default);
-  border-width: 1px;
-  border-style: solid;
-  border-color: var(--figma-color-border);
-  resize: none; /*TODO: Make a prop*/
+  outline-width: 1px;
+  outline-style: solid;
+  outline-offset: -1px;
+  outline-color: transparent;
+  resize: none;
   word-break: break-word;
 
   &:focus {
-    outline-offset: -1px;
-    outline: 2px solid var(--figma-color-border-selected);
+    outline-color: var(--figma-color-border-selected);
   }
 
   &:disabled {

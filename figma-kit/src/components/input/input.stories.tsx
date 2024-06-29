@@ -8,16 +8,10 @@ const meta: Meta<typeof Input> = {
   title: 'Components/Input',
   tags: ['autodocs'],
   args: {
-    variant: 'normal',
-    value: '',
     placeholder: '',
     disabled: false,
   },
   argTypes: {
-    variant: {
-      options: ['normal', 'ghost', 'underline', 'base'],
-      control: { type: 'radio' },
-    },
     selectOnClick: {
       type: 'boolean',
       description: 'Enable content selection on click.',
@@ -27,23 +21,9 @@ const meta: Meta<typeof Input> = {
 
 export default meta;
 
-export const Normal: Story = {
+export const Basic: Story = {
   args: {
-    variant: 'normal',
-  },
-};
-
-export const Ghost: Story = {
-  args: {
-    variant: 'ghost',
-    placeholder: 'Ghost',
-  },
-};
-
-export const Underline: Story = {
-  args: {
-    variant: 'underline',
-    placeholder: 'Suffix',
+    placeholder: 'Basic input',
   },
 };
 
