@@ -1,0 +1,26 @@
+diff --git a/dist/index.js b/dist/index.js
+index 3fe3bfcc8e0949846745df15dcd41e98e870bbfc..a509a32159a02a5f175662beec9d03a4547ab856 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -464,7 +464,7 @@ var SliderThumbImpl = React.forwardRef(
+         style: {
+           transform: "var(--radix-slider-thumb-transform)",
+           position: "absolute",
+-          [orientation.startEdge]: `calc(${percent}% + ${thumbInBoundsOffset}px)`
++          [orientation.startEdge]: `${percent}%`
+         },
+         children: [
+           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Collection.ItemSlot, { scope: props.__scopeSlider, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+diff --git a/dist/index.mjs b/dist/index.mjs
+index f78187804a6afb4aa3d5c0118d4afb8e12f1b25e..d2cf849e2b66fe973018f1bdf50a23cc7c99b70a 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -421,7 +421,7 @@ var SliderThumbImpl = React.forwardRef(
+         style: {
+           transform: "var(--radix-slider-thumb-transform)",
+           position: "absolute",
+-          [orientation.startEdge]: `calc(${percent}% + ${thumbInBoundsOffset}px)`
++          [orientation.startEdge]: `${percent}%`
+         },
+         children: [
+           /* @__PURE__ */ jsx(Collection.ItemSlot, { scope: props.__scopeSlider, children: /* @__PURE__ */ jsx(
