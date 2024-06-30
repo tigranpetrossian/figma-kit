@@ -1,0 +1,50 @@
+.fp-RadioGroupRoot {
+  display: flex;
+
+  &[data-orientation='horizontal'] {
+    gap: var(--space-5);
+  }
+
+  &[data-orientation='vertical'] {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+}
+
+.fp-RadioGroupItem {
+  all: unset;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  background-color: var(--figma-color-bg);
+  border: 4px solid transparent;
+  border-radius: var(--radius-full);
+  outline-offset: -1px;
+  outline: 1px solid var(--figma-color-icon);
+
+  &:focus-visible {
+    outline-color: var(--figma-color-border-selected);
+  }
+
+  &[data-state='checked'] {
+    background-color: var(--figma-color-icon);
+    border-color: var(--figma-color-bg);
+  }
+
+  &[data-disabled] {
+    outline-color: var(--figma-color-icon-disabled);
+  }
+
+  &[data-disabled][data-state='checked'] {
+    background-color: var(--figma-color-icon-disabled);
+  }
+}
+
+.fp-RadioGroupLabel {
+  display: flex;
+  gap: var(--space-2);
+
+  &[data-disabled] {
+    color: var(--figma-color-text-disabled);
+  }
+}

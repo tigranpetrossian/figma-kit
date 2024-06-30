@@ -27,5 +27,5 @@ to get the UI engineering out of the way of building great plugins.
 - [x] Popover
 - [x] Text
 - [x] Tabs
-- [ ] Checkbox & Radio
+- [x] Checkbox & Radio
 - [ ] Toggle group
