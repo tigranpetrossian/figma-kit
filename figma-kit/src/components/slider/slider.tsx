@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as RadixSlider from '@radix-ui/react-slider';
 import { cx } from 'class-variance-authority';
+import { isDeepEqual } from 'remeda';
 import { useComposedRefs } from '@lib/react/use-compose-refs';
 import { normalize } from '@lib/number/normalize';
 
@@ -36,17 +37,23 @@ const Slider = React.forwardRef<SliderElement, SliderProps>((props, forwardedRef
   const ref = useComposedRefs(rootRef, forwardedRef);
   const { onPointerDown, focusVisible } = useSliderVisibleFocus(rootRef);
   const [trackedValue, setTrackedValue] = useState(value ?? defaultValue);
+  const prevValueRef = useRef(value);
+  const prevDefaultValueRef = useRef(defaultValue);
 
+  // Internally tracking a value even in uncontrolled mode.
+  // This is required for range and hints to work.
   useEffect(() => {
-    // Internally tracking a value even in uncontrolled mode.
-    // This is required for range and hints to work.
+    if (isDeepEqual(value, prevValueRef.current) && isDeepEqual(defaultValue, prevDefaultValueRef.current)) {
+      return;
+    }
+
     setTrackedValue(value ?? defaultValue);
   }, [value, defaultValue]);
 
+  // Radix adjusts the thumb position by default to align with the track edges at min/max positions.
+  // This behavior is removed via a patch (see: patches/@radix-ui__react-slider@1.2.0.patch) and replaced it with a CSS solution.
+  // Additionally, we override the transform of the thumb to ensure it aligns with hints.
   useEffect(() => {
-    // Radix adjusts the thumb position by default to align with the track edges at min/max positions.
-    // This behavior is removed via a patch (see: patches/@radix-ui__react-slider@1.2.0.patch) and replaced it with a CSS solution.
-    // Additionally, we override the transform of the thumb to ensure it aligns with hints.
     if (rootRef.current) {
       rootRef.current.style.setProperty(
         '--radix-slider-thumb-transform',

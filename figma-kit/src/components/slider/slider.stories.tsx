@@ -183,6 +183,23 @@ export const Hints: Story = {
   },
 };
 
+export const HintLabel: Story = {
+  decorators: [
+    (Story) => {
+      return (
+        <div style={{ width: 200 }}>
+          <Story />
+        </div>
+      );
+    },
+  ],
+  args: {
+    hints: [60],
+    min: 0,
+    max: 100,
+  },
+};
+
 export const Disabled: Story = {
   decorators: [
     (Story) => {
