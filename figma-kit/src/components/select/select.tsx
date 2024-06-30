@@ -1,8 +1,7 @@
 import React from 'react';
 import * as RadixSelect from '@radix-ui/react-select';
 import { cx } from 'class-variance-authority';
-import { CheckmarkIcon } from '@components/icons/checkmark';
-import { ChevronDownIcon, ChevronUpIcon } from '@components/icons';
+import { ChevronDownIcon, ChevronUpIcon, CheckmarkIcon } from '@components/icons';
 
 type RootProps = RadixSelect.SelectProps;
 

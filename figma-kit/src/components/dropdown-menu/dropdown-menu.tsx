@@ -1,9 +1,7 @@
 import React from 'react';
 import * as RadixMenu from '@radix-ui/react-dropdown-menu';
 import { cx } from 'class-variance-authority';
-import { CircleIcon } from '@components/icons';
-import { CheckmarkIcon } from '@components/icons/checkmark';
-import { ChevronRightIcon } from '@components/icons/chevron-right';
+import { CircleIcon, CheckmarkIcon, ChevronRightIcon } from '@components/icons';
 
 type RootProps = RadixMenu.DropdownMenuProps;
 const Root = RadixMenu.Root;
