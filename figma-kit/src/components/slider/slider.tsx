@@ -50,8 +50,16 @@ const Slider = React.forwardRef<SliderElement, SliderProps>((props, forwardedRef
   }, [rootRef, orientation, dir, inverted]);
 
   const handleValueChange = (value: number[]) => {
-    onValueChange?.(value);
-    setTrackedValue(value);
+    const result = value.map((value) => {
+      const closestHint = hints?.find((hint) => Math.abs(hint - value) <= 15);
+      if (typeof closestHint === 'number') {
+        return closestHint;
+      }
+      return value;
+    });
+
+    onValueChange?.(result);
+    setTrackedValue(result);
   };
 
   return (
