@@ -38,6 +38,12 @@ const Slider = React.forwardRef<SliderElement, SliderProps>((props, forwardedRef
   const [trackedValue, setTrackedValue] = useState(value ?? defaultValue);
 
   useEffect(() => {
+    // Internally tracking a value even in uncontrolled mode.
+    // This is required for range and hints to work.
+    setTrackedValue(value ?? defaultValue);
+  }, [value, defaultValue]);
+
+  useEffect(() => {
     // Radix adjusts the thumb position by default to align with the track edges at min/max positions.
     // This behavior is removed via a patch (see: patches/@radix-ui__react-slider@1.2.0.patch) and replaced it with a CSS solution.
     // Additionally, we override the transform of the thumb to ensure it aligns with hints.
@@ -67,8 +73,7 @@ const Slider = React.forwardRef<SliderElement, SliderProps>((props, forwardedRef
       tabIndex={-1}
       ref={ref}
       className={cx(className, 'fp-SliderRoot')}
-      defaultValue={defaultValue}
-      value={value}
+      value={trackedValue}
       onValueChange={handleValueChange}
       onPointerDown={onPointerDown}
       min={min}

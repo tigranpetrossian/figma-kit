@@ -73,6 +73,10 @@
     margin-top: calc((var(--slider-thumb-width) / 2) * -1);
     margin-bottom: calc((var(--slider-thumb-width) / 2) * -1);
   }
+
+  &[data-disabled] {
+    background-color: var(--figma-color-bg-disabled);
+  }
 }
 
 .fp-SliderThumb {
@@ -85,6 +89,12 @@
   border-radius: var(--radius-full);
   box-shadow: var(--elevation-200);
   outline: 0;
+
+  &[data-disabled] {
+    background-color: var(--figma-color-bg-disabled-secondary);
+    border: 0;
+    box-shadow: none;
+  }
 
   &.fp-SliderThumb-focusVisible:focus-visible {
     outline: 1px solid var(--figma-color-border-selected);
