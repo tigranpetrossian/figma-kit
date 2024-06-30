@@ -28,4 +28,4 @@ to get the UI engineering out of the way of building great plugins.
 - [x] Text
 - [x] Tabs
 - [x] Checkbox & Radio
-- [ ] Toggle group
+- [x] Segmented control

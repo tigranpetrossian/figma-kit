@@ -45,6 +45,7 @@ const preview: Preview = {
             'Value Field',
             'Checkbox',
             'Radio Group',
+            'Segmented Control',
             'Slider',
             'Popover',
             'Dialog',
