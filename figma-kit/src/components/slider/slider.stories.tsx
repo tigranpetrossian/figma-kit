@@ -132,21 +132,6 @@ export const Vertical: Story = {
   },
 };
 
-export const BaseValue: Story = {
-  decorators: [
-    (Story) => {
-      return (
-        <div style={{ width: 200 }}>
-          <Story />
-        </div>
-      );
-    },
-  ],
-  args: {
-    defaultValue: [50],
-    baseValue: 50,
-  },
-};
 export const RangeAnchor: Story = {
   decorators: [
     (Story) => {
@@ -161,6 +146,7 @@ export const RangeAnchor: Story = {
     defaultValue: [50],
     rangeAnchor: 50,
     baseValue: 50,
+    hints: [50],
   },
 };
 

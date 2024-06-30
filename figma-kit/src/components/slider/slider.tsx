@@ -5,6 +5,12 @@ import { isDeepEqual } from 'remeda';
 import { useComposedRefs } from '@lib/react/use-compose-refs';
 import { normalize } from '@lib/number/normalize';
 
+const SNAP_PERCENTAGE_THRESHOLD = 2;
+const DEFAULT_MIN = 0;
+const DEFAULT_MAX = 100;
+const DEFAULT_ORIENTATION = 'horizontal';
+const DEFAULT_DIRECTION = 'ltr';
+
 type SliderElement = React.ElementRef<typeof RadixSlider.Root>;
 
 type SliderOwnProps = {
@@ -18,13 +24,13 @@ type SliderProps = Omit<RadixSlider.SliderProps, 'asChild' | 'children'> & Slide
 const Slider = React.forwardRef<SliderElement, SliderProps>((props, forwardedRef) => {
   const {
     className,
-    min = 0,
-    max = 100,
+    min = DEFAULT_MIN,
+    max = DEFAULT_MAX,
     defaultValue = [min],
     value,
     onValueChange,
-    orientation = 'horizontal',
-    dir = 'ltr',
+    orientation = DEFAULT_ORIENTATION,
+    dir = DEFAULT_DIRECTION,
     inverted,
     disabled,
     range = true,
@@ -63,16 +69,10 @@ const Slider = React.forwardRef<SliderElement, SliderProps>((props, forwardedRef
   }, [rootRef, orientation, dir, inverted]);
 
   const handleValueChange = (value: number[]) => {
-    const result = value.map((value) => {
-      const closestHint = hints?.find((hint) => Math.abs(hint - value) <= 15);
-      if (typeof closestHint === 'number') {
-        return closestHint;
-      }
-      return value;
-    });
+    const snappedValue = value.map((value) => getSnappedValue(value, hints, min, max));
 
-    onValueChange?.(result);
-    setTrackedValue(result);
+    onValueChange?.(snappedValue);
+    setTrackedValue(snappedValue);
   };
 
   return (
@@ -258,6 +258,18 @@ function useSliderVisibleFocus(ref: React.RefObject<SliderElement>) {
   };
 
   return { onPointerDown: handlePointerDown, focusVisible: !pointerDown };
+}
+
+function getSnappedValue(value: number, hints: number[] | undefined, min: number, max: number) {
+  // TODO: snappingFactor is eyeballed to work well for most sizes, but is counterintutive.
+  //       It should ideally be calculated from the width of the track, with pixel threshold of ~10.
+  const snappingFactor = normalize([0, 100], [0, max - min])(SNAP_PERCENTAGE_THRESHOLD);
+  const closestHint = hints?.find((hint) => Math.abs(hint - value) <= snappingFactor);
+  if (typeof closestHint === 'number') {
+    return closestHint;
+  }
+
+  return value;
 }
 
 export type { SliderProps };
