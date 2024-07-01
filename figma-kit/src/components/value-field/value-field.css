@@ -4,20 +4,29 @@
   align-items: center;
   border-radius: var(--radius-medium);
   padding: 0 1px;
-  outline-offset: -1px;
   background-color: var(--figma-color-bg-secondary);
   font-family: var(--font-family-default);
   font-size: var(--font-size-default);
   font-weight: var(--font-weight-default);
   letter-spacing: var(--letter-spacing-default);
   line-height: var(--line-height-default);
+  outline-width: 1px;
+  outline-style: solid;
+  outline-offset: -1px;
+  outline-color: transparent;
 
-  &:hover {
-    outline: 1px solid var(--figma-color-border);
+  &:hover:where(:not([data-disabled])) {
+    outline-color: var(--figma-color-border);
   }
 
   &:focus-within {
-    outline: 1px solid var(--figma-color-border-selected);
+    outline-color: var(--figma-color-border-selected);
+  }
+
+  &[data-disabled] {
+    background-color: var(--figma-color-bg);
+    outline-color: var(--figma-color-border-disabled);
+    color: var(--figma-color-text-disabled);
   }
 
   .fp-ValueFieldBase {
@@ -46,6 +55,11 @@
   & + .fp-ValueFieldBase {
     padding-left: 0;
   }
+
+  &[data-disabled] {
+    color: var(--figma-color-text-disabled);
+    --color-icon: var(--figma-color-icon-disabled);
+  }
 }
 
 .fp-ValueFieldMulti {
@@ -57,12 +71,17 @@
   height: var(--space-6);
   background-color: var(--figma-color-bg-secondary);
 
-  &:hover {
+  &:hover:where(:not([data-disabled])) {
     border: 1px solid var(--figma-color-border);
   }
 
   &:focus-within {
     outline: 1px solid var(--figma-color-border-selected);
+  }
+
+  &[data-disabled] {
+    border: 1px solid var(--figma-color-border-disabled);
+    background-color: var(--figma-color-bg);
   }
 
   .fp-ValueFieldRoot {

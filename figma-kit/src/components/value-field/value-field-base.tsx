@@ -5,6 +5,7 @@ import type { InputProps } from '@components/input';
 import { Input } from '@components/input';
 import { useComposedRefs } from '@lib/react/use-compose-refs';
 import { DEFAULT_BIG_NUDGE, DEFAULT_SMALL_NUDGE } from '@lib/constants';
+import { useValueFieldContext } from '@components/value-field/value-field-elements';
 import type { Formatter } from './types';
 
 type BaseProps<V> = Omit<InputProps, 'value' | 'onChange'> & {
@@ -25,12 +26,14 @@ const Base = <V,>(props: BaseProps<V>) => {
     smallNudge = DEFAULT_SMALL_NUDGE,
     bigNudge = DEFAULT_BIG_NUDGE,
     formatter,
+    disabled,
     ...fieldProps
   } = props;
   const ref = useRef<HTMLInputElement>(null);
   const composedRef = useComposedRefs(forwardedRef, ref);
   const [editingValue, setEditingValue] = useState<string | null>(null);
   const inputValue = editingValue ?? formatter.format(valueProp);
+  const context = useValueFieldContext('ValueField');
 
   const submit = (input: string) => {
     const parserResult = formatter.parse(input, valueProp);
@@ -109,6 +112,7 @@ const Base = <V,>(props: BaseProps<V>) => {
       className={cx(className, 'fp-ValueFieldBase')}
       value={inputValue}
       onChange={handleChange}
+      disabled={disabled || context?.disabled}
       {...mergeProps(fieldProps, { onBlur: handleBlur, onKeyDown: handleKeyDown })}
     />
   );
