@@ -31,6 +31,9 @@ importers:
       '@storybook/addon-links':
         specifier: 8.1.5
         version: 8.1.5(react@18.3.1)
+      '@storybook/addon-storysource':
+        specifier: 8.1.5
+        version: 8.1.5
       '@storybook/blocks':
         specifier: 8.1.5
         version: 8.1.5(@types/react-dom@18.3.0)(@types/react@18.3.3)(prettier@3.2.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -2181,6 +2184,9 @@ packages:
   '@storybook/addon-outline@8.1.5':
     resolution: {integrity: sha512-eCXnGN24ewfvUKKpzTJP7HtPJkAexIBnQdJCw9R9Jk8IyHh7xPWsrz+haY1FQHTXZGAevoBcI4/tpG2XOumBlw==}
 
+  '@storybook/addon-storysource@8.1.5':
+    resolution: {integrity: sha512-QrK1HanCsAwmilQ8hWDdY8IYoeZNao++lx4wPaOmE+qcdoOXsSEUGSfD/T84dE9lHZ3uWqRLaQn49+VoT3FI2Q==}
+
   '@storybook/addon-toolbars@8.1.5':
     resolution: {integrity: sha512-UxEtb4ii0FORqUuPgLycPQ0MQ4Bq2YWBft6yT00xMjUuwkld27BlrvnpaBlx+disgWwOKGKVd02f/4dbZr2s1g==}
 
@@ -2337,6 +2343,9 @@ packages:
 
   '@storybook/router@8.1.5':
     resolution: {integrity: sha512-DCwvAswlbLhQu6REPV04XNRhtPvsrRqHjMHKzjlfs+qYJWY7Egkofy05qlegqjkMDve33czfnRGBm0C16IydkA==}
+
+  '@storybook/source-loader@8.1.5':
+    resolution: {integrity: sha512-MPAPM0kiMZNmzVx2YNCSift1toDA5nYPjqt6nEJ8Yn/XZFiCZL8gpUJ90pMd4NBWP0kNsC2UY5+nEY2WIUKwuw==}
 
   '@storybook/telemetry@8.1.5':
     resolution: {integrity: sha512-QbB1Ox7oBaCvIF2TacFjPLi1XYeHxSPeZUuFXeE+tSMdvvWZzYLnXfj/oISmV6Q+X5VZfyJVMrZ2LfeW9CuFNg==}
@@ -8634,6 +8643,12 @@ snapshots:
       '@storybook/global': 5.0.0
       ts-dedent: 2.2.0
 
+  '@storybook/addon-storysource@8.1.5':
+    dependencies:
+      '@storybook/source-loader': 8.1.5
+      estraverse: 5.3.0
+      tiny-invariant: 1.3.3
+
   '@storybook/addon-toolbars@8.1.5': {}
 
   '@storybook/addon-viewport@8.1.5':
@@ -9138,6 +9153,14 @@ snapshots:
       '@storybook/client-logger': 8.1.5
       memoizerific: 1.11.3
       qs: 6.12.1
+
+  '@storybook/source-loader@8.1.5':
+    dependencies:
+      '@storybook/csf': 0.1.7
+      '@storybook/types': 8.1.5
+      estraverse: 5.3.0
+      lodash: 4.17.21
+      prettier: 3.2.5
 
   '@storybook/telemetry@8.1.5(prettier@3.2.5)':
     dependencies:

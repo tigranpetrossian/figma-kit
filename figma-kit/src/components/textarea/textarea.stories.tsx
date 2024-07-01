@@ -21,6 +21,5 @@ export default meta;
 export const Basic: Story = {
   args: {
     placeholder: 'What is it for?',
-    className: 'dogs',
   },
 };
