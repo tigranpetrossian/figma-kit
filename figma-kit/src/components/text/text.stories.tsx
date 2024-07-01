@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import { Text } from './text';
+import { Text, Link } from './text';
 
 const meta = {
   title: 'Components/Text',
@@ -53,20 +53,21 @@ const meta = {
 
 export default meta;
 
-export const Default: StoryObj<typeof Text> = {
-  args: {
-    children: 'Default text',
-  },
-};
-
-export const TextStory: StoryObj<typeof Text> = {
+export const BasicText: StoryObj<typeof Text> = {
   args: {
     children: (
       <>
         <strong>This is strong text</strong> to highlight important points. <em>This is emphasized text</em> to indicate
         subtle importance. Use <code>inline code</code> for code snippets. <mark>This is marked text</mark> to draw
-        attention.
+        attention. This is a link to <Link href="https://help.figma.com/">Figma's documentation</Link>
+        .
+        <br />
+        <Text weight="default">Nested</Text>
       </>
     ),
   },
+};
+
+export const BasicLink = () => {
+  return <Link href="https://figma.com">Link</Link>;
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import type { VariantProps } from 'class-variance-authority';
-import { cva } from 'class-variance-authority';
+import { cx, cva } from 'class-variance-authority';
 import { Slot } from '@radix-ui/react-slot';
 
 const text = cva('fp-Text', {
@@ -22,11 +22,6 @@ const text = cva('fp-Text', {
     block: {
       true: 'fp-block',
     },
-  },
-  defaultVariants: {
-    size: 'medium',
-    weight: 'default',
-    align: 'start',
   },
 });
 
@@ -97,5 +92,33 @@ const Paragraph = React.forwardRef<ParagraphElement, ParagraphProps>((props, ref
   );
 });
 
-export type { TextProps, LabelProps, ParagraphProps };
-export { Text, Label, Paragraph };
+type LinkElement = React.ElementRef<'a'>;
+type LinkProps = React.ComponentPropsWithoutRef<'a'> &
+  VariantProps<typeof text> & {
+    asChild?: boolean;
+  };
+
+const Link = React.forwardRef<LinkElement, LinkProps>((props, ref) => {
+  const { asChild, className, size, weight, align, block, ...linkProps } = props;
+  const Element = asChild ? Slot : 'a';
+
+  return (
+    <Element
+      ref={ref}
+      className={cx(
+        text({
+          className,
+          size,
+          weight,
+          align,
+          block,
+        }),
+        'fp-Link'
+      )}
+      {...linkProps}
+    />
+  );
+});
+
+export type { TextProps, LabelProps, ParagraphProps, LinkProps };
+export { Text, Label, Paragraph, Link };
