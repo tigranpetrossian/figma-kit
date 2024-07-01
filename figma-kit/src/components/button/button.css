@@ -129,7 +129,7 @@
   color: var(--figma-color-text);
 
   &:hover {
-    background-color: var(--figma-color-bg-pressed);
+    background-color: var(--figma-color-bg-hover);
   }
 
   &:active {
