@@ -26,7 +26,7 @@ const meta = {
           summary: 'secondary',
         },
       },
-      options: ['primary', 'secondary', 'inverse', 'destructive', 'destructiveSecondary', 'success', 'text'],
+      options: ['primary', 'secondary', 'inverse', 'destructive', 'success', 'text'],
       control: { type: 'radio' },
     },
     size: {
