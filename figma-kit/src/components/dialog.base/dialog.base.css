@@ -1,7 +1,6 @@
 .fp-DialogBaseContent {
   font-family: var(--font-family-default);
   color: var(--figma-color-text);
-  min-width: 160px;
   background-color: var(--figma-color-bg);
   border-radius: var(--radius-large);
   box-shadow: var(--elevation-500);

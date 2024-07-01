@@ -23,16 +23,19 @@ const Trigger = React.forwardRef<TriggerElement, TriggerProps>((props, ref) => {
 type ContentElement = React.ElementRef<typeof RadixPopover.Content>;
 type ContentProps = RadixPopover.PopoverContentProps & {
   width?: CSSProperties['width'];
+  maxWidth?: CSSProperties['maxWidth'];
+  height?: CSSProperties['height'];
+  maxHeight?: CSSProperties['maxHeight'];
 };
 
 const Content = React.forwardRef<ContentElement, ContentProps>((props, ref) => {
-  const { className, style, width, ...contentProps } = props;
+  const { className, style, width, height, maxWidth, maxHeight, ...contentProps } = props;
 
   return (
     <RadixPopover.Content
       ref={ref}
       className={cx(className, 'fp-DialogBaseContent')}
-      style={{ ...style, width }}
+      style={{ ...style, width, height, maxWidth, maxHeight }}
       {...contentProps}
     />
   );

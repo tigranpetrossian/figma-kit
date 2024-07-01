@@ -42,10 +42,13 @@ type ContentElement = React.ElementRef<typeof RadixDialog.Content>;
 type ContentProps = RadixDialog.DialogContentProps &
   VariantProps<typeof content> & {
     width?: CSSProperties['width'];
+    maxWidth?: CSSProperties['maxWidth'];
+    height?: CSSProperties['height'];
+    maxHeight?: CSSProperties['maxHeight'];
   };
 
 const Content = React.forwardRef<ContentElement, ContentProps>((props, ref) => {
-  const { children, className, size, placement, style, width, ...contentProps } = props;
+  const { children, className, size, placement, style, width, height, maxWidth, maxHeight, ...contentProps } = props;
 
   return (
     <RadixDialog.Content
@@ -53,7 +56,7 @@ const Content = React.forwardRef<ContentElement, ContentProps>((props, ref) => {
       className={content({ className, size, placement })}
       // Majority figma dialogs typically don't have descriptions. Users can override this as needed.
       aria-describedby={undefined}
-      style={{ ...style, width }}
+      style={{ ...style, width, height, maxWidth, maxHeight }}
       {...contentProps}
     >
       {children}

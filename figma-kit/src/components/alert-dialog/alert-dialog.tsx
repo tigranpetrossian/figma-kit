@@ -38,16 +38,19 @@ type ContentElement = React.ElementRef<typeof RadixAlertDialog.Content>;
 type ContentProps = RadixAlertDialog.AlertDialogContentProps &
   VariantProps<typeof content> & {
     width?: CSSProperties['width'];
+    maxWidth?: CSSProperties['maxWidth'];
+    height?: CSSProperties['height'];
+    maxHeight?: CSSProperties['maxHeight'];
   };
 
 const Content = React.forwardRef<ContentElement, ContentProps>((props, ref) => {
-  const { className, size, placement, style, width, ...contentProps } = props;
+  const { className, size, placement, style, width, height, maxWidth, maxHeight, ...contentProps } = props;
 
   return (
     <RadixAlertDialog.Content
       ref={ref}
       className={content({ className, size, placement })}
-      style={{ ...style, width }}
+      style={{ ...style, width, height, maxWidth, maxHeight }}
       {...contentProps}
     />
   );
