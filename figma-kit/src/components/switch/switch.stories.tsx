@@ -10,6 +10,7 @@ const meta = {
   parameters: {
     radixUrl: 'https://www.radix-ui.com/primitives/docs/components/switch',
     radixComponentName: 'Switch',
+    controls: { expanded: true },
   },
   argTypes: {
     defaultChecked: {
