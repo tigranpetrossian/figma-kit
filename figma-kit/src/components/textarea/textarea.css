@@ -20,11 +20,17 @@
   resize: none;
   word-break: break-word;
 
+  &:hover:where(:not(:disabled, :focus)) {
+    outline-color: var(--figma-color-border);
+  }
+
   &:focus {
     outline-color: var(--figma-color-border-selected);
   }
 
   &:disabled {
+    background-color: var(--figma-color-bg);
+    outline-color: var(--figma-color-border-disabled);
     color: var(--figma-color-text-disabled);
   }
 

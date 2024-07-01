@@ -21,13 +21,9 @@
   }
 
   .fp-ValueFieldBase {
-    border-width: 0;
+    cursor: default;
+    outline: 0;
   }
-}
-
-.fp-ValueFieldBase {
-  cursor: default;
-  outline: 0;
 }
 
 .fp-ValueFieldLabel {
