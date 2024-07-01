@@ -23,7 +23,7 @@ export const Story: Story = {
             <StylesIcon />
           </IconButton>
         </Popover.Trigger>
-        <Popover.Content align="start" side="right">
+        <Popover.Content width={228}>
           <Popover.Header>
             <Popover.Title>Text styles</Popover.Title>
             <Popover.Controls>

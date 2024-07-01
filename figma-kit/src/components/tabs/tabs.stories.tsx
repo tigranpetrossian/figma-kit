@@ -49,7 +49,7 @@ export const WithinPopover = () => {
             <StylesIcon />
           </IconButton>
         </Popover.Trigger>
-        <Popover.Content side="right" align="start">
+        <Popover.Content width={300}>
           <Popover.Header>
             <Tabs.List>
               <Tabs.Trigger value="custom">Custom</Tabs.Trigger>

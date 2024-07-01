@@ -22,8 +22,8 @@ const meta: Meta<typeof ValueField.Numeric> = {
 
 export default meta;
 
-const AngleIcon = () => (
-  <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+const OpacityIcon = () => (
+  <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
     <path
       fill="var(--color-icon)"
       fillRule="evenodd"
@@ -223,7 +223,7 @@ const WithIconComponent = () => {
   return (
     <ValueField.Root style={{ width: 100 }}>
       <ValueField.Label>
-        <AngleIcon />
+        <OpacityIcon />
       </ValueField.Label>
       <ValueField.Numeric value={value} onChange={setValue} />
     </ValueField.Root>

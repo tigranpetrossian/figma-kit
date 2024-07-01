@@ -55,6 +55,16 @@ export default meta;
 
 export const BasicText: StoryObj<typeof Text> = {
   args: {
+    size: 'medium',
+    weight: 'default',
+    align: 'start',
+    block: false,
+    children: 'Basic text',
+  },
+};
+
+export const InlineSemantics: StoryObj<typeof Text> = {
+  args: {
     children: (
       <>
         <strong>This is strong text</strong> to highlight important points. <em>This is emphasized text</em> to indicate

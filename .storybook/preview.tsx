@@ -22,6 +22,7 @@ const preview: Preview = {
     ),
   ],
   parameters: {
+    layout: 'centered',
     actions: {
       disable: true,
     },
