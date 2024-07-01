@@ -6,7 +6,23 @@ type Story = StoryObj<typeof Textarea>;
 const meta: Meta<typeof Textarea> = {
   component: Textarea,
   title: 'Components/Textarea',
-  tags: ['autodocs'],
+  decorators: [
+    (Story) => {
+      return (
+        <div style={{ width: 300 }}>
+          <Story />
+        </div>
+      );
+    },
+  ],
+  argTypes: {
+    disabled: {
+      type: 'boolean',
+    },
+    minRows: {
+      type: 'number',
+    },
+  },
   parameters: {
     docs: {
       description: {
@@ -18,7 +34,7 @@ const meta: Meta<typeof Textarea> = {
 
 export default meta;
 
-export const Basic: Story = {
+export const Default: Story = {
   args: {
     placeholder: 'What is it for?',
   },
