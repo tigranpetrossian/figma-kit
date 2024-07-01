@@ -28,22 +28,26 @@
   }
 }
 
-.fp-IconButton:where(.fp-variant-default) {
+.fp-IconButton:where(.fp-size-small) {
   width: var(--space-6);
   height: var(--space-6);
+}
 
+.fp-IconButton:where(.fp-size-medium) {
+  width: var(--space-8);
+  height: var(--space-8);
+}
+
+.fp-IconButton:where(.fp-active-appearance-subtle) {
   &[data-state='open'] {
     background-color: var(--figma-color-bg-selected);
     --color-icon: var(--figma-color-icon-brand);
   }
 }
 
-.fp-IconButton:where(.fp-variant-toolbar) {
-  width: var(--space-8);
-  height: var(--space-8);
-
+.fp-IconButton:where(.fp-active-appearance-solid) {
   &[data-state='open'] {
-    background-color: var(--figma-color-bg-brand-pressed);
+    background-color: var(--figma-color-bg-selected-strong);
     --color-icon: var(--figma-color-icon-onbrand);
   }
 }

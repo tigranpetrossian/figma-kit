@@ -22,6 +22,9 @@ const preview: Preview = {
     ),
   ],
   parameters: {
+    actions: {
+      disable: true,
+    },
     backgrounds: {
       grid: {
         cellSize: 8,

@@ -5,13 +5,18 @@ import { Tooltip } from '@components/tooltip';
 
 const iconButton = cva('fp-IconButton', {
   variants: {
-    variant: {
-      default: 'fp-variant-default',
-      toolbar: 'fp-variant-toolbar',
+    size: {
+      small: 'fp-size-small',
+      medium: 'fp-size-medium',
+    },
+    activeAppearance: {
+      subtle: 'fp-active-appearance-subtle',
+      solid: 'fp-active-appearance-solid',
     },
   },
   defaultVariants: {
-    variant: 'default', // 👍
+    size: 'small',
+    activeAppearance: 'subtle',
   },
 });
 
@@ -24,9 +29,22 @@ type IconButtonProps = React.ComponentPropsWithoutRef<'button'> &
   };
 
 const IconButton = React.forwardRef<IconButtonElement, IconButtonProps>((props, ref) => {
-  const { className, variant, 'aria-label': ariaLabel, tooltipContent, disableTooltip, ...iconButtonProps } = props;
+  const {
+    className,
+    size,
+    activeAppearance,
+    'aria-label': ariaLabel,
+    tooltipContent,
+    disableTooltip,
+    ...iconButtonProps
+  } = props;
   const buttonElement = (
-    <button ref={ref} className={iconButton({ className, variant })} aria-label={ariaLabel} {...iconButtonProps} />
+    <button
+      ref={ref}
+      className={iconButton({ className, size, activeAppearance })}
+      aria-label={ariaLabel}
+      {...iconButtonProps}
+    />
   );
 
   return disableTooltip ? buttonElement : <Tooltip content={tooltipContent ?? ariaLabel}>{buttonElement}</Tooltip>;

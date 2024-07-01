@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { TooltipProvider } from '@components/tooltip';
-import { PlusIcon } from '@components/icons';
+import { PlusIcon, StylesIcon } from '@components/icons';
+import * as Popover from '@components/popover';
+import { Text } from '@components/text';
 import { IconButton } from './icon-button';
 
 type Story = StoryObj<typeof IconButton>;
@@ -18,19 +20,34 @@ const meta = {
         required: true,
       },
     },
-    variant: {
+    size: {
       description: 'Size of the button.',
-      type: 'string',
       table: {
         type: {
           summary: 'enum',
         },
         defaultValue: {
-          summary: 'default',
+          summary: 'small',
         },
       },
-      options: ['default', 'toolbar'],
+      options: ['small', 'medium'],
       control: { type: 'radio' },
+    },
+    activeAppearance: {
+      description: 'Appearance of the button when in active/pressed mode',
+      table: {
+        type: {
+          summary: 'enum',
+        },
+        defaultValue: {
+          summary: 'subtle',
+        },
+      },
+      options: ['subtle', 'solid'],
+      control: { type: 'radio' },
+    },
+    disabled: {
+      type: 'boolean',
     },
     tooltipContent: {
       description: 'Custom content for the tooltip. Defaults to aria-label if not specified.',
@@ -52,9 +69,33 @@ const meta = {
 
 export default meta;
 
-export const Story: Story = {
+export const Default: Story = {
+  render: (args) => {
+    return (
+      <Popover.Root>
+        <Popover.Trigger>
+          <IconButton {...args}>
+            <StylesIcon />
+          </IconButton>
+        </Popover.Trigger>
+        <Popover.Content width={300} maxWidth="100vw">
+          <Popover.Header>
+            <Popover.Title>Popover</Popover.Title>
+            <Popover.Controls>
+              <Popover.Close />
+            </Popover.Controls>
+          </Popover.Header>
+          <Popover.Section>
+            <Text>A sample popover for demonstrating icon button active state.</Text>
+          </Popover.Section>
+        </Popover.Content>
+      </Popover.Root>
+    );
+  },
   args: {
-    'aria-label': 'Apply variable mode',
+    'aria-label': 'Open popover',
+    activeAppearance: 'subtle',
+    size: 'small',
     children: <PlusIcon />,
   },
 };
