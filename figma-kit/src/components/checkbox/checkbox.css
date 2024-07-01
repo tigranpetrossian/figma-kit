@@ -57,17 +57,17 @@
 }
 
 .fp-CheckboxInput:checked ~ .fp-CheckboxIndicator .fp-CheckboxCheckmark {
-  color: var(--figma-color-icon-onbrand);
+  --color-icon: var(--figma-color-icon-onbrand);
   display: block;
 }
 
 .fp-CheckboxInput:indeterminate ~ .fp-CheckboxIndicator .fp-CheckboxIndeterminate {
-  color: var(--figma-color-icon);
+  --color-icon: var(--figma-color-icon);
   display: block;
 }
+
 .fp-CheckboxInput:disabled:indeterminate ~ .fp-CheckboxIndicator .fp-CheckboxIndeterminate {
-  color: var(--figma-color-icon-disabled);
-  display: block;
+  --color-icon: var(--figma-color-icon-disabled);
 }
 
 .fp-CheckboxLabel {

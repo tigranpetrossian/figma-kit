@@ -11,7 +11,7 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: var(--figma-color-icon);
+  --color-icon: var(--figma-color-icon);
   border-radius: var(--radius-medium);
 
   &:where(:hover:not(:disabled)) {
@@ -24,7 +24,7 @@
   }
 
   &:disabled {
-    color: var(--figma-color-icon-disabled);
+    --color-icon: var(--figma-color-icon-disabled);
   }
 }
 
@@ -34,7 +34,7 @@
 
   &[data-state='open'] {
     background-color: var(--figma-color-bg-selected);
-    color: var(--figma-color-icon-brand);
+    --color-icon: var(--figma-color-icon-brand);
   }
 }
 
@@ -44,6 +44,6 @@
 
   &[data-state='open'] {
     background-color: var(--figma-color-bg-brand-pressed);
-    color: var(--figma-color-icon-onbrand);
+    --color-icon: var(--figma-color-icon-onbrand);
   }
 }

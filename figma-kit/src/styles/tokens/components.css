@@ -15,4 +15,9 @@
   --shadow-tooltip: var(--elevation-300);
 
   --color-overlay-dialog: #00000080;
+
+  /* Aliased for brevity when using in icon attributes */
+  --color-icon: var(--figma-color-icon);
+  --color-icon-secondary: var(--figma-color-icon-secondary);
+  --color-icon-tertiary: var(--figma-color-icon-tertiary);
 }

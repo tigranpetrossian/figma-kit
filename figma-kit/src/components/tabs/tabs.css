@@ -20,12 +20,14 @@
 
   &:where([data-state='inactive']) {
     color: var(--figma-color-text-secondary);
+    --color-icon: var(--figma-color-icon-secondary);
   }
 
   &:where([data-state='active']) {
-    border-radius: var(--radius-medium);
-    background: var(--figma-color-bg-secondary);
-    color: var(--figma-color-text);
     font-weight: var(--font-weight-strong);
+    color: var(--figma-color-text);
+    --color-icon: var(--figma-color-icon);
+    background: var(--figma-color-bg-secondary);
+    border-radius: var(--radius-medium);
   }
 }

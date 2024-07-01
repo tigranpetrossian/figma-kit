@@ -123,32 +123,47 @@ export const Text: Story = {
 
 const IconAlignLeft = () => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10">
-      <path fill="currentColor" fillRule="evenodd" d="M0 0h14v1H0V0zm0 4h8v1H0V4zm10 4H0v1h10V8z"></path>
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
+      <path fill="var(--color-icon)" fillRule="evenodd" d="M0 0h14v1H0V0zm0 4h8v1H0V4zm10 4H0v1h10V8z"></path>
     </svg>
   );
 };
 
 const IconAlignRight = () => {
   return (
-    <svg className="svg" xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10">
-      <path fill="currentColor" fillRule="evenodd" stroke="none" d="M0 0h14v1H0V0zm6 4h8v1H6V4zm8 4H4v1h10V8z"></path>
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
+      <path
+        fill="var(--color-icon)"
+        fillRule="evenodd"
+        stroke="none"
+        d="M0 0h14v1H0V0zm6 4h8v1H6V4zm8 4H4v1h10V8z"
+      ></path>
     </svg>
   );
 };
 
 const IconAlignCenter = () => {
   return (
-    <svg className="svg" xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10">
-      <path fill="currentColor" fillRule="evenodd" stroke="none" d="M0 0h14v1H0V0zm3 4h8v1H3V4zm9 4H2v1h10V8z"></path>
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
+      <path
+        fill="var(--color-icon)"
+        fillRule="evenodd"
+        stroke="none"
+        d="M0 0h14v1H0V0zm3 4h8v1H3V4zm9 4H2v1h10V8z"
+      ></path>
     </svg>
   );
 };
 
 const IconAlignJustify = () => {
   return (
-    <svg className="svg" xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10">
-      <path fill="currentColor" fillRule="evenodd" stroke="none" d="M0 0h14v1H0V0zm0 4h14v1H0V4zm14 4H0v1h14V8z"></path>
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none">
+      <path
+        fill="var(--color-icon)"
+        fillRule="evenodd"
+        stroke="none"
+        d="M0 0h14v1H0V0zm0 4h14v1H0V4zm14 4H0v1h14V8z"
+      ></path>
     </svg>
   );
 };

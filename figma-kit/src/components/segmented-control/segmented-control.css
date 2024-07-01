@@ -25,10 +25,10 @@
   letter-spacing: var(--letter-spacing-default);
   line-height: var(--line-height-default);
   white-space: nowrap;
-  color: var(--figma-color-icon-secondary);
+  --color-icon: var(--figma-color-icon-secondary);
 
   &[aria-checked='true'] {
-    color: var(--figma-color-icon);
+    --color-icon: var(--figma-color-icon);
     background-color: var(--figma-color-bg);
     box-shadow: inset 0 0 0 var(--space-px) var(--figma-color-border);
   }
@@ -39,7 +39,7 @@
   }
 
   &:disabled {
-    color: var(--figma-color-icon-disabled);
+    --color-icon: var(--figma-color-icon-disabled);
   }
 }
 
@@ -48,5 +48,8 @@
   align-items: center;
   padding: var(--space-2);
   gap: var(--space-1_5);
-  color: inherit;
+
+  [data-disabled] & {
+    color: var(--figma-color-text-disabled);
+  }
 }

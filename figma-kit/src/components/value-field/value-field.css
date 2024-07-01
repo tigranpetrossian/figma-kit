@@ -37,6 +37,7 @@
   align-self: stretch;
   flex-shrink: 0;
   color: var(--figma-color-text-secondary);
+  --color-icon: var(--figma-color-icon-secondary);
   height: var(--space-6);
   width: var(--space-6);
 

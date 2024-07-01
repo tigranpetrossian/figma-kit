@@ -66,10 +66,10 @@
 }
 
 .fp-MenuSubtriggerCaret {
-  color: var(--color-icon-menu);
   margin-left: auto;
   margin-right: calc(-1 * var(--space-2));
   padding-left: var(--space-6);
+  --color-icon: var(--color-icon-menu);
 }
 
 .fp-MenuCheckboxItem,
@@ -78,7 +78,7 @@
 }
 
 .fp-MenuItemIndicator {
-  color: var(--color-icon-menu);
   position: absolute;
   left: var(--space-1);
+  --color-icon: var(--color-icon-menu);
 }
