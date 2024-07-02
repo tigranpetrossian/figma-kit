@@ -10,6 +10,7 @@ import * as Dialog from './components/dialog';
 import * as AlertDialog from './components/alert-dialog';
 import * as ValueField from './components/value-field';
 
+export { Flex } from './components/flex';
 export { Button } from './components/button';
 export { Input } from './components/input';
 export { Textarea } from './components/textarea';

@@ -1,0 +1,258 @@
+.fp-Flex {
+  display: flex;
+}
+
+.fp-Flex:where(.fp-direction-row) {
+  flex-direction: row;
+}
+.fp-Flex:where(.fp-direction-column) {
+  flex-direction: column;
+}
+.fp-Flex:where(.fp-direction-row-reverse) {
+  flex-direction: row-reverse;
+}
+.fp-Flex:where(.fp-direction-column-reverse) {
+  flex-direction: column-reverse;
+}
+
+.fp-Flex:where(.fp-align-start) {
+  align-items: flex-start;
+}
+.fp-Flex:where(.fp-align-center) {
+  align-items: center;
+}
+.fp-Flex:where(.fp-align-end) {
+  align-items: flex-end;
+}
+.fp-Flex:where(.fp-align-baseline) {
+  align-items: baseline;
+}
+.fp-Flex:where(.fp-align-stretch) {
+  align-items: stretch;
+}
+
+/* Justify Classes */
+.fp-Flex:where(.fp-justify-start) {
+  justify-content: flex-start;
+}
+.fp-Flex:where(.fp-justify-center) {
+  justify-content: center;
+}
+.fp-Flex:where(.fp-justify-end) {
+  justify-content: flex-end;
+}
+.fp-Flex:where(.fp-justify-between) {
+  justify-content: space-between;
+}
+
+.fp-Flex:where(.fp-wrap-nowrap) {
+  flex-wrap: nowrap;
+}
+.fp-Flex:where(.fp-wrap-wrap) {
+  flex-wrap: wrap;
+}
+.fp-Flex:where(.fp-wrap-wrap-reverse) {
+  flex-wrap: wrap-reverse;
+}
+
+.fp-Flex:where(.fp-gap-0) {
+  gap: var(--space-0);
+}
+.fp-Flex:where(.fp-gap-px) {
+  gap: var(--space-px);
+}
+.fp-Flex:where(.fp-gap-0_5) {
+  gap: var(--space-0_5);
+}
+.fp-Flex:where(.fp-gap-1) {
+  gap: var(--space-1);
+}
+.fp-Flex:where(.fp-gap-1_5) {
+  gap: var(--space-1_5);
+}
+.fp-Flex:where(.fp-gap-2) {
+  gap: var(--space-2);
+}
+.fp-Flex:where(.fp-gap-2_5) {
+  gap: var(--space-2_5);
+}
+.fp-Flex:where(.fp-gap-3) {
+  gap: var(--space-3);
+}
+.fp-Flex:where(.fp-gap-3_5) {
+  gap: var(--space-3_5);
+}
+.fp-Flex:where(.fp-gap-4) {
+  gap: var(--space-4);
+}
+.fp-Flex:where(.fp-gap-5) {
+  gap: var(--space-5);
+}
+.fp-Flex:where(.fp-gap-6) {
+  gap: var(--space-6);
+}
+.fp-Flex:where(.fp-gap-7) {
+  gap: var(--space-7);
+}
+.fp-Flex:where(.fp-gap-8) {
+  gap: var(--space-8);
+}
+.fp-Flex:where(.fp-gap-9) {
+  gap: var(--space-9);
+}
+.fp-Flex:where(.fp-gap-10) {
+  gap: var(--space-10);
+}
+.fp-Flex:where(.fp-gap-11) {
+  gap: var(--space-11);
+}
+.fp-Flex:where(.fp-gap-12) {
+  gap: var(--space-12);
+}
+.fp-Flex:where(.fp-gap-13) {
+  gap: var(--space-13);
+}
+.fp-Flex:where(.fp-gap-14) {
+  gap: var(--space-14);
+}
+.fp-Flex:where(.fp-gap-15) {
+  gap: var(--space-15);
+}
+.fp-Flex:where(.fp-gap-16) {
+  gap: var(--space-16);
+}
+
+/* Row Gap Classes */
+.fp-Flex:where(.fp-rowGap-0) {
+  row-gap: var(--space-0);
+}
+.fp-Flex:where(.fp-rowGap-px) {
+  row-gap: var(--space-px);
+}
+.fp-Flex:where(.fp-rowGap-0_5) {
+  row-gap: var(--space-0_5);
+}
+.fp-Flex:where(.fp-rowGap-1) {
+  row-gap: var(--space-1);
+}
+.fp-Flex:where(.fp-rowGap-1_5) {
+  row-gap: var(--space-1_5);
+}
+.fp-Flex:where(.fp-rowGap-2) {
+  row-gap: var(--space-2);
+}
+.fp-Flex:where(.fp-rowGap-2_5) {
+  row-gap: var(--space-2_5);
+}
+.fp-Flex:where(.fp-rowGap-3) {
+  row-gap: var(--space-3);
+}
+.fp-Flex:where(.fp-rowGap-3_5) {
+  row-gap: var(--space-3_5);
+}
+.fp-Flex:where(.fp-rowGap-4) {
+  row-gap: var(--space-4);
+}
+.fp-Flex:where(.fp-rowGap-5) {
+  row-gap: var(--space-5);
+}
+.fp-Flex:where(.fp-rowGap-6) {
+  row-gap: var(--space-6);
+}
+.fp-Flex:where(.fp-rowGap-7) {
+  row-gap: var(--space-7);
+}
+.fp-Flex:where(.fp-rowGap-8) {
+  row-gap: var(--space-8);
+}
+.fp-Flex:where(.fp-rowGap-9) {
+  row-gap: var(--space-9);
+}
+.fp-Flex:where(.fp-rowGap-10) {
+  row-gap: var(--space-10);
+}
+.fp-Flex:where(.fp-rowGap-11) {
+  row-gap: var(--space-11);
+}
+.fp-Flex:where(.fp-rowGap-12) {
+  row-gap: var(--space-12);
+}
+.fp-Flex:where(.fp-rowGap-13) {
+  row-gap: var(--space-13);
+}
+.fp-Flex:where(.fp-rowGap-14) {
+  row-gap: var(--space-14);
+}
+.fp-Flex:where(.fp-rowGap-15) {
+  row-gap: var(--space-15);
+}
+.fp-Flex:where(.fp-rowGap-16) {
+  row-gap: var(--space-16);
+}
+
+.fp-Flex:where(.fp-columnGap-0) {
+  column-gap: var(--space-0);
+}
+.fp-Flex:where(.fp-columnGap-px) {
+  column-gap: var(--space-px);
+}
+.fp-Flex:where(.fp-columnGap-0_5) {
+  column-gap: var(--space-0_5);
+}
+.fp-Flex:where(.fp-columnGap-1) {
+  column-gap: var(--space-1);
+}
+.fp-Flex:where(.fp-columnGap-1_5) {
+  column-gap: var(--space-1_5);
+}
+.fp-Flex:where(.fp-columnGap-2) {
+  column-gap: var(--space-2);
+}
+.fp-Flex:where(.fp-columnGap-2_5) {
+  column-gap: var(--space-2_5);
+}
+.fp-Flex:where(.fp-columnGap-3) {
+  column-gap: var(--space-3);
+}
+.fp-Flex:where(.fp-columnGap-3_5) {
+  column-gap: var(--space-3_5);
+}
+.fp-Flex:where(.fp-columnGap-4) {
+  column-gap: var(--space-4);
+}
+.fp-Flex:where(.fp-columnGap-5) {
+  column-gap: var(--space-5);
+}
+.fp-Flex:where(.fp-columnGap-6) {
+  column-gap: var(--space-6);
+}
+.fp-Flex:where(.fp-columnGap-7) {
+  column-gap: var(--space-7);
+}
+.fp-Flex:where(.fp-columnGap-8) {
+  column-gap: var(--space-8);
+}
+.fp-Flex:where(.fp-columnGap-9) {
+  column-gap: var(--space-9);
+}
+.fp-Flex:where(.fp-columnGap-10) {
+  column-gap: var(--space-10);
+}
+.fp-Flex:where(.fp-columnGap-11) {
+  column-gap: var(--space-11);
+}
+.fp-Flex:where(.fp-columnGap-12) {
+  column-gap: var(--space-12);
+}
+.fp-Flex:where(.fp-columnGap-13) {
+  column-gap: var(--space-13);
+}
+.fp-Flex:where(.fp-columnGap-14) {
+  column-gap: var(--space-14);
+}
+.fp-Flex:where(.fp-columnGap-15) {
+  column-gap: var(--space-15);
+}
+.fp-Flex:where(.fp-columnGap-16) {
+  column-gap: var(--space-16);
+}

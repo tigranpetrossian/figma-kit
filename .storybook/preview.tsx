@@ -40,6 +40,7 @@ const preview: Preview = {
         order: [
           'Components',
           [
+            'Flex',
             'Text',
             'Button',
             'Icon Button',
