@@ -17,14 +17,19 @@
   ],
   "type": "module",
   "files": [
-    "dist"
+    "dist",
+    "*.css"
+
   ],
   "exports": {
+    "./styles.css": "./dist/styles.css",
+    "./figma-development-theme.css": "./dist/figma-development-theme.css",
     ".": {
       "require": "./dist/index.cjs",
       "import": "./dist/index.mjs",
       "types": "./dist/index.d.ts"
-    }
+    },
+    "./*": "./*"
   },
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
@@ -32,7 +37,10 @@
   "sideEffects": false,
   "scripts": {
     "dev": "vite build --mode development --watch",
-    "build": "vite build",
+    "build": "pnpm build:js && pnpm build:css && pnpm build:figma-dev-theme-css",
+    "build:js": "vite build",
+    "build:css": "postcss src/styles/index.css -o dist/styles.css",
+    "build:figma-dev-theme-css": "postcss src/styles/figma-development-theme.css -o dist/figma-development-theme.css",
     "test": "vitest"
   },
   "peerDependencies": {
