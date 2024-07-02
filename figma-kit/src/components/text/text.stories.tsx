@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { Text, Link } from './text';
 
-const meta = {
+const meta: Meta<typeof Text> = {
   title: 'Components/Text',
   component: Text,
   decorators: [
@@ -49,7 +49,7 @@ const meta = {
       },
     },
   },
-} satisfies Meta<typeof Text>;
+};
 
 export default meta;
 

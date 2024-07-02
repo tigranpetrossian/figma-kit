@@ -8,7 +8,7 @@ import { IconButton } from './icon-button';
 
 type Story = StoryObj<typeof IconButton>;
 
-const meta = {
+const meta: Meta<typeof IconButton> = {
   component: IconButton,
   title: 'Components/Icon Button',
   parameters: { controls: { expanded: true } },
@@ -65,7 +65,7 @@ const meta = {
       </TooltipProvider>
     ),
   ],
-} satisfies Meta<typeof IconButton>;
+};
 
 export default meta;
 

@@ -5,7 +5,7 @@ import * as DropdownMenu from './dropdown-menu';
 
 type Story = StoryObj<typeof DropdownMenu.Root>;
 
-const meta = {
+const meta: Meta<typeof DropdownMenu.Root> = {
   component: DropdownMenu.Root,
   title: 'Components/Dropdown Menu',
   tags: ['autodocs'],
@@ -20,7 +20,7 @@ const meta = {
       </div>
     ),
   ],
-} satisfies Meta<typeof DropdownMenu.Root>;
+};
 
 export default meta;
 
