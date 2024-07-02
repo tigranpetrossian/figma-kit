@@ -29,6 +29,7 @@
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "typings": "dist/index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "dev": "vite build --mode development --watch",
     "build": "vite build",
