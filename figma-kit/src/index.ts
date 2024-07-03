@@ -9,6 +9,7 @@ import * as Popover from './components/popover';
 import * as Dialog from './components/dialog';
 import * as AlertDialog from './components/alert-dialog';
 import * as ValueField from './components/value-field';
+import * as Collapsible from './components/collapsible';
 
 export { Text, Label, Paragraph, Link } from './components/text';
 export { Flex } from './components/flex';
@@ -31,3 +32,4 @@ export { Popover };
 export { Dialog };
 export { AlertDialog };
 export { ValueField };
+export { Collapsible };

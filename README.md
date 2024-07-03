@@ -29,3 +29,4 @@ to get the UI engineering out of the way of building great plugins.
 - [x] Tabs
 - [x] Checkbox & Radio
 - [x] Segmented control
+- [x] Collapsible
