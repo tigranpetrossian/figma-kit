@@ -8,7 +8,6 @@ type Story = StoryObj<typeof ContextMenu.Root>;
 const meta: Meta<typeof ContextMenu.Root> = {
   component: ContextMenu.Root,
   title: 'Components/Context Menu',
-  tags: ['autodocs'],
   parameters: {
     radixUrl: 'https://www.radix-ui.com/primitives/docs/components/context-menu',
     radixComponentName: 'Context Menu',

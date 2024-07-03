@@ -9,7 +9,7 @@ const meta: Meta<typeof Textarea> = {
   decorators: [
     (Story) => {
       return (
-        <div style={{ width: 300 }}>
+        <div style={{ width: 256 }}>
           <Story />
         </div>
       );
@@ -36,6 +36,6 @@ export default meta;
 
 export const Default: Story = {
   args: {
-    placeholder: 'What is it for?',
+    placeholder: 'Textarea that grows vertically to accommodate content.',
   },
 };

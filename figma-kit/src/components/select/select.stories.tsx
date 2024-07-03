@@ -6,7 +6,6 @@ type Story = StoryObj<typeof Root>;
 const meta: Meta<typeof Root> = {
   component: Root,
   title: 'Components/Select',
-  tags: ['autodocs'],
   parameters: {
     radixUrl: 'https://www.radix-ui.com/primitives/docs/components/select',
     radixComponentName: 'Select',
