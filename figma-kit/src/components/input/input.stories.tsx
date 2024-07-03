@@ -6,7 +6,6 @@ type Story = StoryObj<typeof Input>;
 const meta: Meta<typeof Input> = {
   component: Input,
   title: 'Components/Input',
-  tags: ['autodocs'],
   args: {
     placeholder: '',
     disabled: false,

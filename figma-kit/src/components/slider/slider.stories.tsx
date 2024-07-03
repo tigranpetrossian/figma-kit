@@ -7,6 +7,11 @@ const meta: Meta<typeof Slider> = {
   title: 'Components/Slider',
   tags: ['autodocs'],
   component: Slider,
+  parameters: {
+    controls: {
+      expanded: true,
+    },
+  },
   decorators: [
     (Story) => {
       return (
@@ -166,23 +171,6 @@ export const Hints: Story = {
     hints: [100, 200, 300, 400, 500, 600, 700, 800, 900],
     min: 100,
     max: 900,
-  },
-};
-
-export const HintLabel: Story = {
-  decorators: [
-    (Story) => {
-      return (
-        <div style={{ width: 200 }}>
-          <Story />
-        </div>
-      );
-    },
-  ],
-  args: {
-    hints: [60],
-    min: 0,
-    max: 100,
   },
 };
 

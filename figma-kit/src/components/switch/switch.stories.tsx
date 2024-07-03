@@ -6,7 +6,6 @@ type Story = StoryObj<typeof Switch>;
 const meta = {
   component: Switch,
   title: 'Components/Switch',
-  tags: ['autodocs'],
   parameters: {
     radixUrl: 'https://www.radix-ui.com/primitives/docs/components/switch',
     radixComponentName: 'Switch',

@@ -8,7 +8,6 @@ type Story = StoryObj<typeof DropdownMenu.Root>;
 const meta: Meta<typeof DropdownMenu.Root> = {
   component: DropdownMenu.Root,
   title: 'Components/Dropdown Menu',
-  tags: ['autodocs'],
   parameters: {
     radixUrl: 'https://www.radix-ui.com/primitives/docs/components/dropdown-menu',
     radixComponentName: 'Dropdown Menu',
