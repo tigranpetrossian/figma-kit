@@ -42,4 +42,12 @@
   &:where(.fp-size-8) {
     width: var(--space-8);
   }
+
+  &:where(.fp-size-9) {
+    width: var(--space-9);
+  }
+
+  &:where(.fp-size-10) {
+    width: var(--space-10);
+  }
 }

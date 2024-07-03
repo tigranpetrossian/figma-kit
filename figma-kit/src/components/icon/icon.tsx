@@ -24,6 +24,8 @@ const icon = cva('fp-Icon', {
       '6': 'fp-size-6',
       '7': 'fp-size-7',
       '8': 'fp-size-8',
+      '9': 'fp-size-9',
+      '10': 'fp-size-10',
     },
   },
   defaultVariants: {

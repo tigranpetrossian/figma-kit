@@ -10,14 +10,16 @@ import * as Dialog from './components/dialog';
 import * as AlertDialog from './components/alert-dialog';
 import * as ValueField from './components/value-field';
 
+export { Text, Label, Paragraph, Link } from './components/text';
 export { Flex } from './components/flex';
 export { Button } from './components/button';
+export { IconButton } from './components/icon-button';
 export { Input } from './components/input';
 export { Textarea } from './components/textarea';
 export { Slider } from './components/slider';
 export { Switch } from './components/switch';
 export { Tooltip, TooltipProvider } from './components/tooltip';
-export { Text, Label, Paragraph, Link } from './components/text';
+export { createIcon } from './components/icon';
 export { Tabs };
 export { SegmentedControl };
 export { RadioGroup };
