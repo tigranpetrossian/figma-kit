@@ -15,9 +15,12 @@
   font-weight: var(--font-weight-default);
   letter-spacing: var(--letter-spacing-default);
   line-height: var(--line-height-default);
+  color: var(--figma-color-text-secondary);
 }
 
 .fp-CollapsibleIndicator {
+  --color-icon: var(--figma-color-icon-secondary);
+
   [data-state='open'] > & {
     transform: rotate(90deg);
   }
