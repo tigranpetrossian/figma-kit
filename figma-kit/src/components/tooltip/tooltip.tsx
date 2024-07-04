@@ -46,7 +46,7 @@ const Tooltip = React.forwardRef<TooltipElement, TooltipProps>((props, ref) => {
     <RadixTooltip.Root {...rootProps}>
       <RadixTooltip.Trigger asChild>{children}</RadixTooltip.Trigger>
       <RadixTooltip.Portal forceMount={forceMount} container={container}>
-        <Content ref={ref} {...contentProps}>
+        <Content ref={ref} arrowPadding={10} {...contentProps}>
           {content}
           <Arrow />
         </Content>
