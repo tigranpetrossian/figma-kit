@@ -47,6 +47,10 @@
   height: var(--space-6);
   padding: 0 var(--space-4);
   color: var(--color-text-menu-tertiary);
+
+  &:where(.fp-MenuContent:has(.fp-MenuCheckboxItem, .fp-MenuRadioItem) &) {
+    padding-left: var(--space-6);
+  }
 }
 
 .fp-MenuGroup {
