@@ -69,7 +69,18 @@ const meta: Meta<typeof IconButton> = {
 
 export default meta;
 
+const code = `
+<IconButton aria-label="Styles">
+  <StylesIcon />
+</IconButton>
+`;
+
 export const Default: Story = {
+  parameters: {
+    storySource: {
+      source: code,
+    },
+  },
   render: (args) => {
     return (
       <Popover.Root>

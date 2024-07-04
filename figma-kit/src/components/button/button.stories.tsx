@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import reactElementToJSXString from 'react-element-to-jsx-string';
 import { Button } from './button';
 
 type Story = StoryObj<typeof Button>;
@@ -56,10 +57,20 @@ const meta = {
 
 export default meta;
 
+// eslint-disable-next-line
+const getCode = (args: any) => reactElementToJSXString(<Button {...args} />);
+
 export const Primary: Story = {
   args: {
     variant: 'primary',
     children: 'Primary',
+  },
+  parameters: {
+    storySource: {
+      get source() {
+        return getCode(Primary.args);
+      },
+    },
   },
 };
 
@@ -68,12 +79,26 @@ export const Secondary: Story = {
     variant: 'secondary',
     children: 'Secondary',
   },
+  parameters: {
+    storySource: {
+      get source() {
+        return getCode(Secondary.args);
+      },
+    },
+  },
 };
 
 export const Destructive: Story = {
   args: {
     variant: 'destructive',
     children: 'Destructive',
+  },
+  parameters: {
+    storySource: {
+      get source() {
+        return getCode(Destructive.args);
+      },
+    },
   },
 };
 
@@ -82,6 +107,13 @@ export const Success: Story = {
     variant: 'success',
     children: 'Success',
   },
+  parameters: {
+    storySource: {
+      get source() {
+        return getCode(Success.args);
+      },
+    },
+  },
 };
 
 export const Inverse: Story = {
@@ -89,11 +121,25 @@ export const Inverse: Story = {
     variant: 'inverse',
     children: 'Inverse',
   },
+  parameters: {
+    storySource: {
+      get source() {
+        return getCode(Inverse.args);
+      },
+    },
+  },
 };
 
 export const Text: Story = {
   args: {
     variant: 'text',
     children: 'Text',
+  },
+  parameters: {
+    storySource: {
+      get source() {
+        return getCode(Text.args);
+      },
+    },
   },
 };

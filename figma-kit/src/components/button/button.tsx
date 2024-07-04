@@ -36,5 +36,7 @@ const Button = React.forwardRef<ButtonElement, ButtonProps>((props, ref) => {
   return <button ref={ref} className={button({ className, variant, size, fullWidth })} {...buttonProps} />;
 });
 
+Button.displayName = 'Button';
+
 export type { ButtonProps };
 export { Button };
