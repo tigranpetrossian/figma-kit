@@ -19,5 +19,7 @@ const Input = React.forwardRef<InputElement, InputProps>((props, forwardedRef) =
   return <input ref={composedRef} type={type} className={cx(className, 'fp-Input')} {...inputProps} />;
 });
 
+Input.displayName = 'Input';
+
 export type { InputProps };
 export { Input };

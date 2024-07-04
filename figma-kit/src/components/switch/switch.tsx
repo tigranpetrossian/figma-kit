@@ -14,5 +14,7 @@ const Switch = React.forwardRef<SwitchElement, SwitchProps>((props, ref) => {
   );
 });
 
+Switch.displayName = 'Switch';
+
 export type { SwitchProps };
 export { Switch };

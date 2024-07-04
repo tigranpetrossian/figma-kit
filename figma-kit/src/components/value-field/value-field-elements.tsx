@@ -65,5 +65,9 @@ const Label = React.forwardRef<LabelElement, LabelProps>((props, ref) => {
   );
 });
 
+Root.displayName = 'ValueField.Root';
+Label.displayName = 'ValueField.Label';
+Multi.displayName = 'ValueField.Multi';
+
 export type { RootProps, LabelProps, MultiProps };
 export { Root, Label, Multi, useValueFieldContext };

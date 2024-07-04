@@ -90,5 +90,12 @@ const Group = React.forwardRef<GroupElement, GroupProps>((props, ref) => {
   return <RadixSelect.Group ref={ref} className={cx(className, 'fp-MenuGroup')} {...groupProps} />;
 });
 
+Trigger.displayName = 'Select.Trigger';
+Content.displayName = 'Select.Content';
+Item.displayName = 'Select.Item';
+Separator.displayName = 'Select.Separator';
+Group.displayName = 'Select.Group';
+Label.displayName = 'Select.Label';
+
 export type { RootProps, TriggerProps, ContentProps, ItemProps, SeparatorProps, GroupProps, LabelProps };
 export { Root, Trigger, Content, Item, Separator, Group, Label, Arrow };

@@ -52,5 +52,9 @@ const Text = React.forwardRef<TextElement, TextProps>((props, ref) => {
   return <TextPrimitive ref={ref} className={cx(className, 'fp-SegmentedControlText')} {...textProps} />;
 });
 
+Root.displayName = 'SegmentedControl.Root';
+Item.displayName = 'SegmentedControl.Item';
+Text.displayName = 'SegmentedControl.Text';
+
 export type { RootProps, ItemProps, TextProps };
 export { Root, Item, Text };

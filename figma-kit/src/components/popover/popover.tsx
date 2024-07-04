@@ -68,6 +68,11 @@ const Close = React.forwardRef<CloseElement, CloseProps>((props, ref) => {
   );
 });
 
+Trigger.displayName = 'Popover.Trigger';
+Content.displayName = 'Popover.Content';
+Title.displayName = 'Popover.Title';
+Close.displayName = 'Popover.Close';
+
 export type { RootProps, TriggerProps, PortalProps, ContentProps, TitleProps, CloseProps, AnchorProps };
 export { Root, Trigger, Content, Portal, Title, Close, Anchor };
 

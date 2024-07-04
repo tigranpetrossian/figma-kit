@@ -53,5 +53,10 @@ const Content = React.forwardRef<ContentElement, ContentProps>((props, ref) => {
   return <RadixTabs.Content ref={ref} className={cx(className, 'fp-TabsContent')} {...contentProps} />;
 });
 
+Root.displayName = 'Tabs.Root';
+List.displayName = 'Tabs.List';
+Trigger.displayName = 'Tabs.Trigger';
+Content.displayName = 'Tabs.Content';
+
 export type { RootProps, ListProps, TriggerProps, ContentProps };
 export { Root, List, Trigger, Content };

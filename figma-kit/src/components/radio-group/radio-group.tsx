@@ -55,5 +55,9 @@ const Label = React.forwardRef<LabelElement, LabelProps>((props, ref) => {
   );
 });
 
+Root.displayName = 'RadioGroup.Root';
+Item.displayName = 'RadioGroup.Item';
+Label.displayName = 'RadioGroup.Label';
+
 export type { RootProps, ItemProps, LabelProps };
 export { Root, Item, Label };

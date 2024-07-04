@@ -50,6 +50,8 @@ const Text = React.forwardRef<TextElement, TextProps>((props, ref) => {
   );
 });
 
+Text.displayName = 'Text';
+
 type LabelElement = React.ElementRef<'label'>;
 type LabelProps = React.ComponentPropsWithoutRef<'label'> & VariantProps<typeof text>;
 
@@ -70,6 +72,8 @@ const Label = React.forwardRef<LabelElement, LabelProps>((props, ref) => {
     />
   );
 });
+
+Label.displayName = 'Label';
 
 type ParagraphElement = React.ElementRef<'p'>;
 type ParagraphProps = React.ComponentPropsWithoutRef<'p'> & VariantProps<typeof text>;
@@ -98,6 +102,8 @@ type LinkProps = React.ComponentPropsWithoutRef<'a'> &
     asChild?: boolean;
   };
 
+Paragraph.displayName = 'Paragraph';
+
 const Link = React.forwardRef<LinkElement, LinkProps>((props, ref) => {
   const { asChild, className, size, weight, align, block, ...linkProps } = props;
   const Element = asChild ? Slot : 'a';
@@ -119,6 +125,8 @@ const Link = React.forwardRef<LinkElement, LinkProps>((props, ref) => {
     />
   );
 });
+
+Link.displayName = 'Link';
 
 export type { TextProps, LabelProps, ParagraphProps, LinkProps };
 export { Text, Label, Paragraph, Link };
