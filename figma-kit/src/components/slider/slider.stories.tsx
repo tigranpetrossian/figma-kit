@@ -5,7 +5,6 @@ type Story = StoryObj<typeof Slider>;
 
 const meta: Meta<typeof Slider> = {
   title: 'Components/Slider',
-  tags: ['autodocs'],
   component: Slider,
   parameters: {
     controls: {

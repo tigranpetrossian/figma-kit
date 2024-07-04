@@ -2,7 +2,6 @@ import type { Preview } from '@storybook/react';
 import './storybook-reset.css';
 import '../figma-kit/src/styles/figma-development-theme.css';
 import '../figma-kit/src/styles/index.css';
-import { DocTemplate } from './DocTemplate';
 import { TooltipProvider } from '../figma-kit/src/components/tooltip';
 import React from 'react';
 
@@ -73,9 +72,6 @@ const preview: Preview = {
       lightClass: 'light',
       classTarget: 'html',
       stylePreview: true,
-    },
-    docs: {
-      page: DocTemplate,
     },
   },
 };
