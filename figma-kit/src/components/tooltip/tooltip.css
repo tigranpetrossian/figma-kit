@@ -7,7 +7,7 @@
   font-weight: var(--font-weight-default);
   letter-spacing: var(--letter-spacing-default);
   line-height: var(--line-height-default);
-  height: var(--space-6);
+  min-height: var(--space-6);
   color: var(--color-text-tooltip);
   white-space: pre-wrap;
   word-break: break-word;

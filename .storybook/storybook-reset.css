@@ -9,3 +9,30 @@ html.dark {
 body {
   margin: 0;
 }
+
+.story-layout {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sbdocs .story-layout {
+  height: 350px;
+}
+
+.radix-notice {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.radix-link {
+  display: inline-flex;
+  gap: 2px;
+  align-items: center;
+}

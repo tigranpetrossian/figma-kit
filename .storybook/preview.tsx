@@ -4,6 +4,7 @@ import '../figma-kit/src/styles/figma-development-theme.css';
 import '../figma-kit/src/styles/index.css';
 import { TooltipProvider } from '../figma-kit/src/components/tooltip';
 import React from 'react';
+import { StoryLayout } from './StoryLayout';
 
 const preview: Preview = {
   argTypes: {
@@ -14,14 +15,16 @@ const preview: Preview = {
     },
   },
   decorators: [
-    (Story) => (
+    (Story, storyContext) => (
       <TooltipProvider>
-        <Story />
+        <StoryLayout context={storyContext}>
+          <Story />
+        </StoryLayout>
       </TooltipProvider>
     ),
   ],
   parameters: {
-    layout: 'centered',
+    layout: 'fullscreen',
     actions: {
       disable: true,
     },

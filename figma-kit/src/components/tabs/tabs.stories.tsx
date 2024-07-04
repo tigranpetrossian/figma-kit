@@ -11,6 +11,10 @@ type Story = StoryObj<typeof Tabs.Root>;
 const meta: Meta<typeof Tabs.Root> = {
   title: 'Components/Tabs',
   component: Tabs.Root,
+  parameters: {
+    radixUrl: 'https://www.radix-ui.com/primitives/docs/components/tabs',
+    radixComponentName: 'Tabs',
+  },
 };
 
 export default meta;

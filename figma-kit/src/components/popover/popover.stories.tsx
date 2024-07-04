@@ -9,6 +9,10 @@ type Story = StoryObj<typeof Popover.Root>;
 const meta: Meta<typeof Popover.Root> = {
   title: 'Components/Popover',
   component: Popover.Root,
+  parameters: {
+    radixUrl: 'https://www.radix-ui.com/primitives/docs/components/popover',
+    radixComponentName: 'Popover',
+  },
 };
 
 export default meta;
