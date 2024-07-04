@@ -1,32 +1,14 @@
 <div align="center">
-  <h1>Figma Kit</h1>
+    <img src="media/github-banner.png" width="400" height="243" alt="Klavier logo" />
   <h3>A set of React components for building Figma plugins.</h3>
 </div>
 
-## Overview
+### Overview
 
-Figma Kit is under active development and is expected to be published some time in Aug 2024.
+Figma Kit is currently in beta and is expected to be finalized some time in Aug 2024.
 The library attempts to replicate Figma's user interface look & feel with near-100% feature parity,
-to get the UI engineering out of the way of building great plugins.
+to get the UI engineering out of the way of building plugins.
 
-### List of components:
+### Documentation
 
-- [x] Button
-- [x] Icon Button
-- [x] Input
-- [x] Textarea
-- [x] Value field
-- [x] Select
-- [x] Dropdown Menu
-- [x] Context Menu
-- [x] Tooltip
-- [x] Switch
-- [x] Slider
-- [x] Dialog
-- [x] AlertDialog
-- [x] Popover
-- [x] Text
-- [x] Tabs
-- [x] Checkbox & Radio
-- [x] Segmented control
-- [x] Collapsible
+The documentation for the library is on its way. Meanwhile, feel free to check out the [Storybook](https://storybook.figma-kit.dev) for available components and functionality.
