@@ -256,7 +256,7 @@ const WithIcon = () => {
   render: () => <WithIconComponent />,
 };
 
-export const Rgba = () => {
+const Rgba = () => {
   const [rgba, setRgba] = useState<RGBA>({ r: 1, g: 1, b: 1, a: 1 });
 
   const handleRChange = (r: number) => {
