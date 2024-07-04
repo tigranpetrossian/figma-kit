@@ -9,7 +9,6 @@ const config: StorybookConfig = {
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
-    '@chromatic-com/storybook',
     {
       name: '@storybook/addon-storysource',
       options: {
@@ -18,7 +17,6 @@ const config: StorybookConfig = {
         },
       },
     },
-    //'@storybook/addon-interactions',
     'storybook-dark-mode',
   ],
   framework: {
