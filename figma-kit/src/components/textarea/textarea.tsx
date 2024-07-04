@@ -11,5 +11,7 @@ const Textarea = React.forwardRef<TextareaElement, TextareaProps>((props, ref) =
   return <TextareaAutoSize className={cx(className, 'fp-textarea')} ref={ref} {...textareaProps} />;
 });
 
+Textarea.displayName = 'Textarea';
+
 export type { TextareaProps };
 export { Textarea };

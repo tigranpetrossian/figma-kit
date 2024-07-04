@@ -44,5 +44,9 @@ const section = cva('fp-DialogBaseSection', {
   },
 });
 
+Header.displayName = 'Dialog.Header';
+Section.displayName = 'Dialog.Section';
+Controls.displayName = 'Dialog.Controls';
+
 export { Header, Section, Controls };
 export type { HeaderProps, SectionProps, ControlsProps };

@@ -125,6 +125,16 @@ const RadioItem = React.forwardRef<RadioItemElement, RadioItemProps>((props, ref
   );
 });
 
+Content.displayName = 'DropdownMenu.Content';
+Item.displayName = 'DropdownMenu.Item';
+Separator.displayName = 'DropdownMenu.Separator';
+Group.displayName = 'DropdownMenu.Group';
+Label.displayName = 'DropdownMenu.Label';
+SubTrigger.displayName = 'DropdownMenu.SubTrigger';
+SubContent.displayName = 'DropdownMenu.SubContent';
+CheckboxItem.displayName = 'DropdownMenu.CheckboxItem';
+RadioItem.displayName = 'DropdownMenu.RadioItem';
+
 export type {
   RootProps,
   TriggerProps,

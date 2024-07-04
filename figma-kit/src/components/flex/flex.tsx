@@ -77,5 +77,7 @@ const Flex = React.forwardRef<FlexElement, FlexProps>((props, ref) => {
   );
 });
 
+Flex.displayName = 'Flex';
+
 export type { FlexProps };
 export { Flex };

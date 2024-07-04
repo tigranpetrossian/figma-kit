@@ -133,6 +133,8 @@ const Slider = React.forwardRef<SliderElement, SliderProps>((props, forwardedRef
   );
 });
 
+Slider.displayName = 'Slider';
+
 type HintProps = {
   hint: number;
   baseValue?: number;

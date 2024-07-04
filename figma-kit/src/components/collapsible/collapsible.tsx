@@ -35,5 +35,9 @@ const Content = React.forwardRef<ContentElement, ContentProps>((props, ref) => {
   return <RadixCollapsible.Content ref={ref} className={cx(className, 'fp-CollapsibleContent')} {...contentProps} />;
 });
 
+Root.displayName = 'Collapsible.Root';
+Trigger.displayName = 'Collapsible.Trigger';
+Content.displayName = 'Collapsible.Content';
+
 export type { RootProps, ContentProps, TriggerProps };
 export { Root, Content, Trigger };

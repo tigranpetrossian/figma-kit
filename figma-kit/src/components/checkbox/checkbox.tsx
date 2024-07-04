@@ -108,5 +108,11 @@ function useIndeterminateState(indeterminate: boolean | undefined) {
   );
 }
 
+Root.displayName = 'Checkbox.Root';
+Input.displayName = 'Checkbox.Input';
+Indicator.displayName = 'Checkbox.Indicator';
+Label.displayName = 'Checkbox.Label';
+Description.displayName = 'Checkbox.Description';
+
 export type { CheckboxProps };
 export { Root, Input, Label, Description };

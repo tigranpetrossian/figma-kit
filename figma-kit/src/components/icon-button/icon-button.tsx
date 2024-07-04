@@ -50,5 +50,7 @@ const IconButton = React.forwardRef<IconButtonElement, IconButtonProps>((props, 
   return disableTooltip ? buttonElement : <Tooltip content={tooltipContent ?? ariaLabel}>{buttonElement}</Tooltip>;
 });
 
+IconButton.displayName = 'IconButton';
+
 export type { IconButtonProps };
 export { IconButton };

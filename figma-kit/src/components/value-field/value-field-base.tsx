@@ -118,5 +118,7 @@ const Base = <V,>(props: BaseProps<V>) => {
   );
 };
 
+Base.displayName = 'ValueField.Base';
+
 export type { BaseProps };
 export { Base };

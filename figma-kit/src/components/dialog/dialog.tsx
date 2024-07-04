@@ -103,6 +103,12 @@ const Close = React.forwardRef<CloseElement, CloseProps>((props, ref) => {
   );
 });
 
+Trigger.displayName = 'Dialog.Trigger';
+Content.displayName = 'Dialog.Content';
+Overlay.displayName = 'Dialog.Overlay';
+Title.displayName = 'Dialog.Title';
+Close.displayName = 'Dialog.Close';
+
 export type { RootProps, TriggerProps, PortalProps, ContentProps, OverlayProps, TitleProps, CloseProps };
 export { Root, Trigger, Portal, Content, Overlay, Title, Close };
 export type { HeaderProps, SectionProps, ControlsProps } from '@components/dialog.base/';

@@ -124,6 +124,16 @@ const RadioItem = React.forwardRef<RadioItemElement, RadioItemProps>((props, ref
   );
 });
 
+Content.displayName = 'ContextMenu.Content';
+Item.displayName = 'ContextMenu.Item';
+Separator.displayName = 'ContextMenu.Separator';
+Label.displayName = 'ContextMenu.Label';
+Group.displayName = 'ContextMenu.Group';
+SubTrigger.displayName = 'ContextMenu.SubTrigger';
+SubContent.displayName = 'ContextMenu.SubContent';
+CheckboxItem.displayName = 'ContextMenu.CheckboxItem';
+RadioItem.displayName = 'ContextMenu.RadioItem';
+
 export type {
   RootProps,
   TriggerProps,

@@ -121,6 +121,15 @@ const Action = React.forwardRef<ActionElement, ActionProps>((props, ref) => {
   return <RadixAlertDialog.Action ref={ref} asChild {...props} />;
 });
 
+Trigger.displayName = 'AlertDialog.Trigger';
+Content.displayName = 'AlertDialog.Content';
+Overlay.displayName = 'AlertDialog.Overlay';
+Title.displayName = 'AlertDialog.Title';
+Description.displayName = 'AlertDialog.Description';
+Actions.displayName = 'AlertDialog.Actions';
+Cancel.displayName = 'AlertDialog.Cancel';
+Action.displayName = 'AlertDialog.Action';
+
 export type {
   RootProps,
   TriggerProps,
