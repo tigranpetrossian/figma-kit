@@ -20,9 +20,8 @@ const Content = React.forwardRef<ContentElement, ContentProps>((props, ref) => {
 
   return (
     <RadixMenu.Portal>
-      <RadixMenu.Content ref={ref} {...contentProps} className={cx(className, 'fp-MenuContent')}>
+      <RadixMenu.Content ref={ref} sideOffset={6} {...contentProps} className={cx(className, 'fp-MenuContent')}>
         {children}
-        <RadixMenu.Arrow />
       </RadixMenu.Content>
     </RadixMenu.Portal>
   );
