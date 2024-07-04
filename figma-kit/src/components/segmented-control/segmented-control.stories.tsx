@@ -7,6 +7,10 @@ type Story = StoryObj<typeof SegmentedControl.Root>;
 const meta: Meta<typeof SegmentedControl.Root> = {
   title: 'Components/Segmented Control',
   component: SegmentedControl.Root,
+  parameters: {
+    radixUrl: 'https://www.radix-ui.com/primitives/docs/components/toggle-group',
+    radixComponentName: 'Toggle Group',
+  },
 };
 
 export default meta;

@@ -7,6 +7,10 @@ type Story = StoryObj<typeof AlertDialog.Root>;
 const meta: Meta<typeof AlertDialog.Root> = {
   title: 'Components/Alert Dialog',
   component: AlertDialog.Root,
+  parameters: {
+    radixUrl: 'https://www.radix-ui.com/primitives/docs/components/alert-dialog',
+    radixComponentName: 'Alert Dialog',
+  },
 };
 
 export default meta;

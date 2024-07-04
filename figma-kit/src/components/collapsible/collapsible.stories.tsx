@@ -10,6 +10,8 @@ const meta: Meta<typeof Collapsible.Root> = {
   component: Collapsible.Root,
   parameters: {
     layout: 'padded',
+    radixUrl: 'https://www.radix-ui.com/primitives/docs/components/collapsible',
+    radixComponentName: 'Collapsible',
   },
   decorators: [
     (Story) => {
