@@ -15,6 +15,35 @@ Figma Kit is currently in beta and is expected to be finalized some time in Aug 
 The library attempts to replicate Figma's user interface look & feel with near-100% feature parity,
 to get the UI engineering out of the way of building plugins.
 
+### Getting started
+
+```bash
+npm install figma-kit@beta
+```
+
+```tsx
+import { 
+  Button, 
+  IconButton, 
+  Text, 
+  Flex,
+  Input,
+  Textarea,
+  ValueField,
+  Tabs,
+  Popover,
+  SegmentedControl,
+  Checkbox,
+  RadioGroup,
+  Dialog,
+  Select,
+  ContextMenu,
+  Slider,
+  Switch,
+  Collapsible 
+} from 'figma-kit'
+```
+
 ### Documentation
 
 The documentation for the library is on its way. Meanwhile, feel free to check out the [Storybook](https://storybook.figma-kit.dev) for available components and functionality.
