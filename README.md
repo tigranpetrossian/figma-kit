@@ -1,6 +1,10 @@
 <div align="center">
   <a href="https://storybook.figma-kit.dev" target="_blank">
-    <img src="media/github-banner.png" width="400" height="243" alt="Figma banner" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="media/github-banner-dark.png">
+    <source media="(prefers-color-scheme: light)" srcset="media/github-banner-light.png">
+    <img src="media/github-banner-light.png" width="400" height="243" alt="Figma banner" />
+  </picture>
   </a>
   <h3>A set of React components for building Figma plugins.</h3>
 </div>
