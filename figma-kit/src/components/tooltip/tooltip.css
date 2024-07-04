@@ -12,9 +12,13 @@
   white-space: pre-wrap;
   word-break: break-word;
   border-radius: var(--radius-medium);
-  box-shadow: var(--elevation-300-tooltip, 0 2px 7px rgba(0, 0, 0, 0.15));
+  box-shadow: var(--elevation-300, 0 2px 7px rgba(0, 0, 0, 0.15));
 }
 
-.fp-arrow {
+.fp-tooltip-arrow {
   fill: var(--color-bg-tooltip);
+  width: var(--space-3_5);
+  height: var(--space-1_5);
+  position: relative;
+  bottom: 1px;
 }
