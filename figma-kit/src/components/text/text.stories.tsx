@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import { Text, Link } from './text';
+import * as Typography from './text';
 
-const meta: Meta<typeof Text> = {
+const meta: Meta<Typography.TextProps> = {
   title: 'Components/Text',
-  component: Text,
+  component: Typography.Text,
   decorators: [
     (Story) => {
       return (
@@ -53,7 +53,16 @@ const meta: Meta<typeof Text> = {
 
 export default meta;
 
-export const BasicText: StoryObj<typeof Text> = {
+const basicTextCode = `
+<Text />
+`;
+
+export const BasicText: StoryObj<Typography.TextProps> = {
+  parameters: {
+    storySource: {
+      source: basicTextCode,
+    },
+  },
   args: {
     size: 'medium',
     weight: 'default',
@@ -63,21 +72,43 @@ export const BasicText: StoryObj<typeof Text> = {
   },
 };
 
-export const InlineSemantics: StoryObj<typeof Text> = {
+const inlineSemanticsCode = `
+<Text>
+  <strong>This is strong text</strong> to highlight important points. <em>This is emphasized text</em> to indicate
+  subtle importance. Use <code>inline code</code> for code snippets. <mark>This is marked text</mark> to draw
+  attention. This is a link to <Link href="https://help.figma.com/">Figma's documentation</Link>.
+</Text>
+`;
+
+export const InlineSemantics: StoryObj<Typography.TextProps> = {
+  parameters: {
+    storySource: {
+      source: inlineSemanticsCode,
+    },
+  },
   args: {
     children: (
       <>
         <strong>This is strong text</strong> to highlight important points. <em>This is emphasized text</em> to indicate
         subtle importance. Use <code>inline code</code> for code snippets. <mark>This is marked text</mark> to draw
-        attention. This is a link to <Link href="https://help.figma.com/">Figma's documentation</Link>
-        .
-        <br />
-        <Text weight="default">Nested</Text>
+        attention. This is a link to{' '}
+        <Typography.Link href="https://help.figma.com/">Figma's documentation</Typography.Link>.
       </>
     ),
   },
 };
 
-export const BasicLink = () => {
-  return <Link href="https://figma.com">Link</Link>;
+const linkCode = `
+<Link href="https://figma.com">Link</Link>;
+`;
+
+export const Link: StoryObj<Typography.TextProps> = {
+  parameters: {
+    storySource: {
+      source: linkCode,
+    },
+  },
+  render() {
+    return <Typography.Link href="https://figma.com">Link</Typography.Link>;
+  },
 };

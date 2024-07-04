@@ -7,6 +7,10 @@ type Story = StoryObj<typeof RadioGroup.Root>;
 const meta: Meta<typeof RadioGroup.Root> = {
   title: 'Components/Radio Group',
   component: RadioGroup.Root,
+  parameters: {
+    radixUrl: 'https://www.radix-ui.com/primitives/docs/components/radio-group',
+    radixComponentName: 'Radio Group',
+  },
 };
 
 export default meta;

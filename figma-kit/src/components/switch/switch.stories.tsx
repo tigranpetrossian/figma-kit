@@ -46,18 +46,45 @@ const meta = {
 
 export default meta;
 
+const uncheckedCode = `
+<Switch />
+`;
+
+const checkedCode = `
+<Switch checked />
+`;
+
+const disabledCode = `
+<Switch checked disabled />
+`;
+
 // Limitation - no Mixed state support
 export const Unchecked: Story = {
+  parameters: {
+    storySource: {
+      source: uncheckedCode,
+    },
+  },
   args: {},
 };
 
 export const Checked: Story = {
+  parameters: {
+    storySource: {
+      source: checkedCode,
+    },
+  },
   args: {
     checked: true,
   },
 };
 
 export const Disabled: Story = {
+  parameters: {
+    storySource: {
+      source: disabledCode,
+    },
+  },
   args: {
     checked: true,
     disabled: true,
