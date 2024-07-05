@@ -40,6 +40,8 @@ const preview: Preview = {
     options: {
       storySort: {
         order: [
+          'Introduction',
+          'Getting Started',
           'Components',
           [
             'Text',

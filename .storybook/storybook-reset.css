@@ -36,3 +36,16 @@ body {
   gap: 2px;
   align-items: center;
 }
+
+.beta-notice {
+  border: 1px solid #fab815;
+  background-color: rgba(255, 241, 194, 0.2);
+  padding: 12px 16px;
+  border-radius: 5px;
+  margin: -24px auto 40px !important;
+  max-width: 720px;
+
+  p {
+    margin: 0;
+  }
+}
