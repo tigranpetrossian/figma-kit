@@ -2,7 +2,7 @@ import type { StorybookConfig } from '@storybook/react-vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 const config: StorybookConfig = {
-  stories: ['../figma-kit/src/**/*.mdx', '../figma-kit/src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  stories: ['../docs/**/*.mdx', '../figma-kit/src/**/*.mdx', '../figma-kit/src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   docs: {
     defaultName: 'Documentation',
   },

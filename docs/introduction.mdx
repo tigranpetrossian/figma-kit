@@ -1,0 +1,31 @@
+import { Meta } from '@storybook/blocks';
+import { Flex } from '../figma-kit/src';
+
+<Meta title="Introduction" />
+
+<div className="beta-notice">
+  <strong>Note:</strong> Figma Kit is currently in beta.
+
+The documentation website is under development, and there may be breaking changes before the final release.
+
+</div>
+
+<Flex justify="center" style={{ marginBottom: 32 }}>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" src="../media/github-banner-dark.png" />
+    <source media="(prefers-color-scheme: light)" src="../media/github-banner-light.png" />
+    <img src="../media/github-banner-light.png" width="400" height="243" alt="Figma banner" />
+  </picture>
+</Flex>
+
+## Overview
+
+Figma Kit is an extensive set of React components for building Figma plugins that look and
+behave like Figma's interface.
+
+### Features
+
+- UI3 Ready: Components are designed to match Figma's new interface.
+- Automatic dark mode: Dark mode is supported out of the box without any setup or additional code,
+  thanks to Figma's semantic color tokens.
+- Incremental Adoption: Components can be gradually integrated into existing plugins.
