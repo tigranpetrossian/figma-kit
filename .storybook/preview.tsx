@@ -42,6 +42,7 @@ const preview: Preview = {
         order: [
           'Introduction',
           'Getting Started',
+          'Styling',
           'Components',
           [
             'Text',

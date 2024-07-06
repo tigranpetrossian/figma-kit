@@ -1,0 +1,85 @@
+import { Meta, Source } from '@storybook/blocks';
+
+<Meta title="Styling" />
+
+## Styling
+
+Figma Kit is designed to closely resemble Figma's interface, so minimal styling is needed,
+mainly for layout adjustments. All Figma Kit components accept the className prop and can be styled
+using any preferred styling solution.
+Figma injects an extensive set of [semantic tokens](https://www.figma.com/plugin-docs/css-variables/),
+which this library relies on, so familiarity with these tokens is recommended.
+
+
+## Using with Tailwind
+
+Figma kit ships with a Tailwind preset that makes Figma theme tokens available in Tailwind classes:
+
+
+
+```tsx
+import figmaKitPreset from 'figma-kit/tailwind.preset.js';
+
+/** @type {import('tailwindcss').Config} */
+export default {
+  // ...
+  presets: [figmaKitPreset],
+};
+```
+
+
+This replaces the default Tailwind theme with Figma tokens, allowing you to use these tokens directly:
+
+
+```tsx
+import { Text } from 'figma-kit'
+
+const App = () => {
+  return (
+    <div className"border border-secondary">
+      <Text color="text-secondary">Welcome to Figma</Text>
+    </div>
+  )
+}
+```
+
+The preset is built to match Figma's [semantic token format](https://www.figma.com/plugin-docs/css-variables/#tokens-overview),
+which is slightly different from how Tailwind themes are typically defined. Here, properties are
+strictly mapped to their respective tokens, meaning `bg` tokens will only be available for
+backgrounds by default, and cannot be used with for other properties.
+
+```tsx
+<div className="text"/>
+<div className="text-secondary"/>
+<div className="bg"/>
+<div className="bg-secondary"/>
+
+```
+
+Translates to:
+```css
+.text {
+  color: var(--figma-color-text);
+}
+.text-secondary {
+  color: var(--figma-color-text-secondary);
+}
+.bg {
+  background-color: var(--figma-color-bg);
+}
+.bg-secondary {
+  background-color: var(--figma-color-bg-secondary);
+}
+```
+
+### Breaking out of strict property mapping
+
+In rare cases it might be necessary to reference a token for a different property. This can be
+done by referencing the custom property directly using Tailwind arbitrary value syntax:
+
+```tsx
+<div className="border-[var(--figma-color-bg-brand)]"/>
+```
+
+Naturally, this is an escape hatch meant to be used in extreme edge cases. Figma's color system
+is very well-designed and rarely requires referencing an irrelevant token.
