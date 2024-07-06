@@ -44,9 +44,8 @@ const App = () => {
 ```
 
 The preset is built to match Figma's [semantic token format](https://www.figma.com/plugin-docs/css-variables/#tokens-overview),
-which is slightly different from how Tailwind themes are typically defined. Here, properties are
-strictly mapped to their respective tokens, meaning `bg` tokens will only be available for
-backgrounds by default, and cannot be used with for other properties.
+which differs slightly from typical Tailwind themes. Here, properties are
+strictly mapped to their respective tokens:
 
 ```tsx
 <div className="text"/>
@@ -74,12 +73,12 @@ Translates to:
 
 ### Breaking out of strict property mapping
 
-In rare cases it might be necessary to reference a token for a different property. This can be
-done by referencing the custom property directly using Tailwind arbitrary value syntax:
+In rare cases it might be necessary to reference a token for a different property. In rare cases,
+you may need to reference a token for a different property. This can be done using Tailwind's arbitrary value syntax:
 
 ```tsx
 <div className="border-[var(--figma-color-bg-brand)]"/>
 ```
 
-Naturally, this is an escape hatch meant to be used in extreme edge cases. Figma's color system
-is very well-designed and rarely requires referencing an irrelevant token.
+Note: This is an escape hatch intended for edge cases. Figma's color system is well-designed and
+rarely requires referencing unrelated tokens.
