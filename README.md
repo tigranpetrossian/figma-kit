@@ -9,41 +9,19 @@
   <h3>A set of React components for building Figma plugins.</h3>
 </div>
 
+> [!NOTE]  
+> Figma Kit is currently in beta. There may be breaking changes before the final release.
+
 ### Overview
 
-Figma Kit is currently in beta and is expected to be finalized some time in Aug 2024.
-The library attempts to replicate Figma's user interface look & feel with near-100% feature parity,
-to get the UI engineering out of the way of building plugins.
+Figma Kit is an extensive set of React components that attempts to replicate Figma's user interface look & feel with near-100% feature parity.
 
-### Getting started
+#### Features
 
-```bash
-npm install figma-kit@beta
-```
-
-```tsx
-import { 
-  Button, 
-  IconButton, 
-  Text, 
-  Flex,
-  Input,
-  Textarea,
-  ValueField,
-  Tabs,
-  Popover,
-  SegmentedControl,
-  Checkbox,
-  RadioGroup,
-  Dialog,
-  Select,
-  ContextMenu,
-  Slider,
-  Switch,
-  Collapsible 
-} from 'figma-kit'
-```
+* UI3 Ready
+* Automatic dark mode
+* First-class Tailwind support with a preset
 
 ### Documentation
 
-The documentation for the library is on its way. Meanwhile, feel free to check out the [Storybook](https://storybook.figma-kit.dev) for available components and functionality.
+The documentation for the library is on its way. Meanwhile, feel free to check out the [Storybook](https://storybook.figma-kit.dev) for basic guides, information about available components and functionality.
