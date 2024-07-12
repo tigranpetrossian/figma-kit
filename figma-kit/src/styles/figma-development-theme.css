@@ -188,8 +188,7 @@ body {
   --figma-color-text-warning-tertiary: #b86200;
 }
 
-.dark,
-.dark-theme {
+.figma-dark {
   --figma-color-bg: #2c2c2c;
   --figma-color-bg-brand: #0c8ce9;
   --figma-color-bg-brand-hover: #0a6dc2;
