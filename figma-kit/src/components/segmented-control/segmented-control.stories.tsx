@@ -37,6 +37,15 @@ export const Basic: Story = {
 };
 
 export const FullWidth: Story = {
+  decorators: [
+    (Story) => {
+      return (
+        <div style={{ width: 240 }}>
+          <Story />
+        </div>
+      );
+    },
+  ],
   render() {
     return (
       <SegmentedControl.Root fullWidth defaultValue="left">
