@@ -1,0 +1,62 @@
+.fp-ColorPicker {
+  width: 240px;
+  height: 240px;
+  outline-width: 1px;
+  outline-style: solid;
+  outline-color: #0000001a; /*TODO: color-bordertranslucent*/
+  outline-offset: -1px;
+  --hue-color: red;
+  --gradient-step-black: rgb(0 0 0);
+  --gradient-step-black-transparent: rgb(0 0 0 / 0);
+  --gradient-step-white: rgb(255 255 255);
+  --gradient-step-white-transparent: rgb(255 255 255 / 0);
+  --gradient-step-gray: rgb(128 128 128);
+  --gradient-step-gray-transparent: rgb(128 128 128 / 0);
+
+  @supports (color: color(display-p3 1 1 1)) {
+    @media (color-gamut: p3) {
+      --hue-color: color(display-p3 1 0 0);
+      --gradient-step-black: color(display-p3 0 0 0);
+      --gradient-step-black-transparent: color(display-p3 0 0 0 / 0);
+      --gradient-step-white: color(display-p3 1 1 1);
+      --gradient-step-white-transparent: color(display-p3 1 1 1 / 0);
+      --gradient-step-gray: color(display-p3 0.5 0.5 0.5);
+      --gradient-step-gray-transparent: color(display-p3 0.5 0.5 0.5 / 0);
+    }
+  }
+}
+.fp-ColorPicker:where(.fp-model-hsva) {
+  background: linear-gradient(to bottom, var(--gradient-step-black-transparent) 0%, var(--gradient-step-black) 100%),
+    linear-gradient(to right, var(--gradient-step-white) 0%, var(--hue-color) 100%);
+}
+
+.fp-ColorPicker:where(.fp-model-hsla) {
+  background: linear-gradient(
+      to bottom,
+      var(--gradient-step-white) 0%,
+      var(--gradient-step-white-transparent) 49.99%,
+      var(--gradient-step-black-transparent) 50.01%,
+      var(--gradient-step-black) 100%
+    ),
+    linear-gradient(to right, var(--gradient-step-gray) 0%, var(--gradient-step-gray-transparent) 100%),
+    var(--hue-color);
+}
+
+.fp-ColorPickerThumb {
+  position: absolute;
+  box-sizing: border-box;
+  box-shadow: var(--elevation-200);
+  left: 0;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  border-style: solid;
+  border-width: 4px;
+  border-color: white;
+  background: black;
+
+  &:focus-visible {
+    outline: 1px solid var(--figma-color-border-selected);
+  }
+}
