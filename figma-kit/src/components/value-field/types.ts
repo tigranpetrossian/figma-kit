@@ -17,6 +17,4 @@ type Formatter<V> = {
   getIncrementSelection?: (incrementTargets: IncrementTargets) => [start: number, end: number];
 };
 
-type RGBA = { r: number; g: number; b: number; a: number };
-
-export type { IncrementTargets, Formatter, ParserResult, RGBA };
+export type { IncrementTargets, Formatter, ParserResult };
