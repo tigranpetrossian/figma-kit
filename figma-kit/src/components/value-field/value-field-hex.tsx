@@ -1,12 +1,13 @@
 import React, { useMemo } from 'react';
 import { clamp, pipe } from 'remeda';
+import type { RGBA } from '@lib/color';
 import type { InputProps } from '@components/input';
+import type { Formatter } from './types';
 import { Base } from './value-field-base';
-import type { Formatter, RGBA } from './types';
 
 type HexElement = React.ElementRef<'input'>;
 type HexProps = Omit<InputProps, 'value' | 'onChange'> & {
-  /** Color in Figma's RGBA format */
+  /** Color in Figma's normalized RGBA format */
   value: RGBA;
   /** Callback to call upon submission. */
   onChange: (value: RGBA) => void;
