@@ -7,8 +7,7 @@
   --color-border-slider-track: #0000001a;
 }
 
-.dark,
-.dark-theme {
+.figma-dark {
   --color-border-slider-track: #ffffff1a;
 }
 
