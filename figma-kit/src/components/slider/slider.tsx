@@ -125,7 +125,7 @@ const Slider = React.forwardRef<SliderElement, SliderProps>((props, forwardedRef
           key={i}
           className={cx('fp-SliderThumb', {
             'fp-SliderThumb-focusVisible': focusVisible,
-            'fp-SliderThumb-modified': v !== baseValue,
+            'fp-SliderThumb-baseValue': v === baseValue,
           })}
         />
       ))}
