@@ -74,7 +74,7 @@ const preview: Preview = {
       },
     },
     darkMode: {
-      darkClass: 'dark',
+      darkClass: 'figma-dark',
       lightClass: 'light',
       classTarget: 'html',
       stylePreview: true,
