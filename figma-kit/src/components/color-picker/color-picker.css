@@ -1,0 +1,82 @@
+.fp-ColorPickerHueSlider {
+}
+
+.fp-ColorPickerHueSlider:where(.fp-color-model-hsv, .fp-color-model-hsl) {
+  --slider-track-bg: linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 1) calc(var(--slider-track-size) / 2),
+    rgba(255, 48, 0, 1),
+    rgba(255, 96, 0, 1),
+    rgba(255, 143, 0, 1),
+    rgba(255, 191, 0, 1),
+    rgba(255, 239, 0, 1),
+    rgba(223, 255, 0, 1),
+    rgba(175, 255, 0, 1),
+    rgba(128, 255, 0, 1),
+    rgba(80, 255, 0, 1),
+    rgba(32, 255, 0, 1),
+    rgba(0, 255, 16, 1),
+    rgba(0, 255, 64, 1),
+    rgba(0, 255, 112, 1),
+    rgba(0, 255, 159, 1),
+    rgba(0, 255, 207, 1),
+    rgba(0, 255, 255, 1),
+    rgba(0, 207, 255, 1),
+    rgba(0, 159, 255, 1),
+    rgba(0, 112, 255, 1),
+    rgba(0, 64, 255, 1),
+    rgba(0, 16, 255, 1),
+    rgba(32, 0, 255, 1),
+    rgba(80, 0, 255, 1),
+    rgba(127, 0, 255, 1),
+    rgba(175, 0, 255, 1),
+    rgba(223, 0, 255, 1),
+    rgba(255, 0, 239, 1),
+    rgba(255, 0, 191, 1),
+    rgba(255, 0, 143, 1),
+    rgba(255, 0, 96, 1),
+    rgba(255, 0, 48, 1) calc(100% - calc(var(--slider-track-size) / 2))
+  );
+}
+
+@supports (color: color(display-p3 1 1 1)) {
+  @media (color-gamut: p3) {
+    .fp-ColorPickerHueSlider:where(.fp-color-model-hsv, .fp-color-model-hsl):where(.fp-color-space-display-p3) {
+      --slider-track-bg: linear-gradient(
+        90deg,
+        color(display-p3 1 0 0) calc(var(--slider-track-size) / 2),
+        color(display-p3 1 0.1875 0),
+        color(display-p3 1 0.375 0),
+        color(display-p3 1 0.5625 0),
+        color(display-p3 1 0.75 0),
+        color(display-p3 1 0.9375 0),
+        color(display-p3 0.875 1 0),
+        color(display-p3 0.6875 1 0),
+        color(display-p3 0.5 1 0),
+        color(display-p3 0.3125 1 0),
+        color(display-p3 0.125 1 0),
+        color(display-p3 0 1 0.0625),
+        color(display-p3 0 1 0.25),
+        color(display-p3 0 1 0.4375),
+        color(display-p3 0 1 0.625),
+        color(display-p3 0 1 0.8125),
+        color(display-p3 0 1 1),
+        color(display-p3 0 0.8125 1),
+        color(display-p3 0 0.625 1),
+        color(display-p3 0 0.4375 1),
+        color(display-p3 0 0.25 1),
+        color(display-p3 0 0.0625 1),
+        color(display-p3 0.125 0 1),
+        color(display-p3 0.3125 0 1),
+        color(display-p3 0.5 0 1),
+        color(display-p3 0.6875 0 1),
+        color(display-p3 0.875 0 1),
+        color(display-p3 1 0 0.9375),
+        color(display-p3 1 0 0.75),
+        color(display-p3 1 0 0.5625),
+        color(display-p3 1 0 0.375),
+        color(display-p3 1 0 0.1875) calc(100% - calc(var(--slider-track-size) / 2))
+      );
+    }
+  }
+}
