@@ -17,12 +17,13 @@ const meta: Meta<typeof Picker> = {
 export default meta;
 
 export const Story = () => {
-  const [color, setColor] = useState({ r: 0, g: 1, b: 0, a: 1 });
+  const [color, setColor] = useState({ r: 0.48235294, g: 0.81176471, b: 0.48235294, a: 1 });
 
   return (
-    <ColorPicker.Root colorModel="hsv" colorSpace="srgb" color={color} onColorChange={setColor}>
-      <Flex style={{ width: 240 }}>
+    <ColorPicker.Root colorModel="hsv" colorSpace="display-p3" color={color} onColorChange={setColor}>
+      <Flex direction="column" gap="1" style={{ width: 240 }}>
         <ColorPicker.Hue />
+        <ColorPicker.Alpha />
       </Flex>
     </ColorPicker.Root>
   );
