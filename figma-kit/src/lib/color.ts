@@ -6,7 +6,7 @@ export type HSLA = { h: number; s: number; l: number; a: number };
 export type P3String = `color(display-p3 ${number} ${number} ${number}${` / ${number}` | ''})`;
 export type RGBString = `rgb(${number} ${number} ${number}${` / ${number}` | ''})`;
 
-export const rgbaToHsva = ({ r, g, b, a }: RGBA): HSVA => {
+export function rgbaToHsva({ r, g, b, a }: RGBA): HSVA {
   const max = Math.max(r, g, b);
   const delta = max - Math.min(r, g, b);
 
@@ -18,9 +18,9 @@ export const rgbaToHsva = ({ r, g, b, a }: RGBA): HSVA => {
     v: max * 100,
     a,
   };
-};
+}
 
-export const hsvaToRgba = ({ h, s, v, a }: HSVA): RGBA => {
+export function hsvaToRgba({ h, s, v, a }: HSVA): RGBA {
   h = (h / 360) * 6;
   s = s / 100;
   v = v / 100;
@@ -37,9 +37,9 @@ export const hsvaToRgba = ({ h, s, v, a }: HSVA): RGBA => {
     b: [b, b, d, v, v, c][module],
     a: a,
   };
-};
+}
 
-export const hslaToHsva = ({ h, s, l, a }: HSLA): HSVA => {
+export function hslaToHsva({ h, s, l, a }: HSLA): HSVA {
   s *= (l < 50 ? l : 100 - l) / 100;
 
   return {
@@ -48,9 +48,9 @@ export const hslaToHsva = ({ h, s, l, a }: HSLA): HSVA => {
     v: l + s,
     a,
   };
-};
+}
 
-export const hsvaToHsla = ({ h, s, v, a }: HSVA): HSLA => {
+export function hsvaToHsla({ h, s, v, a }: HSVA): HSLA {
   const hh = ((200 - s) * v) / 100;
 
   return {
@@ -59,15 +59,15 @@ export const hsvaToHsla = ({ h, s, v, a }: HSVA): HSLA => {
     l: hh / 2,
     a,
   };
-};
+}
 
-export const hslaToRgba = (hsla: HSLA): RGBA => {
+export function hslaToRgba(hsla: HSLA): RGBA {
   return hsvaToRgba(hslaToHsva(hsla));
-};
+}
 
-export const rgbaToHsla = (rgba: RGBA): HSLA => {
+export function rgbaToHsla(rgba: RGBA): HSLA {
   return hsvaToHsla(rgbaToHsva(rgba));
-};
+}
 
 export function rgbaToP3String(color: RGBA): P3String {
   const r = round(color.r, 4);
