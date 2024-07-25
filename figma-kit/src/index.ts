@@ -9,6 +9,7 @@ import * as Popover from './components/popover';
 import * as Dialog from './components/dialog';
 import * as AlertDialog from './components/alert-dialog';
 import * as ValueField from './components/value-field';
+import * as ColorPicker from './components/color-picker';
 import * as Collapsible from './components/collapsible';
 
 export { Text, Label, Paragraph, Link } from './components/text';
@@ -32,6 +33,7 @@ export { Popover };
 export { Dialog };
 export { AlertDialog };
 export { ValueField };
+export { ColorPicker };
 export { Collapsible };
 export { blendWithWhite } from '@lib/color';
 export { rgbaToCssString } from '@lib/color';

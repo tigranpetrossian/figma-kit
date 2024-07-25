@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 import { TooltipProvider } from '@components/tooltip';
-import type { RGBA } from '@components/value-field/types';
+import type { RGBA } from '@lib/color';
 import * as ValueField from './';
 
 type Story = StoryObj<typeof ValueField.Numeric>;

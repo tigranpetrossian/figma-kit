@@ -25,11 +25,12 @@ const Alpha = (props: AlphaProps) => {
   };
 
   const handleValueChange = (value: number[]) => {
-    onColorChange({ ...color, a: round(value[0] / 100, 2) });
+    onColorChange({ mode: 'rgb', value: { ...color, a: round(value[0] / 100, 2) } });
   };
 
   return (
     <Slider
+      aria-label="alpha"
       min={0}
       max={100}
       range={false}

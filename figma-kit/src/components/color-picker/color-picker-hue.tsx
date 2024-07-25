@@ -9,23 +9,23 @@ type HueProps = React.ComponentPropsWithoutRef<'div'>;
 
 const Hue = (props: HueProps) => {
   const { className, style } = props;
-  const { colorModel, colorSpace, color, onColorChange } = useColorPickerContext('Hue');
-  const strategy = colorModelStrategies[colorModel];
+  const { activeModel, colorSpace, hue, color, onColorChange } = useColorPickerContext('Hue');
+  const strategy = colorModelStrategies[activeModel];
   const handleValueChange = (value: number[]) => {
     const newColor = strategy.setHue(color, value[0]);
-    onColorChange(newColor);
+    onColorChange({ mode: 'rgb', value: newColor });
   };
-  const hue = strategy.getHue(color);
   const thumbColor = strategy.getThumbColor(hue, colorSpace);
 
   return (
     <Slider
+      aria-label="hue"
       range={false}
       min={0}
       max={359}
       value={[hue]}
       onValueChange={handleValueChange}
-      className={`fp-ColorPickerHueSlider fp-color-model-${colorModel} fp-color-space-${colorSpace} ${className}`}
+      className={`fp-ColorPickerHueSlider fp-color-model-${activeModel} fp-color-space-${colorSpace} ${className}`}
       style={{ '--slider-thumb-bg': thumbColor, ...style } as CSSProperties}
     />
   );
