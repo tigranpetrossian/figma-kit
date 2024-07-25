@@ -1,4 +1,4 @@
-.fp-ColorPickerHueSlider:where(.fp-color-model-hsv, .fp-color-model-hsl) {
+.fp-ColorPickerHueSlider:where(.fp-color-model-hsv, .fp-color-model-hsl, .fp-color-model-rgb, .fp-color-model-hex) {
   --slider-track-bg: linear-gradient(
     90deg,
     rgba(255, 0, 0, 1) calc(var(--slider-track-size) / 2),
