@@ -1,6 +1,10 @@
+import { round } from 'remeda';
+
 export type RGBA = { r: number; g: number; b: number; a: number };
 export type HSVA = { h: number; s: number; v: number; a: number };
 export type HSLA = { h: number; s: number; l: number; a: number };
+export type P3String = `color(display-p3 ${number} ${number} ${number}${` / ${number}` | ''})`;
+export type RGBString = `rgb(${number} ${number} ${number}${` / ${number}` | ''})`;
 
 export const rgbaToHsva = ({ r, g, b, a }: RGBA): HSVA => {
   const max = Math.max(r, g, b);
@@ -64,3 +68,30 @@ export const hslaToRgba = (hsla: HSLA): RGBA => {
 export const rgbaToHsla = (rgba: RGBA): HSLA => {
   return hsvaToHsla(rgbaToHsva(rgba));
 };
+
+export function rgbaToP3String(color: RGBA): P3String {
+  const r = round(color.r, 4);
+  const g = round(color.g, 4);
+  const b = round(color.b, 4);
+  const a = round(color.a, 2);
+  return a < 1 ? `color(display-p3 ${r} ${g} ${b} / ${a})` : `color(display-p3 ${r} ${g} ${b})`;
+}
+
+export function rgbaToCssString(color: RGBA): RGBString {
+  const r = Math.round(color.r * 255);
+  const g = Math.round(color.g * 255);
+  const b = Math.round(color.b * 255);
+  const a = color.a;
+
+  return a < 1 ? `rgb(${r} ${g} ${b} / ${a})` : `rgb(${r} ${g} ${b})`;
+}
+
+export function blendWithWhite(color: RGBA): RGBA {
+  const { r, g, b, a } = color;
+  return {
+    r: r + (1 - r) * (1 - a),
+    g: g + (1 - g) * (1 - a),
+    b: b + (1 - b) * (1 - a),
+    a: 1,
+  };
+}
