@@ -22,7 +22,7 @@ const Hue = (props: HueProps) => {
     <Slider
       range={false}
       min={0}
-      max={360}
+      max={359}
       value={[hue]}
       onValueChange={handleValueChange}
       className={`fp-ColorPickerHueSlider fp-color-model-${colorModel} fp-color-space-${colorSpace} ${className}`}
