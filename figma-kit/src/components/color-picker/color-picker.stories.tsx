@@ -33,7 +33,7 @@ export const Story = () => {
         </Select.Content>
       </Select.Root>
       <div style={{ width: 240 }}>
-        <ColorPicker.Root colorSpace={space} models={['hsv', 'hsl']}>
+        <ColorPicker.Root colorSpace={space}>
           <ColorPicker.Area />
           <ColorPicker.Hue />
           <ColorPicker.Alpha />
