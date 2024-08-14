@@ -242,7 +242,7 @@ export default {
       large: 'var(--line-height-5)',
     },
     borderRadius: {
-      none: 'none',
+      none: 0,
       'extra-small': 'var(--radius-extra-small)',
       small: 'var(--radius-small)',
       medium: 'var(--radius-medium)',
