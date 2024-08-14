@@ -284,4 +284,23 @@ export default {
       };
     },
   },
+  plugins: [
+    function ({ addUtilities, theme }) {
+      const iconColors = {
+        current: 'currentColor',
+        inherit: 'inherit',
+        transparent: 'transparent',
+        ...theme('colors').icon,
+      };
+
+      const newUtilities = Object.keys(iconColors).reduce((acc, colorName) => {
+        acc[`.icon-${colorName}`] = {
+          '--color-icon': iconColors[colorName],
+        };
+        return acc;
+      }, {});
+
+      addUtilities(newUtilities, ['responsive', 'hover']);
+    },
+  ],
 };
