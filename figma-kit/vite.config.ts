@@ -26,7 +26,7 @@ export default defineConfig((env) => {
         },
       },
       rollupOptions: {
-        external: Object.keys(dependencies),
+        external: [...Object.keys(dependencies), 'react', 'react-dom', 'react/jsx-runtime'],
         output: {
           globals: {
             react: 'React',
