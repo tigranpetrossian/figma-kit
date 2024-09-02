@@ -10,6 +10,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
   height: var(--space-6);
   padding: 0 var(--space-2);
   font-family: var(--font-family-default);
@@ -17,6 +18,7 @@
   font-weight: var(--font-weight-default);
   letter-spacing: var(--letter-spacing-default);
   line-height: var(--line-height-default);
+  white-space: nowrap;
 
   &:where([data-state='inactive']) {
     color: var(--figma-color-text-secondary);
