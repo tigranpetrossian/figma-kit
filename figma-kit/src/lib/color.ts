@@ -1,8 +1,13 @@
 import { round } from 'remeda';
 
-type RGBA = { r: number; g: number; b: number; a: number };
-type HSVA = { h: number; s: number; v: number; a: number };
-type HSLA = { h: number; s: number; l: number; a: number };
+type WithAlpha<T> = T & { a: number };
+
+type RGB = { r: number; g: number; b: number };
+type HSV = { h: number; s: number; v: number };
+type HSL = { h: number; s: number; l: number };
+type RGBA = WithAlpha<RGB>;
+type HSVA = WithAlpha<HSV>;
+type HSLA = WithAlpha<HSL>;
 type HEX = string;
 type P3String = `color(display-p3 ${number} ${number} ${number}${` / ${number}` | ''})`;
 type RGBString = `rgb(${number} ${number} ${number}${` / ${number}` | ''})`;
@@ -133,7 +138,7 @@ function roundHsla(hsla: HSLA): HSLA {
   };
 }
 
-export type { RGBA, HSVA, HSLA, HEX, P3String, RGBString };
+export type { RGB, HSV, HSL, RGBA, HSVA, HSLA, HEX, P3String, RGBString };
 
 export {
   rgbaToHex,
