@@ -1,3 +1,6 @@
+> [!NOTE]  
+> Figma Kit is currently in beta. There may be breaking changes before the final release.
+
 <div align="center">
   <a href="https://storybook.figma-kit.dev" target="_blank">
   <picture>
@@ -9,12 +12,9 @@
   <h3>A set of React components for building Figma plugins.</h3>
 </div>
 
-> [!NOTE]  
-> Figma Kit is currently in beta. There may be breaking changes before the final release.
-
 ### Overview
 
-Figma Kit is an extensive set of React components that attempts to replicate Figma's user interface look & feel with near-100% feature parity.
+Figma Kit is an extensive collection of React components that attempts to replicate Figma's user interface look & feel with near-100% feature parity.
 
 #### Features
 
