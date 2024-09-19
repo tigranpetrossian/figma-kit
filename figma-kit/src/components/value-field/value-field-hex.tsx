@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { clamp, pipe } from 'remeda';
 import type { RGBA } from '@lib/color';
 import type { InputProps } from '@components/input';
+import { namedColors } from '@components/value-field/named-colors';
 import type { Formatter } from './types';
 import { Base } from './value-field-base';
 
@@ -33,6 +34,14 @@ function createFormatter(options: FormatterOptions): Formatter<RGBA> {
 
   return {
     parse(input, currentValue) {
+      if (isValidNamedColor(input)) {
+        const { r, g, b } = namedColors[input];
+        return {
+          valid: true,
+          value: { r: r / 255, g: g / 255, b: b / 255, a: currentValue.a },
+        };
+      }
+
       try {
         return {
           value: pipe(
@@ -111,6 +120,10 @@ function createFormatter(options: FormatterOptions): Formatter<RGBA> {
       return [start, end];
     },
   };
+}
+
+function isValidNamedColor(input: string): input is keyof typeof namedColors {
+  return Object.keys(namedColors).includes(input);
 }
 
 function getFirstValidSubstring(input: string) {
