@@ -101,6 +101,22 @@ describe('input parsing', () => {
     });
   });
 
+  describe('given a valid <named-color> input', () => {
+    it.each([
+      { input: 'red', expected: { hex: 'FF0000', alpha: '100%' } },
+      { input: 'thistle', expected: { hex: 'D8BFD8', alpha: '100%' } },
+      { input: 'darkseagreen', expected: { hex: '8FBC8F', alpha: '100%' } },
+    ])('Converts $input to $expected', async ({ input, expected }) => {
+      render(<TestHexInput />);
+      const hexField = screen.getByLabelText(HEX_INPUT_LABEL);
+      const alphaField = screen.getByLabelText(ALPHA_INPUT_LABEL);
+      await user.type(hexField, input);
+      await user.keyboard('{Enter}');
+      expect(hexField).toHaveValue(expected.hex);
+      expect(alphaField).toHaveValue(expected.alpha);
+    });
+  });
+
   describe('given an input with `ignoreAlpha`', () => {
     it('ignores alpha triplet from user input', async () => {
       const onChange = vi.fn();
