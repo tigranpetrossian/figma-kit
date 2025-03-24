@@ -54,6 +54,9 @@ const Slider = React.forwardRef<SliderElement, SliderProps>((props, forwardedRef
     }
 
     setTrackedValue(value ?? defaultValue);
+
+    prevValueRef.current = value;
+    prevDefaultValueRef.current = defaultValue;
   }, [value, defaultValue]);
 
   // Radix adjusts the thumb position by default to align with the track edges at min/max positions.
