@@ -87,6 +87,7 @@ const SubContent = React.forwardRef<SubContentElement, SubContentProps>((props, 
         {...subContentProps}
         className={cx(className, 'fp-MenuContent')}
         sideOffset={12}
+        alignOffset={-8}
       />
     </RadixMenu.Portal>
   );
