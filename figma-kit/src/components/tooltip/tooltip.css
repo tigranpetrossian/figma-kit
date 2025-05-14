@@ -18,7 +18,7 @@
 .fp-tooltip-arrow {
   fill: var(--color-bg-tooltip);
   width: var(--space-3_5);
-  height: var(--space-1_5);
+  height: 7px;
   position: relative;
   bottom: 1px;
 }
