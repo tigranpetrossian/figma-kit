@@ -33,20 +33,22 @@
   &:focus-visible {
     outline-offset: -1px;
     outline: 1px solid var(--figma-color-border-selected-strong);
+
+    &::before {
+      inset: 2px;
+    }
   }
 
-  &:focus-visible::before {
-    inset: 2px;
-  }
+  &[data-disabled] {
+    &[data-state='unchecked']::before {
+      /* This gives it more contrast than the disabled checked state but this is
+      how it is in Figma. ¯\_(ツ)_/¯  */
+      background: var(--figma-color-bg-disabled);
+    }
 
-  &[data-disabled]&[data-state='unchecked']::before {
-    /* This gives it more contrast than the disabled checked state but this is
-    how it is in Figma. ¯\_(ツ)_/¯  */
-    background: var(--figma-color-bg-disabled);
-  }
-
-  &[data-disabled]&[data-state='checked']::before {
-    background: var(--figma-color-bg-tertiary);
+    &[data-state='checked']::before {
+      background: var(--figma-color-bg-tertiary);
+    }
   }
 }
 
