@@ -20,7 +20,7 @@
   &:where(.fp-size-medium) {
     --font-size: var(--font-size-3);
     --line-height: var(--line-height-3);
-    --letter-spacing: --letter-spacing-3;
+    --letter-spacing: var(--letter-spacing-3);
   }
 
   &:where(.fp-size-large) {
