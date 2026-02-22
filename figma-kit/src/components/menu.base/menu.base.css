@@ -30,6 +30,15 @@
     background-color: var(--color-bg-menu-selected);
   }
 
+  /* Sub-menu parent when open and not hovered */
+  &[data-state='open'] {
+    background-color: var(--color-bg-menu-selected-parent);
+
+    &[data-highlighted] {
+      background-color: var(--color-bg-menu-selected);
+    }
+  }
+
   &[data-disabled] {
     color: var(--color-text-menu-tertiary);
   }
