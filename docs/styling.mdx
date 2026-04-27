@@ -13,18 +13,11 @@ which this library relies on, so familiarity with these tokens is recommended.
 
 ## Using with Tailwind
 
-Figma kit ships with a Tailwind preset that makes Figma theme tokens available in Tailwind classes:
+Figma kit ships a Tailwind v4 stylesheet that makes Figma theme tokens available in Tailwind classes. Import it alongside Tailwind in your CSS entry:
 
-
-
-```tsx
-import figmaKitPreset from 'figma-kit/tailwind.preset.js';
-
-/** @type {import('tailwindcss').Config} */
-export default {
-  // ...
-  presets: [figmaKitPreset],
-};
+```css
+@import "tailwindcss";
+@import "figma-kit/tailwind.css";
 ```
 
 
@@ -43,7 +36,7 @@ const App = () => {
 }
 ```
 
-The preset is built to match Figma's [semantic token format](https://www.figma.com/plugin-docs/css-variables/#tokens-overview),
+The stylesheet is built to match Figma's [semantic token format](https://www.figma.com/plugin-docs/css-variables/#tokens-overview),
 which differs slightly from typical Tailwind themes. Here, properties are
 strictly mapped to their respective tokens:
 

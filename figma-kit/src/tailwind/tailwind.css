@@ -1,0 +1,273 @@
+@theme {
+  --color-*: initial;
+
+  /* Background colors */
+  --background-color-default: var(--figma-color-bg);
+  --background-color-brand: var(--figma-color-bg-brand);
+  --background-color-brand-hover: var(--figma-color-bg-brand-hover);
+  --background-color-brand-pressed: var(--figma-color-bg-brand-pressed);
+  --background-color-brand-secondary: var(--figma-color-bg-brand-secondary);
+  --background-color-brand-tertiary: var(--figma-color-bg-brand-tertiary);
+  --background-color-component: var(--figma-color-bg-component);
+  --background-color-component-hover: var(--figma-color-bg-component-hover);
+  --background-color-component-pressed: var(--figma-color-bg-component-pressed);
+  --background-color-component-secondary: var(--figma-color-bg-component-secondary);
+  --background-color-component-tertiary: var(--figma-color-bg-component-tertiary);
+  --background-color-danger: var(--figma-color-bg-danger);
+  --background-color-danger-hover: var(--figma-color-bg-danger-hover);
+  --background-color-danger-pressed: var(--figma-color-bg-danger-pressed);
+  --background-color-danger-secondary: var(--figma-color-bg-danger-secondary);
+  --background-color-danger-tertiary: var(--figma-color-bg-danger-tertiary);
+  --background-color-disabled: var(--figma-color-bg-disabled);
+  --background-color-disabled-secondary: var(--figma-color-bg-disabled-secondary);
+  --background-color-hover: var(--figma-color-bg-hover);
+  --background-color-inverse: var(--figma-color-bg-inverse);
+  --background-color-onselected: var(--figma-color-bg-onselected);
+  --background-color-onselected-hover: var(--figma-color-bg-onselected-hover);
+  --background-color-onselected-pressed: var(--figma-color-bg-onselected-pressed);
+  --background-color-pressed: var(--figma-color-bg-pressed);
+  --background-color-secondary: var(--figma-color-bg-secondary);
+  --background-color-selected: var(--figma-color-bg-selected);
+  --background-color-selected-hover: var(--figma-color-bg-selected-hover);
+  --background-color-selected-pressed: var(--figma-color-bg-selected-pressed);
+  --background-color-selected-secondary: var(--figma-color-bg-selected-secondary);
+  --background-color-selected-strong: var(--figma-color-bg-selected-strong);
+  --background-color-selected-tertiary: var(--figma-color-bg-selected-tertiary);
+  --background-color-success: var(--figma-color-bg-success);
+  --background-color-success-hover: var(--figma-color-bg-success-hover);
+  --background-color-success-pressed: var(--figma-color-bg-success-pressed);
+  --background-color-success-secondary: var(--figma-color-bg-success-secondary);
+  --background-color-success-tertiary: var(--figma-color-bg-success-tertiary);
+  --background-color-tertiary: var(--figma-color-bg-tertiary);
+  --background-color-warning: var(--figma-color-bg-warning);
+  --background-color-warning-hover: var(--figma-color-bg-warning-hover);
+  --background-color-warning-pressed: var(--figma-color-bg-warning-pressed);
+  --background-color-warning-secondary: var(--figma-color-bg-warning-secondary);
+  --background-color-warning-tertiary: var(--figma-color-bg-warning-tertiary);
+
+  /* Text colors */
+  --text-color-default: var(--figma-color-text);
+  --text-color-brand: var(--figma-color-text-brand);
+  --text-color-brand-secondary: var(--figma-color-text-brand-secondary);
+  --text-color-brand-tertiary: var(--figma-color-text-brand-tertiary);
+  --text-color-component: var(--figma-color-text-component);
+  --text-color-component-pressed: var(--figma-color-text-component-pressed);
+  --text-color-component-secondary: var(--figma-color-text-component-secondary);
+  --text-color-component-tertiary: var(--figma-color-text-component-tertiary);
+  --text-color-danger: var(--figma-color-text-danger);
+  --text-color-danger-secondary: var(--figma-color-text-danger-secondary);
+  --text-color-danger-tertiary: var(--figma-color-text-danger-tertiary);
+  --text-color-disabled: var(--figma-color-text-disabled);
+  --text-color-hover: var(--figma-color-text-hover);
+  --text-color-onbrand: var(--figma-color-text-onbrand);
+  --text-color-onbrand-secondary: var(--figma-color-text-onbrand-secondary);
+  --text-color-onbrand-tertiary: var(--figma-color-text-onbrand-tertiary);
+  --text-color-oncomponent: var(--figma-color-text-oncomponent);
+  --text-color-oncomponent-secondary: var(--figma-color-text-oncomponent-secondary);
+  --text-color-oncomponent-tertiary: var(--figma-color-text-oncomponent-tertiary);
+  --text-color-ondanger: var(--figma-color-text-ondanger);
+  --text-color-ondanger-secondary: var(--figma-color-text-ondanger-secondary);
+  --text-color-ondanger-tertiary: var(--figma-color-text-ondanger-tertiary);
+  --text-color-ondisabled: var(--figma-color-text-ondisabled);
+  --text-color-oninverse: var(--figma-color-text-oninverse);
+  --text-color-onselected: var(--figma-color-text-onselected);
+  --text-color-onselected-secondary: var(--figma-color-text-onselected-secondary);
+  --text-color-onselected-strong: var(--figma-color-text-onselected-strong);
+  --text-color-onselected-tertiary: var(--figma-color-text-onselected-tertiary);
+  --text-color-onsuccess: var(--figma-color-text-onsuccess);
+  --text-color-onsuccess-secondary: var(--figma-color-text-onsuccess-secondary);
+  --text-color-onsuccess-tertiary: var(--figma-color-text-onsuccess-tertiary);
+  --text-color-onwarning: var(--figma-color-text-onwarning);
+  --text-color-onwarning-secondary: var(--figma-color-text-onwarning-secondary);
+  --text-color-onwarning-tertiary: var(--figma-color-text-onwarning-tertiary);
+  --text-color-secondary: var(--figma-color-text-secondary);
+  --text-color-secondary-hover: var(--figma-color-text-secondary-hover);
+  --text-color-selected: var(--figma-color-text-selected);
+  --text-color-selected-secondary: var(--figma-color-text-selected-secondary);
+  --text-color-selected-tertiary: var(--figma-color-text-selected-tertiary);
+  --text-color-success: var(--figma-color-text-success);
+  --text-color-success-secondary: var(--figma-color-text-success-secondary);
+  --text-color-success-tertiary: var(--figma-color-text-success-tertiary);
+  --text-color-tertiary: var(--figma-color-text-tertiary);
+  --text-color-tertiary-hover: var(--figma-color-text-tertiary-hover);
+  --text-color-warning: var(--figma-color-text-warning);
+  --text-color-warning-secondary: var(--figma-color-text-warning-secondary);
+  --text-color-warning-tertiary: var(--figma-color-text-warning-tertiary);
+
+  /* Border colors */
+  --border-color-default: var(--figma-color-border);
+  --border-color-brand: var(--figma-color-border-brand);
+  --border-color-brand-strong: var(--figma-color-border-brand-strong);
+  --border-color-component: var(--figma-color-border-component);
+  --border-color-component-hover: var(--figma-color-border-component-hover);
+  --border-color-component-strong: var(--figma-color-border-component-strong);
+  --border-color-danger: var(--figma-color-border-danger);
+  --border-color-danger-strong: var(--figma-color-border-danger-strong);
+  --border-color-disabled: var(--figma-color-border-disabled);
+  --border-color-disabled-strong: var(--figma-color-border-disabled-strong);
+  --border-color-onbrand: var(--figma-color-border-onbrand);
+  --border-color-onbrand-strong: var(--figma-color-border-onbrand-strong);
+  --border-color-oncomponent: var(--figma-color-border-oncomponent);
+  --border-color-oncomponent-strong: var(--figma-color-border-oncomponent-strong);
+  --border-color-ondanger: var(--figma-color-border-ondanger);
+  --border-color-ondanger-strong: var(--figma-color-border-ondanger-strong);
+  --border-color-onselected: var(--figma-color-border-onselected);
+  --border-color-onselected-strong: var(--figma-color-border-onselected-strong);
+  --border-color-onsuccess: var(--figma-color-border-onsuccess);
+  --border-color-onsuccess-strong: var(--figma-color-border-onsuccess-strong);
+  --border-color-onwarning: var(--figma-color-border-onwarning);
+  --border-color-onwarning-strong: var(--figma-color-border-onwarning-strong);
+  --border-color-selected: var(--figma-color-border-selected);
+  --border-color-selected-strong: var(--figma-color-border-selected-strong);
+  --border-color-strong: var(--figma-color-border-strong);
+  --border-color-success: var(--figma-color-border-success);
+  --border-color-success-strong: var(--figma-color-border-success-strong);
+  --border-color-warning: var(--figma-color-border-warning);
+  --border-color-warning-strong: var(--figma-color-border-warning-strong);
+
+  /* Icon colors */
+  --icon-color-default: var(--figma-color-icon);
+  --icon-color-brand: var(--figma-color-icon-brand);
+  --icon-color-brand-pressed: var(--figma-color-icon-brand-pressed);
+  --icon-color-brand-secondary: var(--figma-color-icon-brand-secondary);
+  --icon-color-brand-tertiary: var(--figma-color-icon-brand-tertiary);
+  --icon-color-component: var(--figma-color-icon-component);
+  --icon-color-component-pressed: var(--figma-color-icon-component-pressed);
+  --icon-color-component-secondary: var(--figma-color-icon-component-secondary);
+  --icon-color-component-tertiary: var(--figma-color-icon-component-tertiary);
+  --icon-color-danger: var(--figma-color-icon-danger);
+  --icon-color-danger-hover: var(--figma-color-icon-danger-hover);
+  --icon-color-danger-pressed: var(--figma-color-icon-danger-pressed);
+  --icon-color-danger-secondary: var(--figma-color-icon-danger-secondary);
+  --icon-color-danger-secondary-hover: var(--figma-color-icon-danger-secondary-hover);
+  --icon-color-danger-tertiary: var(--figma-color-icon-danger-tertiary);
+  --icon-color-disabled: var(--figma-color-icon-disabled);
+  --icon-color-hover: var(--figma-color-icon-hover);
+  --icon-color-onbrand: var(--figma-color-icon-onbrand);
+  --icon-color-onbrand-secondary: var(--figma-color-icon-onbrand-secondary);
+  --icon-color-onbrand-tertiary: var(--figma-color-icon-onbrand-tertiary);
+  --icon-color-oncomponent: var(--figma-color-icon-oncomponent);
+  --icon-color-oncomponent-secondary: var(--figma-color-icon-oncomponent-secondary);
+  --icon-color-oncomponent-tertiary: var(--figma-color-icon-oncomponent-tertiary);
+  --icon-color-ondanger: var(--figma-color-icon-ondanger);
+  --icon-color-ondanger-secondary: var(--figma-color-icon-ondanger-secondary);
+  --icon-color-ondanger-tertiary: var(--figma-color-icon-ondanger-tertiary);
+  --icon-color-ondisabled: var(--figma-color-icon-ondisabled);
+  --icon-color-oninverse: var(--figma-color-icon-oninverse);
+  --icon-color-onselected: var(--figma-color-icon-onselected);
+  --icon-color-onselected-secondary: var(--figma-color-icon-onselected-secondary);
+  --icon-color-onselected-strong: var(--figma-color-icon-onselected-strong);
+  --icon-color-onselected-tertiary: var(--figma-color-icon-onselected-tertiary);
+  --icon-color-onsuccess: var(--figma-color-icon-onsuccess);
+  --icon-color-onsuccess-secondary: var(--figma-color-icon-onsuccess-secondary);
+  --icon-color-onsuccess-tertiary: var(--figma-color-icon-onsuccess-tertiary);
+  --icon-color-onwarning: var(--figma-color-icon-onwarning);
+  --icon-color-onwarning-secondary: var(--figma-color-icon-onwarning-secondary);
+  --icon-color-onwarning-tertiary: var(--figma-color-icon-onwarning-tertiary);
+  --icon-color-pressed: var(--figma-color-icon-pressed);
+  --icon-color-secondary: var(--figma-color-icon-secondary);
+  --icon-color-secondary-hover: var(--figma-color-icon-secondary-hover);
+  --icon-color-selected: var(--figma-color-icon-selected);
+  --icon-color-selected-secondary: var(--figma-color-icon-selected-secondary);
+  --icon-color-selected-tertiary: var(--figma-color-icon-selected-tertiary);
+  --icon-color-success: var(--figma-color-icon-success);
+  --icon-color-success-pressed: var(--figma-color-icon-success-pressed);
+  --icon-color-success-secondary: var(--figma-color-icon-success-secondary);
+  --icon-color-success-tertiary: var(--figma-color-icon-success-tertiary);
+  --icon-color-tertiary: var(--figma-color-icon-tertiary);
+  --icon-color-tertiary-hover: var(--figma-color-icon-tertiary-hover);
+  --icon-color-warning: var(--figma-color-icon-warning);
+  --icon-color-warning-pressed: var(--figma-color-icon-warning-pressed);
+  --icon-color-warning-secondary: var(--figma-color-icon-warning-secondary);
+  --icon-color-warning-tertiary: var(--figma-color-icon-warning-tertiary);
+}
+
+@utility icon-* {
+  --color-icon: --value(--icon-color-*);
+}
+
+@theme {
+  --radius-*: initial;
+}
+
+@theme inline {
+  --radius-extra-small: var(--radius-extra-small);
+  --radius-small: var(--radius-small);
+  --radius-medium: var(--radius-medium);
+  --radius-large: var(--radius-large);
+  --radius-full: var(--radius-full);
+}
+
+@utility rounded {
+  border-radius: var(--radius-default);
+}
+
+@theme {
+  --font-*: initial;
+  --font-weight-*: initial;
+  --text-*: initial;
+  --tracking-*: initial;
+  --leading-*: initial;
+}
+
+@theme inline {
+  --font-sans: var(--font-family-default);
+  --font-monospace: var(--font-family-monospace);
+
+  --font-weight-normal: var(--font-weight-default);
+  --font-weight-strong: var(--font-weight-strong);
+
+  --text-size-1: var(--font-size-1);
+  --text-size-2: var(--font-size-2);
+  --text-size-3: var(--font-size-3);
+  --text-size-4: var(--font-size-4);
+  --text-size-5: var(--font-size-5);
+  --text-size-6: var(--font-size-6);
+  --text-size-7: var(--font-size-7);
+  --text-size-8: var(--font-size-8);
+  --text-size-9: var(--font-size-9);
+  --text-size-10: var(--font-size-10);
+  --text-small: var(--font-size-1);
+  --text-medium: var(--font-size-3);
+  --text-large: var(--font-size-5);
+
+  --tracking-1: var(--letter-spacing-1);
+  --tracking-2: var(--letter-spacing-2);
+  --tracking-3: var(--letter-spacing-3);
+  --tracking-4: var(--letter-spacing-4);
+  --tracking-5: var(--letter-spacing-5);
+  --tracking-6: var(--letter-spacing-6);
+  --tracking-7: var(--letter-spacing-7);
+  --tracking-8: var(--letter-spacing-8);
+  --tracking-9: var(--letter-spacing-9);
+  --tracking-10: var(--letter-spacing-10);
+  --tracking-small: var(--letter-spacing-1);
+  --tracking-medium: var(--letter-spacing-3);
+  --tracking-large: var(--letter-spacing-5);
+
+  --leading-1: var(--line-height-1);
+  --leading-2: var(--line-height-2);
+  --leading-3: var(--line-height-3);
+  --leading-4: var(--line-height-4);
+  --leading-5: var(--line-height-5);
+  --leading-6: var(--line-height-6);
+  --leading-7: var(--line-height-7);
+  --leading-8: var(--line-height-8);
+  --leading-9: var(--line-height-9);
+  --leading-10: var(--line-height-10);
+  --leading-small: var(--line-height-1);
+  --leading-medium: var(--line-height-3);
+  --leading-large: var(--line-height-5);
+}
+
+@theme {
+  --shadow-*: initial;
+}
+
+@theme inline {
+  --shadow-100: var(--elevation-100);
+  --shadow-200: var(--elevation-200);
+  --shadow-300: var(--elevation-300);
+  --shadow-400: var(--elevation-400);
+  --shadow-500: var(--elevation-500);
+}
