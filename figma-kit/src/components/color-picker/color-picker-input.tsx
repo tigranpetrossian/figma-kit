@@ -1,46 +1,10 @@
-import { pick } from 'remeda';
-import type { CSSProperties } from 'react';
+import type { CSSProperties, ReactElement } from 'react';
 import * as Select from '@components/select';
 import { Flex } from '@components/flex';
 import { useColorPickerContext } from '@components/color-picker/color-picker';
+import type { ColorModel } from '@components/color-picker/color-picker';
 import type { RGBA } from '@lib/color';
 import * as ValueField from '@components/value-field';
-
-type InputProps = {
-  className?: string;
-  style?: CSSProperties;
-};
-
-const Input = (props: InputProps) => {
-  const { models, activeModel, onActiveModelChange } = useColorPickerContext('ColorPicker.Input');
-  const Input = pick(
-    {
-      hex: HexInput,
-      hsv: HsvaInput,
-      hsl: HslaInput,
-      rgb: RgbaInput,
-    },
-    models
-  )[activeModel];
-
-  return (
-    <Flex gap="2.5" className={props.className} style={props.style}>
-      {models.length > 1 && (
-        <Select.Root value={activeModel} onValueChange={onActiveModelChange}>
-          <Select.Trigger style={{ width: 56 }} />
-          <Select.Content>
-            {models.map((model) => (
-              <Select.Item key={model} value={model}>
-                {model.toUpperCase()}
-              </Select.Item>
-            ))}
-          </Select.Content>
-        </Select.Root>
-      )}
-      <Input />
-    </Flex>
-  );
-};
 
 const HexInput = () => {
   const { colorsByModel, onColorChange } = useColorPickerContext('ColorPicker.HEX');
@@ -198,6 +162,41 @@ const HslaInput = () => {
         <ValueField.Label>%</ValueField.Label>
       </ValueField.Root>
     </ValueField.Multi>
+  );
+};
+
+const INPUT_BY_MODEL = {
+  hex: HexInput,
+  hsv: HsvaInput,
+  hsl: HslaInput,
+  rgb: RgbaInput,
+} satisfies Record<ColorModel, () => ReactElement>;
+
+type InputProps = {
+  className?: string;
+  style?: CSSProperties;
+};
+
+const Input = (props: InputProps) => {
+  const { models, activeModel, onActiveModelChange } = useColorPickerContext('ColorPicker.Input');
+  const ActiveInput = INPUT_BY_MODEL[activeModel];
+
+  return (
+    <Flex gap="2.5" className={props.className} style={props.style}>
+      {models.length > 1 && (
+        <Select.Root value={activeModel} onValueChange={onActiveModelChange}>
+          <Select.Trigger style={{ width: 56 }} />
+          <Select.Content>
+            {models.map((model) => (
+              <Select.Item key={model} value={model}>
+                {model.toUpperCase()}
+              </Select.Item>
+            ))}
+          </Select.Content>
+        </Select.Root>
+      )}
+      <ActiveInput />
+    </Flex>
   );
 };
 
