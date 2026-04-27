@@ -20,7 +20,7 @@ Figma Kit is an extensive collection of React components that attempts to replic
 
 * UI3 Ready
 * Automatic dark mode
-* First-class Tailwind support with a preset
+* First-class Tailwind support
 
 ### Documentation
 
