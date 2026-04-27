@@ -21,6 +21,7 @@
   letter-spacing: var(--letter-spacing-default);
   line-height: var(--line-height-default);
   border-radius: var(--radius-medium);
+  --color-icon: currentColor;
 }
 
 .fp-Button:where(.fp-variant-secondary) {
