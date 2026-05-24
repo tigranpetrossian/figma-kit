@@ -13,11 +13,10 @@
     "pretty": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": ".",
     "paths": {
-      "@components/*": ["src/components/*"],
-      "@examples/*": ["src/examples/*"],
-      "@lib/*": ["src/lib/*"]
+      "@components/*": ["./src/components/*"],
+      "@examples/*": ["./src/examples/*"],
+      "@lib/*": ["./src/lib/*"]
     }
   },
   "include": ["src", "test"]

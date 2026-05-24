@@ -153,6 +153,6 @@ describe('invalid expressions', () => {
   const displayValue = 10;
 
   it.each([['dogs'], ['1xx'], ['2%%']])('throws error', (expression) => {
-    expect(() => evaluateExpression({ expression, displayValue })).toThrow;
+    expect(() => evaluateExpression({ expression, displayValue })).toThrow();
   });
 });

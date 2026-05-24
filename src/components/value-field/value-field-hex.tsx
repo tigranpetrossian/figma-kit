@@ -53,7 +53,7 @@ function createFormatter(options: FormatterOptions): Formatter<RGBA> {
           ),
           valid: true,
         };
-      } catch (e) {
+      } catch {
         return { valid: false };
       }
     },
