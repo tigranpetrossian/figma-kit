@@ -6,7 +6,6 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'prettier',
     'plugin:react-hooks/recommended',
-    'plugin:storybook/recommended',
   ],
   plugins: ['react-refresh', 'import'],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
@@ -22,15 +21,6 @@ module.exports = {
       },
     },
   },
-  overrides: [
-    {
-      files: ['*.stories.tsx'],
-      rules: {
-        'import/no-default-export': 'off',
-        'import/exports-last': 'off',
-      },
-    },
-  ],
   rules: {
     'no-console': ['error', { allow: ['warn', 'error'] }],
 
