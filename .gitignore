@@ -29,5 +29,3 @@ figma-kit/*.css
 # Generated
 tsconfig.tsbuildinfo
 .eslintcache
-
-*storybook.log

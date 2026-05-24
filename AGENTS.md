@@ -4,11 +4,10 @@ This file provides guidance to Codex (Codex.ai/code) when working with code in t
 
 ## Repository layout
 
-pnpm monorepo. `pnpm-workspace.yaml` declares the `figma-kit/` package. Storybook lives at the repo root, not inside the package, and pulls stories from both `docs/**/*.mdx` and `figma-kit/src/**/*.{stories.tsx,mdx}`.
+pnpm monorepo. `pnpm-workspace.yaml` declares the `figma-kit/` package.
 
 - `figma-kit/` — the published library (`figma-kit` on npm). Vite library build with rolled-up types.
-- `.storybook/` — root-level Storybook config; runs against the package source via `vite-tsconfig-paths`.
-- `docs/` — MDX docs surfaced in Storybook.
+- `docs/` — MDX docs kept outside the package.
 - `patches/` — pnpm patch for `@radix-ui/react-slider@1.2.0` (applied via `pnpm.patchedDependencies`).
 
 ## Common commands
@@ -19,8 +18,6 @@ Run everything from the repo root unless noted.
 - `pnpm build` — full library build: JS bundles + `styles.css` + `figma-development-theme.css` + `tailwind.css`.
 - `pnpm test` — Vitest in the library package. Single file: `pnpm --filter figma-kit test path/to/file.test.tsx`. Single test: append `-t "name"`.
 - `pnpm lint` — ESLint across `**/{src,test}/**/*.{ts,tsx}` with `--max-warnings 0`. Lint-staged runs this on commit.
-- `pnpm storybook` — Storybook dev server on `:6006`.
-- `pnpm build-storybook` — static Storybook build.
 
 The library `build` is composed of four steps (`build:js`, `build:css`, `build:figma-dev-theme-css`, `build:tailwind-css`); when iterating on CSS or the Tailwind stylesheet, run only the relevant subscript via `pnpm --filter figma-kit run build:css` etc.
 
@@ -32,7 +29,7 @@ Components are thin wrappers over Radix UI primitives, styled with prefixed BEM-
 
 - `asChild` is intentionally hidden on most primitives — wrappers force `asChild` internally and accept children that are real elements (see `figma-kit/src/components/dialog/dialog.tsx:18`).
 - Variants are declared with `cva('fp-Component', { variants: { variant: { ... }, size: { ... } } })` and exposed as typed props via `VariantProps<typeof cva>`. Default variants live in the same `cva` call.
-- Each component dir co-locates `*.tsx`, `*.css`, `*.stories.tsx`, optional `*.mdx`, and an `index.ts` barrel that re-exports `* from './component'`.
+- Each component dir co-locates `*.tsx`, `*.css`, and an `index.ts` barrel that re-exports `* from './component'`.
 - Compound components are exported namespaced from `src/index.ts` (e.g. `import { Dialog } from 'figma-kit'` then `<Dialog.Root>`). Singleton components like `Button`, `Text`, `Input` are exported as named symbols.
 - Two `*.base/` folders (`dialog.base`, `menu.base`) hold shared structural pieces that are reused across higher-level components (`Dialog` and `AlertDialog` both pull `Header/Section/Controls` from `dialog.base`).
 
@@ -42,7 +39,7 @@ The library targets Figma plugin UI, which injects Figma's [semantic color token
 
 - `src/styles/index.css` is the entry that `@import`s every token file and every component CSS file in build order. New components must be added here or their styles won't ship in `dist/styles.css`.
 - `src/styles/tokens/` defines the library's own non-color tokens (`--space-*`, `--radius-*`, `--font-size-*`, `--elevation-*`, etc.). These are independent of Figma's tokens and are used by components for layout/typography.
-- `src/styles/figma-development-theme.css` ships as a separate output and provides hardcoded values for `--figma-color-*` so the library renders correctly outside a real Figma plugin (e.g. Storybook). Never import it from plugin code.
+- `src/styles/figma-development-theme.css` ships as a separate output and provides hardcoded values for `--figma-color-*` so the library renders correctly outside a real Figma plugin. Never import it from plugin code.
 - PostCSS pipeline (`figma-kit/postcss.config.cjs`) runs `postcss-import` then `postcss-nesting`. Component CSS uses native nesting (`&:hover {}`).
 - `src/tailwind/tailwind.css` is a Tailwind v4 stylesheet that maps every Figma token to a utility (e.g. `bg-brand`, `text-secondary`, `icon-danger`) via `@theme` blocks. It replaces Tailwind's color theme rather than extending it; consumers opt in by `@import`ing it alongside `tailwindcss` in their CSS entry. The `@utility icon-*` rule sets the `--color-icon` CSS variable consumed by icon components.
 
@@ -68,7 +65,7 @@ Aliases are resolved at build time by `vite-tsconfig-paths`. Use them instead of
 ## Code conventions specific to this repo
 
 - Before editing, inspect nearby component patterns first. For new components, add the CSS import to `figma-kit/src/styles/index.css`; if the component is public, export it from `figma-kit/src/index.ts`.
-- `import/no-default-export` is enforced; default exports are only allowed in `*.stories.tsx`.
+- `import/no-default-export` is enforced.
 - `import/exports-last` is enforced — types and values are exported at the bottom of each file in two grouped statements (`export type { ... }` then `export { ... }`).
 - `@typescript-eslint/consistent-type-imports` is on — use `import type` for type-only imports (necessary so Vite doesn't bundle them).
 - `displayName` is set on every `forwardRef` component (often as `Namespace.Part`, e.g. `'Dialog.Trigger'`).

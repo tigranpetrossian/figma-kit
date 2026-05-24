@@ -1,7 +1,3 @@
-import { Meta, CodeOrSourceMdx, Source } from '@storybook/blocks';
-
-<Meta title="Getting Started" />
-
 ## Quick start
 
 <br />
@@ -18,16 +14,22 @@ Figma injects a set of [semantic color tokens as CSS custom properties](https://
 relies on those to display the components correctly. Enable this by initializing your plugin UI
 as shown below:
 
-<Source code="figma.showUI(__html__, { themeColors: true, /* other options */ })" />
+```ts
+figma.showUI(__html__, { themeColors: true })
+```
 
 ### Import Figma Kit styles into your CSS
 
-<Source code="@import 'figma-kit/styles.css'" />
+```css
+@import 'figma-kit/styles.css';
+```
 
 Alternatively, if your plugin does not use CSS files, you can also import `styles.css` directly
 into your root JavaScript/TypeScript file:
 
-<Source code="import 'figma-kit/styles.css'" />
+```ts
+import 'figma-kit/styles.css';
+```
 
 Importing CSS files into JS/TS might require additional setup, but it is typically already
 supported by build tools like Vite.
@@ -38,19 +40,19 @@ When using the library outside of Figma plugin UI, e.g. in a normal browser, you
 access to semantic tokens for components to display correctly. Just for that purpose, Figma kit
 exports an optional theme file:
 
-<Source code="@import 'figma-kit/figma-development-theme.css'" />
+```css
+@import 'figma-kit/figma-development-theme.css';
+```
 
 This file is meant to be used for development purposes only, and **should not be included** in
 actual plugin code.
 
 ### Importing and using components
 
-<Source
-  code={`
+```tsx
 import { Text } from 'figma-kit'
 
 const App = () => {
   return <Text>Hello Figma</Text>
 }
-`}
-/>
+```
