@@ -3,6 +3,7 @@
     "target": "ES2020",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
+    "types": ["@testing-library/jest-dom"],
     "strict": true,
     "skipLibCheck": true,
     "moduleResolution": "bundler",
@@ -11,6 +12,13 @@
     "isolatedModules": true,
     "pretty": true,
     "noEmit": true,
-    "jsx": "react-jsx"
-  }
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@examples/*": ["src/examples/*"],
+      "@lib/*": ["src/lib/*"]
+    }
+  },
+  "include": ["src", "test"]
 }

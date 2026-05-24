@@ -17,7 +17,7 @@ module.exports = {
     'import/resolver': {
       typescript: {
         alwaysTryTypes: true,
-        project: ['tsconfig.json', 'figma-kit/tsconfig.json', 'website/tsconfig.json'],
+        project: ['tsconfig.json'],
       },
     },
   },

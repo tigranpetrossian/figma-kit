@@ -53,16 +53,8 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Readme
-        run: cp README.md ./figma-kit
-
       - name: Release
-        working-directory: ./figma-kit
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           npx semantic-release
-
-      - name: Clean up
-        run: rm ./figma-kit/README.md
-
