@@ -24,7 +24,7 @@ dist-ssr
 *.sw?
 
 # Build process CSS output
-figma-kit/*.css
+/*.css
 
 # Generated
 tsconfig.tsbuildinfo
