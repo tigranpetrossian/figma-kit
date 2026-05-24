@@ -64,6 +64,7 @@
 
 .fp-ValueFieldMulti {
   display: flex;
+  position: relative;
   border-radius: var(--radius-medium);
   outline-offset: -1px;
   box-sizing: border-box;
@@ -111,4 +112,69 @@
     background-color: transparent;
     padding-left: calc(var(--space-2) - 1px);
   }
+}
+
+.fp-ValueFieldNumericSelect {
+  width: 100%;
+
+  &:hover:where(:not([data-disabled])) {
+    border-color: transparent;
+  }
+
+  &:has(.fp-ValueFieldNumericSelectField:hover):where(:not([data-disabled])) {
+    border-color: var(--figma-color-border);
+  }
+
+  .fp-ValueFieldNumericSelectField {
+    min-width: 0;
+  }
+}
+
+.fp-ValueFieldNumericSelectTrigger {
+  all: unset;
+  appearance: none;
+  box-sizing: border-box;
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 var(--space-6);
+  height: var(--space-6);
+  margin-top: -1px;
+  border-left: 1px solid var(--figma-color-bg);
+  border-top-right-radius: var(--radius-medium);
+  border-bottom-right-radius: var(--radius-medium);
+  color: var(--figma-color-text);
+  --color-icon: var(--figma-color-icon);
+
+  &:hover:where(:not(:disabled)) {
+    background-color: var(--figma-color-bg-tertiary);
+  }
+
+  &:disabled {
+    color: var(--figma-color-text-disabled);
+    --color-icon: var(--figma-color-icon-disabled);
+  }
+}
+
+.fp-ValueFieldNumericSelectTrigger > span:first-child {
+  position: absolute;
+  left: var(--space-2);
+  top: 0;
+  width: 0;
+  height: var(--space-6);
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.fp-ValueFieldNumericSelectIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fp-ValueFieldNumericSelectCurrentItem {
+  background-color: var(--color-bg-menu-selected);
 }
