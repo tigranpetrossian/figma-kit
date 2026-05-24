@@ -137,6 +137,7 @@ function useAreaSize(target: React.RefObject<HTMLDivElement>) {
     if (!element) {
       return;
     }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSize(element.getBoundingClientRect().width);
     const observer = new ResizeObserver((entries) => {
       for (const entry of entries) {

@@ -1,6 +1,5 @@
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
-import dts from 'vite-plugin-dts';
 import { dependencies } from './package.json';
 
 const extensions: Record<string, string> = {
@@ -10,7 +9,7 @@ const extensions: Record<string, string> = {
 
 export default defineConfig((env) => {
   return {
-    plugins: [react(), dts({ bundleTypes: { bundledPackages: [] } })],
+    plugins: [react()],
     resolve: {
       tsconfigPaths: true,
     },
