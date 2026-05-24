@@ -9,8 +9,11 @@ const meta = {
 } satisfies Meta<typeof ValueField.Numeric>;
 
 type NumericStory = StoryObj<typeof ValueField.Numeric>;
+type NumericSelectStory = StoryObj<typeof ValueField.NumericSelect>;
 type HexStory = StoryObj<typeof ValueField.Hex>;
 type Story = StoryObj;
+
+const NUMERIC_SELECT_OPTIONS = [10, 11, 12, 13, 14, 15, 16, 20, 24, 32, 36, 40, 48, 64, 96, 128];
 
 const Numeric: NumericStory = {
   render() {
@@ -44,6 +47,18 @@ const Numeric: NumericStory = {
 const Hex: HexStory = {
   render() {
     return <HexField />;
+  },
+};
+
+const NumericSelect: NumericSelectStory = {
+  render() {
+    return <NumericSelectField initialValue={20} />;
+  },
+};
+
+const NumericSelectOutOfOptions: NumericSelectStory = {
+  render() {
+    return <NumericSelectField initialValue={21} />;
   },
 };
 
@@ -81,6 +96,21 @@ const NumericField = () => {
   const [value, setValue] = useState(0);
 
   return <ValueField.Numeric value={value} onChange={setValue} />;
+};
+
+const NumericSelectField = (props: { initialValue: number }) => {
+  const [value, setValue] = useState(props.initialValue);
+
+  return (
+    <ValueField.NumericSelect
+      value={value}
+      onChange={setValue}
+      options={NUMERIC_SELECT_OPTIONS}
+      style={{ width: 296 }}
+      min={0}
+      precision={0}
+    />
+  );
 };
 
 const HexField = () => {
@@ -204,4 +234,4 @@ const OpacityIcon = () => {
 };
 
 export default meta;
-export { Hex, HexWithAlpha, MultiInput, Numeric, Rgba, WithIcon, WithLabel };
+export { Hex, HexWithAlpha, MultiInput, Numeric, NumericSelect, NumericSelectOutOfOptions, Rgba, WithIcon, WithLabel };
