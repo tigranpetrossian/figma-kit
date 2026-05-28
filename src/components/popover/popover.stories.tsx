@@ -19,19 +19,23 @@ const Story: Story = {
             <StylesIcon />
           </IconButton>
         </Popover.Trigger>
-        <Popover.Content width={228}>
-          <Popover.Header>
-            <Popover.Title>Text styles</Popover.Title>
-            <Popover.Controls>
-              <IconButton aria-label="New style" disableTooltip>
-                <PlusIcon />
-              </IconButton>
-              <Popover.Close />
-            </Popover.Controls>
-          </Popover.Header>
-          <Popover.Section />
-          <Popover.Section size="small" />
-        </Popover.Content>
+        <Popover.Portal>
+          <Popover.Positioner>
+            <Popover.Popup style={{ width: 228 }}>
+              <Popover.Header>
+                <Popover.Title>Text styles</Popover.Title>
+                <Popover.Controls>
+                  <IconButton aria-label="New style" disableTooltip>
+                    <PlusIcon />
+                  </IconButton>
+                  <Popover.Close />
+                </Popover.Controls>
+              </Popover.Header>
+              <Popover.Section />
+              <Popover.Section size="small" />
+            </Popover.Popup>
+          </Popover.Positioner>
+        </Popover.Portal>
       </Popover.Root>
     );
   },

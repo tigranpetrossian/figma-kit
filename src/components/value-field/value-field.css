@@ -169,6 +169,17 @@
   white-space: nowrap;
 }
 
+.fp-ValueFieldNumericSelectPositioner {
+  display: flex;
+  flex-direction: column;
+  min-width: calc(var(--anchor-width) + var(--space-6) - 2px);
+  min-height: calc(var(--available-height) + var(--space-6) - 2px);
+}
+
+.fp-ValueFieldNumericSelectPositionerInOptions {
+  margin-top: calc(var(--space-2) + 1px) !important;
+}
+
 .fp-ValueFieldNumericSelectIcon {
   display: flex;
   align-items: center;

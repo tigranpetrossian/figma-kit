@@ -21,6 +21,12 @@
   margin-left: auto;
 }
 
+.fp-SelectPositioner {
+  display: flex;
+  flex-direction: column;
+  min-width: calc(var(--anchor-width) + var(--space-6) - 1px);
+}
+
 .fp-SelectScrollUpButton,
 .fp-SelectScrollDownButton {
   position: absolute;

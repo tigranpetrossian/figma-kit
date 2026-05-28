@@ -14,6 +14,7 @@
 .fp-RadioGroupItem {
   all: unset;
   box-sizing: border-box;
+  display: inline-block;
   width: 16px;
   height: 16px;
   background-color: var(--figma-color-bg);
@@ -26,7 +27,7 @@
     outline-color: var(--figma-color-border-selected);
   }
 
-  &[data-state='checked'] {
+  &[data-checked] {
     background-color: var(--figma-color-icon);
     border-color: var(--figma-color-bg);
   }
@@ -35,7 +36,7 @@
     outline-color: var(--figma-color-icon-disabled);
   }
 
-  &[data-disabled][data-state='checked'] {
+  &[data-disabled][data-checked] {
     background-color: var(--figma-color-icon-disabled);
   }
 }

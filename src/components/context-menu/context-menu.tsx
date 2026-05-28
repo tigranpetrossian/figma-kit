@@ -1,166 +1,183 @@
 import React from 'react';
-import * as RadixMenu from '@radix-ui/react-context-menu';
-import { cx } from 'class-variance-authority';
-import { CircleIcon, CheckmarkIcon, ChevronRightIcon } from '@components/icons';
+import { ContextMenu as BaseContextMenu } from '@base-ui/react/context-menu';
+import { ChevronRightIcon } from '@components/icons';
+import { addClassName } from '@lib/react/add-class-name';
 
-type RootProps = RadixMenu.ContextMenuProps;
-const Root = RadixMenu.Root;
-type TriggerProps = RadixMenu.ContextMenuTriggerProps;
-const Trigger = RadixMenu.Trigger;
-type SubProps = RadixMenu.ContextMenuSubProps;
-const Sub = RadixMenu.Sub;
-type RadioGroupProps = RadixMenu.ContextMenuRadioGroupProps;
-const RadioGroup = RadixMenu.RadioGroup;
+type RootProps = BaseContextMenu.Root.Props;
+const Root = BaseContextMenu.Root;
+type TriggerProps = BaseContextMenu.Trigger.Props;
+const Trigger = BaseContextMenu.Trigger;
+type PortalProps = BaseContextMenu.Portal.Props;
+const Portal = BaseContextMenu.Portal;
+type PositionerProps = BaseContextMenu.Positioner.Props;
+const Positioner = BaseContextMenu.Positioner;
+type SubmenuRootProps = BaseContextMenu.SubmenuRoot.Props;
+const SubmenuRoot = BaseContextMenu.SubmenuRoot;
+type RadioGroupProps = BaseContextMenu.RadioGroup.Props;
+const RadioGroup = BaseContextMenu.RadioGroup;
 
-type ContentElement = React.ElementRef<typeof RadixMenu.Content>;
-type ContentProps = RadixMenu.ContextMenuContentProps;
+type PopupElement = HTMLDivElement;
+type PopupProps = BaseContextMenu.Popup.Props;
 
-const Content = React.forwardRef<ContentElement, ContentProps>((props, ref) => {
-  const { children, className, ...contentProps } = props;
-
-  return (
-    <RadixMenu.Portal>
-      <RadixMenu.Content ref={ref} {...contentProps} className={cx(className, 'fp-MenuContent')}>
-        {children}
-      </RadixMenu.Content>
-    </RadixMenu.Portal>
-  );
+const Popup = React.forwardRef<PopupElement, PopupProps>((props, ref) => {
+  const { className, ...popupProps } = props;
+  return <BaseContextMenu.Popup ref={ref} className={addClassName(className, 'fp-MenuContent')} {...popupProps} />;
 });
 
-type ItemElement = React.ElementRef<typeof RadixMenu.Item>;
-type ItemProps = RadixMenu.ContextMenuItemProps;
+type ItemElement = HTMLElement;
+type ItemProps = BaseContextMenu.Item.Props;
 
 const Item = React.forwardRef<ItemElement, ItemProps>((props, ref) => {
   const { className, ...itemProps } = props;
-
-  return <RadixMenu.Item ref={ref} {...itemProps} className={cx(className, 'fp-MenuItem')} />;
+  return <BaseContextMenu.Item ref={ref} className={addClassName(className, 'fp-MenuItem')} {...itemProps} />;
 });
 
-type SeparatorElement = React.ElementRef<typeof RadixMenu.Separator>;
-type SeparatorProps = RadixMenu.ContextMenuSeparatorProps;
+type SeparatorElement = HTMLDivElement;
+type SeparatorProps = BaseContextMenu.Separator.Props;
 
 const Separator = React.forwardRef<SeparatorElement, SeparatorProps>((props, ref) => {
   const { className, ...separatorProps } = props;
-  return <RadixMenu.Separator ref={ref} className={cx(className, 'fp-MenuSeparator')} {...separatorProps} />;
+  return (
+    <BaseContextMenu.Separator ref={ref} className={addClassName(className, 'fp-MenuSeparator')} {...separatorProps} />
+  );
 });
 
-type LabelElement = React.ElementRef<typeof RadixMenu.Label>;
-type LabelProps = RadixMenu.ContextMenuLabelProps;
+type GroupLabelElement = HTMLDivElement;
+type GroupLabelProps = BaseContextMenu.GroupLabel.Props;
 
-const Label = React.forwardRef<LabelElement, LabelProps>((props, ref) => {
+const GroupLabel = React.forwardRef<GroupLabelElement, GroupLabelProps>((props, ref) => {
   const { className, ...labelProps } = props;
-  return <RadixMenu.Label ref={ref} className={cx(className, 'fp-MenuLabel')} {...labelProps} />;
+  return <BaseContextMenu.GroupLabel ref={ref} className={addClassName(className, 'fp-MenuLabel')} {...labelProps} />;
 });
 
-type GroupElement = React.ElementRef<typeof RadixMenu.Group>;
-type GroupProps = RadixMenu.ContextMenuGroupProps;
+type GroupElement = HTMLDivElement;
+type GroupProps = BaseContextMenu.Group.Props;
 
 const Group = React.forwardRef<GroupElement, GroupProps>((props, ref) => {
   const { className, ...groupProps } = props;
-  return <RadixMenu.Group ref={ref} className={cx(className, 'fp-MenuGroup')} {...groupProps} />;
+  return <BaseContextMenu.Group ref={ref} className={addClassName(className, 'fp-MenuGroup')} {...groupProps} />;
 });
 
-type SubTriggerElement = React.ElementRef<typeof RadixMenu.SubTrigger>;
-type SubTriggerProps = RadixMenu.ContextMenuSubTriggerProps;
+type SubmenuTriggerElement = HTMLElement;
+type SubmenuTriggerProps = BaseContextMenu.SubmenuTrigger.Props;
 
-const SubTrigger = React.forwardRef<SubTriggerElement, SubTriggerProps>((props, ref) => {
-  const { children, className, ...subTriggerProps } = props;
+const SubmenuTrigger = React.forwardRef<SubmenuTriggerElement, SubmenuTriggerProps>((props, ref) => {
+  const { children, className, ...triggerProps } = props;
 
   return (
-    <RadixMenu.SubTrigger ref={ref} {...subTriggerProps} className={cx(className, 'fp-MenuItem')}>
+    <BaseContextMenu.SubmenuTrigger ref={ref} className={addClassName(className, 'fp-MenuItem')} {...triggerProps}>
       {children}
       <ChevronRightIcon className="fp-MenuSubtriggerCaret" />
-    </RadixMenu.SubTrigger>
+    </BaseContextMenu.SubmenuTrigger>
   );
 });
 
-type SubContentElement = React.ElementRef<typeof RadixMenu.SubContent>;
-type SubContentProps = RadixMenu.ContextMenuSubContentProps;
-
-const SubContent = React.forwardRef<SubContentElement, SubContentProps>((props, ref) => {
-  const { className, ...subContentProps } = props;
-
-  return (
-    <RadixMenu.Portal>
-      <RadixMenu.SubContent
-        ref={ref}
-        {...subContentProps}
-        className={cx(className, 'fp-MenuContent')}
-        sideOffset={12}
-      />
-    </RadixMenu.Portal>
-  );
-});
-
-type CheckboxItemElement = React.ElementRef<typeof RadixMenu.CheckboxItem>;
-type CheckboxItemProps = RadixMenu.ContextMenuCheckboxItemProps;
+type CheckboxItemElement = HTMLElement;
+type CheckboxItemProps = BaseContextMenu.CheckboxItem.Props;
 
 const CheckboxItem = React.forwardRef<CheckboxItemElement, CheckboxItemProps>((props, ref) => {
-  const { children, className, ...itemProps } = props;
+  const { className, ...itemProps } = props;
 
   return (
-    <RadixMenu.CheckboxItem ref={ref} {...itemProps} className={cx(className, 'fp-MenuItem fp-MenuCheckboxItem')}>
-      <RadixMenu.ItemIndicator className="fp-MenuItemIndicator">
-        <CheckmarkIcon size="4" />
-      </RadixMenu.ItemIndicator>
-      {children}
-    </RadixMenu.CheckboxItem>
+    <BaseContextMenu.CheckboxItem
+      ref={ref}
+      className={addClassName(className, 'fp-MenuItem fp-MenuCheckboxItem')}
+      {...itemProps}
+    />
   );
 });
 
-type RadioItemElement = React.ElementRef<typeof RadixMenu.RadioItem>;
-type RadioItemProps = RadixMenu.ContextMenuRadioItemProps;
+type CheckboxItemIndicatorElement = HTMLSpanElement;
+type CheckboxItemIndicatorProps = BaseContextMenu.CheckboxItemIndicator.Props;
+
+const CheckboxItemIndicator = React.forwardRef<CheckboxItemIndicatorElement, CheckboxItemIndicatorProps>(
+  (props, ref) => {
+    const { className, ...indicatorProps } = props;
+
+    return (
+      <BaseContextMenu.CheckboxItemIndicator
+        ref={ref}
+        className={addClassName(className, 'fp-MenuItemIndicator')}
+        {...indicatorProps}
+      />
+    );
+  }
+);
+
+type RadioItemElement = HTMLElement;
+type RadioItemProps = BaseContextMenu.RadioItem.Props;
 
 const RadioItem = React.forwardRef<RadioItemElement, RadioItemProps>((props, ref) => {
-  const { children, className, ...itemProps } = props;
+  const { className, ...itemProps } = props;
 
   return (
-    <RadixMenu.RadioItem ref={ref} {...itemProps} className={cx(className, 'fp-MenuItem fp-MenuRadioItem')}>
-      <RadixMenu.ItemIndicator className="fp-MenuItemIndicator">
-        <CircleIcon size="4" />
-      </RadixMenu.ItemIndicator>
-      {children}
-    </RadixMenu.RadioItem>
+    <BaseContextMenu.RadioItem
+      ref={ref}
+      className={addClassName(className, 'fp-MenuItem fp-MenuRadioItem')}
+      {...itemProps}
+    />
   );
 });
 
-Content.displayName = 'ContextMenu.Content';
+type RadioItemIndicatorElement = HTMLSpanElement;
+type RadioItemIndicatorProps = BaseContextMenu.RadioItemIndicator.Props;
+
+const RadioItemIndicator = React.forwardRef<RadioItemIndicatorElement, RadioItemIndicatorProps>((props, ref) => {
+  const { className, ...indicatorProps } = props;
+
+  return (
+    <BaseContextMenu.RadioItemIndicator
+      ref={ref}
+      className={addClassName(className, 'fp-MenuItemIndicator')}
+      {...indicatorProps}
+    />
+  );
+});
+
+Popup.displayName = 'ContextMenu.Popup';
 Item.displayName = 'ContextMenu.Item';
 Separator.displayName = 'ContextMenu.Separator';
-Label.displayName = 'ContextMenu.Label';
 Group.displayName = 'ContextMenu.Group';
-SubTrigger.displayName = 'ContextMenu.SubTrigger';
-SubContent.displayName = 'ContextMenu.SubContent';
+GroupLabel.displayName = 'ContextMenu.GroupLabel';
+SubmenuTrigger.displayName = 'ContextMenu.SubmenuTrigger';
 CheckboxItem.displayName = 'ContextMenu.CheckboxItem';
+CheckboxItemIndicator.displayName = 'ContextMenu.CheckboxItemIndicator';
 RadioItem.displayName = 'ContextMenu.RadioItem';
+RadioItemIndicator.displayName = 'ContextMenu.RadioItemIndicator';
 
 export type {
   RootProps,
   TriggerProps,
-  ContentProps,
+  PortalProps,
+  PositionerProps,
+  PopupProps,
   ItemProps,
   SeparatorProps,
   GroupProps,
-  LabelProps,
-  SubProps,
-  SubTriggerProps,
-  SubContentProps,
+  GroupLabelProps,
+  SubmenuRootProps,
+  SubmenuTriggerProps,
   CheckboxItemProps,
+  CheckboxItemIndicatorProps,
   RadioGroupProps,
   RadioItemProps,
+  RadioItemIndicatorProps,
 };
 export {
   Root,
   Trigger,
-  Content,
+  Portal,
+  Positioner,
+  Popup,
   Item,
   Separator,
   Group,
-  Label,
-  Sub,
-  SubTrigger,
-  SubContent,
+  GroupLabel,
+  SubmenuRoot,
+  SubmenuTrigger,
   CheckboxItem,
+  CheckboxItemIndicator,
   RadioGroup,
   RadioItem,
+  RadioItemIndicator,
 };

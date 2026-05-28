@@ -1,16 +1,17 @@
-import * as RadixSwitch from '@radix-ui/react-switch';
 import React from 'react';
-import { cx } from 'class-variance-authority';
+import { Switch as BaseSwitch } from '@base-ui/react/switch';
+import { addClassName } from '@lib/react/add-class-name';
 
-type SwitchElement = React.ElementRef<typeof RadixSwitch.Switch>;
-type SwitchProps = Omit<RadixSwitch.SwitchProps, 'asChild'>;
+type SwitchElement = React.ElementRef<typeof BaseSwitch.Root>;
+type SwitchProps = BaseSwitch.Root.Props;
 
 const Switch = React.forwardRef<SwitchElement, SwitchProps>((props, ref) => {
   const { className, ...switchProps } = props;
+
   return (
-    <RadixSwitch.Root ref={ref} className={cx(className, 'fp-switchRoot')} {...switchProps}>
-      <RadixSwitch.Thumb ref={ref} className={cx(className, 'fp-switchThumb')} />
-    </RadixSwitch.Root>
+    <BaseSwitch.Root ref={ref} className={addClassName(className, 'fp-switchRoot')} {...switchProps}>
+      <BaseSwitch.Thumb className="fp-switchThumb" />
+    </BaseSwitch.Root>
   );
 });
 

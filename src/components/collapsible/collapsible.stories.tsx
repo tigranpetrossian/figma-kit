@@ -24,9 +24,9 @@ const Story: Story = {
     return (
       <Collapsible.Root>
         <Collapsible.Trigger>State</Collapsible.Trigger>
-        <Collapsible.Content>
+        <Collapsible.Panel>
           <ContentOptions />
-        </Collapsible.Content>
+        </Collapsible.Panel>
       </Collapsible.Root>
     );
   },
@@ -37,24 +37,24 @@ const Nesting: Story = {
     return (
       <Collapsible.Root>
         <Collapsible.Trigger>State</Collapsible.Trigger>
-        <Collapsible.Content>
+        <Collapsible.Panel>
           <Collapsible.Root>
             <Collapsible.Trigger>State</Collapsible.Trigger>
-            <Collapsible.Content>
+            <Collapsible.Panel>
               <Collapsible.Root>
                 <Collapsible.Trigger>State</Collapsible.Trigger>
-                <Collapsible.Content>
+                <Collapsible.Panel>
                   <Collapsible.Root>
                     <Collapsible.Trigger>State</Collapsible.Trigger>
-                    <Collapsible.Content>
+                    <Collapsible.Panel>
                       <ContentOptions />
-                    </Collapsible.Content>
+                    </Collapsible.Panel>
                   </Collapsible.Root>
-                </Collapsible.Content>
+                </Collapsible.Panel>
               </Collapsible.Root>
-            </Collapsible.Content>
+            </Collapsible.Panel>
           </Collapsible.Root>
-        </Collapsible.Content>
+        </Collapsible.Panel>
       </Collapsible.Root>
     );
   },

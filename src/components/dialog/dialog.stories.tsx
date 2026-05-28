@@ -17,8 +17,8 @@ const Story: Story = {
           <Button>Open Dialog</Button>
         </Dialog.Trigger>
         <Dialog.Portal>
-          <Dialog.Overlay />
-          <Dialog.Content>
+          <Dialog.Backdrop />
+          <Dialog.Popup>
             <Dialog.Header>
               <Dialog.Title>Onboarding</Dialog.Title>
               <Dialog.Controls>
@@ -31,7 +31,7 @@ const Story: Story = {
                 <Button>Next</Button>
               </div>
             </Dialog.Section>
-          </Dialog.Content>
+          </Dialog.Popup>
         </Dialog.Portal>
       </Dialog.Root>
     );

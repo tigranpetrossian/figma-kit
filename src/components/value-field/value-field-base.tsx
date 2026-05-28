@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
+import { mergeProps } from '@base-ui/react/merge-props';
 import { cx } from 'class-variance-authority';
-import mergeProps from 'merge-props';
 import type { InputProps } from '@components/input';
 import { Input } from '@components/input';
 import { useComposedRefs } from '@lib/react/use-compose-refs';
@@ -113,7 +113,7 @@ const Base = <V,>(props: BaseProps<V>) => {
       value={inputValue}
       onChange={handleChange}
       disabled={disabled || context?.disabled}
-      {...mergeProps(fieldProps, { onBlur: handleBlur, onKeyDown: handleKeyDown })}
+      {...mergeProps<'input'>({ onBlur: handleBlur, onKeyDown: handleKeyDown }, fieldProps)}
     />
   );
 };

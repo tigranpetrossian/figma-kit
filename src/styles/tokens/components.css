@@ -8,7 +8,7 @@
   --color-text-menu-tertiary: var(--figma-color-text-oncomponent-tertiary);
   --color-icon-menu: var(--figma-color-icon-oncomponent);
   --shadow-menu: var(--elevation-400);
-  --font-size-menu: 12px;
+  --font-size-menu: var(--font-size-3);
 
   --color-bg-tooltip: #1e1e1e;
   --color-text-tooltip: #fff;

@@ -1,62 +1,55 @@
 import React, { useCallback } from 'react';
-import * as RadixTabs from '@radix-ui/react-tabs';
-import { cx } from 'class-variance-authority';
+import { Tabs as BaseTabs } from '@base-ui/react/tabs';
+import { addClassName } from '@lib/react/add-class-name';
 import { composeRefs } from '@lib/react/use-compose-refs';
 
-type RootElement = React.ElementRef<typeof RadixTabs.Root>;
-type RootProps = RadixTabs.TabsProps;
+type RootElement = React.ElementRef<typeof BaseTabs.Root>;
+type RootProps = BaseTabs.Root.Props;
 
 const Root = React.forwardRef<RootElement, RootProps>((props, ref) => {
   const { className, ...rootProps } = props;
-  return <RadixTabs.Root ref={ref} className={cx(className, 'fp-TabsRoot')} {...rootProps} />;
+  return <BaseTabs.Root ref={ref} className={addClassName(className, 'fp-TabsRoot')} {...rootProps} />;
 });
 
-type ListElement = React.ElementRef<typeof RadixTabs.List>;
-type ListProps = RadixTabs.TabsListProps;
+type ListElement = React.ElementRef<typeof BaseTabs.List>;
+type ListProps = BaseTabs.List.Props;
 
 const List = React.forwardRef<ListElement, ListProps>((props, ref) => {
   const { className, ...listProps } = props;
-  return <RadixTabs.List ref={ref} className={cx(className, 'fp-TabsList')} {...listProps} />;
+  return <BaseTabs.List ref={ref} className={addClassName(className, 'fp-TabsList')} {...listProps} />;
 });
 
-type TriggerElement = React.ElementRef<typeof RadixTabs.Trigger>;
-type TriggerProps = RadixTabs.TabsTriggerProps;
+type TabElement = React.ElementRef<typeof BaseTabs.Tab>;
+type TabProps = BaseTabs.Tab.Props;
 
-const Trigger = React.forwardRef<TriggerElement, TriggerProps>((props, forwardedRef) => {
-  const { className, ...triggerProps } = props;
-  const triggerRef = useFixedTriggerWidth();
-  const ref = composeRefs(forwardedRef, triggerRef);
+const Tab = React.forwardRef<TabElement, TabProps>((props, forwardedRef) => {
+  const { className, ...tabProps } = props;
+  const tabRef = useFixedTabWidth();
+  const ref = composeRefs(forwardedRef, tabRef);
 
-  return <RadixTabs.Trigger ref={ref} className={cx(className, 'fp-TabsTrigger')} {...triggerProps} />;
+  return <BaseTabs.Tab ref={ref} className={addClassName(className, 'fp-TabsTrigger')} {...tabProps} />;
 });
 
-/**
- * Hardcode the initial trigger width onto the element to prevent layout shifts when the font-weight changes with state.
- * An alternative solution would be using overlaying pseudo-elements in CSS, but this would complicate the API for the consumer,
- * requiring them to manually specify the label and somehow slot icons when used.
- * Note:
- * This won't handle the unlikely case of the trigger label changing after it's been rendered.
- */
-function useFixedTriggerWidth() {
-  return useCallback((node: TriggerElement) => {
+function useFixedTabWidth() {
+  return useCallback((node: TabElement) => {
     if (node !== null) {
       node.style.width = node.getBoundingClientRect().width + 'px';
     }
   }, []);
 }
 
-type ContentElement = React.ElementRef<typeof RadixTabs.Content>;
-type ContentProps = RadixTabs.TabsContentProps;
+type PanelElement = React.ElementRef<typeof BaseTabs.Panel>;
+type PanelProps = BaseTabs.Panel.Props;
 
-const Content = React.forwardRef<ContentElement, ContentProps>((props, ref) => {
-  const { className, ...contentProps } = props;
-  return <RadixTabs.Content ref={ref} className={cx(className, 'fp-TabsContent')} {...contentProps} />;
+const Panel = React.forwardRef<PanelElement, PanelProps>((props, ref) => {
+  const { className, ...panelProps } = props;
+  return <BaseTabs.Panel ref={ref} className={addClassName(className, 'fp-TabsContent')} {...panelProps} />;
 });
 
 Root.displayName = 'Tabs.Root';
 List.displayName = 'Tabs.List';
-Trigger.displayName = 'Tabs.Trigger';
-Content.displayName = 'Tabs.Content';
+Tab.displayName = 'Tabs.Tab';
+Panel.displayName = 'Tabs.Panel';
 
-export type { RootProps, ListProps, TriggerProps, ContentProps };
-export { Root, List, Trigger, Content };
+export type { RootProps, ListProps, TabProps, PanelProps };
+export { Root, List, Tab, Panel };
