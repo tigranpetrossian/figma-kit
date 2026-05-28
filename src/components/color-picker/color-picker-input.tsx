@@ -1,6 +1,7 @@
-import type { CSSProperties, ReactElement } from 'react';
+import type { CSSProperties, ReactElement, ReactNode } from 'react';
 import * as Select from '@components/select';
 import { Flex } from '@components/flex';
+import { CheckmarkIcon, ChevronDownIcon, ChevronUpIcon } from '@components/icons';
 import { useColorPickerContext } from '@components/color-picker/color-picker';
 import type { ColorModel } from '@components/color-picker/color-picker';
 import type { RGBA } from '@lib/color';
@@ -180,24 +181,59 @@ type InputProps = {
 const Input = (props: InputProps) => {
   const { models, activeModel, onActiveModelChange } = useColorPickerContext('ColorPicker.Input');
   const ActiveInput = INPUT_BY_MODEL[activeModel];
+  const modelOptions = models.map((model) => ({ value: model, label: model.toUpperCase() }));
+
+  function changeActiveModel(value: ColorModel | null) {
+    if (value !== null) {
+      onActiveModelChange(value);
+    }
+  }
 
   return (
     <Flex gap="2.5" className={props.className} style={props.style}>
       {models.length > 1 && (
-        <Select.Root value={activeModel} onValueChange={onActiveModelChange}>
-          <Select.Trigger style={{ width: 56 }} />
-          <Select.Content>
-            {models.map((model) => (
-              <Select.Item key={model} value={model}>
-                {model.toUpperCase()}
+        <Select.Root items={modelOptions} value={activeModel} onValueChange={changeActiveModel}>
+          <Select.Trigger style={{ width: 56 }}>
+            <Select.Value />
+            <Select.Icon>
+              <ChevronDownIcon />
+            </Select.Icon>
+          </Select.Trigger>
+          <ColorModelSelectPopup>
+            {modelOptions.map((option) => (
+              <Select.Item key={option.value} value={option.value} label={option.label}>
+                <Select.ItemIndicator>
+                  <CheckmarkIcon size="4" />
+                </Select.ItemIndicator>
+                <Select.ItemText>{option.label}</Select.ItemText>
               </Select.Item>
             ))}
-          </Select.Content>
+          </ColorModelSelectPopup>
         </Select.Root>
       )}
       <ActiveInput />
     </Flex>
   );
 };
+
+function ColorModelSelectPopup(props: { children: ReactNode }) {
+  const { children } = props;
+
+  return (
+    <Select.Portal>
+      <Select.Positioner>
+        <Select.Popup>
+          <Select.ScrollUpArrow>
+            <ChevronUpIcon />
+          </Select.ScrollUpArrow>
+          <Select.List>{children}</Select.List>
+          <Select.ScrollDownArrow>
+            <ChevronDownIcon />
+          </Select.ScrollDownArrow>
+        </Select.Popup>
+      </Select.Positioner>
+    </Select.Portal>
+  );
+}
 
 export { Input };

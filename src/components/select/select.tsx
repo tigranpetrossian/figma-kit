@@ -1,101 +1,182 @@
 import React from 'react';
-import * as RadixSelect from '@radix-ui/react-select';
-import { cx } from 'class-variance-authority';
-import { ChevronDownIcon, ChevronUpIcon, CheckmarkIcon } from '@components/icons';
+import { Select as BaseSelect } from '@base-ui/react/select';
+import { addClassName } from '@lib/react/add-class-name';
 
-type RootProps = RadixSelect.SelectProps;
+type RootProps<Value = unknown, Multiple extends boolean | undefined = false> = BaseSelect.Root.Props<Value, Multiple>;
+const Root = BaseSelect.Root;
 
-const Root = RadixSelect.Root;
-const Arrow = RadixSelect.Arrow;
+type PortalProps = BaseSelect.Portal.Props;
+const Portal = BaseSelect.Portal;
+type ValueProps = BaseSelect.Value.Props;
+const Value = BaseSelect.Value;
+type LabelProps = BaseSelect.Label.Props;
+const Label = BaseSelect.Label;
+type ArrowProps = BaseSelect.Arrow.Props;
+const Arrow = BaseSelect.Arrow;
 
-type TriggerElement = React.ElementRef<typeof RadixSelect.Trigger>;
-type TriggerProps = {
-  placeholder?: string;
-} & RadixSelect.SelectTriggerProps;
+type TriggerElement = HTMLButtonElement;
+type TriggerProps = BaseSelect.Trigger.Props;
 
 const Trigger = React.forwardRef<TriggerElement, TriggerProps>((props, ref) => {
-  const { placeholder, className, ...triggerProps } = props;
+  const { className, ...triggerProps } = props;
+
+  return <BaseSelect.Trigger ref={ref} className={addClassName(className, 'fp-SelectTrigger')} {...triggerProps} />;
+});
+
+type IconElement = HTMLSpanElement;
+type IconProps = BaseSelect.Icon.Props;
+
+const Icon = React.forwardRef<IconElement, IconProps>((props, ref) => {
+  const { className, ...iconProps } = props;
+
+  return <BaseSelect.Icon ref={ref} className={addClassName(className, 'fp-SelectTriggerIcon')} {...iconProps} />;
+});
+
+type PositionerElement = HTMLDivElement;
+type PositionerProps = BaseSelect.Positioner.Props;
+
+const Positioner = React.forwardRef<PositionerElement, PositionerProps>((props, ref) => {
+  const { className, positionMethod = 'fixed', ...positionerProps } = props;
 
   return (
-    <RadixSelect.Trigger ref={ref} {...triggerProps} className={cx(className, 'fp-SelectTrigger')}>
-      <RadixSelect.Value placeholder={placeholder} />
-      <RadixSelect.Icon className="fp-SelectTriggerIcon">
-        <ChevronDownIcon />
-      </RadixSelect.Icon>
-    </RadixSelect.Trigger>
+    <BaseSelect.Positioner
+      ref={ref}
+      className={addClassName(className, 'fp-SelectPositioner')}
+      positionMethod={positionMethod}
+      {...positionerProps}
+    />
   );
 });
 
-type ContentElement = React.ElementRef<typeof RadixSelect.Content>;
-type ContentProps = RadixSelect.SelectContentProps & {
-  portal?: boolean;
-};
+type PopupElement = HTMLDivElement;
+type PopupProps = BaseSelect.Popup.Props;
 
-const Content = React.forwardRef<ContentElement, ContentProps>((props, ref) => {
-  const { children, portal = false, className, ...contentProps } = props;
-  const Wrapper = portal ? RadixSelect.Portal : React.Fragment;
+const Popup = React.forwardRef<PopupElement, PopupProps>((props, ref) => {
+  const { className, ...popupProps } = props;
 
-  return (
-    <Wrapper>
-      <RadixSelect.Content ref={ref} {...contentProps} className={cx(className, 'fp-MenuContent')}>
-        <RadixSelect.ScrollUpButton className="fp-SelectScrollUpButton">
-          <ChevronUpIcon />
-        </RadixSelect.ScrollUpButton>
-        <RadixSelect.Viewport>{children}</RadixSelect.Viewport>
-        <RadixSelect.ScrollDownButton className="fp-SelectScrollDownButton">
-          <ChevronDownIcon />
-        </RadixSelect.ScrollDownButton>
-      </RadixSelect.Content>
-    </Wrapper>
-  );
+  return <BaseSelect.Popup ref={ref} className={addClassName(className, 'fp-MenuContent')} {...popupProps} />;
 });
 
-type ItemElement = React.ElementRef<typeof RadixSelect.Item>;
-type ItemProps = RadixSelect.SelectItemProps;
+type ListElement = HTMLDivElement;
+type ListProps = BaseSelect.List.Props;
+
+const List = React.forwardRef<ListElement, ListProps>((props, ref) => {
+  return <BaseSelect.List ref={ref} {...props} />;
+});
+
+type ItemElement = HTMLElement;
+type ItemProps = BaseSelect.Item.Props;
 
 const Item = React.forwardRef<ItemElement, ItemProps>((props, ref) => {
-  const { children, className, ...itemProps } = props;
+  const { className, ...itemProps } = props;
 
-  return (
-    <RadixSelect.Item ref={ref} {...itemProps} className={cx(className, 'fp-MenuItem fp-MenuCheckboxItem')}>
-      <RadixSelect.ItemIndicator className="fp-MenuItemIndicator">
-        <CheckmarkIcon size="4" />
-      </RadixSelect.ItemIndicator>
-      <RadixSelect.ItemText>{children}</RadixSelect.ItemText>
-    </RadixSelect.Item>
-  );
+  return <BaseSelect.Item ref={ref} className={addClassName(className, 'fp-MenuItem fp-MenuCheckboxItem')} {...itemProps} />;
 });
 
-type SeparatorElement = React.ElementRef<typeof RadixSelect.Separator>;
-type SeparatorProps = RadixSelect.SelectSeparatorProps;
+type ItemTextProps = BaseSelect.ItemText.Props;
+const ItemText = BaseSelect.ItemText;
+
+type ItemIndicatorElement = HTMLSpanElement;
+type ItemIndicatorProps = BaseSelect.ItemIndicator.Props;
+
+const ItemIndicator = React.forwardRef<ItemIndicatorElement, ItemIndicatorProps>((props, ref) => {
+  const { className, ...indicatorProps } = props;
+
+  return <BaseSelect.ItemIndicator ref={ref} className={addClassName(className, 'fp-MenuItemIndicator')} {...indicatorProps} />;
+});
+
+type SeparatorElement = HTMLDivElement;
+type SeparatorProps = BaseSelect.Separator.Props;
 
 const Separator = React.forwardRef<SeparatorElement, SeparatorProps>((props, ref) => {
   const { className, ...separatorProps } = props;
-  return <RadixSelect.Separator ref={ref} className={cx(className, 'fp-MenuSeparator')} {...separatorProps} />;
+  return <BaseSelect.Separator ref={ref} className={addClassName(className, 'fp-MenuSeparator')} {...separatorProps} />;
 });
 
-type LabelElement = React.ElementRef<typeof RadixSelect.Label>;
-type LabelProps = RadixSelect.SelectLabelProps;
-
-const Label = React.forwardRef<LabelElement, LabelProps>((props, ref) => {
-  const { className, ...labelProps } = props;
-  return <RadixSelect.Label ref={ref} className={cx(className, 'fp-MenuLabel')} {...labelProps} />;
-});
-
-type GroupElement = React.ElementRef<typeof RadixSelect.Group>;
-type GroupProps = RadixSelect.SelectGroupProps;
+type GroupElement = HTMLDivElement;
+type GroupProps = BaseSelect.Group.Props;
 
 const Group = React.forwardRef<GroupElement, GroupProps>((props, ref) => {
   const { className, ...groupProps } = props;
-  return <RadixSelect.Group ref={ref} className={cx(className, 'fp-MenuGroup')} {...groupProps} />;
+  return <BaseSelect.Group ref={ref} className={addClassName(className, 'fp-MenuGroup')} {...groupProps} />;
+});
+
+type GroupLabelElement = HTMLDivElement;
+type GroupLabelProps = BaseSelect.GroupLabel.Props;
+
+const GroupLabel = React.forwardRef<GroupLabelElement, GroupLabelProps>((props, ref) => {
+  const { className, ...labelProps } = props;
+  return <BaseSelect.GroupLabel ref={ref} className={addClassName(className, 'fp-MenuLabel')} {...labelProps} />;
+});
+
+type ScrollUpArrowElement = HTMLDivElement;
+type ScrollUpArrowProps = BaseSelect.ScrollUpArrow.Props;
+
+const ScrollUpArrow = React.forwardRef<ScrollUpArrowElement, ScrollUpArrowProps>((props, ref) => {
+  const { className, ...arrowProps } = props;
+  return <BaseSelect.ScrollUpArrow ref={ref} className={addClassName(className, 'fp-SelectScrollUpButton')} {...arrowProps} />;
+});
+
+type ScrollDownArrowElement = HTMLDivElement;
+type ScrollDownArrowProps = BaseSelect.ScrollDownArrow.Props;
+
+const ScrollDownArrow = React.forwardRef<ScrollDownArrowElement, ScrollDownArrowProps>((props, ref) => {
+  const { className, ...arrowProps } = props;
+  return (
+    <BaseSelect.ScrollDownArrow ref={ref} className={addClassName(className, 'fp-SelectScrollDownButton')} {...arrowProps} />
+  );
 });
 
 Trigger.displayName = 'Select.Trigger';
-Content.displayName = 'Select.Content';
+Icon.displayName = 'Select.Icon';
+Positioner.displayName = 'Select.Positioner';
+Popup.displayName = 'Select.Popup';
+List.displayName = 'Select.List';
 Item.displayName = 'Select.Item';
+ItemIndicator.displayName = 'Select.ItemIndicator';
 Separator.displayName = 'Select.Separator';
 Group.displayName = 'Select.Group';
-Label.displayName = 'Select.Label';
+GroupLabel.displayName = 'Select.GroupLabel';
+ScrollUpArrow.displayName = 'Select.ScrollUpArrow';
+ScrollDownArrow.displayName = 'Select.ScrollDownArrow';
 
-export type { RootProps, TriggerProps, ContentProps, ItemProps, SeparatorProps, GroupProps, LabelProps };
-export { Root, Trigger, Content, Item, Separator, Group, Label, Arrow };
+export type {
+  RootProps,
+  PortalProps,
+  ValueProps,
+  LabelProps,
+  TriggerProps,
+  IconProps,
+  PositionerProps,
+  PopupProps,
+  ListProps,
+  ItemProps,
+  ItemTextProps,
+  ItemIndicatorProps,
+  SeparatorProps,
+  GroupProps,
+  GroupLabelProps,
+  ScrollUpArrowProps,
+  ScrollDownArrowProps,
+  ArrowProps,
+};
+export {
+  Root,
+  Portal,
+  Value,
+  Label,
+  Trigger,
+  Icon,
+  Positioner,
+  Popup,
+  List,
+  Item,
+  ItemText,
+  ItemIndicator,
+  Separator,
+  Group,
+  GroupLabel,
+  ScrollUpArrow,
+  ScrollDownArrow,
+  Arrow,
+};

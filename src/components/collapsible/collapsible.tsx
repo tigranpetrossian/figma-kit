@@ -1,43 +1,47 @@
 import React from 'react';
-import * as RadixCollapsible from '@radix-ui/react-collapsible';
-import { cx } from 'class-variance-authority';
+import { Collapsible as BaseCollapsible } from '@base-ui/react/collapsible';
 import { ChevronRightIcon } from '@components/icons';
+import { addClassName } from '@lib/react/add-class-name';
 
-type RootElement = React.ElementRef<typeof RadixCollapsible.Root>;
-type RootProps = RadixCollapsible.CollapsibleProps;
+type RootElement = React.ElementRef<typeof BaseCollapsible.Root>;
+type RootProps = BaseCollapsible.Root.Props;
 
 const Root = React.forwardRef<RootElement, RootProps>((props, ref) => {
   const { className, ...rootProps } = props;
 
-  return <RadixCollapsible.Root ref={ref} className={cx(className, 'fp-CollapsibleRoot')} {...rootProps} />;
+  return <BaseCollapsible.Root ref={ref} className={addClassName(className, 'fp-CollapsibleRoot')} {...rootProps} />;
 });
 
-type TriggerElement = React.ElementRef<typeof RadixCollapsible.Trigger>;
-type TriggerProps = RadixCollapsible.CollapsibleTriggerProps;
+type TriggerElement = React.ElementRef<typeof BaseCollapsible.Trigger>;
+type TriggerProps = BaseCollapsible.Trigger.Props;
 
 const Trigger = React.forwardRef<TriggerElement, TriggerProps>((props, ref) => {
   const { className, children, ...triggerProps } = props;
 
   return (
-    <RadixCollapsible.Trigger ref={ref} className={cx(className, 'fp-CollapsibleTrigger')} {...triggerProps}>
+    <BaseCollapsible.Trigger
+      ref={ref}
+      className={addClassName(className, 'fp-CollapsibleTrigger')}
+      {...triggerProps}
+    >
       <ChevronRightIcon viewBox="4 4 16 16" size="4" className="fp-CollapsibleIndicator" />
       {children}
-    </RadixCollapsible.Trigger>
+    </BaseCollapsible.Trigger>
   );
 });
 
-type ContentElement = React.ElementRef<typeof RadixCollapsible.Content>;
-type ContentProps = RadixCollapsible.CollapsibleContentProps;
+type PanelElement = React.ElementRef<typeof BaseCollapsible.Panel>;
+type PanelProps = BaseCollapsible.Panel.Props;
 
-const Content = React.forwardRef<ContentElement, ContentProps>((props, ref) => {
-  const { className, ...contentProps } = props;
+const Panel = React.forwardRef<PanelElement, PanelProps>((props, ref) => {
+  const { className, ...panelProps } = props;
 
-  return <RadixCollapsible.Content ref={ref} className={cx(className, 'fp-CollapsibleContent')} {...contentProps} />;
+  return <BaseCollapsible.Panel ref={ref} className={addClassName(className, 'fp-CollapsibleContent')} {...panelProps} />;
 });
 
 Root.displayName = 'Collapsible.Root';
 Trigger.displayName = 'Collapsible.Trigger';
-Content.displayName = 'Collapsible.Content';
+Panel.displayName = 'Collapsible.Panel';
 
-export type { RootProps, ContentProps, TriggerProps };
-export { Root, Content, Trigger };
+export type { RootProps, PanelProps, TriggerProps };
+export { Root, Panel, Trigger };

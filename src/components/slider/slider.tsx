@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import * as RadixSlider from '@radix-ui/react-slider';
+import { DirectionProvider } from '@base-ui/react/direction-provider';
+import { Slider as BaseSlider } from '@base-ui/react/slider';
 import { cx } from 'class-variance-authority';
 import { isDeepEqual } from 'remeda';
+import { addClassName } from '@lib/react/add-class-name';
 import { useComposedRefs } from '@lib/react/use-compose-refs';
 import { normalize } from '@lib/number/normalize';
 
@@ -11,7 +13,7 @@ const DEFAULT_MAX = 100;
 const DEFAULT_ORIENTATION = 'horizontal';
 const DEFAULT_DIRECTION = 'ltr';
 
-type SliderElement = React.ElementRef<typeof RadixSlider.Root>;
+type SliderElement = HTMLDivElement;
 
 type SliderOwnProps = {
   range?: boolean;
@@ -19,7 +21,26 @@ type SliderOwnProps = {
   baseValue?: number;
   hints?: number[];
 };
-type SliderProps = Omit<RadixSlider.SliderProps, 'asChild' | 'children'> & SliderOwnProps;
+type SliderProps = Omit<
+  BaseSlider.Root.Props<number | readonly number[]>,
+  | 'children'
+  | 'defaultValue'
+  | 'dir'
+  | 'minStepsBetweenValues'
+  | 'onValueChange'
+  | 'onValueCommitted'
+  | 'thumbAlignment'
+  | 'value'
+> &
+  SliderOwnProps & {
+    defaultValue?: number[] | undefined;
+    dir?: 'ltr' | 'rtl' | undefined;
+    inverted?: boolean | undefined;
+    minStepsBetweenThumbs?: number | undefined;
+    onValueChange?: ((value: number[]) => void) | undefined;
+    onValueCommit?: ((value: number[]) => void) | undefined;
+    value?: number[] | undefined;
+  };
 
 const Slider = React.forwardRef<SliderElement, SliderProps>((props, forwardedRef) => {
   const {
@@ -29,25 +50,29 @@ const Slider = React.forwardRef<SliderElement, SliderProps>((props, forwardedRef
     defaultValue = [min],
     value,
     onValueChange,
+    onValueCommit,
+    tabIndex,
     orientation = DEFAULT_ORIENTATION,
     dir = DEFAULT_DIRECTION,
     inverted,
     disabled,
+    step = 1,
+    minStepsBetweenThumbs,
     range = true,
     rangeAnchor,
     baseValue,
     hints,
     ...rootProps
   } = props;
-  const rootRef = useRef<SliderElement>(null);
-  const ref = useComposedRefs(rootRef, forwardedRef);
-  const { onPointerDown, focusVisible } = useSliderVisibleFocus(rootRef);
+  const controlRef = useRef<SliderElement>(null);
+  const ref = useComposedRefs(controlRef, forwardedRef);
+  const focusVisible = true;
   const [trackedValue, setTrackedValue] = useState(value ?? defaultValue);
+  const rootValue = getRootValue(trackedValue, inverted, min, max);
+  const rootDefaultValue = getRootValue(defaultValue, inverted, min, max);
   const prevValueRef = useRef(value);
   const prevDefaultValueRef = useRef(defaultValue);
 
-  // Internally tracking a value even in uncontrolled mode.
-  // This is required for range and hints to work.
   useEffect(() => {
     if (isDeepEqual(value, prevValueRef.current) && isDeepEqual(defaultValue, prevDefaultValueRef.current)) {
       return;
@@ -59,80 +84,103 @@ const Slider = React.forwardRef<SliderElement, SliderProps>((props, forwardedRef
     prevDefaultValueRef.current = defaultValue;
   }, [value, defaultValue]);
 
-  // Radix adjusts the thumb position by default to align with the track edges at min/max positions.
-  // This behavior is removed via a patch (see: patches/@radix-ui__react-slider@1.2.0.patch) and replaced it with a CSS solution.
-  // Additionally, we override the transform of the thumb to ensure it aligns with hints.
-  useEffect(() => {
-    if (rootRef.current) {
-      rootRef.current.style.setProperty(
-        '--radix-slider-thumb-transform',
-        getThumbTransform(orientation, dir, inverted)
-      );
-    }
-  }, [rootRef, orientation, dir, inverted]);
-
-  const handleValueChange = (value: number[]) => {
-    const snappedValue = value.map((value) => getSnappedValue(value, hints, min, max));
+  const handleValueChange = (value: number | readonly number[], details: BaseSlider.Root.ChangeEventDetails) => {
+    const nextValue = getPointerAdjustedValue(
+      getPublicValue(value, inverted, min, max),
+      details,
+      controlRef.current,
+      orientation,
+      dir,
+      inverted,
+      min,
+      max,
+      step
+    );
+    const snappedValue = nextValue.map((value) => getSnappedValue(value, hints, min, max));
 
     onValueChange?.(snappedValue);
     setTrackedValue(snappedValue);
   };
 
+  const handleValueCommit = (value: number | readonly number[], details: BaseSlider.Root.CommitEventDetails) => {
+    const nextValue = getPointerAdjustedValue(
+      getPublicValue(value, inverted, min, max),
+      details,
+      controlRef.current,
+      orientation,
+      dir,
+      inverted,
+      min,
+      max,
+      step
+    );
+    const snappedValue = nextValue.map((value) => getSnappedValue(value, hints, min, max));
+
+    onValueCommit?.(snappedValue);
+  };
+
   return (
-    <RadixSlider.Root
-      tabIndex={-1}
-      ref={ref}
-      className={cx(className, 'fp-SliderRoot')}
-      value={trackedValue}
-      onValueChange={handleValueChange}
-      onPointerDown={onPointerDown}
-      min={min}
-      max={max}
-      orientation={orientation}
-      dir={dir}
-      inverted={inverted}
-      disabled={disabled}
-      {...rootProps}
-    >
-      <RadixSlider.Track className="fp-SliderTrack" />
+    <DirectionProvider direction={dir}>
+      <BaseSlider.Root
+        className={addClassName(className, 'fp-SliderRoot')}
+        defaultValue={rootDefaultValue}
+        dir={dir === DEFAULT_DIRECTION ? undefined : dir}
+        disabled={disabled}
+        max={max}
+        min={min}
+        minStepsBetweenValues={minStepsBetweenThumbs}
+        onValueChange={handleValueChange}
+        onValueCommitted={handleValueCommit}
+        orientation={orientation}
+        step={step}
+        thumbAlignment="center"
+        value={rootValue}
+        {...rootProps}
+      >
+        <BaseSlider.Control ref={ref} className="fp-SliderControl" tabIndex={tabIndex ?? -1}>
+          <BaseSlider.Track className="fp-SliderTrack" style={{ position: 'static' }}>
+            {trackedValue.map((v, i) => (
+              <BaseSlider.Thumb
+                key={i}
+                index={i}
+                className={cx('fp-SliderThumb', {
+                  'fp-SliderThumb-focusVisible': focusVisible,
+                  'fp-SliderThumb-baseValue': v === baseValue,
+                })}
+              />
+            ))}
+          </BaseSlider.Track>
 
-      {range && (
-        <Range
-          dir={dir}
-          value={trackedValue}
-          min={min}
-          max={max}
-          orientation={orientation}
-          inverted={inverted}
-          rangeAnchor={rangeAnchor}
-          disabled={disabled}
-        />
-      )}
+          {range && (
+            <Range
+              dir={dir}
+              value={trackedValue}
+              min={min}
+              max={max}
+              orientation={orientation}
+              inverted={inverted}
+              rangeAnchor={rangeAnchor}
+              disabled={disabled}
+            />
+          )}
 
-      {hints &&
-        hints.map((hint) => (
-          <Hint
-            key={hint}
-            hint={hint}
-            baseValue={baseValue}
-            min={min}
-            max={max}
-            orientation={orientation}
-            dir={dir}
-            inverted={inverted}
-          />
-        ))}
+          {hints &&
+            hints.map((hint) => (
+              <Hint
+                key={hint}
+                hint={hint}
+                baseValue={baseValue}
+                min={min}
+                max={max}
+                orientation={orientation}
+                dir={dir}
+                inverted={inverted}
+              />
+            ))}
 
-      {trackedValue.map((v, i) => (
-        <RadixSlider.Thumb
-          key={i}
-          className={cx('fp-SliderThumb', {
-            'fp-SliderThumb-focusVisible': focusVisible,
-            'fp-SliderThumb-baseValue': v === baseValue,
-          })}
-        />
-      ))}
-    </RadixSlider.Root>
+        </BaseSlider.Control>
+      </BaseSlider.Root>
+    </DirectionProvider>
   );
 });
 
@@ -152,16 +200,14 @@ const Hint = (props: HintProps) => {
   const { baseValue, dir, inverted, max, min, orientation, hint } = props;
   const { startEdge } = getOrientationEdges(orientation, dir, inverted);
   const offset = normalize([min, max], [0, 100])(hint);
-  const HINT_WIDTH = 4;
+  const hintWidth = 4;
 
   return (
-    <>
-      <span
-        className={cx('fp-SliderHint', { 'fp-SliderHint-baseValue': hint === baseValue })}
-        data-orientation={orientation}
-        style={{ [startEdge]: `calc(${offset}% - ${HINT_WIDTH / 2}px)` }}
-      />
-    </>
+    <span
+      className={cx('fp-SliderHint', { 'fp-SliderHint-baseValue': hint === baseValue })}
+      data-orientation={orientation}
+      style={{ [startEdge]: `calc(${offset}% - ${hintWidth / 2}px)` }}
+    />
   );
 };
 
@@ -229,45 +275,114 @@ function getOrientationEdges(
   return edges[orientation][inversion];
 }
 
-function getThumbTransform(orientation: 'horizontal' | 'vertical', dir: 'ltr' | 'rtl', inverted: boolean | undefined) {
-  const inversion = inverted ? 'inverted' : 'normal';
-  const transform = {
-    vertical: {
-      normal: 'translateY(50%)',
-      inverted: 'translateY(-50%)',
-    },
-    horizontal: {
-      normal: dir === 'ltr' ? 'translateX(-50%)' : 'translateX(50%)',
-      inverted: dir === 'ltr' ? 'translateX(50%)' : 'translateX(-50%)',
-    },
-  };
-  return transform[orientation][inversion];
+function getRootValue(value: readonly number[], inverted: boolean | undefined, min: number, max: number) {
+  const mappedValue = getMappedValue(value, inverted, min, max);
+
+  if (mappedValue.length === 1) {
+    const firstValue = mappedValue[0];
+
+    if (firstValue !== undefined) {
+      return firstValue;
+    }
+  }
+
+  return mappedValue;
 }
 
-/**
- * Fix :focus-visible behavior for the slider thumb, to only show outline when not dragging with the mouse.
- * The focus will remain on the Root element afterward to enable subsequent keyboard interactions.
- */
-function useSliderVisibleFocus(ref: React.RefObject<SliderElement>) {
-  const [pointerDown, setPointerDown] = useState(false);
+function getPublicValue(value: number | readonly number[], inverted: boolean | undefined, min: number, max: number) {
+  const values = typeof value === 'number' ? [value] : value;
 
-  const handleGlobalUp = () => {
-    setPointerDown(false);
-    window.removeEventListener('pointerup', handleGlobalUp);
-    ref.current?.focus();
-  };
+  return getMappedValue(values, inverted, min, max);
+}
 
-  const handlePointerDown = () => {
-    setPointerDown(true);
-    window.addEventListener('pointerup', handleGlobalUp);
-  };
+function getPointerAdjustedValue(
+  value: number[],
+  details: BaseSlider.Root.ChangeEventDetails | BaseSlider.Root.CommitEventDetails,
+  control: SliderElement | null,
+  orientation: 'horizontal' | 'vertical',
+  dir: 'ltr' | 'rtl',
+  inverted: boolean | undefined,
+  min: number,
+  max: number,
+  step: number
+) {
+  if (details.reason !== 'track-press' || control === null) {
+    return value;
+  }
 
-  return { onPointerDown: handlePointerDown, focusVisible: !pointerDown };
+  const root = control.parentElement;
+  const point = getEventPoint(details.event);
+
+  if (root === null || point === undefined) {
+    return value;
+  }
+
+  const rect = root.getBoundingClientRect();
+  const percent = getPointerPercent(point, rect, orientation, dir, inverted);
+  const nextValue = getSteppedValue(min + (max - min) * percent, min, max, step);
+  const activeThumbIndex = getActiveThumbIndex(details);
+
+  return value.map((item, index) => {
+    if (index === activeThumbIndex || value.length === 1) {
+      return nextValue;
+    }
+
+    return item;
+  });
+}
+
+type EventPoint = {
+  x: number;
+  y: number;
+};
+
+function getEventPoint(event: Event): EventPoint | undefined {
+  if ('clientX' in event && 'clientY' in event && typeof event.clientX === 'number' && typeof event.clientY === 'number') {
+    return { x: event.clientX, y: event.clientY };
+  }
+
+  return undefined;
+}
+
+function getActiveThumbIndex(details: BaseSlider.Root.ChangeEventDetails | BaseSlider.Root.CommitEventDetails) {
+  if ('activeThumbIndex' in details && typeof details.activeThumbIndex === 'number') {
+    return details.activeThumbIndex;
+  }
+
+  return undefined;
+}
+
+function getPointerPercent(
+  point: EventPoint,
+  rect: DOMRect,
+  orientation: 'horizontal' | 'vertical',
+  dir: 'ltr' | 'rtl',
+  inverted: boolean | undefined
+) {
+  const rawPercent =
+    orientation === 'vertical' ? (rect.bottom - point.y) / rect.height : (point.x - rect.left) / rect.width;
+  const directionPercent = orientation === 'horizontal' && dir === 'rtl' ? 1 - rawPercent : rawPercent;
+  const percent = inverted ? 1 - directionPercent : directionPercent;
+
+  return Math.min(1, Math.max(0, percent));
+}
+
+function getSteppedValue(value: number, min: number, max: number, step: number) {
+  const steppedValue = min + Math.round((value - min) / step) * step;
+  const normalizedValue = Number(steppedValue.toFixed(10));
+
+  return Math.min(max, Math.max(min, normalizedValue));
+}
+
+function getMappedValue(value: readonly number[], inverted: boolean | undefined, min: number, max: number) {
+  if (!inverted) {
+    return [...value];
+  }
+
+  return value.map((value) => min + max - value);
 }
 
 function getSnappedValue(value: number, hints: number[] | undefined, min: number, max: number) {
-  // TODO: snappingFactor is eyeballed to work well for most sizes, but is counterintutive.
-  //       It should ideally be calculated from the width of the track, with pixel threshold of ~10.
   const snappingFactor = normalize([0, 100], [0, max - min])(SNAP_PERCENTAGE_THRESHOLD);
   const closestHint = hints?.find((hint) => Math.abs(hint - value) <= snappingFactor);
   if (typeof closestHint === 'number') {

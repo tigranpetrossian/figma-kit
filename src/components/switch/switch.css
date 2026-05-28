@@ -22,11 +22,11 @@
     content: '';
   }
 
-  &[data-state='unchecked']::before {
+  &[data-unchecked]::before {
     background: var(--figma-color-bg-tertiary);
   }
 
-  &[data-state='checked']::before {
+  &[data-checked]::before {
     background: var(--figma-color-bg-brand);
   }
 
@@ -40,13 +40,13 @@
   }
 
   &[data-disabled] {
-    &[data-state='unchecked']::before {
+    &[data-unchecked]::before {
       /* This gives it more contrast than the disabled checked state but this is
       how it is in Figma. ¯\_(ツ)_/¯  */
       background: var(--figma-color-bg-disabled);
     }
 
-    &[data-state='checked']::before {
+    &[data-checked]::before {
       background: var(--figma-color-bg-tertiary);
     }
   }
@@ -67,11 +67,11 @@
     background-color: var(--figma-color-icon-ondisabled);
   }
 
-  &[data-state='unchecked'] {
+  &[data-unchecked] {
     left: 1px;
   }
 
-  &[data-state='checked'] {
+  &[data-checked] {
     left: calc(100% - var(--space-3_5) - 1px);
   }
 }

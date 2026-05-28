@@ -21,7 +21,7 @@
 .fp-CollapsibleIndicator {
   --color-icon: var(--figma-color-icon-secondary);
 
-  [data-state='open'] > & {
+  [data-panel-open] > & {
     transform: rotate(90deg);
   }
 }

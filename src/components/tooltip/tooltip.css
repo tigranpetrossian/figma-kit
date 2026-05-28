@@ -19,6 +19,24 @@
   fill: var(--color-bg-tooltip);
   width: var(--space-3_5);
   height: 7px;
-  position: relative;
-  bottom: 1px;
+  position: absolute;
+}
+
+.fp-tooltip-arrow[data-side='top'] {
+  top: calc(100% - 1px);
+}
+
+.fp-tooltip-arrow[data-side='bottom'] {
+  bottom: calc(100% - 1px);
+  transform: rotate(180deg);
+}
+
+.fp-tooltip-arrow[data-side='left'] {
+  left: calc(100% - 1px);
+  transform: rotate(-90deg);
+}
+
+.fp-tooltip-arrow[data-side='right'] {
+  right: calc(100% - 1px);
+  transform: rotate(90deg);
 }

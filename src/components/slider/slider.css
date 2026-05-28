@@ -34,10 +34,24 @@
   }
 }
 
+.fp-SliderControl {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  width: 100%;
+  height: 100%;
+  outline: 0;
+}
+
+.fp-SliderRoot[data-orientation='vertical'] .fp-SliderControl {
+  flex-direction: column;
+}
+
 .fp-SliderTrack {
   box-sizing: border-box;
-  position: relative;
-  overflow: hidden;
+  position: static;
+  overflow: visible;
   flex-grow: 1;
   background: var(--slider-track-bg);
   border-radius: var(--radius-full);
@@ -83,6 +97,7 @@
 .fp-SliderThumb {
   box-sizing: border-box;
   display: block;
+  z-index: 1;
   width: var(--slider-track-size);
   height: var(--slider-track-size);
   background-color: var(--slider-thumb-bg);

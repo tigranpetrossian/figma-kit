@@ -20,12 +20,12 @@
   line-height: var(--line-height-default);
   white-space: nowrap;
 
-  &:where([data-state='inactive']) {
+  &:where(:not([data-active])) {
     color: var(--figma-color-text-secondary);
     --color-icon: var(--figma-color-icon-secondary);
   }
 
-  &:where([data-state='active']) {
+  &:where([data-active]) {
     font-weight: var(--font-weight-strong);
     color: var(--figma-color-text);
     --color-icon: var(--figma-color-icon);

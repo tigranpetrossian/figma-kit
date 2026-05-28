@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import mergeProps from 'merge-props';
+import { mergeProps } from '@base-ui/react/merge-props';
 import { cx } from 'class-variance-authority';
 import { useSelectOnInputClick } from '@lib/react/use-select-on-input-click';
 import { useComposedRefs } from '@lib/react/use-compose-refs';
@@ -14,7 +14,7 @@ const Input = React.forwardRef<InputElement, InputProps>((props, forwardedRef) =
   const ref = useRef<HTMLInputElement>(null);
   const composedRef = useComposedRefs(ref, forwardedRef);
   const { onMouseLeave, onMouseUp, onFocus } = useSelectOnInputClick();
-  const inputProps = selectOnClick ? mergeProps({ onMouseLeave, onMouseUp, onFocus }, rest) : rest;
+  const inputProps = selectOnClick ? mergeProps<'input'>(rest, { onMouseLeave, onMouseUp, onFocus }) : rest;
 
   return <input ref={composedRef} type={type} className={cx(className, 'fp-Input')} {...inputProps} />;
 });

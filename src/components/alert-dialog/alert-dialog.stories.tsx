@@ -17,21 +17,21 @@ const Story: Story = {
           <Button variant="destructive">Delete file</Button>
         </AlertDialog.Trigger>
         <AlertDialog.Portal>
-          <AlertDialog.Overlay />
-          <AlertDialog.Content>
+          <AlertDialog.Backdrop />
+          <AlertDialog.Popup>
             <AlertDialog.Title>Dialog with primary destructive action</AlertDialog.Title>
             <AlertDialog.Description>
               Moving the file out of Team Foo means some people might lose access to it.
             </AlertDialog.Description>
             <AlertDialog.Actions>
-              <AlertDialog.Cancel>
+              <AlertDialog.Close>
                 <Button>Cancel</Button>
-              </AlertDialog.Cancel>
-              <AlertDialog.Action>
+              </AlertDialog.Close>
+              <AlertDialog.Close>
                 <Button variant="destructive">Delete file</Button>
-              </AlertDialog.Action>
+              </AlertDialog.Close>
             </AlertDialog.Actions>
-          </AlertDialog.Content>
+          </AlertDialog.Popup>
         </AlertDialog.Portal>
       </AlertDialog.Root>
     );

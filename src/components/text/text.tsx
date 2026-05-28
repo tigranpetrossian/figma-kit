@@ -1,7 +1,7 @@
 import React from 'react';
+import { useRender } from '@base-ui/react/use-render';
 import type { VariantProps } from 'class-variance-authority';
 import { cx, cva } from 'class-variance-authority';
-import { Slot } from '@radix-ui/react-slot';
 
 const text = cva('fp-Text', {
   variants: {
@@ -28,26 +28,27 @@ const text = cva('fp-Text', {
 type TextElement = React.ElementRef<'span'>;
 type TextProps = React.ComponentPropsWithoutRef<'span'> &
   VariantProps<typeof text> & {
-    asChild?: boolean;
+    render?: useRender.RenderProp | undefined;
   };
 
 const Text = React.forwardRef<TextElement, TextProps>((props, ref) => {
-  const { asChild, className, size, weight, align, block, ...textProps } = props;
-  const Element = asChild ? Slot : 'span';
+  const { className, render, size, weight, align, block, ...textProps } = props;
 
-  return (
-    <Element
-      ref={ref}
-      className={text({
+  return useRender({
+    defaultTagName: 'span',
+    render,
+    ref,
+    props: {
+      className: text({
         className,
         size,
         weight,
         align,
         block,
-      })}
-      {...textProps}
-    />
-  );
+      }),
+      ...textProps,
+    },
+  });
 });
 
 Text.displayName = 'Text';
@@ -99,19 +100,20 @@ const Paragraph = React.forwardRef<ParagraphElement, ParagraphProps>((props, ref
 type LinkElement = React.ElementRef<'a'>;
 type LinkProps = React.ComponentPropsWithoutRef<'a'> &
   VariantProps<typeof text> & {
-    asChild?: boolean;
+    render?: useRender.RenderProp | undefined;
   };
 
 Paragraph.displayName = 'Paragraph';
 
 const Link = React.forwardRef<LinkElement, LinkProps>((props, ref) => {
-  const { asChild, className, size, weight, align, block, ...linkProps } = props;
-  const Element = asChild ? Slot : 'a';
+  const { className, render, size, weight, align, block, ...linkProps } = props;
 
-  return (
-    <Element
-      ref={ref}
-      className={cx(
+  return useRender({
+    defaultTagName: 'a',
+    render,
+    ref,
+    props: {
+      className: cx(
         text({
           className,
           size,
@@ -120,10 +122,10 @@ const Link = React.forwardRef<LinkElement, LinkProps>((props, ref) => {
           block,
         }),
         'fp-Link'
-      )}
-      {...linkProps}
-    />
-  );
+      ),
+      ...linkProps,
+    },
+  });
 });
 
 Link.displayName = 'Link';

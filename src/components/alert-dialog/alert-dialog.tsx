@@ -1,19 +1,22 @@
-import type { CSSProperties } from 'react';
 import React from 'react';
-import * as RadixAlertDialog from '@radix-ui/react-alert-dialog';
+import { AlertDialog as BaseAlertDialog } from '@base-ui/react/alert-dialog';
 import { cva, cx, type VariantProps } from 'class-variance-authority';
 import { Text } from '@components/text';
+import { addClassName } from '@lib/react/add-class-name';
 
-type RootProps = RadixAlertDialog.AlertDialogProps;
-const Root = RadixAlertDialog.Root;
-type PortalProps = RadixAlertDialog.AlertDialogPortalProps;
-const Portal = RadixAlertDialog.Portal;
-
-type TriggerElement = React.ElementRef<typeof RadixAlertDialog.Trigger>;
-type TriggerProps = Omit<RadixAlertDialog.AlertDialogTriggerProps, 'asChild'>;
+type RootProps = BaseAlertDialog.Root.Props;
+const Root = BaseAlertDialog.Root;
+type PortalProps = BaseAlertDialog.Portal.Props;
+const Portal = BaseAlertDialog.Portal;
+type TriggerElement = HTMLButtonElement;
+type TriggerProps = Omit<BaseAlertDialog.Trigger.Props, 'children' | 'nativeButton' | 'render'> & {
+  children: NonNullable<BaseAlertDialog.Trigger.Props['render']>;
+};
 
 const Trigger = React.forwardRef<TriggerElement, TriggerProps>((props, ref) => {
-  return <RadixAlertDialog.Trigger ref={ref} {...props} asChild />;
+  const { children, ...triggerProps } = props;
+
+  return <BaseAlertDialog.Trigger ref={ref} render={children} {...triggerProps} />;
 });
 
 const content = cva(['fp-DialogBaseContent', 'fp-AlertDialogContent'], {
@@ -34,65 +37,62 @@ const content = cva(['fp-DialogBaseContent', 'fp-AlertDialogContent'], {
   },
 });
 
-type ContentElement = React.ElementRef<typeof RadixAlertDialog.Content>;
-type ContentProps = RadixAlertDialog.AlertDialogContentProps &
-  VariantProps<typeof content> & {
-    width?: CSSProperties['width'];
-    maxWidth?: CSSProperties['maxWidth'];
-    height?: CSSProperties['height'];
-    maxHeight?: CSSProperties['maxHeight'];
-  };
+type PopupElement = HTMLDivElement;
+type PopupProps = BaseAlertDialog.Popup.Props & VariantProps<typeof content>;
 
-const Content = React.forwardRef<ContentElement, ContentProps>((props, ref) => {
-  const { className, size, placement, style, width, height, maxWidth, maxHeight, ...contentProps } = props;
+const Popup = React.forwardRef<PopupElement, PopupProps>((props, ref) => {
+  const { className, size, placement, ...popupProps } = props;
+  const contentClassName = content({ size, placement });
 
   return (
-    <RadixAlertDialog.Content
+    <BaseAlertDialog.Popup
       ref={ref}
-      className={content({ className, size, placement })}
-      style={{ ...style, width, height, maxWidth, maxHeight }}
-      {...contentProps}
+      className={addClassName(className, contentClassName)}
+      {...popupProps}
     />
   );
 });
 
-type OverlayElement = React.ElementRef<typeof RadixAlertDialog.Overlay>;
-type OverlayProps = Omit<RadixAlertDialog.AlertDialogOverlayProps, 'asChild'>;
+type BackdropElement = HTMLDivElement;
+type BackdropProps = BaseAlertDialog.Backdrop.Props;
 
-const Overlay = React.forwardRef<OverlayElement, OverlayProps>((props, ref) => {
-  const { className, ...overlayProps } = props;
-
-  return <RadixAlertDialog.Overlay ref={ref} className={cx(className, 'fp-DialogBaseOverlay')} {...overlayProps} />;
-});
-
-type TitleElement = React.ElementRef<typeof RadixAlertDialog.Title>;
-type TitleProps = Omit<RadixAlertDialog.AlertDialogTitleProps, 'asChild'>;
-
-const Title = React.forwardRef<TitleElement, TitleProps>((props, ref) => {
-  const { children, className, ...closeProps } = props;
+const Backdrop = React.forwardRef<BackdropElement, BackdropProps>((props, ref) => {
+  const { className, ...backdropProps } = props;
 
   return (
-    <RadixAlertDialog.Title ref={ref} className={cx(className, 'fp-AlertDialogTitle')} {...closeProps} asChild>
-      <Text weight="strong">{children}</Text>
-    </RadixAlertDialog.Title>
+    <BaseAlertDialog.Backdrop ref={ref} className={addClassName(className, 'fp-DialogBaseOverlay')} {...backdropProps} />
   );
 });
 
-type DescriptionElement = React.ElementRef<typeof RadixAlertDialog.Description>;
-type DescriptionProps = Omit<RadixAlertDialog.AlertDialogDescriptionProps, 'asChild'>;
+type TitleElement = HTMLHeadingElement;
+type TitleProps = BaseAlertDialog.Title.Props;
 
-const Description = React.forwardRef<DescriptionElement, DescriptionProps>((props, ref) => {
-  const { children, className, ...closeProps } = props;
+const Title = React.forwardRef<TitleElement, TitleProps>((props, ref) => {
+  const { className, render, ...titleProps } = props;
 
   return (
-    <RadixAlertDialog.Description
+    <BaseAlertDialog.Title
       ref={ref}
-      className={cx(className, 'fp-AlertDialogDescription')}
-      {...closeProps}
-      asChild
-    >
-      <Text>{children}</Text>
-    </RadixAlertDialog.Description>
+      className={addClassName(className, 'fp-AlertDialogTitle')}
+      render={render ?? <Text weight="strong" />}
+      {...titleProps}
+    />
+  );
+});
+
+type DescriptionElement = HTMLParagraphElement;
+type DescriptionProps = BaseAlertDialog.Description.Props;
+
+const Description = React.forwardRef<DescriptionElement, DescriptionProps>((props, ref) => {
+  const { className, render, ...descriptionProps } = props;
+
+  return (
+    <BaseAlertDialog.Description
+      ref={ref}
+      className={addClassName(className, 'fp-AlertDialogDescription')}
+      render={render ?? <Text />}
+      {...descriptionProps}
+    />
   );
 });
 
@@ -107,39 +107,34 @@ const Actions = React.forwardRef<ActionsElement, ActionsProps>((props, ref) => {
   return <div ref={ref} className={cx(className, 'fp-AlertDialogActions')} {...actionsProps} />;
 });
 
-type CancelElement = React.ElementRef<typeof RadixAlertDialog.Cancel>;
-type CancelProps = Omit<RadixAlertDialog.AlertDialogCancelProps, 'asChild'>;
+type CloseElement = HTMLButtonElement;
+type CloseProps = Omit<BaseAlertDialog.Close.Props, 'children' | 'nativeButton' | 'render'> & {
+  children: NonNullable<BaseAlertDialog.Close.Props['render']>;
+};
 
-const Cancel = React.forwardRef<CancelElement, CancelProps>((props, ref) => {
-  return <RadixAlertDialog.Cancel ref={ref} asChild {...props} />;
-});
+const Close = React.forwardRef<CloseElement, CloseProps>((props, ref) => {
+  const { children, ...closeProps } = props;
 
-type ActionElement = React.ElementRef<typeof RadixAlertDialog.Action>;
-type ActionProps = Omit<RadixAlertDialog.AlertDialogActionProps, 'asChild'>;
-
-const Action = React.forwardRef<ActionElement, ActionProps>((props, ref) => {
-  return <RadixAlertDialog.Action ref={ref} asChild {...props} />;
+  return <BaseAlertDialog.Close ref={ref} render={children} {...closeProps} />;
 });
 
 Trigger.displayName = 'AlertDialog.Trigger';
-Content.displayName = 'AlertDialog.Content';
-Overlay.displayName = 'AlertDialog.Overlay';
+Popup.displayName = 'AlertDialog.Popup';
+Backdrop.displayName = 'AlertDialog.Backdrop';
 Title.displayName = 'AlertDialog.Title';
 Description.displayName = 'AlertDialog.Description';
 Actions.displayName = 'AlertDialog.Actions';
-Cancel.displayName = 'AlertDialog.Cancel';
-Action.displayName = 'AlertDialog.Action';
+Close.displayName = 'AlertDialog.Close';
 
 export type {
   RootProps,
   TriggerProps,
-  ContentProps,
-  OverlayProps,
+  PopupProps,
+  BackdropProps,
   PortalProps,
   TitleProps,
   DescriptionProps,
   ActionsProps,
-  CancelProps,
-  ActionProps,
+  CloseProps,
 };
-export { Root, Trigger, Content, Overlay, Portal, Title, Description, Actions, Cancel, Action };
+export { Root, Trigger, Popup, Backdrop, Portal, Title, Description, Actions, Close };

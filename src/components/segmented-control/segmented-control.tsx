@@ -1,12 +1,17 @@
 import React from 'react';
-import * as RadixToggleGroup from '@radix-ui/react-toggle-group';
+import { Toggle } from '@base-ui/react/toggle';
+import { ToggleGroup } from '@base-ui/react/toggle-group';
 import { cx } from 'class-variance-authority';
 import { Text as TextPrimitive, type TextProps as TextPrimitiveProps } from '@components/text';
+import { addClassName } from '@lib/react/add-class-name';
 import { useControllableState } from '@lib/react/use-controllable-state';
 
-type RootElement = React.ElementRef<typeof RadixToggleGroup.Root>;
-type RootProps = Omit<RadixToggleGroup.ToggleGroupSingleProps, 'type'> & {
-  fullWidth?: boolean;
+type RootElement = HTMLDivElement;
+type RootProps = Omit<ToggleGroup.Props<string>, 'defaultValue' | 'multiple' | 'onValueChange' | 'value'> & {
+  defaultValue?: string | undefined;
+  fullWidth?: boolean | undefined;
+  onValueChange?: ((value: string) => void) | undefined;
+  value?: string | undefined;
 };
 
 const Root = React.forwardRef<RootElement, RootProps>((props, ref) => {
@@ -19,28 +24,30 @@ const Root = React.forwardRef<RootElement, RootProps>((props, ref) => {
   });
 
   return (
-    <RadixToggleGroup.Root
+    <ToggleGroup
       ref={ref}
-      className={cx(className, 'fp-SegmentedControlRoot', { 'fp-full-width': fullWidth })}
+      className={addClassName(className, cx('fp-SegmentedControlRoot', { 'fp-full-width': fullWidth }))}
       {...rootProps}
-      type="single"
-      value={value}
+      multiple={false}
+      value={toGroupValue(value)}
       onValueChange={(value) => {
-        if (value) {
-          setValue(value);
+        const nextValue = value[0];
+
+        if (nextValue !== undefined) {
+          setValue(nextValue);
         }
       }}
     />
   );
 });
 
-type ItemElement = React.ElementRef<typeof RadixToggleGroup.Item>;
-type ItemProps = RadixToggleGroup.ToggleGroupItemProps;
+type ItemElement = HTMLButtonElement;
+type ItemProps = Toggle.Props<string>;
 
 const Item = React.forwardRef<ItemElement, ItemProps>((props, ref) => {
   const { className, ...itemProps } = props;
 
-  return <RadixToggleGroup.Item ref={ref} className={cx(className, 'fp-SegmentedControlItem')} {...itemProps} />;
+  return <Toggle ref={ref} className={addClassName(className, 'fp-SegmentedControlItem')} {...itemProps} />;
 });
 
 type TextElement = React.ElementRef<typeof TextPrimitive>;
@@ -55,6 +62,14 @@ const Text = React.forwardRef<TextElement, TextProps>((props, ref) => {
 Root.displayName = 'SegmentedControl.Root';
 Item.displayName = 'SegmentedControl.Item';
 Text.displayName = 'SegmentedControl.Text';
+
+function toGroupValue(value: string | undefined): readonly string[] {
+  if (value === undefined) {
+    return [];
+  }
+
+  return [value];
+}
 
 export type { RootProps, ItemProps, TextProps };
 export { Root, Item, Text };

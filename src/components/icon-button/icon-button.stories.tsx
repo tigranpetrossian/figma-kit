@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { PlusIcon, StylesIcon } from '@components/icons';
+import { CloseIcon, PlusIcon, StylesIcon } from '@components/icons';
 import * as Popover from '@components/popover';
 import { Text } from '@components/text';
 import { IconButton } from './icon-button';
@@ -44,17 +44,25 @@ const Default: Story = {
             <StylesIcon />
           </IconButton>
         </Popover.Trigger>
-        <Popover.Content width={300} maxWidth="100vw">
-          <Popover.Header>
-            <Popover.Title>Popover</Popover.Title>
-            <Popover.Controls>
-              <Popover.Close />
-            </Popover.Controls>
-          </Popover.Header>
-          <Popover.Section>
-            <Text>A sample popover for demonstrating icon button active state.</Text>
-          </Popover.Section>
-        </Popover.Content>
+        <Popover.Portal>
+          <Popover.Positioner>
+            <Popover.Popup style={{ width: 300, maxWidth: '100vw' }}>
+              <Popover.Header>
+                <Popover.Title>Popover</Popover.Title>
+                <Popover.Controls>
+                  <Popover.Close>
+                    <IconButton aria-label="Close" disableTooltip>
+                      <CloseIcon />
+                    </IconButton>
+                  </Popover.Close>
+                </Popover.Controls>
+              </Popover.Header>
+              <Popover.Section>
+                <Text>A sample popover for demonstrating icon button active state.</Text>
+              </Popover.Section>
+            </Popover.Popup>
+          </Popover.Positioner>
+        </Popover.Portal>
       </Popover.Root>
     );
   },
