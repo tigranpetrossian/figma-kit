@@ -67,6 +67,7 @@ const preview: Preview = {
             'Flex',
             'Button',
             'Icon Button',
+            'Icons',
             'Switch',
             'Input',
             'Textarea',
