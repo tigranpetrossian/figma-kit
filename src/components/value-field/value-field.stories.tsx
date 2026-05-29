@@ -95,7 +95,12 @@ const HexWithAlpha: Story = {
 const NumericField = () => {
   const [value, setValue] = useState(0);
 
-  return <ValueField.Numeric value={value} onChange={setValue} />;
+  return (
+    <ValueField.Root style={{ width: 100 }}>
+      <ValueField.Scrubber />
+      <ValueField.Numeric value={value} onChange={setValue} />
+    </ValueField.Root>
+  );
 };
 
 const NumericSelectField = (props: { initialValue: number }) => {
@@ -124,7 +129,9 @@ const LabeledField = () => {
 
   return (
     <ValueField.Root style={{ width: 100 }}>
-      <ValueField.Label>X</ValueField.Label>
+      <ValueField.Scrubber>
+        <ValueField.Label>X</ValueField.Label>
+      </ValueField.Scrubber>
       <ValueField.Numeric value={value} onChange={setValue} />
     </ValueField.Root>
   );
@@ -135,9 +142,11 @@ const IconField = () => {
 
   return (
     <ValueField.Root style={{ width: 100 }}>
-      <ValueField.Label>
-        <OpacityIcon />
-      </ValueField.Label>
+      <ValueField.Scrubber>
+        <ValueField.Label>
+          <OpacityIcon />
+        </ValueField.Label>
+      </ValueField.Scrubber>
       <ValueField.Numeric value={value} onChange={setValue} />
     </ValueField.Root>
   );
@@ -166,15 +175,19 @@ const RgbaFields = () => {
     <div style={{ width: 160 }}>
       <ValueField.Multi>
         <ValueField.Root>
+          <ValueField.Scrubber />
           <ValueField.Numeric value={rgba.r} onChange={setRed} min={0} max={1} targetRange={[0, 255]} precision={0} />
         </ValueField.Root>
         <ValueField.Root>
+          <ValueField.Scrubber />
           <ValueField.Numeric value={rgba.g} onChange={setGreen} min={0} max={1} targetRange={[0, 255]} precision={0} />
         </ValueField.Root>
         <ValueField.Root>
+          <ValueField.Scrubber />
           <ValueField.Numeric value={rgba.b} onChange={setBlue} min={0} max={1} targetRange={[0, 255]} precision={0} />
         </ValueField.Root>
         <ValueField.Root style={{ flex: '0 0 48px' }}>
+          <ValueField.Scrubber />
           <ValueField.Numeric
             value={rgba.a}
             onChange={setAlpha}

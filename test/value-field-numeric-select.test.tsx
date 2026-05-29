@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { useState } from 'react';
 import { NumericSelect } from '@components/value-field/value-field-numeric-select';
@@ -12,6 +12,14 @@ const user = userEvent.setup();
 type TestNumericSelectProps = Partial<Omit<NumericSelectProps, 'value' | 'onChange' | 'options'>> & {
   initialValue: number;
   options?: readonly number[];
+};
+
+type TestPointerEventInit = {
+  button?: number;
+  clientX?: number;
+  clientY?: number;
+  movementX?: number;
+  pointerType?: string;
 };
 
 const TestNumericSelect = (props: TestNumericSelectProps) => {
@@ -35,6 +43,22 @@ describe('NumericSelect', () => {
     await user.type(field, '14');
     await user.keyboard('{Enter}');
     expect(field).toHaveValue('14');
+  });
+
+  it('updates from scrubber drag', async () => {
+    const { container, getByLabelText } = render(<TestNumericSelect initialValue={12} />);
+    const scrubber = container.querySelector('.fp-ValueFieldScrubber');
+
+    if (!(scrubber instanceof HTMLElement)) {
+      expect(scrubber).toBeInstanceOf(HTMLElement);
+      return;
+    }
+
+    await startScrubbing(scrubber);
+    await movePointer(4);
+    await stopScrubbing();
+
+    expect(getByLabelText(LABEL)).toHaveValue('16');
   });
 
   it('updates from selected option', async () => {
@@ -61,3 +85,49 @@ describe('NumericSelect', () => {
     expect(getByRole('combobox', { name: 'Select value' })).toBeDisabled();
   });
 });
+
+async function startScrubbing(element: HTMLElement) {
+  await act(async () => {
+    element.dispatchEvent(
+      createPointerEvent('pointerdown', {
+        clientX: 10,
+        clientY: 10,
+        pointerType: 'mouse',
+      })
+    );
+  });
+}
+
+async function movePointer(movementX: number) {
+  await act(async () => {
+    window.dispatchEvent(
+      createPointerEvent('pointermove', {
+        movementX,
+        pointerType: 'mouse',
+      })
+    );
+  });
+}
+
+async function stopScrubbing() {
+  await act(async () => {
+    window.dispatchEvent(createPointerEvent('pointerup', { pointerType: 'mouse' }));
+  });
+}
+
+function createPointerEvent(type: string, init: TestPointerEventInit = {}) {
+  const event = new MouseEvent(type, {
+    bubbles: true,
+    cancelable: true,
+    button: init.button ?? 0,
+    clientX: init.clientX ?? 0,
+    clientY: init.clientY ?? 0,
+  });
+
+  Object.defineProperties(event, {
+    movementX: { value: init.movementX ?? 0 },
+    pointerType: { value: init.pointerType ?? 'mouse' },
+  });
+
+  return event;
+}
