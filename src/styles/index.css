@@ -16,6 +16,7 @@
 @import '../components/textarea/textarea.css';
 @import '../components/menu.base/menu.base.css';
 @import '../components/select/select.css';
+@import '../components/combobox/combobox.css';
 @import '../components/button/button.css';
 @import '../components/icon-button/icon-button.css';
 @import '../components/switch/switch.css';

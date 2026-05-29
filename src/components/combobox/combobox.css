@@ -1,0 +1,133 @@
+.fp-ComboboxTrigger {
+  cursor: default;
+
+  &:focus-visible {
+    border-color: var(--figma-color-border-selected);
+  }
+
+  &[data-disabled] {
+    color: var(--figma-color-text-disabled);
+    border-color: var(--figma-color-border-disabled);
+  }
+}
+
+.fp-ComboboxPositioner {
+  display: flex;
+  flex-direction: column;
+  min-width: var(--anchor-width);
+  max-width: min(var(--available-width), 24rem);
+}
+
+.fp-ComboboxPopup {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-height: min(var(--available-height), 20rem);
+  min-width: var(--anchor-width);
+  padding: var(--space-2);
+  background-color: var(--figma-color-bg);
+  border-radius: var(--radius-large);
+  box-shadow: var(--elevation-500);
+  color: var(--figma-color-text);
+  font-family: var(--font-family-default);
+  font-size: var(--font-size-default);
+  font-weight: var(--font-weight-default);
+  letter-spacing: var(--letter-spacing-default);
+  outline: 0;
+  overflow: auto;
+}
+
+.fp-ComboboxInputGroup {
+  box-sizing: border-box;
+  position: relative;
+  flex-shrink: 0;
+  --color-icon: var(--figma-color-icon-secondary);
+
+  & > .fp-Icon {
+    position: absolute;
+    top: 50%;
+    left: var(--space-2);
+    z-index: 1;
+    transform: translateY(-50%);
+  }
+
+  &:has(.fp-ComboboxInput:disabled) {
+    --color-icon: var(--figma-color-icon-disabled);
+  }
+}
+
+.fp-ComboboxInput {
+  min-width: 0;
+  padding-left: calc(var(--space-2) + var(--space-6) + var(--space-1));
+  padding-right: var(--space-6);
+}
+
+.fp-ComboboxList {
+  display: flex;
+  flex-direction: column;
+}
+
+.fp-ComboboxItem {
+  width: 100%;
+  box-sizing: border-box;
+  color: var(--figma-color-text);
+  line-height: var(--line-height-default);
+
+  &[data-selected] {
+    background-color: var(--figma-color-bg-selected-secondary);
+  }
+
+  &[data-highlighted] {
+    background-color: var(--figma-color-bg-hover);
+  }
+
+  &[data-selected][data-highlighted] {
+    background-color: var(--figma-color-bg-selected);
+  }
+
+  &[data-disabled] {
+    color: var(--figma-color-text-disabled);
+  }
+}
+
+.fp-ComboboxItemIndicator {
+  --color-icon: var(--figma-color-icon);
+}
+
+.fp-ComboboxMessage {
+  display: flex;
+  align-items: center;
+  min-height: var(--space-6);
+  padding: 0 var(--space-2);
+  color: var(--figma-color-text-secondary);
+
+  &:empty {
+    min-height: 0;
+    padding: 0;
+  }
+}
+
+.fp-ComboboxClear.fp-IconButton,
+.fp-ComboboxSearchClear.fp-IconButton {
+  --color-icon: var(--figma-color-icon-secondary);
+
+  &:hover {
+    background-color: transparent;
+    --color-icon: var(--figma-color-icon-secondary-hover);
+  }
+}
+
+.fp-ComboboxClear.fp-IconButton[data-disabled] {
+  --color-icon: var(--figma-color-icon-disabled);
+}
+
+.fp-ComboboxSearchClear.fp-IconButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.fp-ComboboxInput:placeholder-shown + .fp-ComboboxSearchClear.fp-IconButton {
+  display: none;
+}
