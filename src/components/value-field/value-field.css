@@ -1,6 +1,7 @@
 .fp-ValueFieldRoot {
   box-sizing: border-box;
   display: flex;
+  position: relative;
   align-items: center;
   border-radius: var(--radius-medium);
   padding: 0 1px;
@@ -33,6 +34,59 @@
     cursor: default;
     outline: 0;
   }
+}
+
+.fp-ValueFieldScrubber {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  flex-shrink: 0;
+  cursor: ew-resize;
+  color: var(--figma-color-text-secondary);
+  --color-icon: var(--figma-color-icon-secondary);
+
+  &:empty {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    width: var(--space-6);
+  }
+
+  &[data-disabled] {
+    cursor: default;
+    color: var(--figma-color-text-disabled);
+    --color-icon: var(--figma-color-icon-disabled);
+  }
+
+  &:not(:empty) + .fp-ValueFieldBase {
+    padding-left: 0;
+  }
+
+  .fp-ValueFieldLabel:last-child {
+    width: var(--space-6);
+  }
+}
+
+.fp-ValueFieldScrubberCursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2147483647;
+  width: 26px;
+  height: 14px;
+  pointer-events: none;
+  color: var(--figma-color-text-oninverse);
+  filter: drop-shadow(0 1px 1px var(--figma-color-bg-inverse));
+}
+
+.fp-ValueFieldScrubberCursorIcon {
+  display: block;
+  width: 26px;
+  height: 14px;
+  fill: var(--figma-color-bg-inverse);
+  stroke: var(--figma-color-text-oninverse);
 }
 
 .fp-ValueFieldLabel {

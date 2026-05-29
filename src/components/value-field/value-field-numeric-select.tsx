@@ -5,6 +5,7 @@ import { CheckmarkIcon, ChevronDownIcon, ChevronUpIcon } from '@components/icons
 import type { NumericProps } from './value-field-numeric';
 import { Multi, Root } from './value-field-elements';
 import { Numeric } from './value-field-numeric';
+import { Scrubber } from './value-field-scrubber';
 
 type NumericSelectElement = React.ElementRef<'input'>;
 type NumericSelectProps = Omit<NumericProps, 'className' | 'style'> & {
@@ -40,6 +41,7 @@ const NumericSelect = React.forwardRef<NumericSelectElement, NumericSelectProps>
     <BaseSelect.Root items={selectOptions} value={selectValue} onValueChange={changeSelectValue} disabled={disabled}>
       <Multi ref={anchorRef} className={cx(className, 'fp-ValueFieldNumericSelect')} style={style} disabled={disabled}>
         <Root className="fp-ValueFieldNumericSelectField" disabled={disabled}>
+          <Scrubber />
           <Numeric ref={ref} value={value} onChange={onChange} disabled={disabled} {...numericProps} />
         </Root>
         <BaseSelect.Trigger className="fp-ValueFieldNumericSelectTrigger" aria-label={triggerLabel}>

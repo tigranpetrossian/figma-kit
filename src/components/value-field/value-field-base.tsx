@@ -5,7 +5,7 @@ import type { InputProps } from '@components/input';
 import { Input } from '@components/input';
 import { useComposedRefs } from '@lib/react/use-compose-refs';
 import { DEFAULT_BIG_NUDGE, DEFAULT_SMALL_NUDGE } from '@lib/constants';
-import { useValueFieldContext } from '@components/value-field/value-field-elements';
+import { type ValueFieldScrubTarget, useValueFieldContext } from '@components/value-field/value-field-elements';
 import type { Formatter } from './types';
 
 type BaseProps<V> = Omit<InputProps, 'value' | 'onChange'> & {
@@ -31,9 +31,18 @@ const Base = <V,>(props: BaseProps<V>) => {
   } = props;
   const ref = useRef<HTMLInputElement>(null);
   const composedRef = useComposedRefs(forwardedRef, ref);
+  const scrubValueRef = useRef(valueProp);
   const [editingValue, setEditingValue] = useState<string | null>(null);
   const inputValue = editingValue ?? formatter.format(valueProp);
   const context = useValueFieldContext('ValueField');
+  const disabledValue = disabled || context?.disabled ? true : undefined;
+  const registerScrubTarget = context?.registerScrubTarget;
+
+  React.useEffect(() => {
+    if (!context?.scrubbing) {
+      scrubValueRef.current = valueProp;
+    }
+  }, [context?.scrubbing, valueProp]);
 
   const submit = (input: string) => {
     const parserResult = formatter.parse(input, valueProp);
@@ -102,6 +111,57 @@ const Base = <V,>(props: BaseProps<V>) => {
     submit(event.currentTarget.value);
   };
 
+  const handleScrubStart = React.useCallback(() => {
+    const inputElement = ref.current;
+    setEditingValue(null);
+
+    if (!inputElement) {
+      scrubValueRef.current = valueProp;
+      return;
+    }
+
+    const parseResult = formatter.parse(inputElement.value, valueProp);
+    scrubValueRef.current = parseResult.valid ? parseResult.value : valueProp;
+    inputElement.focus();
+  }, [formatter, valueProp]);
+
+  const handleScrub = React.useCallback(
+    (movementX: number, event: PointerEvent) => {
+      if (!formatter.incrementBy) {
+        return;
+      }
+
+      const currentValue = scrubValueRef.current;
+      const nudge = event.shiftKey ? bigNudge : smallNudge;
+      const nextValue = formatter.incrementBy(currentValue, movementX * nudge, null);
+      const parserResult = formatter.parse(formatter.format(nextValue), currentValue);
+
+      if (!parserResult.valid || parserResult.value === currentValue) {
+        return;
+      }
+
+      scrubValueRef.current = parserResult.value;
+      setEditingValue(null);
+      onChange(parserResult.value);
+    },
+    [bigNudge, formatter, onChange, smallNudge]
+  );
+
+  React.useEffect(() => {
+    if (!registerScrubTarget || !formatter.incrementBy) {
+      return undefined;
+    }
+
+    const scrubTarget: ValueFieldScrubTarget = {
+      disabled: Boolean(disabledValue),
+      inputRef: ref,
+      startScrub: handleScrubStart,
+      scrub: handleScrub,
+    };
+
+    return registerScrubTarget(scrubTarget);
+  }, [disabledValue, formatter, handleScrub, handleScrubStart, registerScrubTarget]);
+
   return (
     <Input
       ref={composedRef}
@@ -112,7 +172,7 @@ const Base = <V,>(props: BaseProps<V>) => {
       className={cx(className, 'fp-ValueFieldBase')}
       value={inputValue}
       onChange={handleChange}
-      disabled={disabled || context?.disabled}
+      disabled={disabledValue}
       {...mergeProps<'input'>({ onBlur: handleBlur, onKeyDown: handleKeyDown }, fieldProps)}
     />
   );
