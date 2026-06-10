@@ -13,9 +13,7 @@ const Story: Story = {
   render() {
     return (
       <AlertDialog.Root>
-        <AlertDialog.Trigger>
-          <Button variant="destructive">Delete file</Button>
-        </AlertDialog.Trigger>
+        <AlertDialog.Trigger render={<Button variant="destructive" />}>Delete file</AlertDialog.Trigger>
         <AlertDialog.Portal>
           <AlertDialog.Backdrop />
           <AlertDialog.Popup>
@@ -24,12 +22,8 @@ const Story: Story = {
               Moving the file out of Team Foo means some people might lose access to it.
             </AlertDialog.Description>
             <AlertDialog.Actions>
-              <AlertDialog.Close>
-                <Button>Cancel</Button>
-              </AlertDialog.Close>
-              <AlertDialog.Close>
-                <Button variant="destructive">Delete file</Button>
-              </AlertDialog.Close>
+              <AlertDialog.Close render={<Button />}>Cancel</AlertDialog.Close>
+              <AlertDialog.Close render={<Button variant="destructive" />}>Delete file</AlertDialog.Close>
             </AlertDialog.Actions>
           </AlertDialog.Popup>
         </AlertDialog.Portal>

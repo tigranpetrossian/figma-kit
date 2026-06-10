@@ -14,10 +14,8 @@ const Story: Story = {
   render() {
     return (
       <Popover.Root>
-        <Popover.Trigger>
-          <IconButton aria-label="Styles and variables">
-            <StylesIcon />
-          </IconButton>
+        <Popover.Trigger render={<IconButton aria-label="Styles and variables" />}>
+          <StylesIcon />
         </Popover.Trigger>
         <Popover.Portal>
           <Popover.Positioner>

@@ -13,9 +13,7 @@ const Story: Story = {
   render() {
     return (
       <Dialog.Root>
-        <Dialog.Trigger>
-          <Button>Open Dialog</Button>
-        </Dialog.Trigger>
+        <Dialog.Trigger render={<Button />}>Dogs</Dialog.Trigger>
         <Dialog.Portal>
           <Dialog.Backdrop />
           <Dialog.Popup>
