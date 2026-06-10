@@ -40,13 +40,13 @@ type TitleElement = HTMLHeadingElement;
 type TitleProps = BasePopover.Title.Props;
 
 const Title = React.forwardRef<TitleElement, TitleProps>((props, ref) => {
-  const { className, render, ...titleProps } = props;
+  const { className, render = <Text weight="strong" />, ...titleProps } = props;
 
   return (
     <BasePopover.Title
       ref={ref}
       className={addClassName(className, 'fp-DialogBaseTitle')}
-      render={render ?? <Text weight="strong" />}
+      render={render}
       {...titleProps}
     />
   );
