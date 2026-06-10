@@ -11,16 +11,8 @@ type RootProps = BaseDialog.Root.Props;
 const Root = BaseDialog.Root;
 type PortalProps = BaseDialog.Portal.Props;
 const Portal = BaseDialog.Portal;
-type TriggerElement = HTMLButtonElement;
-type TriggerProps = Omit<BaseDialog.Trigger.Props, 'children' | 'nativeButton' | 'render'> & {
-  children: NonNullable<BaseDialog.Trigger.Props['render']>;
-};
-
-const Trigger = React.forwardRef<TriggerElement, TriggerProps>((props, ref) => {
-  const { children, ...triggerProps } = props;
-
-  return <BaseDialog.Trigger ref={ref} render={children} {...triggerProps} />;
-});
+const Trigger = BaseDialog.Trigger;
+type TriggerProps = BaseDialog.Trigger.Props;
 
 const content = cva(['fp-DialogBaseContent', 'fp-DialogContent'], {
   variants: {
@@ -83,22 +75,21 @@ const Title = React.forwardRef<TitleElement, TitleProps>((props, ref) => {
 });
 
 type CloseElement = HTMLButtonElement;
-type CloseProps = Omit<BaseDialog.Close.Props, 'children' | 'nativeButton' | 'render'> & {
-  children?: BaseDialog.Close.Props['render'] | undefined;
-};
+type CloseProps = BaseDialog.Close.Props;
 
 const Close = React.forwardRef<CloseElement, CloseProps>((props, ref) => {
-  const { children, ...closeProps } = props;
-  const close = children ?? (
-    <IconButton aria-label="Close" disableTooltip>
-      <CloseIcon />
-    </IconButton>
-  );
+  const {
+    render = (
+      <IconButton aria-label="Close" disableTooltip>
+        <CloseIcon />
+      </IconButton>
+    ),
+    ...closeProps
+  } = props;
 
-  return <BaseDialog.Close ref={ref} render={close} {...closeProps} />;
+  return <BaseDialog.Close ref={ref} render={render} {...closeProps} />;
 });
 
-Trigger.displayName = 'Dialog.Trigger';
 Popup.displayName = 'Dialog.Popup';
 Backdrop.displayName = 'Dialog.Backdrop';
 Title.displayName = 'Dialog.Title';

@@ -7,16 +7,8 @@ import { addClassName } from '@lib/react/add-class-name';
 
 type RootProps = BasePopover.Root.Props;
 const Root = BasePopover.Root;
-type TriggerElement = HTMLButtonElement;
-type TriggerProps = Omit<BasePopover.Trigger.Props, 'children' | 'nativeButton' | 'render'> & {
-  children: NonNullable<BasePopover.Trigger.Props['render']>;
-};
-
-const Trigger = React.forwardRef<TriggerElement, TriggerProps>((props, ref) => {
-  const { children, ...triggerProps } = props;
-
-  return <BasePopover.Trigger ref={ref} render={children} {...triggerProps} />;
-});
+type TriggerProps = BasePopover.Trigger.Props;
+const Trigger = BasePopover.Trigger;
 
 type PortalProps = BasePopover.Portal.Props;
 const Portal = BasePopover.Portal;
@@ -53,22 +45,21 @@ const Title = React.forwardRef<TitleElement, TitleProps>((props, ref) => {
 });
 
 type CloseElement = HTMLButtonElement;
-type CloseProps = Omit<BasePopover.Close.Props, 'children' | 'nativeButton' | 'render'> & {
-  children?: BasePopover.Close.Props['render'] | undefined;
-};
+type CloseProps = BasePopover.Close.Props;
 
 const Close = React.forwardRef<CloseElement, CloseProps>((props, ref) => {
-  const { children, ...closeProps } = props;
-  const close = children ?? (
-    <IconButton aria-label="Close" disableTooltip>
-      <CloseIcon />
-    </IconButton>
-  );
+  const {
+    render = (
+      <IconButton aria-label="Close" disableTooltip>
+        <CloseIcon />
+      </IconButton>
+    ),
+    ...closeProps
+  } = props;
 
-  return <BasePopover.Close ref={ref} render={close} {...closeProps} />;
+  return <BasePopover.Close ref={ref} render={render} {...closeProps} />;
 });
 
-Trigger.displayName = 'Popover.Trigger';
 Popup.displayName = 'Popover.Popup';
 Positioner.displayName = 'Popover.Positioner';
 Title.displayName = 'Popover.Title';

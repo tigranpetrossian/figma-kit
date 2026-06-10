@@ -8,16 +8,10 @@ type RootProps = BaseAlertDialog.Root.Props;
 const Root = BaseAlertDialog.Root;
 type PortalProps = BaseAlertDialog.Portal.Props;
 const Portal = BaseAlertDialog.Portal;
-type TriggerElement = HTMLButtonElement;
-type TriggerProps = Omit<BaseAlertDialog.Trigger.Props, 'children' | 'nativeButton' | 'render'> & {
-  children: NonNullable<BaseAlertDialog.Trigger.Props['render']>;
-};
-
-const Trigger = React.forwardRef<TriggerElement, TriggerProps>((props, ref) => {
-  const { children, ...triggerProps } = props;
-
-  return <BaseAlertDialog.Trigger ref={ref} render={children} {...triggerProps} />;
-});
+type TriggerProps = BaseAlertDialog.Trigger.Props;
+const Trigger = BaseAlertDialog.Trigger;
+type CloseProps = BaseAlertDialog.Close.Props;
+const Close = BaseAlertDialog.Close;
 
 const content = cva(['fp-DialogBaseContent', 'fp-AlertDialogContent'], {
   variants: {
@@ -105,24 +99,11 @@ const Actions = React.forwardRef<ActionsElement, ActionsProps>((props, ref) => {
   return <div ref={ref} className={cx(className, 'fp-AlertDialogActions')} {...actionsProps} />;
 });
 
-type CloseElement = HTMLButtonElement;
-type CloseProps = Omit<BaseAlertDialog.Close.Props, 'children' | 'nativeButton' | 'render'> & {
-  children: NonNullable<BaseAlertDialog.Close.Props['render']>;
-};
-
-const Close = React.forwardRef<CloseElement, CloseProps>((props, ref) => {
-  const { children, ...closeProps } = props;
-
-  return <BaseAlertDialog.Close ref={ref} render={children} {...closeProps} />;
-});
-
-Trigger.displayName = 'AlertDialog.Trigger';
 Popup.displayName = 'AlertDialog.Popup';
 Backdrop.displayName = 'AlertDialog.Backdrop';
 Title.displayName = 'AlertDialog.Title';
 Description.displayName = 'AlertDialog.Description';
 Actions.displayName = 'AlertDialog.Actions';
-Close.displayName = 'AlertDialog.Close';
 
 export type {
   RootProps,

@@ -39,11 +39,13 @@ const Default: Story = {
   render(args) {
     return (
       <Popover.Root>
-        <Popover.Trigger>
-          <IconButton {...args}>
-            <StylesIcon />
-          </IconButton>
-        </Popover.Trigger>
+        <Popover.Trigger
+          render={
+            <IconButton {...args}>
+              <StylesIcon />
+            </IconButton>
+          }
+        />
         <Popover.Portal>
           <Popover.Positioner>
             <Popover.Popup style={{ width: 300, maxWidth: '100vw' }}>
