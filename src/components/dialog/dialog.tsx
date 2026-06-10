@@ -61,20 +61,22 @@ type BackdropProps = BaseDialog.Backdrop.Props;
 const Backdrop = React.forwardRef<BackdropElement, BackdropProps>((props, ref) => {
   const { className, ...backdropProps } = props;
 
-  return <BaseDialog.Backdrop ref={ref} className={addClassName(className, 'fp-DialogBaseOverlay')} {...backdropProps} />;
+  return (
+    <BaseDialog.Backdrop ref={ref} className={addClassName(className, 'fp-DialogBaseOverlay')} {...backdropProps} />
+  );
 });
 
 type TitleElement = HTMLHeadingElement;
 type TitleProps = BaseDialog.Title.Props;
 
 const Title = React.forwardRef<TitleElement, TitleProps>((props, ref) => {
-  const { className, render, ...titleProps } = props;
+  const { className, render = <Text weight="strong" />, ...titleProps } = props;
 
   return (
     <BaseDialog.Title
       ref={ref}
       className={addClassName(className, 'fp-DialogBaseTitle')}
-      render={render ?? <Text weight="strong" />}
+      render={render}
       {...titleProps}
     />
   );

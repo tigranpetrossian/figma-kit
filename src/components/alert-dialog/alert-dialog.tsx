@@ -44,13 +44,7 @@ const Popup = React.forwardRef<PopupElement, PopupProps>((props, ref) => {
   const { className, size, placement, ...popupProps } = props;
   const contentClassName = content({ size, placement });
 
-  return (
-    <BaseAlertDialog.Popup
-      ref={ref}
-      className={addClassName(className, contentClassName)}
-      {...popupProps}
-    />
-  );
+  return <BaseAlertDialog.Popup ref={ref} className={addClassName(className, contentClassName)} {...popupProps} />;
 });
 
 type BackdropElement = HTMLDivElement;
@@ -60,7 +54,11 @@ const Backdrop = React.forwardRef<BackdropElement, BackdropProps>((props, ref) =
   const { className, ...backdropProps } = props;
 
   return (
-    <BaseAlertDialog.Backdrop ref={ref} className={addClassName(className, 'fp-DialogBaseOverlay')} {...backdropProps} />
+    <BaseAlertDialog.Backdrop
+      ref={ref}
+      className={addClassName(className, 'fp-DialogBaseOverlay')}
+      {...backdropProps}
+    />
   );
 });
 
@@ -68,13 +66,13 @@ type TitleElement = HTMLHeadingElement;
 type TitleProps = BaseAlertDialog.Title.Props;
 
 const Title = React.forwardRef<TitleElement, TitleProps>((props, ref) => {
-  const { className, render, ...titleProps } = props;
+  const { className, render = <Text weight="strong" />, ...titleProps } = props;
 
   return (
     <BaseAlertDialog.Title
       ref={ref}
       className={addClassName(className, 'fp-AlertDialogTitle')}
-      render={render ?? <Text weight="strong" />}
+      render={render}
       {...titleProps}
     />
   );
@@ -84,13 +82,13 @@ type DescriptionElement = HTMLParagraphElement;
 type DescriptionProps = BaseAlertDialog.Description.Props;
 
 const Description = React.forwardRef<DescriptionElement, DescriptionProps>((props, ref) => {
-  const { className, render, ...descriptionProps } = props;
+  const { className, render = <Text />, ...descriptionProps } = props;
 
   return (
     <BaseAlertDialog.Description
       ref={ref}
       className={addClassName(className, 'fp-AlertDialogDescription')}
-      render={render ?? <Text />}
+      render={render}
       {...descriptionProps}
     />
   );
