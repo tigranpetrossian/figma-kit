@@ -61,14 +61,27 @@ const Group = React.forwardRef<GroupElement, GroupProps>((props, ref) => {
 type SubmenuTriggerElement = HTMLElement;
 type SubmenuTriggerProps = BaseMenu.SubmenuTrigger.Props;
 
-const SubmenuTrigger = React.forwardRef<SubmenuTriggerElement, SubmenuTriggerProps>((props, ref) => {
-  const { children, className, ...triggerProps } = props;
+const renderItemWithCaret: SubmenuTriggerProps['render'] = (props) => {
+  const { children, ...itemProps } = props;
 
   return (
-    <BaseMenu.SubmenuTrigger ref={ref} className={addClassName(className, 'fp-MenuItem')} {...triggerProps}>
+    <div {...itemProps}>
       {children}
       <ChevronRightIcon className="fp-MenuSubtriggerCaret" />
-    </BaseMenu.SubmenuTrigger>
+    </div>
+  );
+};
+
+const SubmenuTrigger = React.forwardRef<SubmenuTriggerElement, SubmenuTriggerProps>((props, ref) => {
+  const { className, render = renderItemWithCaret, ...triggerProps } = props;
+
+  return (
+    <BaseMenu.SubmenuTrigger
+      ref={ref}
+      className={addClassName(className, 'fp-MenuItem')}
+      render={render}
+      {...triggerProps}
+    />
   );
 });
 
@@ -90,17 +103,19 @@ const CheckboxItem = React.forwardRef<CheckboxItemElement, CheckboxItemProps>((p
 type CheckboxItemIndicatorElement = HTMLSpanElement;
 type CheckboxItemIndicatorProps = BaseMenu.CheckboxItemIndicator.Props;
 
-const CheckboxItemIndicator = React.forwardRef<CheckboxItemIndicatorElement, CheckboxItemIndicatorProps>((props, ref) => {
-  const { className, ...indicatorProps } = props;
+const CheckboxItemIndicator = React.forwardRef<CheckboxItemIndicatorElement, CheckboxItemIndicatorProps>(
+  (props, ref) => {
+    const { className, ...indicatorProps } = props;
 
-  return (
-    <BaseMenu.CheckboxItemIndicator
-      ref={ref}
-      className={addClassName(className, 'fp-MenuItemIndicator')}
-      {...indicatorProps}
-    />
-  );
-});
+    return (
+      <BaseMenu.CheckboxItemIndicator
+        ref={ref}
+        className={addClassName(className, 'fp-MenuItemIndicator')}
+        {...indicatorProps}
+      />
+    );
+  }
+);
 
 type RadioItemElement = HTMLElement;
 type RadioItemProps = BaseMenu.RadioItem.Props;

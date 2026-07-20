@@ -61,14 +61,27 @@ const Group = React.forwardRef<GroupElement, GroupProps>((props, ref) => {
 type SubmenuTriggerElement = HTMLElement;
 type SubmenuTriggerProps = BaseContextMenu.SubmenuTrigger.Props;
 
-const SubmenuTrigger = React.forwardRef<SubmenuTriggerElement, SubmenuTriggerProps>((props, ref) => {
-  const { children, className, ...triggerProps } = props;
+const renderItemWithCaret: SubmenuTriggerProps['render'] = (props) => {
+  const { children, ...itemProps } = props;
 
   return (
-    <BaseContextMenu.SubmenuTrigger ref={ref} className={addClassName(className, 'fp-MenuItem')} {...triggerProps}>
+    <div {...itemProps}>
       {children}
       <ChevronRightIcon className="fp-MenuSubtriggerCaret" />
-    </BaseContextMenu.SubmenuTrigger>
+    </div>
+  );
+};
+
+const SubmenuTrigger = React.forwardRef<SubmenuTriggerElement, SubmenuTriggerProps>((props, ref) => {
+  const { className, render = renderItemWithCaret, ...triggerProps } = props;
+
+  return (
+    <BaseContextMenu.SubmenuTrigger
+      ref={ref}
+      className={addClassName(className, 'fp-MenuItem')}
+      render={render}
+      {...triggerProps}
+    />
   );
 });
 
