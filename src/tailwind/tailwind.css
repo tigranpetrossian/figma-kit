@@ -1,3 +1,5 @@
+@import '../styles/index.css' layer(components);
+
 @theme {
   --color-*: initial;
 
