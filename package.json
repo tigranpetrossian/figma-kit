@@ -42,7 +42,7 @@
     "build:types": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
     "build:css": "postcss src/styles/index.css -o dist/styles.css",
     "build:figma-dev-theme-css": "postcss src/styles/figma-development-theme.css -o dist/figma-development-theme.css",
-    "build:tailwind-css": "cp src/tailwind/tailwind.css dist/tailwind.css",
+    "build:tailwind-css": "postcss src/tailwind/tailwind.css -o dist/tailwind.css",
     "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build",
     "lint": "eslint \"**/{src,test}/**/*.{ts,tsx}\" --fix --max-warnings 0",

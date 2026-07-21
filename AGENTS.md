@@ -42,7 +42,7 @@ The library targets Figma plugin UI, which injects Figma's semantic color tokens
 - `src/styles/tokens/` defines the library's own non-color tokens (`--space-*`, `--radius-*`, `--font-size-*`, `--elevation-*`, etc.). These are independent of Figma's tokens and are used by components for layout/typography.
 - `src/styles/figma-development-theme.css` ships as a separate output and provides hardcoded values for `--figma-color-*` so the library renders correctly outside a real Figma plugin. Never import it from plugin code.
 - PostCSS pipeline (`postcss.config.cjs`) runs `postcss-import` then `postcss-nesting`. Component CSS uses native nesting (`&:hover {}`).
-- `src/tailwind/tailwind.css` is a Tailwind v4 stylesheet that maps every Figma token to a utility (e.g. `bg-brand`, `text-secondary`, `icon-danger`) via `@theme` blocks. It replaces Tailwind's color theme rather than extending it; consumers opt in by `@import`ing it alongside `tailwindcss` in their CSS entry. The `@utility icon-*` rule sets the `--color-icon` CSS variable consumed by icon components.
+- `src/tailwind/tailwind.css` is the aggregate Tailwind v4 entry: it imports all component styles into the `components` cascade layer and maps every Figma token to a utility (e.g. `bg-brand`, `text-secondary`, `icon-danger`) via `@theme` blocks. It replaces Tailwind's color theme rather than extending it; consumers import it alongside `tailwindcss` instead of importing `styles.css` separately. The `@utility icon-*` rule sets the `--color-icon` CSS variable consumed by icon components.
 
 ### Path aliases
 

@@ -6,30 +6,29 @@ using any preferred styling solution.
 Figma injects an extensive set of [semantic tokens](https://www.figma.com/plugin-docs/css-variables/),
 which this library relies on, so familiarity with these tokens is recommended.
 
-
 ## Using with Tailwind
 
-Figma kit ships a Tailwind v4 stylesheet that makes Figma theme tokens available in Tailwind classes. Import it alongside Tailwind in your CSS entry:
+Figma Kit ships a Tailwind v4 stylesheet that includes the component styles and makes Figma theme tokens available in Tailwind classes. Import it alongside Tailwind in your CSS entry:
 
 ```css
-@import "tailwindcss";
-@import "figma-kit/tailwind.css";
+@import 'tailwindcss';
+@import 'figma-kit/tailwind.css';
 ```
 
+Do not also import `figma-kit/styles.css`. The Tailwind entry includes those styles in the `components` cascade layer so Tailwind utilities can override component defaults.
 
 This replaces the default Tailwind theme with Figma tokens, allowing you to use these tokens directly:
 
-
 ```tsx
-import { Text } from 'figma-kit'
+import { Text } from 'figma-kit';
 
 const App = () => {
   return (
-    <div className"border border-secondary">
-      <Text color="text-secondary">Welcome to Figma</Text>
+    <div className="border border-secondary">
+      <Text className="text-secondary">Welcome to Figma</Text>
     </div>
-  )
-}
+  );
+};
 ```
 
 The stylesheet is built to match Figma's [semantic token format](https://www.figma.com/plugin-docs/css-variables/#tokens-overview),
@@ -45,6 +44,7 @@ strictly mapped to their respective tokens:
 ```
 
 Translates to:
+
 ```css
 .text {
   color: var(--figma-color-text);
@@ -66,7 +66,7 @@ In rare cases it might be necessary to reference a token for a different propert
 you may need to reference a token for a different property. This can be done using Tailwind's arbitrary value syntax:
 
 ```tsx
-<div className="border-[var(--figma-color-bg-brand)]"/>
+<div className="border-[var(--figma-color-bg-brand)]" />
 ```
 
 Note: This is an escape hatch intended for edge cases. Figma's color system is well-designed and
