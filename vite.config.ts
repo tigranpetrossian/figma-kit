@@ -1,6 +1,12 @@
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
-import { dependencies } from './package.json';
+import { dependencies, peerDependencies } from './package.json';
+
+const externalDependencies = [...Object.keys(dependencies), ...Object.keys(peerDependencies)];
+
+function isExternal(id: string) {
+  return externalDependencies.some((dependency) => id === dependency || id.startsWith(`${dependency}/`));
+}
 
 const extensions: Record<string, string> = {
   cjs: 'cjs',
@@ -25,8 +31,8 @@ export default defineConfig((env) => {
           return `${entryName}.${extensions[format]}`;
         },
       },
-      rollupOptions: {
-        external: [...Object.keys(dependencies), 'react', 'react-dom', 'react/jsx-runtime'],
+      rolldownOptions: {
+        external: isExternal,
         output: {
           globals: {
             react: 'React',
