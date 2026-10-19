@@ -200,13 +200,12 @@ const Hint = (props: HintProps) => {
   const { baseValue, dir, inverted, max, min, orientation, hint } = props;
   const { startEdge } = getOrientationEdges(orientation, dir, inverted);
   const offset = normalize([min, max], [0, 100])(hint);
-  const hintWidth = 4;
 
   return (
     <span
       className={cx('fp-SliderHint', { 'fp-SliderHint-baseValue': hint === baseValue })}
       data-orientation={orientation}
-      style={{ [startEdge]: `calc(${offset}% - ${hintWidth / 2}px)` }}
+      style={{ [startEdge]: `calc(${offset}% - var(--slider-hint-size) / 2)` }}
     />
   );
 };
