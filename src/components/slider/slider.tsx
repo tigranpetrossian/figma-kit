@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { DirectionProvider } from '@base-ui/react/direction-provider';
 import { Slider as BaseSlider } from '@base-ui/react/slider';
-import { cx } from 'class-variance-authority';
+import type { VariantProps } from 'class-variance-authority';
+import { cva, cx } from 'class-variance-authority';
 import { isDeepEqual } from 'remeda';
 import { addClassName } from '@lib/react/add-class-name';
 import { useComposedRefs } from '@lib/react/use-compose-refs';
@@ -12,6 +13,18 @@ const DEFAULT_MIN = 0;
 const DEFAULT_MAX = 100;
 const DEFAULT_ORIENTATION = 'horizontal';
 const DEFAULT_DIRECTION = 'ltr';
+
+const slider = cva('fp-SliderRoot', {
+  variants: {
+    size: {
+      small: 'fp-size-small',
+      large: 'fp-size-large',
+    },
+  },
+  defaultVariants: {
+    size: 'large',
+  },
+});
 
 type SliderElement = HTMLDivElement;
 
@@ -32,7 +45,8 @@ type SliderProps = Omit<
   | 'thumbAlignment'
   | 'value'
 > &
-  SliderOwnProps & {
+  SliderOwnProps &
+  VariantProps<typeof slider> & {
     defaultValue?: number[] | undefined;
     dir?: 'ltr' | 'rtl' | undefined;
     inverted?: boolean | undefined;
@@ -45,6 +59,7 @@ type SliderProps = Omit<
 const Slider = React.forwardRef<SliderElement, SliderProps>((props, forwardedRef) => {
   const {
     className,
+    size,
     min = DEFAULT_MIN,
     max = DEFAULT_MAX,
     defaultValue = [min],
@@ -122,7 +137,7 @@ const Slider = React.forwardRef<SliderElement, SliderProps>((props, forwardedRef
   return (
     <DirectionProvider direction={dir}>
       <BaseSlider.Root
-        className={addClassName(className, 'fp-SliderRoot')}
+        className={addClassName(className, slider({ size }))}
         defaultValue={rootDefaultValue}
         dir={dir === DEFAULT_DIRECTION ? undefined : dir}
         disabled={disabled}

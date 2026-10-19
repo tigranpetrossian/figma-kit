@@ -1,11 +1,6 @@
 :root,
 .light,
 .light-theme {
-  --slider-root-size: var(--space-6);
-  --slider-track-size: var(--space-4);
-  --slider-thumb-size: var(--space-4);
-  --slider-thumb-inset: calc(var(--slider-thumb-size) / 2);
-  --slider-hint-size: var(--space-1);
   --slider-track-border-color: #0000001a;
   --slider-track-bg: var(--figma-color-bg-secondary);
   --slider-thumb-bg: transparent;
@@ -34,6 +29,25 @@
     width: var(--slider-root-size);
     border-width: var(--slider-thumb-inset) 0;
   }
+}
+
+.fp-SliderRoot:where(.fp-size-large) {
+  --slider-root-size: var(--space-6);
+  --slider-track-size: var(--space-4);
+  --slider-thumb-size: var(--space-4);
+  --slider-thumb-inset: calc(var(--slider-thumb-size) / 2);
+  --slider-hint-size: var(--space-1);
+}
+
+.fp-SliderRoot:where(.fp-size-small) {
+  --slider-root-size: var(--space-4);
+  --slider-track-size: var(--space-1_5);
+  --slider-thumb-size: var(--space-3);
+  --slider-thumb-inset: calc(var(--slider-track-size) / 2);
+  --slider-hint-size: var(--space-0_5);
+  --slider-track-bg: var(--figma-color-bg-tertiary);
+  --slider-track-border-color: transparent;
+  --slider-thumb-bg: var(--figma-color-icon-onbrand);
 }
 
 .fp-SliderControl {
