@@ -180,6 +180,35 @@
   }
 }
 
+.fp-ValueFieldMulti:has(> .fp-SliderRoot) {
+  &:hover:where(:not([data-disabled]))::after {
+    border-color: transparent;
+  }
+
+  &:focus-within::after {
+    outline: 0;
+  }
+
+  > .fp-SliderRoot {
+    align-self: center;
+    margin-inline: 10px 11px;
+  }
+
+  > .fp-ValueFieldRoot {
+    flex: 0 0 var(--space-14);
+    outline: 1px solid transparent;
+    outline-offset: -1px;
+
+    &:hover:where(:not([data-disabled])) {
+      outline-color: var(--figma-color-border);
+    }
+
+    &:focus-within {
+      outline-color: var(--figma-color-border-selected);
+    }
+  }
+}
+
 .fp-ValueFieldNumericSelect {
   width: 100%;
 

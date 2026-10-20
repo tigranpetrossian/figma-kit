@@ -4,6 +4,7 @@ import { Slider as BaseSlider } from '@base-ui/react/slider';
 import type { VariantProps } from 'class-variance-authority';
 import { cva, cx } from 'class-variance-authority';
 import { isDeepEqual } from 'remeda';
+import { useValueFieldContext } from '@components/value-field/value-field-elements';
 import { addClassName } from '@lib/react/add-class-name';
 import { useComposedRefs } from '@lib/react/use-compose-refs';
 import { normalize } from '@lib/number/normalize';
@@ -70,7 +71,7 @@ const Slider = React.forwardRef<SliderElement, SliderProps>((props, forwardedRef
     orientation = DEFAULT_ORIENTATION,
     dir = DEFAULT_DIRECTION,
     inverted,
-    disabled,
+    disabled: disabledProp,
     step = 1,
     minStepsBetweenThumbs,
     range = true,
@@ -79,6 +80,8 @@ const Slider = React.forwardRef<SliderElement, SliderProps>((props, forwardedRef
     hints,
     ...rootProps
   } = props;
+  const valueFieldContext = useValueFieldContext('Slider');
+  const disabled = disabledProp || valueFieldContext?.disabled;
   const controlRef = useRef<SliderElement>(null);
   const ref = useComposedRefs(controlRef, forwardedRef);
   const focusVisible = true;
