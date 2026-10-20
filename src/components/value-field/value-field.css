@@ -51,7 +51,7 @@
     bottom: 0;
     left: 0;
     z-index: 1;
-    width: var(--space-6);
+    width: var(--space-1);
   }
 
   &[data-disabled] {
@@ -120,23 +120,35 @@
   display: flex;
   position: relative;
   border-radius: var(--radius-medium);
-  outline-offset: -1px;
   box-sizing: border-box;
   border: 1px solid transparent;
   height: var(--space-6);
   background-color: var(--figma-color-bg-secondary);
 
-  &:hover:where(:not([data-disabled])) {
-    border: 1px solid var(--figma-color-border);
+  &::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border: 1px solid transparent;
+    border-radius: inherit;
+    outline-offset: -1px;
+    pointer-events: none;
   }
 
-  &:focus-within {
+  &:hover:where(:not([data-disabled]))::after {
+    border-color: var(--figma-color-border);
+  }
+
+  &:focus-within::after {
     outline: 1px solid var(--figma-color-border-selected);
   }
 
   &[data-disabled] {
-    border: 1px solid var(--figma-color-border-disabled);
     background-color: var(--figma-color-bg);
+
+    &::after {
+      border-color: var(--figma-color-border-disabled);
+    }
   }
 
   .fp-ValueFieldRoot {
@@ -171,11 +183,11 @@
 .fp-ValueFieldNumericSelect {
   width: 100%;
 
-  &:hover:where(:not([data-disabled])) {
+  &:hover:where(:not([data-disabled]))::after {
     border-color: transparent;
   }
 
-  &:has(.fp-ValueFieldNumericSelectField:hover):where(:not([data-disabled])) {
+  &:has(.fp-ValueFieldNumericSelectField:hover):where(:not([data-disabled]))::after {
     border-color: var(--figma-color-border);
   }
 
