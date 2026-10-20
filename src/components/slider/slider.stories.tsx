@@ -6,6 +6,10 @@ const meta = {
   title: 'Components/Slider',
   component: Slider,
   argTypes: {
+    size: {
+      control: 'radio',
+      options: ['small', 'large'],
+    },
     defaultValue: {
       control: 'object',
     },
@@ -61,6 +65,13 @@ const Vertical: Story = {
   },
 };
 
+const Range: Story = {
+  decorators: [withHorizontalWidth],
+  args: {
+    defaultValue: [25, 75],
+  },
+};
+
 const RangeAnchor: Story = {
   decorators: [withHorizontalWidth],
   args: {
@@ -94,6 +105,18 @@ const Disabled: Story = {
   },
 };
 
+const SmallHorizontal: Story = { ...Horizontal, args: { ...Horizontal.args, size: 'small' } };
+
+const SmallVertical: Story = { ...Vertical, args: { ...Vertical.args, size: 'small' } };
+
+const SmallRange: Story = { ...Range, args: { ...Range.args, size: 'small' } };
+
+const SmallRangeAnchor: Story = { ...RangeAnchor, args: { ...RangeAnchor.args, size: 'small' } };
+
+const SmallHints: Story = { ...Hints, args: { ...Hints.args, size: 'small' } };
+
+const SmallDisabled: Story = { ...Disabled, args: { ...Disabled.args, size: 'small' } };
+
 function withHorizontalWidth(Story: () => ReactNode) {
   return (
     <div style={{ width: 200 }}>
@@ -111,4 +134,17 @@ function withVerticalHeight(Story: () => ReactNode) {
 }
 
 export default meta;
-export { Disabled, Hints, Horizontal, RangeAnchor, Vertical };
+export {
+  Disabled,
+  Hints,
+  Horizontal,
+  Range,
+  RangeAnchor,
+  SmallDisabled,
+  SmallHints,
+  SmallHorizontal,
+  SmallRange,
+  SmallRangeAnchor,
+  SmallVertical,
+  Vertical,
+};

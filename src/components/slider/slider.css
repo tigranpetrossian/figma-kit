@@ -1,9 +1,6 @@
 :root,
 .light,
 .light-theme {
-  --slider-root-size: var(--space-6);
-  --slider-track-size: var(--space-4);
-  --slider-thumb-width: var(--space-4);
   --slider-track-border-color: #0000001a;
   --slider-track-bg: var(--figma-color-bg-secondary);
   --slider-thumb-bg: transparent;
@@ -24,14 +21,39 @@
 
   &[data-orientation='horizontal'] {
     height: var(--slider-root-size);
-    border-width: 0 calc(var(--slider-thumb-width) / 2);
+    border-width: 0 var(--slider-thumb-inset);
   }
 
   &[data-orientation='vertical'] {
     flex-direction: column;
     width: var(--slider-root-size);
-    border-width: calc(var(--slider-thumb-width) / 2) 0;
+    border-width: var(--slider-thumb-inset) 0;
   }
+}
+
+.fp-SliderRoot:where(.fp-size-large) {
+  --slider-root-size: var(--space-6);
+  --slider-track-size: var(--space-4);
+  --slider-thumb-size: var(--space-4);
+  --slider-thumb-inset: calc(var(--slider-thumb-size) / 2);
+  --slider-hint-width: var(--space-1);
+  --slider-hint-height: var(--space-1);
+  --slider-hint-offset: 0px;
+  --slider-hint-radius: var(--radius-full);
+}
+
+.fp-SliderRoot:where(.fp-size-small) {
+  --slider-root-size: var(--space-4);
+  --slider-track-size: var(--space-1_5);
+  --slider-thumb-size: var(--space-3);
+  --slider-thumb-inset: calc(var(--slider-track-size) / 2);
+  --slider-hint-width: 1px;
+  --slider-hint-height: 3px;
+  --slider-hint-offset: calc(var(--slider-track-size) / 2 + 3px + var(--slider-hint-height) / 2);
+  --slider-hint-radius: 0;
+  --slider-track-bg: var(--figma-color-bg-tertiary);
+  --slider-track-border-color: transparent;
+  --slider-thumb-bg: var(--figma-color-icon-onbrand);
 }
 
 .fp-SliderControl {
@@ -42,10 +64,23 @@
   width: 100%;
   height: 100%;
   outline: 0;
+
+  &::before {
+    content: '';
+    position: absolute;
+  }
+}
+
+.fp-SliderRoot[data-orientation='horizontal'] .fp-SliderControl::before {
+  inset: calc(50% - var(--space-11) / 2) calc((var(--slider-thumb-inset) + var(--space-3)) * -1);
 }
 
 .fp-SliderRoot[data-orientation='vertical'] .fp-SliderControl {
   flex-direction: column;
+
+  &::before {
+    inset: calc((var(--slider-thumb-inset) + var(--space-3)) * -1) calc(50% - var(--space-11) / 2);
+  }
 }
 
 .fp-SliderTrack {
@@ -59,14 +94,14 @@
   outline-offset: -1px;
 
   &[data-orientation='horizontal'] {
-    margin-left: calc((var(--slider-thumb-width) / 2) * -1);
-    margin-right: calc((var(--slider-thumb-width) / 2) * -1);
+    margin-left: calc(var(--slider-thumb-inset) * -1);
+    margin-right: calc(var(--slider-thumb-inset) * -1);
     height: var(--slider-track-size);
   }
 
   &[data-orientation='vertical'] {
-    margin-top: calc((var(--slider-thumb-width) / 2) * -1);
-    margin-bottom: calc((var(--slider-thumb-width) / 2) * -1);
+    margin-top: calc(var(--slider-thumb-inset) * -1);
+    margin-bottom: calc(var(--slider-thumb-inset) * -1);
     width: var(--slider-track-size);
   }
 }
@@ -79,14 +114,14 @@
 
   &[data-orientation='horizontal'] {
     height: var(--slider-track-size);
-    margin-left: calc((var(--slider-thumb-width) / 2) * -1);
-    margin-right: calc((var(--slider-thumb-width) / 2) * -1);
+    margin-left: calc(var(--slider-thumb-inset) * -1);
+    margin-right: calc(var(--slider-thumb-inset) * -1);
   }
 
   &[data-orientation='vertical'] {
     width: var(--slider-track-size);
-    margin-top: calc((var(--slider-thumb-width) / 2) * -1);
-    margin-bottom: calc((var(--slider-thumb-width) / 2) * -1);
+    margin-top: calc(var(--slider-thumb-inset) * -1);
+    margin-bottom: calc(var(--slider-thumb-inset) * -1);
   }
 
   &[data-disabled] {
@@ -98,8 +133,8 @@
   box-sizing: border-box;
   display: block;
   z-index: 1;
-  width: var(--slider-track-size);
-  height: var(--slider-track-size);
+  width: var(--slider-thumb-size);
+  height: var(--slider-thumb-size);
   background-color: var(--slider-thumb-bg);
   border: 4px solid var(--figma-color-icon-onbrand);
   border-radius: var(--radius-full);
@@ -124,18 +159,20 @@
 .fp-SliderHint {
   position: absolute;
   display: block;
-  width: var(--space-1);
-  height: var(--space-1);
   background-color: var(--figma-color-icon-tertiary);
-  border-radius: var(--radius-full);
+  border-radius: var(--slider-hint-radius);
 
   &[data-orientation='horizontal'] {
-    top: 50%;
+    top: calc(50% + var(--slider-hint-offset));
+    width: var(--slider-hint-width);
+    height: var(--slider-hint-height);
     transform: translateY(-50%);
   }
 
   &[data-orientation='vertical'] {
-    left: 50%;
+    left: calc(50% + var(--slider-hint-offset));
+    width: var(--slider-hint-height);
+    height: var(--slider-hint-width);
     transform: translateX(-50%);
   }
 
