@@ -1,7 +1,7 @@
 .fp-ColorPickerHueSlider:where(.fp-color-model-hsv, .fp-color-model-hsl, .fp-color-model-rgb, .fp-color-model-hex) {
   --slider-track-bg: linear-gradient(
     90deg,
-    rgba(255, 0, 0, 1) calc(var(--slider-track-size) / 2),
+    rgba(255, 0, 0, 1) var(--slider-thumb-inset),
     rgba(255, 48, 0, 1),
     rgba(255, 96, 0, 1),
     rgba(255, 143, 0, 1),
@@ -32,7 +32,7 @@
     rgba(255, 0, 191, 1),
     rgba(255, 0, 143, 1),
     rgba(255, 0, 96, 1),
-    rgba(255, 0, 48, 1) calc(100% - calc(var(--slider-track-size) / 2))
+    rgba(255, 0, 48, 1) calc(100% - var(--slider-thumb-inset))
   );
 }
 
@@ -41,7 +41,7 @@
     @media (color-gamut: p3) {
       --slider-track-bg: linear-gradient(
         90deg,
-        color(display-p3 1 0 0) calc(var(--slider-track-size) / 2),
+        color(display-p3 1 0 0) var(--slider-thumb-inset),
         color(display-p3 1 0.1875 0),
         color(display-p3 1 0.375 0),
         color(display-p3 1 0.5625 0),
@@ -72,7 +72,7 @@
         color(display-p3 1 0 0.75),
         color(display-p3 1 0 0.5625),
         color(display-p3 1 0 0.375),
-        color(display-p3 1 0 0.1875) calc(100% - calc(var(--slider-track-size) / 2))
+        color(display-p3 1 0 0.1875) calc(100% - var(--slider-thumb-inset))
       );
     }
   }
@@ -85,8 +85,8 @@
 
   --slider-track-bg: linear-gradient(
       to right,
-      var(--track-bg-step-1) 0 calc(var(--slider-track-size) / 2),
-      var(--track-bg-step-2) calc(100% - calc(var(--slider-track-size) / 2)) 100%
+      var(--track-bg-step-1) 0 var(--slider-thumb-inset),
+      var(--track-bg-step-2) calc(100% - var(--slider-thumb-inset)) 100%
     ),
     url('data:image/svg+xml;utf8,%3Csvg%20width%3D%222%22%20height%3D%222%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M0%200h1v2h1V1H0%22%20fill-rule%3D%22nonzero%22%20fill%3D%22%23e1e1e1%22/%3E%3C/svg%3E')
       0 0 / auto 66.66%,
