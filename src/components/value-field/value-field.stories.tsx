@@ -1,6 +1,8 @@
 import type { StoryObj, Meta } from '@storybook/react-vite';
 import { useState } from 'react';
+import { Flex } from '@components/flex';
 import { Slider } from '@components/slider';
+import { Text } from '@components/text';
 import type { RGBA } from '@lib/color';
 import * as ValueField from './';
 
@@ -60,6 +62,12 @@ const NumericSelect: NumericSelectStory = {
 const NumericSelectOutOfOptions: NumericSelectStory = {
   render() {
     return <NumericSelectField initialValue={21} />;
+  },
+};
+
+const NumericSelectHighlightPreview: NumericSelectStory = {
+  render() {
+    return <NumericSelectPreviewField />;
   },
 };
 
@@ -128,6 +136,29 @@ const NumericSelectField = (props: { initialValue: number }) => {
       min={0}
       precision={0}
     />
+  );
+};
+
+const NumericSelectPreviewField = () => {
+  const [value, setValue] = useState(20);
+  const [highlightedValue, setHighlightedValue] = useState<number>();
+  const previewSize = highlightedValue ?? value;
+
+  return (
+    <Flex direction="column" gap="4">
+      <ValueField.NumericSelect
+        value={value}
+        onChange={setValue}
+        onItemHighlighted={setHighlightedValue}
+        options={NUMERIC_SELECT_OPTIONS}
+        style={{ width: 296 }}
+        min={0}
+        precision={0}
+      />
+      <Text block style={{ fontSize: previewSize, lineHeight: 1.2 }}>
+        Preview {previewSize}
+      </Text>
+    </Flex>
   );
 };
 
@@ -286,6 +317,7 @@ export {
   MultiInput,
   Numeric,
   NumericSelect,
+  NumericSelectHighlightPreview,
   NumericSelectOutOfOptions,
   Rgba,
   WithIcon,

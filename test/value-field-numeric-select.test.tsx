@@ -1,5 +1,5 @@
-import { describe, expect, it } from 'vitest';
-import { act, render } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
+import { act, render, waitFor } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { useState } from 'react';
 import { NumericSelect } from '@components/value-field/value-field-numeric-select';
@@ -77,6 +77,86 @@ describe('NumericSelect', () => {
     expect(getByRole('option', { name: '21', selected: true })).toBeInTheDocument();
     expect(getAllByRole('option').map((option) => option.textContent)).toEqual(['21', '10', '12', '14', '20']);
     expect(document.querySelector('.fp-MenuSeparator')).toBeInTheDocument();
+  });
+
+  it('reports the option highlighted with the keyboard', async () => {
+    const onItemHighlighted = vi.fn();
+    const { getByRole } = render(<TestNumericSelect initialValue={12} onItemHighlighted={onItemHighlighted} />);
+    await user.click(getByRole('combobox', { name: 'Select value' }));
+    await waitFor(() => expect(onItemHighlighted).toHaveBeenLastCalledWith(12));
+    await user.keyboard('{ArrowDown}');
+    expect(onItemHighlighted).toHaveBeenLastCalledWith(14);
+  });
+
+  it('reports the hovered option, then undefined when the pointer leaves', async () => {
+    const onItemHighlighted = vi.fn();
+    const { getByRole } = render(<TestNumericSelect initialValue={12} onItemHighlighted={onItemHighlighted} />);
+    await user.click(getByRole('combobox', { name: 'Select value' }));
+    const option = getByRole('option', { name: '20' });
+    await user.hover(option);
+    expect(onItemHighlighted).toHaveBeenLastCalledWith(20);
+    await user.unhover(option);
+    expect(onItemHighlighted).toHaveBeenLastCalledWith(undefined);
+  });
+
+  it('reports undefined when the menu closes', async () => {
+    const onItemHighlighted = vi.fn();
+    const { getByRole } = render(<TestNumericSelect initialValue={12} onItemHighlighted={onItemHighlighted} />);
+    await user.click(getByRole('combobox', { name: 'Select value' }));
+    await waitFor(() => expect(onItemHighlighted).toHaveBeenLastCalledWith(12));
+    await user.keyboard('{Escape}');
+    expect(onItemHighlighted).toHaveBeenLastCalledWith(undefined);
+  });
+
+  it('reports each highlight change once', async () => {
+    const onItemHighlighted = vi.fn();
+    const { getByRole } = render(<TestNumericSelect initialValue={12} onItemHighlighted={onItemHighlighted} />);
+    await user.click(getByRole('combobox', { name: 'Select value' }));
+    await waitFor(() => expect(onItemHighlighted).toHaveBeenLastCalledWith(12));
+    const option = getByRole('option', { name: '20' });
+    await user.hover(option);
+    await user.unhover(option);
+    await user.keyboard('{Escape}');
+    expect(onItemHighlighted.mock.calls).toEqual([[12], [20], [undefined]]);
+  });
+
+  it('reports undefined after an option is selected', async () => {
+    const onItemHighlighted = vi.fn();
+    const { getByLabelText, getByRole } = render(
+      <TestNumericSelect initialValue={12} onItemHighlighted={onItemHighlighted} />
+    );
+    await user.click(getByRole('combobox', { name: 'Select value' }));
+    await waitFor(() => expect(onItemHighlighted).toHaveBeenLastCalledWith(12));
+    await user.click(getByRole('option', { name: '20' }));
+    expect(getByLabelText(LABEL)).toHaveValue('20');
+    expect(onItemHighlighted.mock.calls).toEqual([[12], [20], [undefined]]);
+  });
+
+  it('reports the current value when it is not an option', async () => {
+    const onItemHighlighted = vi.fn();
+    const { getByRole } = render(<TestNumericSelect initialValue={21} onItemHighlighted={onItemHighlighted} />);
+    await user.click(getByRole('combobox', { name: 'Select value' }));
+    await waitFor(() => expect(onItemHighlighted).toHaveBeenLastCalledWith(21));
+  });
+
+  it('reports the option matched by typing', async () => {
+    const onItemHighlighted = vi.fn();
+    const { getByRole } = render(<TestNumericSelect initialValue={12} onItemHighlighted={onItemHighlighted} />);
+    await user.click(getByRole('combobox', { name: 'Select value' }));
+    await waitFor(() => expect(onItemHighlighted).toHaveBeenLastCalledWith(12));
+    await user.keyboard('2');
+    expect(onItemHighlighted).toHaveBeenLastCalledWith(20);
+  });
+
+  it('reports the highlighted option again when the menu reopens', async () => {
+    const onItemHighlighted = vi.fn();
+    const { getByRole } = render(<TestNumericSelect initialValue={12} onItemHighlighted={onItemHighlighted} />);
+    const trigger = getByRole('combobox', { name: 'Select value' });
+    await user.click(trigger);
+    await waitFor(() => expect(onItemHighlighted).toHaveBeenLastCalledWith(12));
+    await user.keyboard('{Escape}');
+    await user.click(trigger);
+    await waitFor(() => expect(onItemHighlighted.mock.calls).toEqual([[12], [undefined], [12]]));
   });
 
   it('disables the field and trigger', () => {
