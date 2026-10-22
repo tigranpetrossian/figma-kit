@@ -10,6 +10,7 @@ import { Scrubber } from './value-field-scrubber';
 type NumericSelectElement = React.ElementRef<'input'>;
 type NumericSelectProps = Omit<NumericProps, 'className' | 'style'> & {
   options: readonly number[];
+  onItemHighlighted?: (value: number | undefined) => void;
   className?: string;
   style?: React.CSSProperties;
   triggerLabel?: string;
@@ -22,6 +23,7 @@ const NumericSelect = React.forwardRef<NumericSelectElement, NumericSelectProps>
     value,
     onChange,
     options,
+    onItemHighlighted,
     disabled,
     triggerLabel = 'Select value',
     ...numericProps
@@ -30,6 +32,7 @@ const NumericSelect = React.forwardRef<NumericSelectElement, NumericSelectProps>
   const selectValue = toSelectValue(value);
   const selectOptions = getSelectOptions(value, options, valueOption);
   const anchorRef = React.useRef<HTMLDivElement>(null);
+  const highlightedValueRef = React.useRef<number | undefined>(undefined);
 
   function changeSelectValue(nextValue: string | null) {
     if (nextValue !== null) {
@@ -37,8 +40,35 @@ const NumericSelect = React.forwardRef<NumericSelectElement, NumericSelectProps>
     }
   }
 
+  function highlightItem(nextValue: number | undefined) {
+    if (highlightedValueRef.current === nextValue) {
+      return;
+    }
+
+    highlightedValueRef.current = nextValue;
+    onItemHighlighted?.(nextValue);
+  }
+
+  function changeOpen(open: boolean) {
+    if (!open) {
+      highlightItem(undefined);
+    }
+  }
+
+  function clearHighlightOnPopupFocus(event: React.FocusEvent<HTMLElement>) {
+    if (event.target === event.currentTarget) {
+      highlightItem(undefined);
+    }
+  }
+
   return (
-    <BaseSelect.Root items={selectOptions} value={selectValue} onValueChange={changeSelectValue} disabled={disabled}>
+    <BaseSelect.Root
+      items={selectOptions}
+      value={selectValue}
+      onValueChange={changeSelectValue}
+      onOpenChange={changeOpen}
+      disabled={disabled}
+    >
       <Multi ref={anchorRef} className={cx(className, 'fp-ValueFieldNumericSelect')} style={style} disabled={disabled}>
         <Root className="fp-ValueFieldNumericSelectField" disabled={disabled}>
           <Scrubber />
@@ -61,7 +91,7 @@ const NumericSelect = React.forwardRef<NumericSelectElement, NumericSelectProps>
           positionMethod="fixed"
           collisionPadding={0}
         >
-          <BaseSelect.Popup className="fp-MenuContent">
+          <BaseSelect.Popup className="fp-MenuContent" onFocus={clearHighlightOnPopupFocus}>
             <BaseSelect.ScrollUpArrow className="fp-SelectScrollUpButton">
               <ChevronUpIcon size="4" />
             </BaseSelect.ScrollUpArrow>
@@ -72,6 +102,7 @@ const NumericSelect = React.forwardRef<NumericSelectElement, NumericSelectProps>
                     value={selectValue}
                     label={selectValue}
                     className="fp-MenuItem fp-MenuCheckboxItem fp-ValueFieldNumericSelectCurrentItem"
+                    onFocus={() => highlightItem(value)}
                   >
                     <BaseSelect.ItemIndicator className="fp-MenuItemIndicator">
                       <CheckmarkIcon size="4" />
@@ -87,6 +118,7 @@ const NumericSelect = React.forwardRef<NumericSelectElement, NumericSelectProps>
                   value={toSelectValue(option)}
                   label={toSelectValue(option)}
                   className="fp-MenuItem fp-MenuCheckboxItem"
+                  onFocus={() => highlightItem(option)}
                 >
                   <BaseSelect.ItemIndicator className="fp-MenuItemIndicator">
                     <CheckmarkIcon size="4" />
