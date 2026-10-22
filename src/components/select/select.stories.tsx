@@ -77,6 +77,17 @@ const GroupsAndLabels: Story = {
   },
 };
 
+const Disabled: Story = {
+  render() {
+    return (
+      <Select.Root items={simpleOptions} value="drop-shadow" disabled>
+        <SelectTrigger />
+        <SelectPopup>{simpleOptions.map(renderOption)}</SelectPopup>
+      </Select.Root>
+    );
+  },
+};
+
 const simpleOptions: readonly Option[] = [
   { value: 'inner-shadow', label: 'Inner shadow' },
   { value: 'drop-shadow', label: 'Drop shadow' },
@@ -220,4 +231,4 @@ function getSectionKey(section: readonly Option[]) {
 }
 
 export default meta;
-export { GroupsAndLabels, Separators, Simple };
+export { Disabled, GroupsAndLabels, Separators, Simple };
