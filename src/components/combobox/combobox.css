@@ -1,6 +1,14 @@
 .fp-ComboboxTrigger {
   cursor: default;
 
+  &:hover:where(:not([data-disabled])) {
+    background-color: var(--figma-color-bg-hover);
+  }
+
+  &:where([data-popup-open]) {
+    background-color: var(--figma-color-bg-hover);
+  }
+
   &:focus-visible {
     border-color: var(--figma-color-border-selected);
   }
