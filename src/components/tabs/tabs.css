@@ -1,7 +1,7 @@
 .fp-TabsList {
   display: flex;
   overflow-y: auto;
-  gap: var(--space-2);
+  gap: var(--space-1);
 }
 
 .fp-TabsTrigger {
@@ -18,11 +18,13 @@
   font-weight: var(--font-weight-default);
   letter-spacing: var(--letter-spacing-default);
   line-height: var(--line-height-default);
+  color: var(--figma-color-text-secondary);
+  --color-icon: var(--figma-color-icon-secondary);
+  border-radius: var(--radius-medium);
   white-space: nowrap;
 
-  &:where(:not([data-active])) {
-    color: var(--figma-color-text-secondary);
-    --color-icon: var(--figma-color-icon-secondary);
+  &:hover:where(:not([data-disabled])) {
+    background: var(--figma-color-bg-secondary);
   }
 
   &:where([data-active]) {
@@ -30,6 +32,9 @@
     color: var(--figma-color-text);
     --color-icon: var(--figma-color-icon);
     background: var(--figma-color-bg-secondary);
-    border-radius: var(--radius-medium);
+  }
+
+  &:where([data-disabled]) {
+    color: var(--figma-color-text-disabled);
   }
 }
