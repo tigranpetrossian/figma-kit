@@ -8,6 +8,12 @@
 npm install figma-kit@beta
 ```
 
+Yarn Berry does not install peer dependencies automatically, so add Base UI yourself:
+
+```
+yarn add @base-ui/react
+```
+
 ### Enable access to Figma's semantic tokens in your plugin UI setup:
 
 Figma injects a set of [semantic color tokens as CSS custom properties](https://www.figma.com/plugin-docs/css-variables/) into plugin UI. Figma Kit
