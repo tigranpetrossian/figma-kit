@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { CloseIcon, PlusIcon, StylesIcon } from '@components/icons';
 import * as Popover from '@components/popover';
 import { Text } from '@components/text';
+import { Tooltip } from '@components/tooltip';
 import { IconButton } from './icon-button';
 
 const meta = {
@@ -22,12 +23,6 @@ const meta = {
       options: ['subtle', 'solid'],
     },
     disabled: {
-      control: 'boolean',
-    },
-    tooltipContent: {
-      control: 'text',
-    },
-    disableTooltip: {
       control: 'boolean',
     },
   },
@@ -53,7 +48,7 @@ const Default: Story = {
                 <Popover.Title>Popover</Popover.Title>
                 <Popover.Controls>
                   <Popover.Close>
-                    <IconButton aria-label="Close" disableTooltip>
+                    <IconButton aria-label="Close">
                       <CloseIcon />
                     </IconButton>
                   </Popover.Close>
@@ -83,5 +78,20 @@ const WithCustomIcon: Story = {
   },
 };
 
+const WithTooltip: Story = {
+  args: {
+    'aria-label': 'Add item',
+  },
+  render(args) {
+    return (
+      <Tooltip content="Add item">
+        <IconButton {...args}>
+          <PlusIcon />
+        </IconButton>
+      </Tooltip>
+    );
+  },
+};
+
 export default meta;
-export { Default, WithCustomIcon };
+export { Default, WithCustomIcon, WithTooltip };

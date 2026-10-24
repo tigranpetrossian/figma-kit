@@ -50,7 +50,7 @@ type CloseProps = BasePopover.Close.Props;
 const Close = React.forwardRef<CloseElement, CloseProps>((props, ref) => {
   const {
     render = (
-      <IconButton aria-label="Close" disableTooltip>
+      <IconButton aria-label="Close">
         <CloseIcon />
       </IconButton>
     ),
