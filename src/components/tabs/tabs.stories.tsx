@@ -63,7 +63,7 @@ const TabsInPopover = () => {
                 </Tabs.List>
                 <Popover.Controls>
                   <Popover.Close>
-                    <IconButton ref={closeRef} aria-label="Close" disableTooltip>
+                    <IconButton ref={closeRef} aria-label="Close">
                       <CloseIcon />
                     </IconButton>
                   </Popover.Close>

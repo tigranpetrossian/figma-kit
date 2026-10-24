@@ -23,7 +23,7 @@ const Story: Story = {
               <Popover.Header>
                 <Popover.Title>Text styles</Popover.Title>
                 <Popover.Controls>
-                  <IconButton aria-label="New style" disableTooltip>
+                  <IconButton aria-label="New style">
                     <PlusIcon />
                   </IconButton>
                   <Popover.Close />
