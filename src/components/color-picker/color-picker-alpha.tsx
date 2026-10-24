@@ -8,7 +8,8 @@ type AlphaProps = React.ComponentPropsWithoutRef<'div'>;
 
 const Alpha = (props: AlphaProps) => {
   const { className, style } = props;
-  const { colorSpace, color, onColorChange } = useColorPickerContext('Hue');
+  const { colorSpace, colorsByModel, onColorChange } = useColorPickerContext('ColorPicker.Alpha');
+  const color = colorsByModel.rgb;
   const trackBg = {
     srgb: {
       transparent: rgbaToCssString({ ...color, a: 0 }),

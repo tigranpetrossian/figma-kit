@@ -8,27 +8,8 @@ type HSL = { h: number; s: number; l: number };
 type RGBA = WithAlpha<RGB>;
 type HSVA = WithAlpha<HSV>;
 type HSLA = WithAlpha<HSL>;
-type HEX = string;
 type P3String = `color(display-p3 ${number} ${number} ${number}${` / ${number}` | ''})`;
 type RGBString = `rgb(${number} ${number} ${number}${` / ${number}` | ''})`;
-
-function decimalToHex(number: number): string {
-  const hex = round(number * 255, 0).toString(16);
-  return hex.length < 2 ? '0' + hex : hex;
-}
-
-function rgbaToHex({ r, g, b, a }: RGBA): HEX {
-  const alphaHex = a < 1 ? decimalToHex(a) : '';
-  return '#' + decimalToHex(r) + decimalToHex(g) + decimalToHex(b) + alphaHex;
-}
-
-function hslaToHex(hsla: HSLA): HEX {
-  return rgbaToHex(hslaToRgba(hsla));
-}
-
-function hsvaToHex(hsla: HSVA): HEX {
-  return rgbaToHex(hsvaToRgba(hsla));
-}
 
 function rgbaToHsva({ r, g, b, a }: RGBA): HSVA {
   const max = Math.max(r, g, b);
@@ -120,28 +101,9 @@ function blendWithWhite(color: RGBA): RGBA {
   };
 }
 
-function roundHsva(hsva: HSVA): HSVA {
-  return {
-    h: round(hsva.h, 0),
-    s: round(hsva.s, 0),
-    v: round(hsva.v, 0),
-    a: round(hsva.a, 2),
-  };
-}
-
-function roundHsla(hsla: HSLA): HSLA {
-  return {
-    h: round(hsla.h, 0),
-    s: round(hsla.s, 0),
-    l: round(hsla.l, 0),
-    a: round(hsla.a, 2),
-  };
-}
-
-export type { RGB, HSV, HSL, RGBA, HSVA, HSLA, HEX, P3String, RGBString };
+export type { RGB, HSV, HSL, RGBA, HSVA, HSLA, P3String, RGBString };
 
 export {
-  rgbaToHex,
   rgbaToHsva,
   hsvaToRgba,
   hslaToHsva,
@@ -151,8 +113,4 @@ export {
   rgbaToP3String,
   rgbaToCssString,
   blendWithWhite,
-  roundHsva,
-  roundHsla,
-  hslaToHex,
-  hsvaToHex,
 };
