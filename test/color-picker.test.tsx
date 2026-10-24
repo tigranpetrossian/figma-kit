@@ -1,14 +1,17 @@
 import { useState } from 'react';
-import { describe, expect, it } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
+import { render, screen, within } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import type { ColorModel } from '@components/color-picker';
 import * as ColorPicker from '@components/color-picker';
 import type { RGBA } from '@lib/color';
 
 const GRAY = { r: 0.5, g: 0.5, b: 0.5, a: 1 };
+const BLACK = { r: 0, g: 0, b: 0, a: 1 };
+const WHITE = { r: 1, g: 1, b: 1, a: 1 };
 const RED = { r: 1, g: 0, b: 0, a: 1 };
 const GREEN = { r: 0, g: 1, b: 0, a: 1 };
+const DARK_GREEN = { r: 0, g: 0.6, b: 0, a: 1 };
 const BLUE = { r: 0, g: 0, b: 1, a: 1 };
 
 const user = userEvent.setup();
@@ -33,28 +36,168 @@ describe('controlled ColorPicker', () => {
 
   it('keeps the edited hue when the parent passes back the emitted gray', async () => {
     render(<ControlledPicker initialColor={GREEN} defaultActiveModel="hsv" />);
-    const [hueField, saturationField] = screen.getAllByRole('textbox');
+    const { hue, saturation } = getHsvFields();
 
-    await user.type(saturationField, '0');
+    await user.type(saturation, '0');
     await user.keyboard('{Enter}');
 
-    expect(saturationField).toHaveValue('0');
-    expect(hueField).toHaveValue('120');
+    expect(saturation).toHaveValue('0');
+    expect(hue).toHaveValue('120');
+  });
+
+  it('keeps the edited hue when the parent passes back the emitted gray rounded to float32', async () => {
+    render(<ControlledPicker initialColor={DARK_GREEN} defaultActiveModel="hsv" roundToFloat32 />);
+    const { hue, saturation } = getHsvFields();
+
+    await user.type(saturation, '0');
+    await user.keyboard('{Enter}');
+
+    expect(saturation).toHaveValue('0');
+    expect(hue).toHaveValue('120');
+  });
+
+  it('changes the hue of a gray with the hue slider', async () => {
+    render(<ControlledPicker initialColor={GRAY} defaultActiveModel="hsv" />);
+    const { hue, saturation, value } = getHsvFields();
+
+    getHueThumb().focus();
+    await user.keyboard('{PageUp}');
+
+    expect(hue).not.toHaveValue('0');
+    expect(saturation).toHaveValue('0');
+    expect(value).toHaveValue('50');
+  });
+
+  it('keeps the hue of a gray when alpha changes', async () => {
+    render(<ControlledPicker initialColor={GREEN} defaultActiveModel="hsv" />);
+    const { hue, saturation } = getHsvFields();
+
+    await user.type(saturation, '0');
+    await user.keyboard('{Enter}');
+    getAlphaThumb().focus();
+    await user.keyboard('{ArrowLeft}');
+
+    expect(hue).toHaveValue('120');
+  });
+
+  it('keeps the hue when the parent passes a gray', async () => {
+    render(<ControlledPicker initialColor={BLUE} defaultActiveModel="hsv" />);
+    const { hue, saturation, value } = getHsvFields();
+
+    await user.click(screen.getByRole('button', { name: 'Gray' }));
+
+    expect(hue).toHaveValue('240');
+    expect(saturation).toHaveValue('0');
+    expect(value).toHaveValue('50');
+  });
+
+  it('keeps the hue when the parent passes black', async () => {
+    render(<ControlledPicker initialColor={BLUE} defaultActiveModel="hsv" />);
+    const { hue, value } = getHsvFields();
+
+    await user.click(screen.getByRole('button', { name: 'Black' }));
+
+    expect(hue).toHaveValue('240');
+    expect(value).toHaveValue('0');
+  });
+
+  it('takes the hue of the last color the parent passed before a gray', async () => {
+    render(<ControlledPicker initialColor={BLUE} defaultActiveModel="hsv" />);
+    const { hue } = getHsvFields();
+
+    await user.click(screen.getByRole('button', { name: 'Red' }));
+    await user.click(screen.getByRole('button', { name: 'Gray' }));
+
+    expect(hue).toHaveValue('0');
+  });
+
+  it('keeps the hue and the gray saturation when the parent passes a gray, then black', async () => {
+    render(<ControlledPicker initialColor={BLUE} defaultActiveModel="hsv" />);
+    const { hue, saturation, value } = getHsvFields();
+
+    await user.click(screen.getByRole('button', { name: 'Gray' }));
+    await user.click(screen.getByRole('button', { name: 'Black' }));
+
+    expect(hue).toHaveValue('240');
+    expect(saturation).toHaveValue('0');
+    expect(value).toHaveValue('0');
+  });
+
+  it('keeps the HSL saturation when the parent passes white', async () => {
+    render(<ControlledPicker initialColor={BLUE} defaultActiveModel="hsl" />);
+    const { saturation, lightness } = getHslFields();
+
+    await user.click(screen.getByRole('button', { name: 'White' }));
+
+    expect(saturation).toHaveValue('100');
+    expect(lightness).toHaveValue('100');
+  });
+
+  it('does not report a color change when the hue slider moves on a gray', async () => {
+    const handleColorChange = vi.fn();
+    render(<ControlledPicker initialColor={GRAY} defaultActiveModel="hsv" onColorChange={handleColorChange} />);
+    const { hue } = getHsvFields();
+
+    getHueThumb().focus();
+    await user.keyboard('{ArrowRight}{ArrowRight}');
+
+    expect(hue).toHaveValue('2');
+    expect(handleColorChange).not.toHaveBeenCalled();
+  });
+
+  it('reports each hue slider step on a chromatic color', async () => {
+    const handleColorChange = vi.fn();
+    render(<ControlledPicker initialColor={RED} defaultActiveModel="hsv" onColorChange={handleColorChange} />);
+    const { hue } = getHsvFields();
+
+    getHueThumb().focus();
+    await user.keyboard('{ArrowRight}{ArrowRight}');
+
+    expect(hue).toHaveValue('2');
+    expect(handleColorChange).toHaveBeenCalledTimes(2);
   });
 });
 
-function ControlledPicker(props: { initialColor: RGBA; defaultActiveModel?: ColorModel }) {
-  const [color, setColor] = useState(props.initialColor);
+describe('uncontrolled ColorPicker', () => {
+  it('changes the hue of a gray with the hue slider', async () => {
+    render(<UncontrolledPicker defaultColor={GRAY} />);
+    const { hue, saturation, value } = getHsvFields();
+
+    getHueThumb().focus();
+    await user.keyboard('{PageUp}');
+
+    expect(hue).not.toHaveValue('0');
+    expect(saturation).toHaveValue('0');
+    expect(value).toHaveValue('50');
+  });
+});
+
+function ControlledPicker(props: {
+  initialColor: RGBA;
+  defaultActiveModel?: ColorModel;
+  roundToFloat32?: boolean;
+  onColorChange?: (color: RGBA) => void;
+}) {
+  const { initialColor, defaultActiveModel, roundToFloat32 = false, onColorChange } = props;
+  const [color, setColor] = useState(initialColor);
+
+  const handleColorChange = (color: RGBA) => {
+    onColorChange?.(color);
+    setColor(roundToFloat32 ? toFloat32(color) : color);
+  };
 
   return (
     <>
       <button onClick={() => setColor(RED)}>Red</button>
       <button onClick={() => setColor(BLUE)}>Blue</button>
+      <button onClick={() => setColor(GRAY)}>Gray</button>
+      <button onClick={() => setColor(BLACK)}>Black</button>
+      <button onClick={() => setColor(WHITE)}>White</button>
       <ColorPicker.Root
         colorSpace="srgb"
         color={color}
-        onColorChange={setColor}
-        defaultActiveModel={props.defaultActiveModel}
+        onColorChange={handleColorChange}
+        defaultActiveModel={defaultActiveModel}
       >
         <ColorPicker.Area />
         <ColorPicker.Hue />
@@ -63,4 +206,37 @@ function ControlledPicker(props: { initialColor: RGBA; defaultActiveModel?: Colo
       </ColorPicker.Root>
     </>
   );
+}
+
+function UncontrolledPicker(props: { defaultColor: RGBA }) {
+  return (
+    <ColorPicker.Root colorSpace="srgb" defaultColor={props.defaultColor} defaultActiveModel="hsv">
+      <ColorPicker.Area />
+      <ColorPicker.Hue />
+      <ColorPicker.Alpha />
+      <ColorPicker.Input />
+    </ColorPicker.Root>
+  );
+}
+
+function getHsvFields() {
+  const [hue, saturation, value] = screen.getAllByRole('textbox');
+  return { hue, saturation, value };
+}
+
+function getHslFields() {
+  const [hue, saturation, lightness] = screen.getAllByRole('textbox');
+  return { hue, saturation, lightness };
+}
+
+function getHueThumb() {
+  return within(screen.getByRole('group', { name: 'hue' })).getByRole('slider');
+}
+
+function getAlphaThumb() {
+  return within(screen.getByRole('group', { name: 'alpha' })).getByRole('slider');
+}
+
+function toFloat32(color: RGBA): RGBA {
+  return { r: Math.fround(color.r), g: Math.fround(color.g), b: Math.fround(color.b), a: Math.fround(color.a) };
 }
