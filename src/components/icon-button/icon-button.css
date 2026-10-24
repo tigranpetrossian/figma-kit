@@ -39,14 +39,14 @@
 }
 
 .fp-IconButton:where(.fp-active-appearance-subtle) {
-  &:where([data-state='open'], [data-popup-open]) {
+  &:where([aria-expanded='true']) {
     background-color: var(--figma-color-bg-selected);
     --color-icon: var(--figma-color-icon-brand);
   }
 }
 
 .fp-IconButton:where(.fp-active-appearance-solid) {
-  &:where([data-state='open'], [data-popup-open]) {
+  &:where([aria-expanded='true']) {
     background-color: var(--figma-color-bg-selected-strong);
     --color-icon: var(--figma-color-icon-onbrand);
   }
