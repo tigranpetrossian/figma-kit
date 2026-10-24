@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { IconButton } from '@components/icon-button';
 import { PlusIcon, StylesIcon } from '@components/icons';
-import * as Popover from './popover';
+import { Tooltip } from '@components/tooltip';
+import * as Popover from '@components/popover';
 
 const meta = {
   title: 'Components/Popover',
@@ -14,9 +15,11 @@ const Story: Story = {
   render() {
     return (
       <Popover.Root>
-        <Popover.Trigger render={<IconButton aria-label="Styles and variables" />}>
-          <StylesIcon />
-        </Popover.Trigger>
+        <Tooltip content="Styles and variables">
+          <Popover.Trigger render={<IconButton aria-label="Styles and variables" />}>
+            <StylesIcon />
+          </Popover.Trigger>
+        </Tooltip>
         <Popover.Portal>
           <Popover.Positioner>
             <Popover.Popup style={{ width: 228 }}>

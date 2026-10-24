@@ -5,7 +5,7 @@
     background-color: var(--figma-color-bg-hover);
   }
 
-  &:where([data-popup-open]) {
+  &:where([aria-expanded='true']) {
     background-color: var(--figma-color-bg-hover);
   }
 
