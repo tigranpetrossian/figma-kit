@@ -51,17 +51,18 @@
     "prepare": "husky"
   },
   "peerDependencies": {
+    "@base-ui/react": "^1.5.0",
     "react": "^18 || ^19",
     "react-dom": "^18 || ^19"
   },
   "dependencies": {
-    "@base-ui/react": "^1.5.0",
     "@emmetio/math-expression": "^1.0.5",
     "class-variance-authority": "0.7.1",
     "react-textarea-autosize": "8.5.9",
     "remeda": "2.34.0"
   },
   "devDependencies": {
+    "@base-ui/react": "1.5.0",
     "@commitlint/cli": "19.3.0",
     "@commitlint/config-conventional": "19.2.2",
     "@eslint/js": "10.0.1",
