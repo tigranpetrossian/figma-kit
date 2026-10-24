@@ -95,43 +95,18 @@ const Root = (props: RootProps) => {
     onChange: onActiveModelChange,
   });
 
-  const [editingColorsByModel, setEditingColorsByModel] = useState<Partial<ColorsByModel>>({});
-  const colorsByModel = {
-    hsv: editingColorsByModel.hsv ?? rgbaToHsva(color),
-    hsl: editingColorsByModel.hsl ?? rgbaToHsla(color),
-    rgb: editingColorsByModel.rgb ?? color,
-    hex: editingColorsByModel.hex ?? rgbaToHex(color),
-  };
+  const [editingColorsByModel, setEditingColorsByModel] = useState<ColorsByModel | null>(null);
+  const colorsByModel =
+    editingColorsByModel && isSameRgba(editingColorsByModel.rgb, color)
+      ? editingColorsByModel
+      : getColorsByModel(color);
   // TODO: Rethink when adding OKLCH
   const hue = colorsByModel.hsv.h;
 
   const handleColorChange = (params: ColorChangeParams) => {
-    const { mode, value } = params;
-    if (mode === 'rgb') {
-      setEditingColorsByModel({
-        rgb: value,
-        hsv: rgbaToHsva(value),
-        hsl: rgbaToHsla(value),
-        hex: rgbaToHex(value),
-      });
-      setColor(value);
-    } else if (mode === 'hsv') {
-      setEditingColorsByModel({
-        hsv: value,
-        hsl: hsvaToHsla(value),
-        rgb: hsvaToRgba(value),
-        hex: hsvaToHex(value),
-      });
-      setColor(hsvaToRgba(value));
-    } else if (mode === 'hsl') {
-      setEditingColorsByModel({
-        hsv: hslaToHsva(value),
-        hsl: value,
-        rgb: hslaToRgba(value),
-        hex: hslaToHex(value),
-      });
-      setColor(hslaToRgba(value));
-    }
+    const next = getColorsByModelFromChange(params);
+    setEditingColorsByModel(next);
+    setColor(next.rgb);
   };
 
   return (
@@ -172,6 +147,40 @@ function validateModelProps(
       `Invalid 'defaultActiveModel': '${defaultActiveModel}' is not present in the 'models' array. Make sure 'activeModel' matches a model name in 'models'.`
     );
   }
+}
+
+function getColorsByModel(rgb: RGBA): ColorsByModel {
+  return {
+    rgb,
+    hsv: rgbaToHsva(rgb),
+    hsl: rgbaToHsla(rgb),
+    hex: rgbaToHex(rgb),
+  };
+}
+
+function getColorsByModelFromChange(params: ColorChangeParams): ColorsByModel {
+  switch (params.mode) {
+    case 'rgb':
+      return getColorsByModel(params.value);
+    case 'hsv':
+      return {
+        hsv: params.value,
+        hsl: hsvaToHsla(params.value),
+        rgb: hsvaToRgba(params.value),
+        hex: hsvaToHex(params.value),
+      };
+    case 'hsl':
+      return {
+        hsv: hslaToHsva(params.value),
+        hsl: params.value,
+        rgb: hslaToRgba(params.value),
+        hex: hslaToHex(params.value),
+      };
+  }
+}
+
+function isSameRgba(left: RGBA, right: RGBA) {
+  return left.r === right.r && left.g === right.g && left.b === right.b && left.a === right.a;
 }
 
 export type { RootProps, ColorModel, ColorSpace, ColorsByModel };
