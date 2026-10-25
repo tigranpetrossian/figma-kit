@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { describe, expect, it, vi } from 'vitest';
-import { render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import type { ColorModel } from '@components/color-picker';
 import * as ColorPicker from '@components/color-picker';
@@ -172,6 +172,24 @@ describe('uncontrolled ColorPicker', () => {
   });
 });
 
+describe('ColorPicker.Area', () => {
+  it('sets its width from the size prop', () => {
+    const { container } = render(<UncontrolledPicker defaultColor={RED} areaSize={200} />);
+
+    expect(getArea(container)).toHaveStyle({ width: '200px' });
+  });
+
+  it('maps the pointer position against the size prop', () => {
+    const { container } = render(<UncontrolledPicker defaultColor={RED} areaSize={200} />);
+    const { saturation, value } = getHsvFields();
+
+    fireEvent.pointerDown(getArea(container), { clientX: 100, clientY: 108 });
+
+    expect(saturation).toHaveValue('50');
+    expect(value).toHaveValue('50');
+  });
+});
+
 function ControlledPicker(props: {
   initialColor: RGBA;
   defaultActiveModel?: ColorModel;
@@ -208,10 +226,10 @@ function ControlledPicker(props: {
   );
 }
 
-function UncontrolledPicker(props: { defaultColor: RGBA }) {
+function UncontrolledPicker(props: { defaultColor: RGBA; areaSize?: number }) {
   return (
     <ColorPicker.Root colorSpace="srgb" defaultColor={props.defaultColor} defaultActiveModel="hsv">
-      <ColorPicker.Area />
+      <ColorPicker.Area size={props.areaSize} />
       <ColorPicker.Hue />
       <ColorPicker.Alpha />
       <ColorPicker.Input />
@@ -227,6 +245,14 @@ function getHsvFields() {
 function getHslFields() {
   const [hue, saturation, lightness] = screen.getAllByRole('textbox');
   return { hue, saturation, lightness };
+}
+
+function getArea(container: HTMLElement) {
+  const area = container.querySelector('.fp-ColorPickerArea');
+  if (!(area instanceof HTMLElement)) {
+    throw new Error('ColorPicker.Area is not rendered');
+  }
+  return area;
 }
 
 function getHueThumb() {

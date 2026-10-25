@@ -26,7 +26,8 @@ const Area = (props: AreaProps) => {
   };
   const position = getPosition(colorsByModel, activeModel);
   const areaRef = useRef<HTMLDivElement | null>(null);
-  const { size } = useAreaSize(areaRef);
+  const { size: measuredSize } = useAreaSize(areaRef);
+  const size = props.size ?? measuredSize;
 
   const handlePositionChange = (position: ThumbPosition) => {
     if (activeModel === 'hsl') {
@@ -90,6 +91,7 @@ const Area = (props: AreaProps) => {
         {
           '--base-color-srgb': baseColor.srgb,
           '--base-color-p3': baseColor.p3,
+          width: props.size,
         } as CSSProperties
       }
     >
