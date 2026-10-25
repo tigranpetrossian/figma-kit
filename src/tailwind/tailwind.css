@@ -193,73 +193,65 @@
 }
 
 @theme inline {
-  --radius-extra-small: var(--radius-extra-small);
-  --radius-small: var(--radius-small);
-  --radius-medium: var(--radius-medium);
-  --radius-large: var(--radius-large);
-  --radius-full: var(--radius-full);
-}
-
-@utility rounded {
-  border-radius: var(--radius-default);
+  --radius: var(--radius-default);
+  --radius-xs: var(--radius-extra-small);
+  --radius-sm: var(--radius-small);
+  --radius-md: var(--radius-medium);
+  --radius-lg: var(--radius-large);
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
 }
 
 @theme {
   --font-*: initial;
-  --font-weight-*: initial;
   --text-*: initial;
-  --tracking-*: initial;
-  --leading-*: initial;
 }
 
 @theme inline {
   --font-sans: var(--font-family-default);
-  --font-monospace: var(--font-family-monospace);
+  --font-mono: var(--font-family-monospace);
 
   --font-weight-normal: var(--font-weight-default);
-  --font-weight-strong: var(--font-weight-strong);
+  --font-weight-medium: var(--font-weight-strong);
 
-  --text-size-1: var(--font-size-1);
-  --text-size-2: var(--font-size-2);
-  --text-size-3: var(--font-size-3);
-  --text-size-4: var(--font-size-4);
-  --text-size-5: var(--font-size-5);
-  --text-size-6: var(--font-size-6);
-  --text-size-7: var(--font-size-7);
-  --text-size-8: var(--font-size-8);
-  --text-size-9: var(--font-size-9);
-  --text-size-10: var(--font-size-10);
-  --text-small: var(--font-size-1);
-  --text-medium: var(--font-size-3);
-  --text-large: var(--font-size-5);
+  --text-xs: var(--font-size-1);
+  --text-xs--line-height: var(--line-height-1);
+  --text-xs--letter-spacing: var(--letter-spacing-1);
+  --text-sm: var(--font-size-2);
+  --text-sm--line-height: var(--line-height-2);
+  --text-sm--letter-spacing: var(--letter-spacing-2);
+  --text-base: var(--font-size-3);
+  --text-base--line-height: var(--line-height-3);
+  --text-base--letter-spacing: var(--letter-spacing-3);
+  --text-lg: var(--font-size-4);
+  --text-lg--line-height: var(--line-height-4);
+  --text-lg--letter-spacing: var(--letter-spacing-4);
+  --text-xl: var(--font-size-5);
+  --text-xl--line-height: var(--line-height-5);
+  --text-xl--letter-spacing: var(--letter-spacing-5);
+  --text-2xl: var(--font-size-6);
+  --text-2xl--line-height: var(--line-height-6);
+  --text-2xl--letter-spacing: var(--letter-spacing-6);
+  --text-3xl: var(--font-size-7);
+  --text-3xl--line-height: var(--line-height-7);
+  --text-3xl--letter-spacing: var(--letter-spacing-7);
+  --text-4xl: var(--font-size-8);
+  --text-4xl--line-height: var(--line-height-8);
+  --text-4xl--letter-spacing: var(--letter-spacing-8);
+  --text-5xl: var(--font-size-9);
+  --text-5xl--line-height: var(--line-height-9);
+  --text-5xl--letter-spacing: var(--letter-spacing-9);
+  --text-6xl: var(--font-size-10);
+  --text-6xl--line-height: var(--line-height-10);
+  --text-6xl--letter-spacing: var(--letter-spacing-10);
+}
 
-  --tracking-1: var(--letter-spacing-1);
-  --tracking-2: var(--letter-spacing-2);
-  --tracking-3: var(--letter-spacing-3);
-  --tracking-4: var(--letter-spacing-4);
-  --tracking-5: var(--letter-spacing-5);
-  --tracking-6: var(--letter-spacing-6);
-  --tracking-7: var(--letter-spacing-7);
-  --tracking-8: var(--letter-spacing-8);
-  --tracking-9: var(--letter-spacing-9);
-  --tracking-10: var(--letter-spacing-10);
-  --tracking-small: var(--letter-spacing-1);
-  --tracking-medium: var(--letter-spacing-3);
-  --tracking-large: var(--letter-spacing-5);
-
-  --leading-1: var(--line-height-1);
-  --leading-2: var(--line-height-2);
-  --leading-3: var(--line-height-3);
-  --leading-4: var(--line-height-4);
-  --leading-5: var(--line-height-5);
-  --leading-6: var(--line-height-6);
-  --leading-7: var(--line-height-7);
-  --leading-8: var(--line-height-8);
-  --leading-9: var(--line-height-9);
-  --leading-10: var(--line-height-10);
-  --leading-small: var(--line-height-1);
-  --leading-medium: var(--line-height-3);
-  --leading-large: var(--line-height-5);
+@layer base {
+  b,
+  strong {
+    font-weight: var(--font-weight-strong);
+  }
 }
 
 @theme {
