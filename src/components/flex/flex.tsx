@@ -2,31 +2,6 @@ import React from 'react';
 import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
 
-const gapVariants = {
-  '0': 'fp-gap-0',
-  px: 'fp-gap-px',
-  '0.5': 'fp-gap-0_5',
-  '1': 'fp-gap-1',
-  '1.5': 'fp-gap-1_5',
-  '2': 'fp-gap-2',
-  '2.5': 'fp-gap-2_5',
-  '3': 'fp-gap-3',
-  '3.5': 'fp-gap-3_5',
-  '4': 'fp-gap-4',
-  '5': 'fp-gap-5',
-  '6': 'fp-gap-6',
-  '7': 'fp-gap-7',
-  '8': 'fp-gap-8',
-  '9': 'fp-gap-9',
-  '10': 'fp-gap-10',
-  '11': 'fp-gap-11',
-  '12': 'fp-gap-12',
-  '13': 'fp-gap-13',
-  '14': 'fp-gap-14',
-  '15': 'fp-gap-15',
-  '16': 'fp-gap-16',
-};
-
 const flex = cva('fp-Flex', {
   variants: {
     direction: {
@@ -53,9 +28,9 @@ const flex = cva('fp-Flex', {
       wrap: 'fp-wrap-wrap',
       wrapReverse: 'fp-wrap-wrap-reverse',
     },
-    gap: gapVariants,
-    columnGap: gapVariants,
-    rowGap: gapVariants,
+    gap: gapVariants('fp-gap'),
+    columnGap: gapVariants('fp-columnGap'),
+    rowGap: gapVariants('fp-rowGap'),
   },
   defaultVariants: {
     direction: 'row',
@@ -78,6 +53,33 @@ const Flex = React.forwardRef<FlexElement, FlexProps>((props, ref) => {
 });
 
 Flex.displayName = 'Flex';
+
+function gapVariants(prefix: 'fp-gap' | 'fp-rowGap' | 'fp-columnGap') {
+  return {
+    '0': `${prefix}-0`,
+    px: `${prefix}-px`,
+    '0.5': `${prefix}-0_5`,
+    '1': `${prefix}-1`,
+    '1.5': `${prefix}-1_5`,
+    '2': `${prefix}-2`,
+    '2.5': `${prefix}-2_5`,
+    '3': `${prefix}-3`,
+    '3.5': `${prefix}-3_5`,
+    '4': `${prefix}-4`,
+    '5': `${prefix}-5`,
+    '6': `${prefix}-6`,
+    '7': `${prefix}-7`,
+    '8': `${prefix}-8`,
+    '9': `${prefix}-9`,
+    '10': `${prefix}-10`,
+    '11': `${prefix}-11`,
+    '12': `${prefix}-12`,
+    '13': `${prefix}-13`,
+    '14': `${prefix}-14`,
+    '15': `${prefix}-15`,
+    '16': `${prefix}-16`,
+  };
+}
 
 export type { FlexProps };
 export { Flex };
