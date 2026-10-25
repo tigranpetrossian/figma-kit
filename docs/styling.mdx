@@ -17,7 +17,7 @@ Figma Kit ships a Tailwind v4 stylesheet that includes the component styles and 
 
 Do not also import `figma-kit/styles.css`. The Tailwind entry includes those styles in the `components` cascade layer so Tailwind utilities can override component defaults.
 
-This replaces the default Tailwind theme with Figma tokens, allowing you to use these tokens directly:
+This maps Tailwind's colors, radius, typography, and shadows to Figma tokens, so you can use them directly:
 
 ```tsx
 import { Text } from 'figma-kit';
@@ -69,3 +69,65 @@ In rare cases, you may need to reference a token for a different property. This 
 
 Note: This is an escape hatch intended for edge cases. Figma's color system is well-designed and
 rarely requires referencing unrelated tokens.
+
+### Icon colors
+
+`icon-*` classes set the color of Figma Kit icons inside the element, using Figma's icon tokens:
+
+```tsx
+<div className="icon-secondary" />
+```
+
+Translates to:
+
+```css
+.icon-secondary {
+  --color-icon: var(--figma-color-icon-secondary);
+}
+```
+
+### Shadows
+
+`shadow-100` through `shadow-500` map to Figma's elevation tokens, `--elevation-100` through `--elevation-500`.
+
+### Radius and typography
+
+Radius, font size, and font weight use Tailwind's class names with Figma's values.
+Tailwind names without a value here, such as `rounded-4xl` or `text-7xl`, produce no CSS.
+
+| Class          | Value                  |
+| -------------- | ---------------------- |
+| `rounded`      | `--radius-default`     |
+| `rounded-xs`   | `--radius-extra-small` |
+| `rounded-sm`   | `--radius-small`       |
+| `rounded-md`   | `--radius-medium`      |
+| `rounded-lg`   | `--radius-large`       |
+| `rounded-xl`   | 16px                   |
+| `rounded-2xl`  | 24px                   |
+| `rounded-3xl`  | 32px                   |
+| `rounded-full` | Fully rounded          |
+
+Figma has no radius above `--radius-large` (13px), so `rounded-xl` through `rounded-3xl` are fixed values for larger surfaces.
+
+Each text size also sets its line height and letter spacing:
+
+| Class       | Size | Line height |
+| ----------- | ---- | ----------- |
+| `text-xs`   | 9px  | 14px        |
+| `text-sm`   | 10px | 14px        |
+| `text-base` | 11px | 16px        |
+| `text-lg`   | 12px | 16px        |
+| `text-xl`   | 13px | 22px        |
+| `text-2xl`  | 14px | 24px        |
+| `text-3xl`  | 15px | 25px        |
+| `text-4xl`  | 16px | 25px        |
+| `text-5xl`  | 20px | 32px        |
+| `text-6xl`  | 24px | 32px        |
+
+`text-base` is Figma's default size. `Text` sizes `small`, `medium`, and `large` match `text-xs`, `text-base`, and `text-xl`.
+
+`font-normal` and `font-medium` are Figma's two weights, 450 and 550. Tailwind's other weights, such as `font-semibold` and `font-bold`, keep their usual values. `<b>` and `<strong>` render at the `font-medium` weight.
+
+`leading-*` and `tracking-*` keep Tailwind's values and override what `text-*` sets. Numeric `leading-*` follows Tailwind's spacing scale, so `leading-4` is 16px.
+
+Font families are `font-sans` and `font-mono`.
