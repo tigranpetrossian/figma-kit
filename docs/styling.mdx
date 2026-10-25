@@ -24,7 +24,7 @@ import { Text } from 'figma-kit';
 
 const App = () => {
   return (
-    <div className="border border-secondary">
+    <div className="border border-default">
       <Text className="text-secondary">Welcome to Figma</Text>
     </div>
   );
@@ -36,23 +36,22 @@ which differs slightly from typical Tailwind themes. Here, properties are
 strictly mapped to their respective tokens:
 
 ```tsx
-<div className="text"/>
+<div className="text-default"/>
 <div className="text-secondary"/>
-<div className="bg"/>
+<div className="bg-default"/>
 <div className="bg-secondary"/>
-
 ```
 
 Translates to:
 
 ```css
-.text {
+.text-default {
   color: var(--figma-color-text);
 }
 .text-secondary {
   color: var(--figma-color-text-secondary);
 }
-.bg {
+.bg-default {
   background-color: var(--figma-color-bg);
 }
 .bg-secondary {
@@ -62,8 +61,7 @@ Translates to:
 
 ### Breaking out of strict property mapping
 
-In rare cases it might be necessary to reference a token for a different property. In rare cases,
-you may need to reference a token for a different property. This can be done using Tailwind's arbitrary value syntax:
+In rare cases, you may need to reference a token for a different property. This can be done using Tailwind's arbitrary value syntax:
 
 ```tsx
 <div className="border-[var(--figma-color-bg-brand)]" />
