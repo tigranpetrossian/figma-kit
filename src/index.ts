@@ -14,7 +14,6 @@ import * as ColorPicker from './components/color-picker';
 import * as Collapsible from './components/collapsible';
 
 export { Text, Label, Paragraph, Link } from './components/text';
-export { Flex } from './components/flex';
 export { Button } from './components/button';
 export { IconButton } from './components/icon-button';
 export { Input } from './components/input';
