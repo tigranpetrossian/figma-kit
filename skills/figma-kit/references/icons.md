@@ -15,17 +15,17 @@ import { EyeIcon } from 'figma-kit';
 ## Available icons
 
 - **Alignment:** `AlignLeftIcon`, `AlignHorizontalCenterIcon`, `AlignRightIcon`, `AlignTopIcon`, `AlignVerticalCenterIcon`, `AlignBottomIcon`
-- **Text:** `TextIcon`, `TextAlignLeftIcon`, `TextAlignCenterIcon`, `TextAlignRightIcon`, `TextVerticalAlignTopIcon`, `TextVerticalAlignMiddleIcon`, `TextVerticalAlignBottomIcon`, `LineHeightIcon`, `LetterSpacingIcon`
+- **Text:** `TextIcon`, `TextAlignLeftIcon`, `TextAlignCenterIcon`, `TextAlignRightIcon`, `TextAlignJustifiedIcon`, `TextVerticalAlignTopIcon`, `TextVerticalAlignMiddleIcon`, `TextVerticalAlignBottomIcon`, `LineHeightIcon`, `LetterSpacingIcon`, `TextUnderlineIcon`, `TextStrikethroughIcon`, `TextCaseUpperIcon`, `TextCaseLowerIcon`, `TextCaseTitleIcon`, `TextCaseSmallCapsIcon`, `VerticalTrimStandardIcon`, `VerticalTrimCapHeightIcon`, `ListBulletedIcon`, `ListNumberedIcon`, `TextTruncateIcon`
 - **Layout and sizing:** `AutoWidthIcon`, `AutoHeightIcon`, `FixedSizeIcon`, `AspectRatioIcon`, `ConstraintLeftIcon`, `ConstraintTopIcon`, `CornerRadiusIcon`, `RotationIcon`, `RotateClockwiseIcon`, `FlipHorizontalIcon`, `FlipVerticalIcon`, `MoveIcon`, `RulerIcon`, `ExpandIcon`
 - **Fill and effects:** `FillSolidIcon`, `FillGradientIcon`, `FillPatternIcon`, `OpacityIcon`, `BlendModeIcon`, `EyedropperIcon`, `PaletteIcon`, `StylesIcon`, `ShadowUpIcon`, `ShadowDownIcon`, `ShadowLeftIcon`, `ShadowRightIcon`, `ShadowTopLeftIcon`, `ShadowTopRightIcon`, `ShadowBottomLeftIcon`, `ShadowBottomRightIcon`
 - **Layers and nodes:** `FrameIcon`, `RectangleIcon`, `CircleIcon`, `ComponentIcon`, `ImageIcon`, `VideoIcon`, `BooleanIcon`, `PenIcon`, `DrawIcon`, `LayersCollapseIcon`, `SelectMatchingIcon`
 - **Variables:** `VariableIcon`, `VariableModeIcon`, `NumberIcon`, `StringIcon`
-- **Actions and controls:** `PlusIcon`, `MinusIcon`, `CloseIcon`, `ClearIcon`, `CheckmarkIcon`, `CheckmarkIndeterminateIcon`, `EllipsisIcon`, `ActionsIcon`, `EyeIcon`, `SearchIcon`, `LinkIcon`, `PlayIcon`, `SlidersIcon`, `HelpIcon`, `CommentIcon`, `AnnotationIcon`, `CodeIcon`, `DesignIcon`, `PanelLeftCloseIcon`, `FigmaIcon`
+- **Actions and controls:** `PlusIcon`, `MinusIcon`, `CloseIcon`, `ClearIcon`, `CheckmarkIcon`, `CheckmarkIndeterminateIcon`, `EllipsisIcon`, `ActionsIcon`, `EyeIcon`, `EyeClosedIcon`, `SearchIcon`, `LinkIcon`, `PlayIcon`, `SlidersIcon`, `HelpIcon`, `CommentIcon`, `AnnotationIcon`, `CodeIcon`, `DesignIcon`, `PanelLeftCloseIcon`, `FigmaIcon`
 - **Chevrons:** `ChevronDownIcon`, `ChevronUpIcon`, `ChevronLeftIcon`, `ChevronRightIcon`
 
 ## Custom icons
 
-The list above is complete. There is no closed-eye or arrow icon. Draw a missing one in your own code with `createIcon`, and paint it with `var(--color-icon)` so it follows the same color utilities.
+The list above is complete. There is no arrow icon. Draw a missing one in your own code with `createIcon`, and paint it with `var(--color-icon)` so it follows the same color utilities.
 
 ```tsx
 import { createIcon } from 'figma-kit';
