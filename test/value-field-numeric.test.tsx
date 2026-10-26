@@ -89,6 +89,16 @@ describe('interactions', () => {
     expect(onChange).not.toBeCalled();
   });
 
+  it.each(['1/0', '0/0'])('reverts input that evaluates to a non-finite number: %s', async (input) => {
+    const onChange = vi.fn();
+    const { getByLabelText } = renderInput({ initialValue: 10, min: 0, max: 100, onChange });
+    const field = getByLabelText(LABEL);
+    await user.type(field, input);
+    await user.keyboard('{Enter}');
+    expect(field).toHaveValue('10');
+    expect(onChange).not.toBeCalled();
+  });
+
   it('rounds input to specified precision', async () => {
     const { getByLabelText } = renderInput({ initialValue: 10, precision: 2 });
     const field = getByLabelText(LABEL);

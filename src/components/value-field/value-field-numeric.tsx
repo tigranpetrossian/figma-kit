@@ -63,21 +63,20 @@ function createFormatter(options: FormatterOptions = {}): Formatter<number> {
   return {
     parse: (input: string, currentValue: number) => {
       try {
+        const displayValue = evaluateExpression({
+          expression: input,
+          displayValue: toDisplayValue(currentValue),
+          suffix,
+          allowedUnits,
+        });
+
+        if (!Number.isFinite(displayValue)) {
+          return { valid: false };
+        }
+
         return {
           valid: true,
-          value: pipe(
-            input,
-            (input) =>
-              evaluateExpression({
-                expression: input,
-                displayValue: toDisplayValue(currentValue),
-                suffix,
-                allowedUnits,
-              }),
-            round(precision),
-            fromDisplayValue,
-            clamp({ min, max })
-          ),
+          value: pipe(displayValue, round(precision), fromDisplayValue, clamp({ min, max })),
         };
       } catch {
         return { valid: false };
