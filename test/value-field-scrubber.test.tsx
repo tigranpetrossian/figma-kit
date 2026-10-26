@@ -111,18 +111,10 @@ describe('ValueField.Scrubber', () => {
     expect(nextField).toHaveValue('10');
   });
 
-  it('keeps min, max, precision, suffix, and target range behavior', async () => {
+  it('keeps min, max, precision, suffix, and scale behavior', async () => {
     const onChange = vi.fn();
     const { getByLabelText, getByTestId } = render(
-      <TestField
-        initialValue={0.95}
-        onChange={onChange}
-        min={0}
-        max={1}
-        targetRange={[0, 100]}
-        precision={0}
-        suffix="%"
-      />
+      <TestField initialValue={0.95} onChange={onChange} min={0} max={1} scale={100} precision={0} suffix="%" />
     );
     const field = getByLabelText(FIELD_LABEL);
 
@@ -308,15 +300,7 @@ function TestMultiField() {
     <ValueField.Multi>
       <ValueField.Root>
         <ValueField.Scrubber data-testid="scrubber-r" />
-        <ValueField.Numeric
-          aria-label="r"
-          value={red}
-          onChange={setRed}
-          min={0}
-          max={1}
-          targetRange={[0, 255]}
-          precision={0}
-        />
+        <ValueField.Numeric aria-label="r" value={red} onChange={setRed} min={0} max={1} scale={255} precision={0} />
       </ValueField.Root>
       <ValueField.Root>
         <ValueField.Scrubber data-testid="scrubber-g" />
@@ -326,21 +310,13 @@ function TestMultiField() {
           onChange={setGreen}
           min={0}
           max={1}
-          targetRange={[0, 255]}
+          scale={255}
           precision={0}
         />
       </ValueField.Root>
       <ValueField.Root>
         <ValueField.Scrubber data-testid="scrubber-b" />
-        <ValueField.Numeric
-          aria-label="b"
-          value={blue}
-          onChange={setBlue}
-          min={0}
-          max={1}
-          targetRange={[0, 255]}
-          precision={0}
-        />
+        <ValueField.Numeric aria-label="b" value={blue} onChange={setBlue} min={0} max={1} scale={255} precision={0} />
       </ValueField.Root>
       <ValueField.Root>
         <ValueField.Scrubber data-testid="scrubber-a" />
@@ -350,7 +326,7 @@ function TestMultiField() {
           onChange={setAlpha}
           min={0}
           max={1}
-          targetRange={[0, 100]}
+          scale={100}
           precision={0}
           suffix="%"
         />

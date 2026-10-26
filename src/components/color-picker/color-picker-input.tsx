@@ -30,7 +30,7 @@ const HexInput = () => {
           value={rgba.a}
           min={0}
           max={1}
-          targetRange={[0, 100]}
+          scale={100}
           precision={2}
           allowedUnits={['%']}
         />
@@ -51,34 +51,13 @@ const RgbaInput = () => {
   return (
     <ValueField.Multi>
       <ValueField.Root>
-        <ValueField.Numeric
-          onChange={onChange('r')}
-          value={rgba.r}
-          min={0}
-          max={1}
-          targetRange={[0, 255]}
-          precision={0}
-        />
+        <ValueField.Numeric onChange={onChange('r')} value={rgba.r} min={0} max={1} scale={255} precision={0} />
       </ValueField.Root>
       <ValueField.Root>
-        <ValueField.Numeric
-          onChange={onChange('g')}
-          value={rgba.g}
-          min={0}
-          max={1}
-          targetRange={[0, 255]}
-          precision={0}
-        />
+        <ValueField.Numeric onChange={onChange('g')} value={rgba.g} min={0} max={1} scale={255} precision={0} />
       </ValueField.Root>
       <ValueField.Root>
-        <ValueField.Numeric
-          onChange={onChange('b')}
-          value={rgba.b}
-          min={0}
-          max={1}
-          targetRange={[0, 255]}
-          precision={0}
-        />
+        <ValueField.Numeric onChange={onChange('b')} value={rgba.b} min={0} max={1} scale={255} precision={0} />
       </ValueField.Root>
       <ValueField.Root style={{ flex: '0 0 52px' }}>
         <ValueField.Numeric
@@ -86,7 +65,7 @@ const RgbaInput = () => {
           value={rgba.a}
           min={0}
           max={1}
-          targetRange={[0, 100]}
+          scale={100}
           precision={2}
           allowedUnits={['%']}
         />
@@ -121,7 +100,7 @@ const HsvaInput = () => {
           value={hsva.a}
           min={0}
           max={1}
-          targetRange={[0, 100]}
+          scale={100}
           precision={2}
           allowedUnits={['%']}
         />
@@ -156,7 +135,7 @@ const HslaInput = () => {
           value={hsla.a}
           min={0}
           max={1}
-          targetRange={[0, 100]}
+          scale={100}
           precision={2}
           allowedUnits={['%']}
         />

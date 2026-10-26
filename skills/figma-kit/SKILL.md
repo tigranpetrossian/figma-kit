@@ -77,7 +77,7 @@ Before writing a component, read its reference. It shows how the parts nest and 
     </ValueField.Root>
     <ValueField.Root className="w-16 flex-none">
       <ValueField.Scrubber />
-      <ValueField.Numeric value={color.a} onChange={setAlpha} min={0} max={1} targetRange={[0, 100]} precision={0} allowedUnits={['%']} />
+      <ValueField.Numeric value={color.a} onChange={setAlpha} min={0} max={1} scale={100} precision={0} allowedUnits={['%']} />
       <ValueField.Label>%</ValueField.Label>
     </ValueField.Root>
   </ValueField.Multi>

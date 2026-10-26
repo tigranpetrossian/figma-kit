@@ -37,7 +37,7 @@ describe('input parsing', () => {
             onChange={setAlpha}
             min={0}
             max={1}
-            targetRange={[0, 100]}
+            scale={100}
             suffix="%"
             precision={2}
           />
