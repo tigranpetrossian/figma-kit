@@ -14,6 +14,8 @@ const GREEN = { r: 0, g: 1, b: 0, a: 1 };
 const DARK_GREEN = { r: 0, g: 0.6, b: 0, a: 1 };
 const BLUE = { r: 0, g: 0, b: 1, a: 1 };
 const OFF_GRID = { r: 0.123, g: 0.456, b: 0.789, a: 0.5 };
+const NEARLY_RED = { r: 1, g: 0, b: 1 / 255, a: 1 };
+const NEARLY_RED_HUE = 360 - 60 / 255;
 
 const user = userEvent.setup();
 
@@ -182,6 +184,54 @@ describe('uncontrolled ColorPicker', () => {
     expect(hue).not.toHaveValue('0');
     expect(saturation).toHaveValue('0');
     expect(value).toHaveValue('50');
+  });
+});
+
+describe('ColorPicker.Hue', () => {
+  it('holds a hue between 359 and 360', () => {
+    render(<UncontrolledPicker defaultColor={NEARLY_RED} />);
+
+    expect(Number(getHueThumb().getAttribute('aria-valuenow'))).toBeCloseTo(NEARLY_RED_HUE);
+  });
+
+  it('moves a hue between 359 and 360 up to red', async () => {
+    const handleColorChange = vi.fn();
+    render(<ControlledPicker initialColor={NEARLY_RED} onColorChange={handleColorChange} />);
+
+    getHueThumb().focus();
+    await user.keyboard('{ArrowRight}');
+
+    expect(handleColorChange).toHaveBeenLastCalledWith(RED);
+  });
+});
+
+describe.each([
+  ['Hue', ColorPicker.Hue],
+  ['Alpha', ColorPicker.Alpha],
+])('ColorPicker.%s', (_, Part) => {
+  it('forwards props to the slider', () => {
+    const handlePointerDown = vi.fn();
+    render(
+      <ColorPicker.Root colorSpace="srgb">
+        <Part id="part" aria-label="Part" onPointerDown={handlePointerDown} />
+      </ColorPicker.Root>
+    );
+    const slider = screen.getByRole('slider', { name: 'Part' });
+
+    fireEvent.pointerDown(slider);
+
+    expect(document.getElementById('part')).toContainElement(slider);
+    expect(handlePointerDown).toHaveBeenCalled();
+  });
+
+  it('renders no undefined class without a className', () => {
+    render(
+      <ColorPicker.Root colorSpace="srgb">
+        <Part />
+      </ColorPicker.Root>
+    );
+
+    expect(screen.getByRole('group')).not.toHaveClass('undefined');
   });
 });
 
