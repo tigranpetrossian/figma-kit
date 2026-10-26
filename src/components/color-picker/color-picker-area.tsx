@@ -3,6 +3,7 @@ import React, { useRef } from 'react';
 import { clamp, pipe } from 'remeda';
 import type { ColorModel, ColorsByModel } from '@components/color-picker/color-picker';
 import { useColorPickerContext } from '@components/color-picker/color-picker';
+import type { HSLA, HSVA } from '@lib/color';
 import { hsvaToRgba, rgbaToCssString, rgbaToP3String } from '@lib/color';
 import { normalize } from '@lib/number/normalize';
 
@@ -10,11 +11,16 @@ const CURSOR_VERTICAL_OFFSET = 8;
 
 type ThumbPosition = { x: number; y: number };
 
+type AreaColor = { model: 'hsv'; value: HSVA } | { model: 'hsl'; value: HSLA };
+
 type AreaProps = {
   size?: number;
+  'aria-label'?: string;
+  getAriaValueText?: (color: AreaColor) => string;
 };
 
 const Area = (props: AreaProps) => {
+  const { 'aria-label': ariaLabel = 'Color', getAriaValueText = getDefaultAriaValueText } = props;
   const { onColorChange, colorsByModel, hue, colorSpace, activeModel } = useColorPickerContext('ColorPicker.Area');
   const baseColor = {
     srgb: rgbaToCssString(hsvaToRgba({ h: hue, s: 100, v: 100, a: 1 })),
@@ -24,7 +30,8 @@ const Area = (props: AreaProps) => {
     srgb: rgbaToCssString(colorsByModel.rgb),
     p3: rgbaToP3String(colorsByModel.rgb),
   };
-  const position = getPosition(colorsByModel, activeModel);
+  const areaColor = getAreaColor(colorsByModel, activeModel);
+  const position = getPosition(areaColor);
   const areaRef = useRef<HTMLDivElement | null>(null);
   const { size: measuredSize } = useAreaSize(areaRef);
   const size = props.size ?? measuredSize;
@@ -74,6 +81,7 @@ const Area = (props: AreaProps) => {
     }[event.key];
 
     if (direction) {
+      event.preventDefault();
       handlePositionChange({
         x: clamp(position.x + direction.x * incrementMultiplier, { min: 0, max: 100 }),
         y: clamp(position.y + direction.y * incrementMultiplier, { min: 0, max: 100 }),
@@ -97,7 +105,10 @@ const Area = (props: AreaProps) => {
     >
       <div className={`fp-ColorPickerAreaCanvas fp-color-space-${colorSpace} fp-color-model-${activeModel}`} />
       <div
+        role="slider"
         tabIndex={0}
+        aria-label={ariaLabel}
+        aria-valuetext={getAriaValueText(areaColor)}
         onKeyDown={handleKeyDown}
         className={`fp-ColorPickerThumb fp-color-space-${colorSpace}`}
         style={
@@ -113,22 +124,30 @@ const Area = (props: AreaProps) => {
   );
 };
 
-function getPosition(colorsByModel: ColorsByModel, colorModel: ColorModel): ThumbPosition {
-  if (colorModel === 'hsl') {
-    const color = colorsByModel.hsl;
+function getAreaColor(colorsByModel: ColorsByModel, colorModel: ColorModel): AreaColor {
+  return colorModel === 'hsl' ? { model: 'hsl', value: colorsByModel.hsl } : { model: 'hsv', value: colorsByModel.hsv };
+}
 
+function getPosition(color: AreaColor): ThumbPosition {
+  if (color.model === 'hsl') {
     return {
-      x: color.s,
-      y: 100 - color.l,
+      x: color.value.s,
+      y: 100 - color.value.l,
     };
   } else {
-    const color = colorsByModel.hsv;
-
     return {
-      x: color.s,
-      y: 100 - color.v,
+      x: color.value.s,
+      y: 100 - color.value.v,
     };
   }
+}
+
+function getDefaultAriaValueText(color: AreaColor) {
+  const saturation = `Saturation ${Math.round(color.value.s)}%`;
+
+  return color.model === 'hsl'
+    ? `${saturation}, Lightness ${Math.round(color.value.l)}%`
+    : `${saturation}, Brightness ${Math.round(color.value.v)}%`;
 }
 
 function useAreaSize(target: React.RefObject<HTMLDivElement>) {
@@ -156,4 +175,5 @@ function useAreaSize(target: React.RefObject<HTMLDivElement>) {
   return { size };
 }
 
+export type { AreaProps, AreaColor };
 export { Area };

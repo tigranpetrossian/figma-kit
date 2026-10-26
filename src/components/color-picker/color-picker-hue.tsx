@@ -23,7 +23,7 @@ const Hue = (props: HueProps) => {
 
   return (
     <Slider
-      aria-label="hue"
+      aria-label="Hue"
       {...sliderProps}
       range={false}
       min={0}
