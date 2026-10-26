@@ -1,7 +1,6 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Tabs as BaseTabs } from '@base-ui/react/tabs';
 import { addClassName } from '@lib/react/add-class-name';
-import { composeRefs } from '@lib/react/use-compose-refs';
 
 type RootElement = React.ElementRef<typeof BaseTabs.Root>;
 type RootProps = BaseTabs.Root.Props;
@@ -22,21 +21,18 @@ const List = React.forwardRef<ListElement, ListProps>((props, ref) => {
 type TabElement = React.ElementRef<typeof BaseTabs.Tab>;
 type TabProps = BaseTabs.Tab.Props;
 
-const Tab = React.forwardRef<TabElement, TabProps>((props, forwardedRef) => {
-  const { className, ...tabProps } = props;
-  const tabRef = useFixedTabWidth();
-  const ref = composeRefs(forwardedRef, tabRef);
+const Tab = React.forwardRef<TabElement, TabProps>((props, ref) => {
+  const { className, children, ...tabProps } = props;
 
-  return <BaseTabs.Tab ref={ref} className={addClassName(className, 'fp-TabsTrigger')} {...tabProps} />;
+  return (
+    <BaseTabs.Tab ref={ref} className={addClassName(className, 'fp-TabsTrigger')} {...tabProps}>
+      <span className="fp-TabsTriggerLabel">{children}</span>
+      <span className="fp-TabsTriggerLabel fp-TabsTriggerLabelHidden" aria-hidden>
+        {children}
+      </span>
+    </BaseTabs.Tab>
+  );
 });
-
-function useFixedTabWidth() {
-  return useCallback((node: TabElement) => {
-    if (node !== null) {
-      node.style.width = node.getBoundingClientRect().width + 'px';
-    }
-  }, []);
-}
 
 type PanelElement = React.ElementRef<typeof BaseTabs.Panel>;
 type PanelProps = BaseTabs.Panel.Props;
