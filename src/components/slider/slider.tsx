@@ -1,19 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { DirectionProvider } from '@base-ui/react/direction-provider';
 import { Slider as BaseSlider } from '@base-ui/react/slider';
 import type { VariantProps } from 'class-variance-authority';
 import { cva, cx } from 'class-variance-authority';
-import { isDeepEqual } from 'remeda';
 import { useValueFieldContext } from '@components/value-field/value-field-elements';
 import { addClassName } from '@lib/react/add-class-name';
-import { useComposedRefs } from '@lib/react/use-compose-refs';
+import { useControllableState } from '@lib/react/use-controllable-state';
 import { normalize } from '@lib/number/normalize';
 
 const SNAP_PERCENTAGE_THRESHOLD = 2;
+const SNAPPING_REASONS: ReadonlySet<BaseSlider.Root.ChangeEventReason> = new Set(['drag', 'track-press']);
 const DEFAULT_MIN = 0;
 const DEFAULT_MAX = 100;
 const DEFAULT_ORIENTATION = 'horizontal';
 const DEFAULT_DIRECTION = 'ltr';
+const ORIENTATION_EDGES = {
+  horizontal: { startEdge: 'insetInlineStart', endEdge: 'insetInlineEnd' },
+  vertical: { startEdge: 'bottom', endEdge: 'top' },
+} as const;
 
 const slider = cva('fp-SliderRoot', {
   variants: {
@@ -35,6 +39,15 @@ type SliderOwnProps = {
   baseValue?: number;
   hints?: number[];
 };
+type SliderOrientationProps =
+  | {
+      orientation?: 'horizontal' | undefined;
+      inverted?: boolean | undefined;
+    }
+  | {
+      orientation: 'vertical';
+      inverted?: false | undefined;
+    };
 type SliderProps = Omit<
   BaseSlider.Root.Props<number | readonly number[]>,
   | 'children'
@@ -43,14 +56,16 @@ type SliderProps = Omit<
   | 'minStepsBetweenValues'
   | 'onValueChange'
   | 'onValueCommitted'
+  | 'orientation'
   | 'thumbAlignment'
   | 'value'
 > &
   SliderOwnProps &
+  SliderOrientationProps &
   VariantProps<typeof slider> & {
     defaultValue?: number[] | undefined;
     dir?: 'ltr' | 'rtl' | undefined;
-    inverted?: boolean | undefined;
+    getAriaLabel?: ((index: number) => string) | undefined;
     minStepsBetweenThumbs?: number | undefined;
     onValueChange?: ((value: number[]) => void) | undefined;
     onValueCommit?: ((value: number[]) => void) | undefined;
@@ -64,7 +79,7 @@ const Slider = React.forwardRef<SliderElement, SliderProps>((props, forwardedRef
     min = DEFAULT_MIN,
     max = DEFAULT_MAX,
     defaultValue = [min],
-    value,
+    value: valueProp,
     onValueChange,
     onValueCommit,
     tabIndex,
@@ -78,71 +93,33 @@ const Slider = React.forwardRef<SliderElement, SliderProps>((props, forwardedRef
     rangeAnchor,
     baseValue,
     hints,
+    'aria-label': ariaLabel,
+    getAriaLabel,
     ...rootProps
   } = props;
   const valueFieldContext = useValueFieldContext('Slider');
   const disabled = disabledProp || valueFieldContext?.disabled;
-  const controlRef = useRef<SliderElement>(null);
-  const ref = useComposedRefs(controlRef, forwardedRef);
   const focusVisible = true;
-  const [trackedValue, setTrackedValue] = useState(value ?? defaultValue);
-  const rootValue = getRootValue(trackedValue, inverted, min, max);
-  const rootDefaultValue = getRootValue(defaultValue, inverted, min, max);
-  const prevValueRef = useRef(value);
-  const prevDefaultValueRef = useRef(defaultValue);
+  const [value = defaultValue, setValue] = useControllableState({
+    prop: valueProp,
+    defaultProp: defaultValue,
+    onChange: onValueChange,
+  });
+  const direction = getTrackDirection(orientation, dir, inverted);
 
-  useEffect(() => {
-    if (isDeepEqual(value, prevValueRef.current) && isDeepEqual(defaultValue, prevDefaultValueRef.current)) {
-      return;
-    }
-
-    setTrackedValue(value ?? defaultValue);
-
-    prevValueRef.current = value;
-    prevDefaultValueRef.current = defaultValue;
-  }, [value, defaultValue]);
-
-  const handleValueChange = (value: number | readonly number[], details: BaseSlider.Root.ChangeEventDetails) => {
-    const nextValue = getPointerAdjustedValue(
-      getPublicValue(value, inverted, min, max),
-      details,
-      controlRef.current,
-      orientation,
-      dir,
-      inverted,
-      min,
-      max,
-      step
-    );
-    const snappedValue = nextValue.map((value) => getSnappedValue(value, hints, min, max));
-
-    onValueChange?.(snappedValue);
-    setTrackedValue(snappedValue);
+  const handleValueChange = (nextValue: number | readonly number[], details: BaseSlider.Root.ChangeEventDetails) => {
+    setValue(getSnappedValues(toValueArray(nextValue), details.reason, hints, min, max));
   };
 
-  const handleValueCommit = (value: number | readonly number[], details: BaseSlider.Root.CommitEventDetails) => {
-    const nextValue = getPointerAdjustedValue(
-      getPublicValue(value, inverted, min, max),
-      details,
-      controlRef.current,
-      orientation,
-      dir,
-      inverted,
-      min,
-      max,
-      step
-    );
-    const snappedValue = nextValue.map((value) => getSnappedValue(value, hints, min, max));
-
-    onValueCommit?.(snappedValue);
+  const handleValueCommit = (nextValue: number | readonly number[], details: BaseSlider.Root.CommitEventDetails) => {
+    onValueCommit?.(getSnappedValues(toValueArray(nextValue), details.reason, hints, min, max));
   };
 
   return (
-    <DirectionProvider direction={dir}>
+    <DirectionProvider direction={direction}>
       <BaseSlider.Root
         className={addClassName(className, slider({ size }))}
-        defaultValue={rootDefaultValue}
-        dir={dir === DEFAULT_DIRECTION ? undefined : dir}
+        dir={direction}
         disabled={disabled}
         max={max}
         min={min}
@@ -152,15 +129,17 @@ const Slider = React.forwardRef<SliderElement, SliderProps>((props, forwardedRef
         orientation={orientation}
         step={step}
         thumbAlignment="center"
-        value={rootValue}
+        value={toRootValue(value)}
         {...rootProps}
       >
-        <BaseSlider.Control ref={ref} className="fp-SliderControl" tabIndex={tabIndex ?? -1}>
+        <BaseSlider.Control ref={forwardedRef} className="fp-SliderControl" tabIndex={tabIndex ?? -1}>
           <BaseSlider.Track className="fp-SliderTrack" style={{ position: 'static' }}>
-            {trackedValue.map((v, i) => (
+            {value.map((v, i) => (
               <BaseSlider.Thumb
                 key={i}
                 index={i}
+                aria-label={ariaLabel}
+                getAriaLabel={getAriaLabel}
                 className={cx('fp-SliderThumb', {
                   'fp-SliderThumb-focusVisible': focusVisible,
                   'fp-SliderThumb-baseValue': v === baseValue,
@@ -171,12 +150,10 @@ const Slider = React.forwardRef<SliderElement, SliderProps>((props, forwardedRef
 
           {range && (
             <Range
-              dir={dir}
-              value={trackedValue}
+              value={value}
               min={min}
               max={max}
               orientation={orientation}
-              inverted={inverted}
               rangeAnchor={rangeAnchor}
               disabled={disabled}
             />
@@ -184,16 +161,7 @@ const Slider = React.forwardRef<SliderElement, SliderProps>((props, forwardedRef
 
           {hints &&
             hints.map((hint) => (
-              <Hint
-                key={hint}
-                hint={hint}
-                baseValue={baseValue}
-                min={min}
-                max={max}
-                orientation={orientation}
-                dir={dir}
-                inverted={inverted}
-              />
+              <Hint key={hint} hint={hint} baseValue={baseValue} min={min} max={max} orientation={orientation} />
             ))}
         </BaseSlider.Control>
       </BaseSlider.Root>
@@ -209,13 +177,11 @@ type HintProps = {
   min: number;
   max: number;
   orientation: 'horizontal' | 'vertical';
-  dir: 'ltr' | 'rtl';
-  inverted?: boolean;
 };
 
 const Hint = (props: HintProps) => {
-  const { baseValue, dir, inverted, max, min, orientation, hint } = props;
-  const { startEdge } = getOrientationEdges(orientation, dir, inverted);
+  const { baseValue, max, min, orientation, hint } = props;
+  const { startEdge } = ORIENTATION_EDGES[orientation];
   const offset = normalize([min, max], [0, 100])(hint);
 
   return (
@@ -232,19 +198,17 @@ type RangeProps = {
   max: number;
   value: number[];
   orientation: 'horizontal' | 'vertical';
-  dir: 'ltr' | 'rtl';
-  inverted?: boolean;
   rangeAnchor?: number;
   disabled?: boolean;
 };
 
 const Range = (props: RangeProps) => {
-  const { min, max, value, rangeAnchor = min, orientation, dir, inverted, disabled } = props;
+  const { min, max, value, rangeAnchor = min, orientation, disabled } = props;
   const rangeStart = value.length > 1 ? Math.min(...value) : Math.min(rangeAnchor, ...value);
   const rangeEnd = value.length > 1 ? Math.max(...value) : Math.max(rangeAnchor, ...value);
   const offsetStart = normalize([min, max], [0, 100])(rangeStart);
   const offsetEnd = 100 - normalize([min, max], [0, 100])(rangeEnd);
-  const edges = getOrientationEdges(orientation, dir, inverted);
+  const { startEdge, endEdge } = ORIENTATION_EDGES[orientation];
 
   return (
     <span
@@ -252,155 +216,43 @@ const Range = (props: RangeProps) => {
       data-orientation={orientation}
       data-disabled={disabled ? '' : undefined}
       style={{
-        [edges.startEdge]: `${offsetStart}%`,
-        [edges.endEdge]: `${offsetEnd}%`,
+        [startEdge]: `${offsetStart}%`,
+        [endEdge]: `${offsetEnd}%`,
       }}
     />
   );
 };
 
-function getOrientationEdges(
-  orientation: 'horizontal' | 'vertical',
-  dir: 'ltr' | 'rtl',
-  inverted: boolean | undefined
-) {
-  const inversion = inverted ? 'inverted' : 'normal';
-  const edges = {
-    vertical: {
-      normal: {
-        startEdge: 'bottom',
-        endEdge: 'top',
-      },
-      inverted: {
-        startEdge: 'top',
-        endEdge: 'bottom',
-      },
-    },
-    horizontal: {
-      normal: {
-        startEdge: dir === 'ltr' ? 'left' : 'right',
-        endEdge: dir === 'ltr' ? 'right' : 'left',
-      },
-      inverted: {
-        startEdge: dir === 'ltr' ? 'right' : 'left',
-        endEdge: dir === 'ltr' ? 'left' : 'right',
-      },
-    },
-  };
-
-  return edges[orientation][inversion];
-}
-
-function getRootValue(value: readonly number[], inverted: boolean | undefined, min: number, max: number) {
-  const mappedValue = getMappedValue(value, inverted, min, max);
-
-  if (mappedValue.length === 1) {
-    const firstValue = mappedValue[0];
-
-    if (firstValue !== undefined) {
-      return firstValue;
-    }
+function getTrackDirection(orientation: 'horizontal' | 'vertical', dir: 'ltr' | 'rtl', inverted: boolean | undefined) {
+  if (orientation === 'vertical' || !inverted) {
+    return dir;
   }
 
-  return mappedValue;
+  return dir === 'ltr' ? 'rtl' : 'ltr';
 }
 
-function getPublicValue(value: number | readonly number[], inverted: boolean | undefined, min: number, max: number) {
-  const values = typeof value === 'number' ? [value] : value;
+function toRootValue(value: number[]) {
+  const [firstValue] = value;
 
-  return getMappedValue(values, inverted, min, max);
+  return value.length === 1 && firstValue !== undefined ? firstValue : value;
 }
 
-function getPointerAdjustedValue(
+function toValueArray(value: number | readonly number[]) {
+  return typeof value === 'number' ? [value] : [...value];
+}
+
+function getSnappedValues(
   value: number[],
-  details: BaseSlider.Root.ChangeEventDetails | BaseSlider.Root.CommitEventDetails,
-  control: SliderElement | null,
-  orientation: 'horizontal' | 'vertical',
-  dir: 'ltr' | 'rtl',
-  inverted: boolean | undefined,
+  reason: BaseSlider.Root.ChangeEventReason,
+  hints: number[] | undefined,
   min: number,
-  max: number,
-  step: number
+  max: number
 ) {
-  if (details.reason !== 'track-press' || control === null) {
+  if (!SNAPPING_REASONS.has(reason)) {
     return value;
   }
 
-  const root = control.parentElement;
-  const point = getEventPoint(details.event);
-
-  if (root === null || point === undefined) {
-    return value;
-  }
-
-  const rect = root.getBoundingClientRect();
-  const percent = getPointerPercent(point, rect, orientation, dir, inverted);
-  const nextValue = getSteppedValue(min + (max - min) * percent, min, max, step);
-  const activeThumbIndex = getActiveThumbIndex(details);
-
-  return value.map((item, index) => {
-    if (index === activeThumbIndex || value.length === 1) {
-      return nextValue;
-    }
-
-    return item;
-  });
-}
-
-type EventPoint = {
-  x: number;
-  y: number;
-};
-
-function getEventPoint(event: Event): EventPoint | undefined {
-  if (
-    'clientX' in event &&
-    'clientY' in event &&
-    typeof event.clientX === 'number' &&
-    typeof event.clientY === 'number'
-  ) {
-    return { x: event.clientX, y: event.clientY };
-  }
-
-  return undefined;
-}
-
-function getActiveThumbIndex(details: BaseSlider.Root.ChangeEventDetails | BaseSlider.Root.CommitEventDetails) {
-  if ('activeThumbIndex' in details && typeof details.activeThumbIndex === 'number') {
-    return details.activeThumbIndex;
-  }
-
-  return undefined;
-}
-
-function getPointerPercent(
-  point: EventPoint,
-  rect: DOMRect,
-  orientation: 'horizontal' | 'vertical',
-  dir: 'ltr' | 'rtl',
-  inverted: boolean | undefined
-) {
-  const rawPercent =
-    orientation === 'vertical' ? (rect.bottom - point.y) / rect.height : (point.x - rect.left) / rect.width;
-  const directionPercent = orientation === 'horizontal' && dir === 'rtl' ? 1 - rawPercent : rawPercent;
-  const percent = inverted ? 1 - directionPercent : directionPercent;
-
-  return Math.min(1, Math.max(0, percent));
-}
-
-function getSteppedValue(value: number, min: number, max: number, step: number) {
-  const steppedValue = min + Math.round((value - min) / step) * step;
-  const normalizedValue = Number(steppedValue.toFixed(10));
-
-  return Math.min(max, Math.max(min, normalizedValue));
-}
-
-function getMappedValue(value: readonly number[], inverted: boolean | undefined, min: number, max: number) {
-  if (!inverted) {
-    return [...value];
-  }
-
-  return value.map((value) => min + max - value);
+  return value.map((item) => getSnappedValue(item, hints, min, max));
 }
 
 function getSnappedValue(value: number, hints: number[] | undefined, min: number, max: number) {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { describe, expect, it, vi } from 'vitest';
-import { fireEvent, render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import type { ColorModel } from '@components/color-picker';
 import * as ColorPicker from '@components/color-picker';
@@ -269,11 +269,11 @@ function getArea(container: HTMLElement) {
 }
 
 function getHueThumb() {
-  return within(screen.getByRole('group', { name: 'hue' })).getByRole('slider');
+  return screen.getByRole('slider', { name: 'hue' });
 }
 
 function getAlphaThumb() {
-  return within(screen.getByRole('group', { name: 'alpha' })).getByRole('slider');
+  return screen.getByRole('slider', { name: 'alpha' });
 }
 
 function toFloat32(color: RGBA): RGBA {
