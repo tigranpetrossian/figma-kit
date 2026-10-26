@@ -91,6 +91,14 @@ describe('interactions', () => {
     expect(field).toHaveValue('11px');
   });
 
+  it("doesn't fire onChange or round the value when blurred without an edit", async () => {
+    const onChange = vi.fn();
+    const { getByLabelText } = renderInput({ initialValue: 10.23456, precision: 2, onChange });
+    await user.click(getByLabelText(LABEL));
+    await user.keyboard('{Tab}');
+    expect(onChange).not.toBeCalled();
+  });
+
   it('rounds input to specified precision', async () => {
     const { getByLabelText } = renderInput({ initialValue: 10, precision: 2 });
     const field = getByLabelText(LABEL);
