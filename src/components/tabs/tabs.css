@@ -27,6 +27,11 @@
     background: var(--figma-color-bg-secondary);
   }
 
+  &:focus-visible {
+    outline: 1px solid var(--figma-color-border-selected);
+    outline-offset: -1px;
+  }
+
   &:where([data-active]) {
     font-weight: var(--font-weight-strong);
     color: var(--figma-color-text);

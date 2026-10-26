@@ -16,6 +16,10 @@
   letter-spacing: var(--letter-spacing-default);
   color: var(--figma-color-text);
 
+  &:focus-visible {
+    border-color: var(--figma-color-border-selected);
+  }
+
   &[data-disabled] {
     color: var(--figma-color-text-disabled);
     border-color: var(--figma-color-border-disabled);
