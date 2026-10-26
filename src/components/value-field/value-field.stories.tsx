@@ -220,27 +220,19 @@ const RgbaFields = () => {
       <ValueField.Multi>
         <ValueField.Root>
           <ValueField.Scrubber />
-          <ValueField.Numeric value={rgba.r} onChange={setRed} min={0} max={1} targetRange={[0, 255]} precision={0} />
+          <ValueField.Numeric value={rgba.r} onChange={setRed} min={0} max={1} scale={255} precision={0} />
         </ValueField.Root>
         <ValueField.Root>
           <ValueField.Scrubber />
-          <ValueField.Numeric value={rgba.g} onChange={setGreen} min={0} max={1} targetRange={[0, 255]} precision={0} />
+          <ValueField.Numeric value={rgba.g} onChange={setGreen} min={0} max={1} scale={255} precision={0} />
         </ValueField.Root>
         <ValueField.Root>
           <ValueField.Scrubber />
-          <ValueField.Numeric value={rgba.b} onChange={setBlue} min={0} max={1} targetRange={[0, 255]} precision={0} />
+          <ValueField.Numeric value={rgba.b} onChange={setBlue} min={0} max={1} scale={255} precision={0} />
         </ValueField.Root>
         <ValueField.Root style={{ flex: '0 0 48px' }}>
           <ValueField.Scrubber />
-          <ValueField.Numeric
-            value={rgba.a}
-            onChange={setAlpha}
-            min={0}
-            max={1}
-            targetRange={[0, 100]}
-            precision={2}
-            suffix="%"
-          />
+          <ValueField.Numeric value={rgba.a} onChange={setAlpha} min={0} max={1} scale={100} precision={2} suffix="%" />
         </ValueField.Root>
       </ValueField.Multi>
     </div>
@@ -266,7 +258,7 @@ const HexWithAlphaField = () => {
             onChange={setAlpha}
             min={0}
             max={1}
-            targetRange={[0, 100]}
+            scale={100}
             allowedUnits={['%']}
             precision={2}
           />

@@ -25,24 +25,14 @@ describe('formatting', () => {
     expect(getByLabelText(LABEL)).toHaveValue('0');
   });
 
-  it('throws an error, when min or max is not specified', () => {
-    const consoleError = vi.spyOn(console, 'error');
-    consoleError.mockImplementation(() => {});
-    expect(() => renderInput({ value: 1, min: 0, targetRange: [0, 100] })).toThrow();
-    expect(() => renderInput({ value: 1, max: 1, targetRange: [0, 100] })).toThrow();
-    consoleError.mockRestore();
-  });
-
-  it('throws an error, when min equals to max', () => {
-    const consoleError = vi.spyOn(console, 'error');
-    consoleError.mockImplementation(() => {});
-    expect(() => renderInput({ value: 1, min: 0, max: 0, targetRange: [0, 100] })).toThrow();
-    consoleError.mockRestore();
-  });
-
-  it('normalizes formatted value to specified target range', () => {
-    const { getByLabelText } = renderInput({ value: 0.5, min: 0, max: 1, targetRange: [0, 100] });
+  it('multiplies formatted value by scale', () => {
+    const { getByLabelText } = renderInput({ value: 0.5, min: 0, max: 1, scale: 100 });
     expect(getByLabelText(LABEL)).toHaveValue('50');
+  });
+
+  it('scales without min and max', () => {
+    const { getByLabelText } = renderInput({ value: 3, scale: 100 });
+    expect(getByLabelText(LABEL)).toHaveValue('300');
   });
 
   it('adds suffix', () => {
@@ -123,13 +113,13 @@ describe('interactions', () => {
     expect(field).toHaveValue('100');
   });
 
-  it('denormalizes into initial min-max range upon submission', async () => {
+  it('divides submitted value by scale', async () => {
     const onChange = vi.fn();
     const { getByLabelText } = renderInput({
       initialValue: 0,
       min: 0,
       max: 1,
-      targetRange: [0, 100],
+      scale: 100,
       onChange,
     });
     const field = getByLabelText(LABEL);
@@ -138,6 +128,16 @@ describe('interactions', () => {
     expect(field).not.toHaveFocus();
     expect(field).toHaveValue('50');
     expect(onChange).toHaveBeenCalledWith(0.5);
+  });
+
+  it('nudges by displayed units when scaled', async () => {
+    const onChange = vi.fn();
+    const { getByLabelText } = renderInput({ initialValue: 15, min: 10, max: 20, scale: 10, onChange });
+    const field = getByLabelText(LABEL);
+    await user.click(field);
+    await user.keyboard('{ArrowUp}');
+    expect(field).toHaveValue('151');
+    expect(onChange).toHaveBeenCalledWith(15.1);
   });
 
   describe('when nudge amounts are not specified', () => {

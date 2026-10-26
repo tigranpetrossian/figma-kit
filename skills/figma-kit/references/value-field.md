@@ -19,7 +19,7 @@ function TextFields() {
     <>
       <ValueField.Root>
         <ValueField.Scrubber />
-        <ValueField.Numeric value={opacity} onChange={setOpacity} min={0} max={1} targetRange={[0, 100]} precision={0} suffix="%" />
+        <ValueField.Numeric value={opacity} onChange={setOpacity} min={0} max={1} scale={100} precision={0} suffix="%" />
       </ValueField.Root>
       <ValueField.NumericSelect aria-label="Font size" value={fontSize} onChange={setFontSize} options={FONT_SIZES} min={1} precision={0} />
       <ValueField.Root>
@@ -34,7 +34,7 @@ function TextFields() {
 
 - `onChange` fires on commit, which is Enter, blur, or an arrow key, and on every step of a scrub. It does not fire per keystroke. Escape discards the edit.
 - Typed input is evaluated as math. `x` is the current value, so `2x` doubles it.
-- `targetRange` shows the stored `min` to `max` range in another range. Above, a stored `0.5` shows as `50%`. It needs both `min` and `max`, and they must differ, or the field throws on render. `precision`, `suffix`, and typed input all use the shown range.
+- `scale` multiplies the stored value for display and divides typed input by it. Above, a stored `0.5` shows as `50%`. `min` and `max` stay in stored units. `precision`, `suffix`, nudges, and typed input all use the shown units.
 - `precision` defaults to 15 decimals, so set it. Use `0` for whole numbers.
 - `suffix="%"` puts the unit in the input text and accepts it when typed. A trailing `<ValueField.Label>%</ValueField.Label>` after the input shows the unit outside the text instead. Pair it with `allowedUnits={['%']}`, because without a `%` suffix or unit, typing `50%` means 50% of the current value. `allowedUnits` takes any units to accept and strip, such as `['px']`.
 - An empty `<ValueField.Scrubber />` is a thin drag strip on the field's left edge. With a Label inside, the label is the drag handle.

@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import { clamp, pipe, round } from 'remeda';
 import evaluate from '@emmetio/math-expression';
 import type { InputProps } from '@components/input';
-import { normalize } from '@lib/number/normalize';
 import type { Formatter } from './types';
 import { Base } from './value-field-base';
 
@@ -22,12 +21,11 @@ type NumericProps = Omit<InputProps, 'value' | 'onChange' | 'min' | 'max' | 'typ
   /** The maximum allowed value. */
   max?: number;
 
-  /** The numeric range that the `value` prop will be normalized to when displayed in the input.
-   * Requires non-equal 'max' and 'min' values.
+  /** The factor that the `value` prop is multiplied by when displayed in the input.
    * @example:
-   * <Numeric value={0.5} min={0} max={1} targetRange={[0, 100]} /> // Displays value of 50
+   * <Numeric value={0.5} min={0} max={1} scale={100} /> // Displays value of 50
    * */
-  targetRange?: [number, number];
+  scale?: number;
 
   /** The decimal precision that user input will be rounded to. */
   precision?: number;
@@ -46,20 +44,21 @@ type NumericProps = Omit<InputProps, 'value' | 'onChange' | 'min' | 'max' | 'typ
 };
 
 const Numeric = React.forwardRef<NumericElement, NumericProps>((props, ref) => {
-  const { value, onChange, min, max, targetRange, precision, suffix, allowedUnits, ...inputProps } = props;
+  const { value, onChange, min, max, scale, precision, suffix, allowedUnits, ...inputProps } = props;
   const formatter = useMemo(
-    () => createFormatter({ min, max, precision, targetRange, suffix, allowedUnits }),
-    [min, max, precision, targetRange, suffix, allowedUnits]
+    () => createFormatter({ min, max, precision, scale, suffix, allowedUnits }),
+    [min, max, precision, scale, suffix, allowedUnits]
   );
 
   return <Base inputRef={ref} value={value} onChange={onChange} formatter={formatter} {...inputProps} />;
 });
 
-type FormatterOptions = Pick<NumericProps, 'min' | 'max' | 'targetRange' | 'precision' | 'suffix' | 'allowedUnits'>;
+type FormatterOptions = Pick<NumericProps, 'min' | 'max' | 'scale' | 'precision' | 'suffix' | 'allowedUnits'>;
 
 function createFormatter(options: FormatterOptions = {}): Formatter<number> {
-  const { min, max, targetRange, precision = MAX_SUPPORTED_PRECISION, suffix, allowedUnits = [] } = options;
-  const { toDisplayValue, fromDisplayValue } = getValueTransformers({ min, max, targetRange });
+  const { min, max, scale = 1, precision = MAX_SUPPORTED_PRECISION, suffix, allowedUnits = [] } = options;
+  const toDisplayValue = (value: number) => value * scale;
+  const fromDisplayValue = (value: number) => value / scale;
 
   return {
     parse: (input: string, currentValue: number) => {
@@ -92,30 +91,6 @@ function createFormatter(options: FormatterOptions = {}): Formatter<number> {
     incrementBy(value: number, amount: number) {
       return value + fromDisplayValue(amount);
     },
-  };
-}
-
-function getValueTransformers(props: Pick<NumericProps, 'min' | 'max' | 'targetRange'>) {
-  const { min, max, targetRange } = props;
-
-  if (!targetRange) {
-    return {
-      toDisplayValue: (value: number) => value,
-      fromDisplayValue: (value: number) => value,
-    };
-  }
-
-  if (typeof min !== 'number' || typeof max !== 'number') {
-    throw Error("'targetRange' requires specifying 'min' and 'max'.");
-  }
-
-  if (min === max) {
-    throw Error("'min' and 'max' cannot be equal.");
-  }
-
-  return {
-    toDisplayValue: normalize([min, max], targetRange),
-    fromDisplayValue: normalize(targetRange, [min, max]),
   };
 }
 
