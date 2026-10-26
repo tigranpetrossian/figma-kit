@@ -74,6 +74,7 @@ const Base = <V,>(props: BaseProps<V>) => {
 
     if (event.key === 'Escape') {
       event.preventDefault();
+      event.stopPropagation();
       revert();
       // TODO: Needs better solution
       // Delegate selection to the next tick to make sure it happens after value is set.
