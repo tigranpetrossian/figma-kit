@@ -7,9 +7,8 @@
 .fp-TabsTrigger {
   all: unset;
   box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center start;
   flex-shrink: 0;
   height: var(--space-6);
   padding: 0 var(--space-2);
@@ -42,4 +41,15 @@
   &:where([data-disabled]) {
     color: var(--figma-color-text-disabled);
   }
+}
+
+.fp-TabsTriggerLabel {
+  grid-area: 1 / 1;
+  display: flex;
+  align-items: center;
+}
+
+.fp-TabsTriggerLabelHidden {
+  visibility: hidden;
+  font-weight: var(--font-weight-strong);
 }
