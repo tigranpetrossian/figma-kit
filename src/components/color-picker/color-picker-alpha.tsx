@@ -1,13 +1,20 @@
 import { round } from 'remeda';
 import type { CSSProperties } from 'react';
+import type { SliderProps } from '@components/slider';
 import { Slider } from '@components/slider';
 import { useColorPickerContext } from '@components/color-picker/color-picker';
 import { blendWithWhite, rgbaToCssString, rgbaToP3String } from '@lib/color';
+import { addClassName } from '@lib/react/add-class-name';
 
-type AlphaProps = React.ComponentPropsWithoutRef<'div'>;
+type AlphaProps = Omit<
+  SliderProps,
+  'defaultValue' | 'inverted' | 'max' | 'min' | 'onValueChange' | 'orientation' | 'range' | 'style' | 'value'
+> & {
+  style?: CSSProperties | undefined;
+};
 
 const Alpha = (props: AlphaProps) => {
-  const { className, style } = props;
+  const { className, style, ...sliderProps } = props;
   const { colorSpace, colorsByModel, onColorChange } = useColorPickerContext('ColorPicker.Alpha');
   const color = colorsByModel.rgb;
   const trackBg = {
@@ -32,12 +39,13 @@ const Alpha = (props: AlphaProps) => {
   return (
     <Slider
       aria-label="alpha"
+      {...sliderProps}
       min={0}
       max={100}
       range={false}
       value={[color.a * 100]}
       onValueChange={handleValueChange}
-      className={`fp-ColorPickerAlphaSlider fp-color-space-${colorSpace} ${className}`}
+      className={addClassName(className, `fp-ColorPickerAlphaSlider fp-color-space-${colorSpace}`)}
       style={
         {
           '--track-bg-transparent-srgb': trackBg.srgb.transparent,
