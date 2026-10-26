@@ -4,6 +4,7 @@ import { render } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import type { Formatter } from '@components/value-field/types';
 import * as ValueField from '@components/value-field//value-field-base';
+import * as Popover from '@components/popover';
 
 const LABEL = 'test-field';
 const INITIAL_VALUE = 30;
@@ -87,7 +88,26 @@ describe('given a basic field', () => {
     expect(changeHandler).not.toBeCalled();
   });
 
-  it.todo("doesn't close parent modal on Escape"); // feature unimplemented
+  it("doesn't close parent popover on Escape", async () => {
+    const openChangeHandler = vi.fn();
+    const { getByLabelText } = render(
+      <Popover.Root defaultOpen onOpenChange={openChangeHandler}>
+        <Popover.Portal>
+          <Popover.Positioner>
+            <Popover.Popup>
+              <TestControl />
+            </Popover.Popup>
+          </Popover.Positioner>
+        </Popover.Portal>
+      </Popover.Root>
+    );
+    const field = getByLabelText(LABEL);
+    await user.click(field);
+    await user.keyboard('{Escape}');
+    expect(openChangeHandler).not.toBeCalled();
+    expect(field).toBeInTheDocument();
+  });
+
   it.todo('increments correctly');
   it.todo('selects value on  click');
 });
