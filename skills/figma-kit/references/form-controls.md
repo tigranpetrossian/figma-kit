@@ -36,7 +36,7 @@ function Controls() {
         <Switch checked={snap} onCheckedChange={setSnap} />
         Snap to pixel grid
       </Label>
-      <Slider value={[size]} onValueChange={([next = size]) => setSize(next)} min={0} max={100} />
+      <Slider aria-label="Size" value={[size]} onValueChange={([next = size]) => setSize(next)} min={0} max={100} />
     </>
   );
 }
@@ -48,4 +48,5 @@ function Controls() {
 - `Checkbox.Input` is a native checkbox. Use `checked` and `onChange`, not `onCheckedChange`. It also takes `indeterminate`, and `Checkbox.Description` adds help text under the label.
 - `RadioGroup` and `Switch` use Base UI callbacks, `onValueChange(value)` and `onCheckedChange(checked)`. Radio values are strings. Wrap each `RadioGroup.Item` and its text in `RadioGroup.Label`. `orientation="vertical"` stacks the items.
 - `Switch` has no label part. Wrap it and its text in figma-kit's `Label`.
-- `Slider` takes and returns an array, even with one thumb. Use `onValueCommit` for the value on release. `size` is `'large'` by default or `'small'`. `hints` adds snap marks, and `range={false}` removes the filled part of the track.
+- `Slider` takes and returns an array, even with one thumb. Use `onValueCommit` for the value on release. `size` is `'large'` by default or `'small'`. `hints` adds marks that a drag or track press snaps to, and `range={false}` removes the filled part of the track.
+- Name a `Slider` with `aria-label` or `aria-labelledby`. With two thumbs, `getAriaLabel(index)` names each one. `inverted` puts the maximum at the start edge and only applies to horizontal sliders.
