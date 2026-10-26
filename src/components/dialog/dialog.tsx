@@ -78,16 +78,14 @@ type CloseElement = HTMLButtonElement;
 type CloseProps = BaseDialog.Close.Props;
 
 const Close = React.forwardRef<CloseElement, CloseProps>((props, ref) => {
-  const {
-    render = (
-      <IconButton aria-label="Close">
-        <CloseIcon />
-      </IconButton>
-    ),
-    ...closeProps
-  } = props;
+  const { render, children = <CloseIcon />, ...closeProps } = props;
+  const closeButton = render ?? <IconButton aria-label={closeProps['aria-label'] ?? 'Close'} />;
 
-  return <BaseDialog.Close ref={ref} render={render} {...closeProps} />;
+  return (
+    <BaseDialog.Close ref={ref} render={closeButton} {...closeProps}>
+      {children}
+    </BaseDialog.Close>
+  );
 });
 
 Popup.displayName = 'Dialog.Popup';

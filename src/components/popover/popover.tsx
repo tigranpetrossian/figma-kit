@@ -48,16 +48,14 @@ type CloseElement = HTMLButtonElement;
 type CloseProps = BasePopover.Close.Props;
 
 const Close = React.forwardRef<CloseElement, CloseProps>((props, ref) => {
-  const {
-    render = (
-      <IconButton aria-label="Close">
-        <CloseIcon />
-      </IconButton>
-    ),
-    ...closeProps
-  } = props;
+  const { render, children = <CloseIcon />, ...closeProps } = props;
+  const closeButton = render ?? <IconButton aria-label={closeProps['aria-label'] ?? 'Close'} />;
 
-  return <BasePopover.Close ref={ref} render={render} {...closeProps} />;
+  return (
+    <BasePopover.Close ref={ref} render={closeButton} {...closeProps}>
+      {children}
+    </BasePopover.Close>
+  );
 });
 
 Popup.displayName = 'Popover.Popup';

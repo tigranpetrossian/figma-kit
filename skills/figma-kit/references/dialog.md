@@ -34,7 +34,7 @@ import { Button, Dialog } from 'figma-kit';
 
 - `Dialog.Popup` must be inside `Dialog.Portal`, or Base UI throws. `Dialog.Backdrop` is optional and dims the page.
 - `Dialog.Trigger` renders an unstyled `<button>`. Pass `render={<Button />}` and put the label on the Trigger, not on the render element.
-- `Dialog.Close` without `render` is an `IconButton` with `CloseIcon` and `aria-label="Close"`, the header close button. For a text button, pass `render={<Button />}` and a label.
+- `Dialog.Close` with no children is an `IconButton` with `CloseIcon` and `aria-label="Close"`, the header close button. Pass `aria-label` to change the label and children to replace the icon. For a text button, pass `render={<Button />}` and a label. Never nest a button inside Close. Use `render`.
 - A Close with `onClick` runs the handler, then closes the dialog. Use it for confirm buttons.
 - `Dialog.Popup` defaults to `size="2"` (352px) and `placement="top"`, which pins it near the top of the window. Use `placement="center"` to center it. Sizes are `"1"` (288px), `"2"`, `"3"` (448px), and `"fullscreen"`. Width never exceeds the window minus 32px.
 - Content placed directly in `Dialog.Popup` gets no padding. Wrap it in `Dialog.Section`, which adds 16px padding and a divider between sections. `size="small"` cuts the vertical padding to 8px.

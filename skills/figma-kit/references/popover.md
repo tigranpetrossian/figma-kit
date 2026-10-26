@@ -31,7 +31,7 @@ import { IconButton, Popover, StylesIcon, Tooltip } from 'figma-kit';
 
 - Nest `Portal` > `Positioner` > `Popup`, or Base UI throws.
 - `Popover.Popup` has the dialog surface (background, radius, shadow) but no width. Set one with `style` or a class.
-- `Header`, `Title`, `Controls`, `Section`, and `Close` are the same parts as in Dialog. `Popover.Close` without `render` is an `IconButton` with `CloseIcon`.
+- `Header`, `Title`, `Controls`, `Section`, and `Close` are the same parts as in Dialog. `Popover.Close` with no children is an `IconButton` with `CloseIcon` and `aria-label="Close"`, and takes `aria-label`, children, and `render` the same way `Dialog.Close` does.
 - Position with `side`, `align`, `sideOffset`, and `alignOffset` on `Popover.Positioner`. Base UI defaults to `side="bottom"`, `align="center"`, and no offset. `positionMethod` defaults to `"fixed"` here.
 - An icon-only trigger needs a tooltip. Wrap the `Popover.Trigger` element in `Tooltip`, as above, and both work on the same button.
 - Clicking outside or pressing Escape closes it, and the rest of the UI stays usable while it is open.

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { CloseIcon, PlusIcon, StylesIcon } from '@components/icons';
+import { PlusIcon, StylesIcon } from '@components/icons';
 import * as Popover from '@components/popover';
 import { Text } from '@components/text';
 import { Tooltip } from '@components/tooltip';
@@ -47,11 +47,7 @@ const Default: Story = {
               <Popover.Header>
                 <Popover.Title>Popover</Popover.Title>
                 <Popover.Controls>
-                  <Popover.Close>
-                    <IconButton aria-label="Close">
-                      <CloseIcon />
-                    </IconButton>
-                  </Popover.Close>
+                  <Popover.Close />
                 </Popover.Controls>
               </Popover.Header>
               <Popover.Section>
