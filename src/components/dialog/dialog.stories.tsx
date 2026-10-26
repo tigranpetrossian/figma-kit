@@ -36,6 +36,28 @@ const Story: Story = {
   },
 };
 
+const Fullscreen: Story = {
+  render() {
+    return (
+      <Dialog.Root>
+        <Dialog.Trigger render={<Button />}>Open fullscreen</Dialog.Trigger>
+        <Dialog.Portal>
+          <Dialog.Backdrop />
+          <Dialog.Popup size="fullscreen">
+            <Dialog.Header>
+              <Dialog.Title>Fullscreen</Dialog.Title>
+              <Dialog.Controls>
+                <Dialog.Close />
+              </Dialog.Controls>
+            </Dialog.Header>
+            <Dialog.Section>Content</Dialog.Section>
+          </Dialog.Popup>
+        </Dialog.Portal>
+      </Dialog.Root>
+    );
+  },
+};
+
 const OnboardingPreview = () => {
   return (
     <div
@@ -89,4 +111,4 @@ const PreviewDot = (props: PreviewDotProps) => {
 };
 
 export default meta;
-export { Story };
+export { Story, Fullscreen };
