@@ -23,18 +23,17 @@ describe('controlled ColorPicker', () => {
   it('follows a new color prop after an internal hue edit', async () => {
     render(<ControlledPicker initialColor={GRAY} />);
     const hexField = () => screen.getAllByRole('textbox')[0];
-    const hueThumb = () => screen.getAllByRole('slider')[0];
 
     await user.click(screen.getByRole('button', { name: 'Red' }));
     expect(hexField()).toHaveValue('FF0000');
 
-    hueThumb().focus();
+    getHueThumb().focus();
     await user.keyboard('{ArrowRight}');
     expect(hexField()).not.toHaveValue('FF0000');
 
     await user.click(screen.getByRole('button', { name: 'Blue' }));
     expect(hexField()).toHaveValue('0000FF');
-    expect(hueThumb()).toHaveAttribute('aria-valuenow', '240');
+    expect(getHueThumb()).toHaveAttribute('aria-valuenow', '240');
   });
 
   it('keeps the edited hue when the parent passes back the emitted gray', async () => {
@@ -253,6 +252,68 @@ describe('ColorPicker.Area', () => {
   });
 });
 
+describe('ColorPicker accessible names', () => {
+  it.each([
+    ['hex', ['Hex', 'Opacity']],
+    ['rgb', ['Red', 'Green', 'Blue', 'Opacity']],
+    ['hsl', ['Hue', 'Saturation', 'Lightness', 'Opacity']],
+    ['hsv', ['Hue', 'Saturation', 'Brightness', 'Opacity']],
+  ] satisfies [ColorModel, string[]][])('names the %s fields', (model, names) => {
+    render(<ControlledPicker initialColor={RED} defaultActiveModel={model} />);
+
+    for (const name of names) {
+      expect(screen.getByRole('textbox', { name })).toBeInTheDocument();
+    }
+    expect(screen.getByRole('combobox', { name: 'Color model' })).toBeInTheDocument();
+  });
+
+  it('replaces the default field names with the labels prop', () => {
+    render(
+      <ColorPicker.Root colorSpace="srgb" defaultColor={RED} defaultActiveModel="rgb">
+        <ColorPicker.Input labels={{ red: 'Rouge', model: 'Modèle' }} />
+      </ColorPicker.Root>
+    );
+
+    expect(screen.getByRole('textbox', { name: 'Rouge' })).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Green' })).toBeInTheDocument();
+    expect(screen.getByRole('combobox', { name: 'Modèle' })).toBeInTheDocument();
+  });
+
+  it('names the hue and opacity sliders', () => {
+    render(<UncontrolledPicker defaultColor={RED} />);
+
+    expect(screen.getByRole('slider', { name: 'Hue' })).toBeInTheDocument();
+    expect(screen.getByRole('slider', { name: 'Opacity' })).toBeInTheDocument();
+  });
+
+  it('describes the area thumb position in the active model', () => {
+    render(<ControlledPicker initialColor={RED} defaultActiveModel="hsl" />);
+
+    expect(screen.getByRole('slider', { name: 'Color' })).toHaveAttribute(
+      'aria-valuetext',
+      'Saturation 100%, Lightness 50%'
+    );
+  });
+
+  it('takes a custom area label and value text', () => {
+    render(
+      <ColorPicker.Root colorSpace="srgb" defaultColor={RED} defaultActiveModel="hsv">
+        <ColorPicker.Area aria-label="Couleur" getAriaValueText={(color) => `${color.model} ${color.value.s}`} />
+      </ColorPicker.Root>
+    );
+
+    expect(screen.getByRole('slider', { name: 'Couleur' })).toHaveAttribute('aria-valuetext', 'hsv 100');
+  });
+
+  it('keeps arrow keys on the area thumb from scrolling the page', () => {
+    render(<UncontrolledPicker defaultColor={RED} />);
+
+    const notPrevented = fireEvent.keyDown(screen.getByRole('slider', { name: 'Color' }), { key: 'ArrowDown' });
+
+    expect(notPrevented).toBe(false);
+  });
+});
+
 function ControlledPicker(props: {
   initialColor: RGBA;
   defaultActiveModel?: ColorModel;
@@ -319,11 +380,11 @@ function getArea(container: HTMLElement) {
 }
 
 function getHueThumb() {
-  return screen.getByRole('slider', { name: 'hue' });
+  return screen.getByRole('slider', { name: 'Hue' });
 }
 
 function getAlphaThumb() {
-  return screen.getByRole('slider', { name: 'alpha' });
+  return screen.getByRole('slider', { name: 'Opacity' });
 }
 
 function toFloat32(color: RGBA): RGBA {

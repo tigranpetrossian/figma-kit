@@ -38,7 +38,7 @@ const Alpha = (props: AlphaProps) => {
 
   return (
     <Slider
-      aria-label="alpha"
+      aria-label="Opacity"
       {...sliderProps}
       min={0}
       max={100}
