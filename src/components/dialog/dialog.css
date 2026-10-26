@@ -29,5 +29,8 @@
 
   &:where(.fp-size-fullscreen) {
     inset: 0;
+    transform: none;
+    max-width: none;
+    max-height: none;
   }
 }
