@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useRef, useState } from 'react';
 import { IconButton } from '@components/icon-button';
-import { CloseIcon, StylesIcon } from '@components/icons';
+import { StylesIcon } from '@components/icons';
 import { Text } from '@components/text';
 import * as Popover from '../popover';
 import * as Tabs from './tabs';
@@ -62,11 +62,7 @@ const TabsInPopover = () => {
                   <Tabs.Tab value="carburetors">Carburetors</Tabs.Tab>
                 </Tabs.List>
                 <Popover.Controls>
-                  <Popover.Close>
-                    <IconButton ref={closeRef} aria-label="Close">
-                      <CloseIcon />
-                    </IconButton>
-                  </Popover.Close>
+                  <Popover.Close ref={closeRef} />
                 </Popover.Controls>
               </Popover.Header>
               <Popover.Section>
