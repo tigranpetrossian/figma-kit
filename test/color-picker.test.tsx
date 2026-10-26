@@ -13,6 +13,7 @@ const RED = { r: 1, g: 0, b: 0, a: 1 };
 const GREEN = { r: 0, g: 1, b: 0, a: 1 };
 const DARK_GREEN = { r: 0, g: 0.6, b: 0, a: 1 };
 const BLUE = { r: 0, g: 0, b: 1, a: 1 };
+const OFF_GRID = { r: 0.123, g: 0.456, b: 0.789, a: 0.5 };
 
 const user = userEvent.setup();
 
@@ -131,6 +132,18 @@ describe('controlled ColorPicker', () => {
 
     expect(saturation).toHaveValue('100');
     expect(lightness).toHaveValue('100');
+  });
+
+  it('does not report a color change when its fields are focused and blurred without an edit', async () => {
+    const onColorChange = vi.fn();
+    render(<ControlledPicker initialColor={OFF_GRID} onColorChange={onColorChange} />);
+
+    for (const field of screen.getAllByRole('textbox')) {
+      await user.click(field);
+      await user.keyboard('{Tab}');
+    }
+
+    expect(onColorChange).not.toBeCalled();
   });
 
   it('does not report a color change when the hue slider moves on a gray', async () => {

@@ -46,8 +46,9 @@ const Base = <V,>(props: BaseProps<V>) => {
 
   const submit = (input: string) => {
     const parserResult = formatter.parse(input, valueProp);
+    const matchesDisplayedValue = input === formatter.format(valueProp);
 
-    if (input.length === 0 || !parserResult.valid || parserResult.value === valueProp) {
+    if (input.length === 0 || matchesDisplayedValue || !parserResult.valid || parserResult.value === valueProp) {
       return revert();
     }
 

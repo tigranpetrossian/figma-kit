@@ -117,6 +117,34 @@ describe('input parsing', () => {
     });
   });
 
+  describe('given no edit', () => {
+    it("doesn't fire onChange on blur", async () => {
+      const onChange = vi.fn();
+      render(<TestHexInput onChange={onChange} />);
+      await user.click(screen.getByLabelText(HEX_INPUT_LABEL));
+      await user.keyboard('{Tab}');
+      expect(onChange).not.toBeCalled();
+    });
+
+    it("doesn't fire onChange on Escape", async () => {
+      const onChange = vi.fn();
+      render(<TestHexInput onChange={onChange} />);
+      const hexField = screen.getByLabelText(HEX_INPUT_LABEL);
+      await user.click(hexField);
+      await user.keyboard('{Escape}');
+      expect(hexField).not.toHaveFocus();
+      expect(onChange).not.toBeCalled();
+    });
+
+    it("doesn't fire onChange when the typed hex matches the current color", async () => {
+      const onChange = vi.fn();
+      render(<TestHexInput onChange={onChange} />);
+      await user.type(screen.getByLabelText(HEX_INPUT_LABEL), '000000');
+      await user.keyboard('{Enter}');
+      expect(onChange).not.toBeCalled();
+    });
+  });
+
   describe('given an input with `ignoreAlpha`', () => {
     it('ignores alpha triplet from user input', async () => {
       const onChange = vi.fn();
