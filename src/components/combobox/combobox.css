@@ -44,6 +44,11 @@
   letter-spacing: var(--letter-spacing-default);
   outline: 0;
   overflow: auto;
+  --color-text-menu: var(--figma-color-text);
+  --color-text-menu-secondary: var(--figma-color-text-secondary);
+  --color-text-menu-tertiary: var(--figma-color-text-tertiary);
+  --color-border-menu: var(--figma-color-border);
+  --color-icon-menu: var(--figma-color-icon);
 }
 
 .fp-ComboboxInputGroup {
@@ -79,7 +84,6 @@
 .fp-ComboboxItem {
   width: 100%;
   box-sizing: border-box;
-  color: var(--figma-color-text);
   line-height: var(--line-height-default);
 
   &[data-selected] {
@@ -97,10 +101,6 @@
   &[data-disabled] {
     color: var(--figma-color-text-disabled);
   }
-}
-
-.fp-ComboboxItemIndicator {
-  --color-icon: var(--figma-color-icon);
 }
 
 .fp-ComboboxMessage {
