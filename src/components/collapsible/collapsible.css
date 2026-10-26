@@ -16,6 +16,11 @@
   letter-spacing: var(--letter-spacing-default);
   line-height: var(--line-height-default);
   color: var(--figma-color-text-secondary);
+
+  &:focus-visible {
+    outline: 1px solid var(--figma-color-border-selected);
+    outline-offset: -1px;
+  }
 }
 
 .fp-CollapsibleIndicator {
