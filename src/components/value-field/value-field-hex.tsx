@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
-import { clamp, pipe } from 'remeda';
 import type { RGBA } from '@lib/color';
+import { BYTE_DISPLAY } from '@lib/color';
 import type { InputProps } from '@components/input';
 import { namedColors } from '@components/value-field/named-colors';
 import type { Formatter } from './types';
@@ -29,6 +29,11 @@ const Hex = React.forwardRef<HexElement, HexProps>((props, ref) => {
 
 type FormatterOptions = { ignoreAlpha?: boolean };
 
+type HexDigits = {
+  rgb: string;
+  alpha: string | undefined;
+};
+
 function createFormatter(options: FormatterOptions): Formatter<RGBA> {
   const { ignoreAlpha } = options;
 
@@ -42,40 +47,23 @@ function createFormatter(options: FormatterOptions): Formatter<RGBA> {
         };
       }
 
-      try {
-        return {
-          value: pipe(
-            input,
-            getFirstValidSubstring,
-            (input) => expandToHex8(input, currentValue),
-            hex8toRgba,
-            (rgba) => (ignoreAlpha ? { ...rgba, a: 1 } : rgba)
-          ),
-          valid: true,
-        };
-      } catch {
+      const digits = parseHexDigits(getFirstValidSubstring(input));
+      if (digits === null) {
         return { valid: false };
       }
+
+      const rgba = hexDigitsToRgba(digits, currentValue.a);
+      return { valid: true, value: ignoreAlpha ? { ...rgba, a: 1 } : rgba };
     },
     format(value) {
-      return (
-        Math.round(value.r * 255)
-          .toString(16)
-          .padStart(2, '0') +
-        Math.round(value.g * 255)
-          .toString(16)
-          .padStart(2, '0') +
-        Math.round(value.b * 255)
-          .toString(16)
-          .padStart(2, '0')
-      ).toUpperCase();
+      return [value.r, value.g, value.b].map(channelToHex).join('').toUpperCase();
     },
     incrementBy(value, amount, incrementTargets): RGBA {
       incrementTargets ??= { r: true, g: true, b: true };
       return {
-        r: incrementTargets.r ? clamp(Math.round(value.r * 255) + amount, { min: 0, max: 255 }) / 255 : value.r,
-        g: incrementTargets.g ? clamp(Math.round(value.g * 255) + amount, { min: 0, max: 255 }) / 255 : value.g,
-        b: incrementTargets.b ? clamp(Math.round(value.b * 255) + amount, { min: 0, max: 255 }) / 255 : value.b,
+        r: incrementTargets.r ? BYTE_DISPLAY.nudge(value.r, amount) : value.r,
+        g: incrementTargets.g ? BYTE_DISPLAY.nudge(value.g, amount) : value.g,
+        b: incrementTargets.b ? BYTE_DISPLAY.nudge(value.b, amount) : value.b,
         a: value.a,
       };
     },
@@ -131,61 +119,52 @@ function getFirstValidSubstring(input: string) {
   return input.match(pattern)?.[0] ?? '';
 }
 
-function expandToHex8(hexLike: string, currentValue: RGBA): string {
-  if (!/^[0-9a-f]{1,8}$/i.test(hexLike)) {
-    throw new Error('Invalid hex substring');
-  }
-
-  switch (hexLike.length) {
+function parseHexDigits(hex: string): HexDigits | null {
+  switch (hex.length) {
     case 1:
-      return hexLike.repeat(6) + alphaToHex(currentValue.a);
+      return { rgb: hex.repeat(6), alpha: undefined };
     case 2:
-      return hexLike.repeat(3) + alphaToHex(currentValue.a);
+      return { rgb: hex.repeat(3), alpha: undefined };
     case 3:
-      return (
-        hexLike
-          .split('')
-          .map((c) => c.repeat(2))
-          .join('') + alphaToHex(currentValue.a)
-      );
+      return { rgb: doubleEachDigit(hex), alpha: undefined };
     case 4:
-      return (
-        hexLike
-          .slice(0, 3)
-          .split('')
-          .map((c) => c.repeat(2))
-          .join('') + hexLike[3].repeat(2)
-      );
+      return { rgb: doubleEachDigit(hex.slice(0, 3)), alpha: doubleEachDigit(hex.slice(3)) };
     case 5:
-      return (
-        hexLike
-          .slice(0, 3)
-          .split('')
-          .map((c) => c.repeat(2))
-          .join('') + hexLike.slice(-2)
-      );
+      return { rgb: doubleEachDigit(hex.slice(0, 3)), alpha: hex.slice(3) };
     case 6:
-      return hexLike + alphaToHex(currentValue.a);
+      return { rgb: hex, alpha: undefined };
     case 7:
-      return hexLike.slice(0, 6) + hexLike[6].repeat(2);
+      return { rgb: hex.slice(0, 6), alpha: doubleEachDigit(hex.slice(6)) };
     case 8:
-      return hexLike;
+      return { rgb: hex.slice(0, 6), alpha: hex.slice(6) };
     default:
-      throw new Error('Invalid hex substring');
+      return null;
   }
 }
 
-function hex8toRgba(hex: string): RGBA {
+function hexDigitsToRgba(digits: HexDigits, currentAlpha: number): RGBA {
+  const { rgb, alpha } = digits;
   return {
-    r: parseInt(hex.substring(0, 2), 16) / 255,
-    g: parseInt(hex.substring(2, 4), 16) / 255,
-    b: parseInt(hex.substring(4, 6), 16) / 255,
-    a: parseInt(hex.substring(6, 8), 16) / 255,
+    r: hexToChannel(rgb.slice(0, 2)),
+    g: hexToChannel(rgb.slice(2, 4)),
+    b: hexToChannel(rgb.slice(4, 6)),
+    a: alpha === undefined ? currentAlpha : hexToChannel(alpha),
   };
 }
 
-function alphaToHex(a: number): string {
-  return Math.round(a * 255).toString(16);
+function doubleEachDigit(hex: string) {
+  return hex
+    .split('')
+    .map((digit) => digit.repeat(2))
+    .join('');
+}
+
+function hexToChannel(hex: string) {
+  return BYTE_DISPLAY.fromDisplay(parseInt(hex, 16));
+}
+
+function channelToHex(channel: number) {
+  return BYTE_DISPLAY.toDisplay(channel).toString(16).padStart(2, '0');
 }
 
 export type { HexProps };

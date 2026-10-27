@@ -5,6 +5,7 @@ import { CheckmarkIcon, ChevronDownIcon, ChevronUpIcon } from '@components/icons
 import { useColorPickerContext } from '@components/color-picker/color-picker';
 import type { ColorModel } from '@components/color-picker/color-picker';
 import type { RGBA } from '@lib/color';
+import { BYTE_DISPLAY, OPACITY_DISPLAY } from '@lib/color';
 import * as ValueField from '@components/value-field';
 
 const DEFAULT_INPUT_LABELS: InputLabels = {
@@ -37,28 +38,12 @@ const HexInput = ({ labels }: ModelInputProps) => {
     onColorChange({ mode: 'rgb', value: rgba });
   };
 
-  const handleAlphaChange = (alpha: number) => {
-    onColorChange({ mode: 'rgb', value: { ...rgba, a: alpha } });
-  };
-
   return (
     <ValueField.Multi>
       <ValueField.Root>
         <ValueField.Hex aria-label={labels.hex} onChange={onChange} value={rgba} />
       </ValueField.Root>
-      <ValueField.Root style={{ flex: '0 0 52px' }}>
-        <ValueField.Numeric
-          aria-label={labels.opacity}
-          onChange={handleAlphaChange}
-          value={rgba.a}
-          min={0}
-          max={1}
-          scale={100}
-          precision={2}
-          allowedUnits={['%']}
-        />
-        <ValueField.Label>%</ValueField.Label>
-      </ValueField.Root>
+      <OpacityField label={labels.opacity} />
     </ValueField.Multi>
   );
 };
@@ -67,32 +52,21 @@ const RgbaInput = ({ labels }: ModelInputProps) => {
   const { colorsByModel, onColorChange } = useColorPickerContext('ColorPicker.RGBA');
   const rgba = colorsByModel.rgb;
 
-  const onChange = (channel: 'r' | 'g' | 'b' | 'a') => (value: number) => {
+  const onChange = (channel: 'r' | 'g' | 'b') => (value: number) => {
     onColorChange({ mode: 'rgb', value: { ...rgba, [channel]: value } });
   };
 
   return (
     <ValueField.Multi>
       <ValueField.Root>
-        <ValueField.Numeric
-          aria-label={labels.red}
-          onChange={onChange('r')}
-          value={rgba.r}
-          min={0}
-          max={1}
-          scale={255}
-          precision={0}
-        />
+        <ValueField.Numeric aria-label={labels.red} onChange={onChange('r')} value={rgba.r} {...BYTE_DISPLAY.options} />
       </ValueField.Root>
       <ValueField.Root>
         <ValueField.Numeric
           aria-label={labels.green}
           onChange={onChange('g')}
           value={rgba.g}
-          min={0}
-          max={1}
-          scale={255}
-          precision={0}
+          {...BYTE_DISPLAY.options}
         />
       </ValueField.Root>
       <ValueField.Root>
@@ -100,25 +74,10 @@ const RgbaInput = ({ labels }: ModelInputProps) => {
           aria-label={labels.blue}
           onChange={onChange('b')}
           value={rgba.b}
-          min={0}
-          max={1}
-          scale={255}
-          precision={0}
+          {...BYTE_DISPLAY.options}
         />
       </ValueField.Root>
-      <ValueField.Root style={{ flex: '0 0 52px' }}>
-        <ValueField.Numeric
-          aria-label={labels.opacity}
-          onChange={onChange('a')}
-          value={rgba.a}
-          min={0}
-          max={1}
-          scale={100}
-          precision={2}
-          allowedUnits={['%']}
-        />
-        <ValueField.Label>%</ValueField.Label>
-      </ValueField.Root>
+      <OpacityField label={labels.opacity} />
     </ValueField.Multi>
   );
 };
@@ -127,7 +86,7 @@ const HsvaInput = ({ labels }: ModelInputProps) => {
   const { colorsByModel, onColorChange } = useColorPickerContext('ColorPicker.HSVA');
   const hsva = colorsByModel.hsv;
 
-  const onChange = (channel: 'h' | 's' | 'v' | 'a') => (value: number) => {
+  const onChange = (channel: 'h' | 's' | 'v') => (value: number) => {
     onColorChange({ mode: 'hsv', value: { ...hsva, [channel]: value } });
   };
 
@@ -163,19 +122,7 @@ const HsvaInput = ({ labels }: ModelInputProps) => {
           precision={0}
         />
       </ValueField.Root>
-      <ValueField.Root style={{ flex: '0 0 52px' }}>
-        <ValueField.Numeric
-          aria-label={labels.opacity}
-          onChange={onChange('a')}
-          value={hsva.a}
-          min={0}
-          max={1}
-          scale={100}
-          precision={2}
-          allowedUnits={['%']}
-        />
-        <ValueField.Label>%</ValueField.Label>
-      </ValueField.Root>
+      <OpacityField label={labels.opacity} />
     </ValueField.Multi>
   );
 };
@@ -184,7 +131,7 @@ const HslaInput = ({ labels }: ModelInputProps) => {
   const { colorsByModel, onColorChange } = useColorPickerContext('ColorPicker.HSLA');
   const hsla = colorsByModel.hsl;
 
-  const onChange = (channel: 'h' | 's' | 'l' | 'a') => (value: number) => {
+  const onChange = (channel: 'h' | 's' | 'l') => (value: number) => {
     onColorChange({ mode: 'hsl', value: { ...hsla, [channel]: value } });
   };
 
@@ -220,19 +167,7 @@ const HslaInput = ({ labels }: ModelInputProps) => {
           precision={0}
         />
       </ValueField.Root>
-      <ValueField.Root style={{ flex: '0 0 52px' }}>
-        <ValueField.Numeric
-          aria-label={labels.opacity}
-          onChange={onChange('a')}
-          value={hsla.a}
-          min={0}
-          max={1}
-          scale={100}
-          precision={2}
-          allowedUnits={['%']}
-        />
-        <ValueField.Label>%</ValueField.Label>
-      </ValueField.Root>
+      <OpacityField label={labels.opacity} />
     </ValueField.Multi>
   );
 };
@@ -306,6 +241,28 @@ function ColorModelSelectPopup(props: { children: ReactNode }) {
         </Select.Popup>
       </Select.Positioner>
     </Select.Portal>
+  );
+}
+
+function OpacityField(props: { label: string }) {
+  const { label } = props;
+  const { colorsByModel, onColorChange } = useColorPickerContext('ColorPicker.Opacity');
+
+  function changeAlpha(alpha: number) {
+    onColorChange({ mode: 'alpha', value: alpha });
+  }
+
+  return (
+    <ValueField.Root style={{ flex: '0 0 52px' }}>
+      <ValueField.Numeric
+        aria-label={label}
+        onChange={changeAlpha}
+        value={colorsByModel.rgb.a}
+        {...OPACITY_DISPLAY.options}
+        allowedUnits={['%']}
+      />
+      <ValueField.Label>%</ValueField.Label>
+    </ValueField.Root>
   );
 }
 

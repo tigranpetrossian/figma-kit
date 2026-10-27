@@ -61,7 +61,8 @@ type ColorChangeParams =
   | { mode: 'rgb'; value: RGBA }
   | { mode: 'hsv'; value: HSVA }
   | { mode: 'hsl'; value: HSLA }
-  | { mode: 'hue'; value: number };
+  | { mode: 'hue'; value: number }
+  | { mode: 'alpha'; value: number };
 
 const Root = (props: RootProps) => {
   const {
@@ -158,6 +159,8 @@ function applyColorChange(current: ColorsByModel, change: ColorChangeParams): Co
       return applyRgbChange(current, change.value);
     case 'hue':
       return applyHueChange(current, change.value);
+    case 'alpha':
+      return applyAlphaChange(current, change.value);
     case 'hsv': {
       const rgb = hsvaToRgba(change.value);
       return { rgb, hsv: change.value, hsl: keepHslSaturation(current.hsl, hsvaToHsla(change.value), rgb) };
@@ -188,6 +191,10 @@ function applyRgbChange(current: ColorsByModel, rgb: RGBA): ColorsByModel {
 function applyHueChange(current: ColorsByModel, h: number): ColorsByModel {
   const hsv = { ...current.hsv, h };
   return { rgb: hsvaToRgba(hsv), hsv, hsl: { ...current.hsl, h } };
+}
+
+function applyAlphaChange(current: ColorsByModel, a: number): ColorsByModel {
+  return { rgb: { ...current.rgb, a }, hsv: { ...current.hsv, a }, hsl: { ...current.hsl, a } };
 }
 
 function keepHue<T extends { h: number }>(current: T, next: T, rgb: RGB): T {

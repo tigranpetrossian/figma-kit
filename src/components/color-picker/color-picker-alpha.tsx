@@ -1,9 +1,8 @@
-import { round } from 'remeda';
 import type { CSSProperties } from 'react';
 import type { SliderProps } from '@components/slider';
 import { Slider } from '@components/slider';
 import { useColorPickerContext } from '@components/color-picker/color-picker';
-import { blendWithWhite, rgbaToCssString, rgbaToP3String } from '@lib/color';
+import { OPACITY_DISPLAY, blendWithWhite, rgbaToCssString, rgbaToP3String } from '@lib/color';
 import { addClassName } from '@lib/react/add-class-name';
 
 type AlphaProps = Omit<
@@ -33,7 +32,7 @@ const Alpha = (props: AlphaProps) => {
   };
 
   const handleValueChange = (value: number[]) => {
-    onColorChange({ mode: 'rgb', value: { ...color, a: round(value[0] / 100, 2) } });
+    onColorChange({ mode: 'alpha', value: OPACITY_DISPLAY.fromDisplay(value[0]) });
   };
 
   return (
@@ -43,7 +42,7 @@ const Alpha = (props: AlphaProps) => {
       min={0}
       max={100}
       range={false}
-      value={[color.a * 100]}
+      value={[OPACITY_DISPLAY.toDisplay(color.a)]}
       onValueChange={handleValueChange}
       className={addClassName(className, `fp-ColorPickerAlphaSlider fp-color-space-${colorSpace}`)}
       style={

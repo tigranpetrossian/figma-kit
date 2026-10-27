@@ -16,6 +16,8 @@ const BLUE = { r: 0, g: 0, b: 1, a: 1 };
 const OFF_GRID = { r: 0.123, g: 0.456, b: 0.789, a: 0.5 };
 const NEARLY_RED = { r: 1, g: 0, b: 1 / 255, a: 1 };
 const NEARLY_RED_HUE = 360 - 60 / 255;
+const AZURE = { r: 0, g: 0.5, b: 0.75, a: 1 };
+const TEAL = { r: 0, g: 85 / 255, b: 102 / 255, a: 1 };
 
 const user = userEvent.setup();
 
@@ -314,6 +316,73 @@ describe('ColorPicker accessible names', () => {
   });
 });
 
+describe('ColorPicker precision', () => {
+  it('shows the same channel values in the hex and RGB fields', async () => {
+    render(<ControlledPicker initialColor={RED} defaultActiveModel="hsv" />);
+    const { saturation, value } = getHsvFields();
+
+    await user.type(saturation, '80');
+    await user.keyboard('{Enter}');
+    await user.type(value, '50');
+    await user.keyboard('{Enter}');
+
+    await selectModel('HEX');
+    expect(screen.getByRole('textbox', { name: 'Hex' })).toHaveValue('801A1A');
+    await selectModel('RGB');
+    expect(screen.getByRole('textbox', { name: 'Red' })).toHaveValue('128');
+    expect(screen.getByRole('textbox', { name: 'Green' })).toHaveValue('26');
+    expect(screen.getByRole('textbox', { name: 'Blue' })).toHaveValue('26');
+  });
+
+  it('emits channels within range from the HSL fields', async () => {
+    const handleColorChange = vi.fn();
+    render(<ControlledPicker initialColor={RED} defaultActiveModel="hsl" onColorChange={handleColorChange} />);
+    const { lightness } = getHslFields();
+
+    await user.type(lightness, '7');
+    await user.keyboard('{Enter}');
+
+    const [color] = handleColorChange.mock.lastCall ?? [];
+    expect(color.r).toBeCloseTo(0.14);
+    expect(color.g).toBe(0);
+    expect(color.b).toBe(0);
+  });
+
+  it.each(['hsl', 'hsv'] satisfies ColorModel[])(
+    'keeps the RGB channels when opacity changes in %s mode',
+    async (model) => {
+      const handleColorChange = vi.fn();
+      render(<ControlledPicker initialColor={AZURE} defaultActiveModel={model} onColorChange={handleColorChange} />);
+
+      await user.type(screen.getByRole('textbox', { name: 'Opacity' }), '50');
+      await user.keyboard('{Enter}');
+
+      expect(handleColorChange).toHaveBeenLastCalledWith({ ...AZURE, a: 0.5 });
+    }
+  );
+
+  it('reports a typed opacity to assistive tech without noise', async () => {
+    render(<ControlledPicker initialColor={RED} defaultActiveModel="rgb" />);
+
+    await user.type(screen.getByRole('textbox', { name: 'Opacity' }), '7');
+    await user.keyboard('{Enter}');
+
+    expect(getAlphaThumb()).toHaveAttribute('aria-valuenow', '7');
+  });
+
+  it('reports a float32 opacity to assistive tech without noise', () => {
+    render(<ControlledPicker initialColor={{ ...RED, a: Math.fround(0.07) }} />);
+
+    expect(getAlphaThumb()).toHaveAttribute('aria-valuenow', '7');
+  });
+
+  it('reports a computed hue to assistive tech without noise', () => {
+    render(<UncontrolledPicker defaultColor={TEAL} />);
+
+    expect(getHueThumb()).toHaveAttribute('aria-valuenow', '190');
+  });
+});
+
 function ControlledPicker(props: {
   initialColor: RGBA;
   defaultActiveModel?: ColorModel;
@@ -377,6 +446,11 @@ function getArea(container: HTMLElement) {
     throw new Error('ColorPicker.Area is not rendered');
   }
   return area;
+}
+
+async function selectModel(name: string) {
+  await user.click(screen.getByRole('combobox', { name: 'Color model' }));
+  await user.click(screen.getByRole('option', { name }));
 }
 
 function getHueThumb() {
