@@ -5,7 +5,7 @@ import type { InputProps } from '@components/input';
 import type { Formatter } from './types';
 import { Base } from './value-field-base';
 
-const MAX_SUPPORTED_PRECISION = 15;
+const FAITHFUL_DOUBLE_SIGNIFICANT_DIGITS = 15;
 
 type NumericElement = React.ElementRef<'input'>;
 type NumericProps = Omit<InputProps, 'value' | 'onChange' | 'min' | 'max' | 'type'> & {
@@ -56,9 +56,10 @@ const Numeric = React.forwardRef<NumericElement, NumericProps>((props, ref) => {
 type FormatterOptions = Pick<NumericProps, 'min' | 'max' | 'scale' | 'precision' | 'suffix' | 'allowedUnits'>;
 
 function createFormatter(options: FormatterOptions = {}): Formatter<number> {
-  const { min, max, scale = 1, precision = MAX_SUPPORTED_PRECISION, suffix, allowedUnits = [] } = options;
-  const toDisplayValue = (value: number) => value * scale;
+  const { min, max, scale = 1, precision, suffix, allowedUnits = [] } = options;
+  const toDisplayValue = (value: number) => stripFloatingPointError(value * scale);
   const fromDisplayValue = (value: number) => value / scale;
+  const roundToPrecision = (value: number) => (precision === undefined ? value : round(value, precision));
 
   return {
     parse: (input: string, currentValue: number) => {
@@ -76,14 +77,14 @@ function createFormatter(options: FormatterOptions = {}): Formatter<number> {
 
         return {
           valid: true,
-          value: pipe(displayValue, round(precision), fromDisplayValue, clamp({ min, max })),
+          value: pipe(displayValue, stripFloatingPointError, roundToPrecision, fromDisplayValue, clamp({ min, max })),
         };
       } catch {
         return { valid: false };
       }
     },
     format: (value: number) => {
-      return pipe(value, clamp({ min, max }), toDisplayValue, round(precision), (value) =>
+      return pipe(value, clamp({ min, max }), toDisplayValue, roundToPrecision, (value) =>
         toValueString(value, suffix)
       );
     },
@@ -126,6 +127,10 @@ function evaluateExpression(params: {
     throw new Error('Invalid expression.');
   }
   return result;
+}
+
+function stripFloatingPointError(value: number) {
+  return Number(value.toPrecision(FAITHFUL_DOUBLE_SIGNIFICANT_DIGITS));
 }
 
 export type { NumericProps };

@@ -150,6 +150,27 @@ describe('interactions', () => {
     expect(onChange).toHaveBeenCalledWith(15.1);
   });
 
+  it('nudges scaled values without floating point error', async () => {
+    const onChange = vi.fn();
+    const { getByLabelText } = renderInput({ initialValue: 0, min: 0, max: 1, scale: 100, onChange });
+    const field = getByLabelText(LABEL);
+    await user.click(field);
+
+    for (let step = 1; step <= 100; step++) {
+      await user.keyboard('{ArrowUp}');
+      expect(field).toHaveValue(String(step));
+      expect(onChange).toHaveBeenLastCalledWith(step / 100);
+    }
+  });
+
+  it('shows evaluated input without floating point error', async () => {
+    const { getByLabelText } = renderInput({ initialValue: 0 });
+    const field = getByLabelText(LABEL);
+    await user.type(field, '10.1+20.2');
+    await user.keyboard('{Enter}');
+    expect(field).toHaveValue('30.3');
+  });
+
   describe('when nudge amounts are not specified', () => {
     it('increments by default small nudge', async () => {
       const { getByLabelText } = renderInput({ initialValue: 10 });
