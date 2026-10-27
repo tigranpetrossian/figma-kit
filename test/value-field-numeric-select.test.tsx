@@ -164,6 +164,36 @@ describe('NumericSelect', () => {
     expect(getByLabelText(LABEL)).toBeDisabled();
     expect(getByRole('combobox', { name: 'Select value' })).toBeDisabled();
   });
+
+  it('matches an option to a value read back from Figma as float32', async () => {
+    const { getAllByRole, getByLabelText, getByRole } = render(
+      <TestNumericSelect initialValue={Math.fround(0.1)} options={[0.1, 0.2]} />
+    );
+    expect(getByLabelText(LABEL)).toHaveValue('0.1');
+    await user.click(getByRole('combobox', { name: 'Select value' }));
+    expect(getAllByRole('option').map((option) => option.textContent)).toEqual(['0.1', '0.2']);
+    expect(getByRole('option', { name: '0.1', selected: true })).toBeInTheDocument();
+  });
+
+  it('labels options in the scaled units of the field', async () => {
+    const { getAllByRole, getByLabelText, getByRole } = render(
+      <TestNumericSelect initialValue={0.5} options={[0.25, 0.5]} scale={100} />
+    );
+    expect(getByLabelText(LABEL)).toHaveValue('50');
+    await user.click(getByRole('combobox', { name: 'Select value' }));
+    expect(getAllByRole('option').map((option) => option.textContent)).toEqual(['25', '50']);
+    expect(getByRole('option', { name: '50', selected: true })).toBeInTheDocument();
+  });
+
+  it('emits the picked option when two options show the same text', async () => {
+    const onChange = vi.fn();
+    const { getAllByRole, getByRole } = render(
+      <NumericSelect aria-label={LABEL} value={10} onChange={onChange} options={[10, 10.4]} precision={0} />
+    );
+    await user.click(getByRole('combobox', { name: 'Select value' }));
+    await user.click(getAllByRole('option', { name: '10' })[1]);
+    expect(onChange).toHaveBeenCalledWith(10.4);
+  });
 });
 
 async function startScrubbing(element: HTMLElement) {
