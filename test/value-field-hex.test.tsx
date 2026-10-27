@@ -155,6 +155,28 @@ describe('input parsing', () => {
       expect(onChange).toHaveBeenCalledWith({ r: 1, g: 1, b: 1, a: 1 });
     });
   });
+
+  it.each(['FF0000', 'F00'])('keeps the exact alpha when %s has no alpha digits', async (input) => {
+    const onChange = vi.fn();
+    render(<Hex aria-label={HEX_INPUT_LABEL} value={{ r: 1, g: 1, b: 1, a: 0.5 }} onChange={onChange} />);
+    await user.type(screen.getByLabelText(HEX_INPUT_LABEL), input);
+    await user.keyboard('{Enter}');
+    expect(onChange).toHaveBeenCalledWith({ r: 1, g: 0, b: 0, a: 0.5 });
+  });
+});
+
+describe('formatting', () => {
+  it('rounds a channel computed on a half step up, like the RGB fields', () => {
+    const halfStepChannel = 0.5 * (1 - 0.8);
+    render(
+      <Hex
+        aria-label={HEX_INPUT_LABEL}
+        value={{ r: 0.5, g: halfStepChannel, b: halfStepChannel, a: 1 }}
+        onChange={() => {}}
+      />
+    );
+    expect(screen.getByLabelText(HEX_INPUT_LABEL)).toHaveValue('801A1A');
+  });
 });
 
 describe('incrementing', () => {

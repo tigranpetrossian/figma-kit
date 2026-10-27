@@ -4,7 +4,10 @@ import { Slider } from '@components/slider';
 import type { ColorSpace } from '@components/color-picker/color-picker';
 import { useColorPickerContext } from '@components/color-picker/color-picker';
 import { hsvaToRgba } from '@lib/color';
+import { createNumberDisplay } from '@lib/number/number-display';
 import { addClassName } from '@lib/react/add-class-name';
+
+const HUE_DISPLAY = createNumberDisplay({ min: 0, max: 360 });
 
 type HueProps = Omit<
   SliderProps,
@@ -28,7 +31,7 @@ const Hue = (props: HueProps) => {
       range={false}
       min={0}
       max={360}
-      value={[hue]}
+      value={[HUE_DISPLAY.toDisplay(hue)]}
       onValueChange={handleValueChange}
       className={addClassName(
         className,

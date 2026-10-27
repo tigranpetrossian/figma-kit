@@ -1,4 +1,9 @@
-import { round } from 'remeda';
+import { clamp, round } from 'remeda';
+import { createNumberDisplay } from '@lib/number/number-display';
+
+const BYTE_DISPLAY = createNumberDisplay({ min: 0, max: 1, scale: 255, precision: 0 });
+const OPACITY_DISPLAY = createNumberDisplay({ min: 0, max: 1, scale: 100, precision: 2 });
+const PERCENT_RANGE = { min: 0, max: 100 };
 
 type WithAlpha<T> = T & { a: number };
 
@@ -49,8 +54,8 @@ function hslaToHsva({ h, s, l, a }: HSLA): HSVA {
 
   return {
     h: h,
-    s: s > 0 ? ((2 * s) / (l + s)) * 100 : 0,
-    v: l + s,
+    s: clamp(s > 0 ? ((2 * s) / (l + s)) * 100 : 0, PERCENT_RANGE),
+    v: clamp(l + s, PERCENT_RANGE),
     a,
   };
 }
@@ -104,6 +109,8 @@ function blendWithWhite(color: RGBA): RGBA {
 export type { RGB, HSV, HSL, RGBA, HSVA, HSLA, P3String, RGBString };
 
 export {
+  BYTE_DISPLAY,
+  OPACITY_DISPLAY,
   rgbaToHsva,
   hsvaToRgba,
   hslaToHsva,
