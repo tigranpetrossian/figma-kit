@@ -1,11 +1,9 @@
 import React, { useMemo } from 'react';
-import { clamp, pipe, round } from 'remeda';
 import evaluate from '@emmetio/math-expression';
 import type { InputProps } from '@components/input';
+import { createNumberDisplay } from '@lib/number/number-display';
 import type { Formatter } from './types';
 import { Base } from './value-field-base';
-
-const FAITHFUL_DOUBLE_SIGNIFICANT_DIGITS = 15;
 
 type NumericElement = React.ElementRef<'input'>;
 type NumericProps = Omit<InputProps, 'value' | 'onChange' | 'min' | 'max' | 'type'> & {
@@ -27,7 +25,10 @@ type NumericProps = Omit<InputProps, 'value' | 'onChange' | 'min' | 'max' | 'typ
    * */
   scale?: number;
 
-  /** The decimal precision that user input will be rounded to. */
+  /**
+   * The decimal places, in displayed units, that values are rounded to. Halves round away from zero.
+   * Non-integers are truncated and values outside [-15, 15] are limited to that range.
+   * */
   precision?: number;
 
   /** Units that will be accepted as valid input (e.g., "px", "%"). */
@@ -45,28 +46,31 @@ type NumericProps = Omit<InputProps, 'value' | 'onChange' | 'min' | 'max' | 'typ
 
 const Numeric = React.forwardRef<NumericElement, NumericProps>((props, ref) => {
   const { value, onChange, min, max, scale, precision, suffix, allowedUnits, ...inputProps } = props;
-  const formatter = useMemo(
-    () => createFormatter({ min, max, precision, scale, suffix, allowedUnits }),
-    [min, max, precision, scale, suffix, allowedUnits]
-  );
+  const formatter = useNumericFormatter({ min, max, scale, precision, suffix, allowedUnits });
 
   return <Base inputRef={ref} value={value} onChange={onChange} formatter={formatter} {...inputProps} />;
 });
 
-type FormatterOptions = Pick<NumericProps, 'min' | 'max' | 'scale' | 'precision' | 'suffix' | 'allowedUnits'>;
+type NumericFormatterOptions = Pick<NumericProps, 'min' | 'max' | 'scale' | 'precision' | 'suffix' | 'allowedUnits'>;
 
-function createFormatter(options: FormatterOptions = {}): Formatter<number> {
-  const { min, max, scale = 1, precision, suffix, allowedUnits = [] } = options;
-  const toDisplayValue = (value: number) => stripFloatingPointError(value * scale);
-  const fromDisplayValue = (value: number) => value / scale;
-  const roundToPrecision = (value: number) => (precision === undefined ? value : round(value, precision));
+function useNumericFormatter(options: NumericFormatterOptions): Formatter<number> {
+  const { min, max, scale, precision, suffix, allowedUnits } = options;
+  return useMemo(
+    () => createFormatter({ min, max, scale, precision, suffix, allowedUnits }),
+    [min, max, scale, precision, suffix, allowedUnits]
+  );
+}
+
+function createFormatter(options: NumericFormatterOptions): Formatter<number> {
+  const { suffix, allowedUnits = [], ...displayOptions } = options;
+  const display = createNumberDisplay(displayOptions);
 
   return {
     parse: (input: string, currentValue: number) => {
       try {
         const displayValue = evaluateExpression({
           expression: input,
-          displayValue: toDisplayValue(currentValue),
+          displayValue: display.toDisplay(currentValue),
           suffix,
           allowedUnits,
         });
@@ -75,31 +79,18 @@ function createFormatter(options: FormatterOptions = {}): Formatter<number> {
           return { valid: false };
         }
 
-        return {
-          valid: true,
-          value: pipe(displayValue, stripFloatingPointError, roundToPrecision, fromDisplayValue, clamp({ min, max })),
-        };
+        return { valid: true, value: display.fromDisplay(displayValue) };
       } catch {
         return { valid: false };
       }
     },
-    format: (value: number) => {
-      return pipe(value, clamp({ min, max }), toDisplayValue, roundToPrecision, (value) =>
-        toValueString(value, suffix)
-      );
-    },
-    incrementBy(value: number, amount: number) {
-      return value + fromDisplayValue(amount);
-    },
+    format: (value: number) => withSuffix(display.format(value), suffix),
+    incrementBy: (value: number, amount: number) => display.nudge(value, amount),
   };
 }
 
-function toValueString(value: number, suffix: string | undefined) {
-  if (Number.isNaN(value)) {
-    return '';
-  }
-
-  return suffix ? `${value}${suffix}` : `${value}`;
+function withSuffix(text: string, suffix: string | undefined) {
+  return text && suffix ? `${text}${suffix}` : text;
 }
 
 function evaluateExpression(params: {
@@ -129,9 +120,5 @@ function evaluateExpression(params: {
   return result;
 }
 
-function stripFloatingPointError(value: number) {
-  return Number(value.toPrecision(FAITHFUL_DOUBLE_SIGNIFICANT_DIGITS));
-}
-
 export type { NumericProps };
-export { Numeric, evaluateExpression };
+export { Numeric, evaluateExpression, useNumericFormatter };

@@ -44,6 +44,36 @@ describe('formatting', () => {
     const { getByLabelText } = renderInput({ value: 3.14159265359, precision: 2 });
     expect(getByLabelText(LABEL)).toHaveValue('3.14');
   });
+
+  it.each([
+    { value: 1234567890123456, expected: '1234567890123456' },
+    { value: Number.MAX_SAFE_INTEGER, expected: '9007199254740991' },
+  ])('shows every digit of the integer $value', ({ value, expected }) => {
+    const { getByLabelText } = renderInput({ value });
+    expect(getByLabelText(LABEL)).toHaveValue(expected);
+  });
+
+  it.each([
+    { value: 1e-7, expected: '0.0000001' },
+    { value: 1e21, expected: '1000000000000000000000' },
+  ])('shows $value without exponent notation', ({ value, expected }) => {
+    const { getByLabelText } = renderInput({ value });
+    expect(getByLabelText(LABEL)).toHaveValue(expected);
+  });
+
+  it('shows a value read back from Figma as float32 without noise', () => {
+    const { getByLabelText } = renderInput({ value: Math.fround(0.07), min: 0, max: 1, scale: 100 });
+    expect(getByLabelText(LABEL)).toHaveValue('7');
+  });
+
+  it.each([
+    { precision: 16, expected: '1.23' },
+    { precision: -16, expected: '0' },
+    { precision: 1.5, expected: '1.2' },
+  ])('renders with an unsupported precision of $precision', ({ precision, expected }) => {
+    const { getByLabelText } = renderInput({ value: 1.23, precision });
+    expect(getByLabelText(LABEL)).toHaveValue(expected);
+  });
 });
 
 // Expression evaluations are tested separately in ./value-field-numeric-evaluator.test.ts,
@@ -255,5 +285,66 @@ describe('interactions', () => {
       await user.keyboard('{ArrowDown}');
       expect(field).toHaveValue('0');
     });
+  });
+
+  it('saves fractional nudges on a scaled field without noise', async () => {
+    const onChange = vi.fn();
+    const { getByLabelText } = renderInput({ initialValue: 0, scale: 100, smallNudge: 0.1, onChange });
+    const field = getByLabelText(LABEL);
+    await user.click(field);
+    await user.keyboard('{ArrowUp>7/}');
+    expect(field).toHaveValue('0.7');
+    expect(onChange).toHaveBeenLastCalledWith(0.007);
+  });
+
+  it('saves a typed fraction on a scaled field without noise', async () => {
+    const onChange = vi.fn();
+    const { getByLabelText } = renderInput({ initialValue: 0, scale: 100, onChange });
+    const field = getByLabelText(LABEL);
+    await user.type(field, '0.07');
+    await user.keyboard('{Enter}');
+    expect(onChange).toHaveBeenLastCalledWith(0.0007);
+  });
+
+  it('nudges a value read back from Figma as float32 without noise', async () => {
+    const onChange = vi.fn();
+    const { getByLabelText } = renderInput({ initialValue: Math.fround(0.07), min: 0, max: 1, scale: 100, onChange });
+    const field = getByLabelText(LABEL);
+    await user.click(field);
+    await user.keyboard('{ArrowUp}');
+    expect(field).toHaveValue('8');
+    expect(onChange).toHaveBeenLastCalledWith(0.08);
+  });
+
+  it.each([
+    { input: '2.5', precision: 0, expected: '3' },
+    { input: '-2.5', precision: 0, expected: '-3' },
+    { input: '1.005', precision: 2, expected: '1.01' },
+    { input: '-1.005', precision: 2, expected: '-1.01' },
+  ])('rounds $input half away from zero at precision $precision', async ({ input, precision, expected }) => {
+    const { getByLabelText } = renderInput({ initialValue: 0, precision });
+    const field = getByLabelText(LABEL);
+    await user.type(field, input);
+    await user.keyboard('{Enter}');
+    expect(field).toHaveValue(expected);
+  });
+
+  it.each([
+    { key: '{ArrowUp}', expected: '3' },
+    { key: '{ArrowDown}', expected: '1' },
+  ])('moves to the next value at precision when the nudge is finer, with $key', async ({ key, expected }) => {
+    const { getByLabelText } = renderInput({ initialValue: 2, precision: 0, smallNudge: 0.5 });
+    const field = getByLabelText(LABEL);
+    await user.click(field);
+    await user.keyboard(key);
+    expect(field).toHaveValue(expected);
+  });
+
+  it('shows typed small numbers without exponent notation', async () => {
+    const { getByLabelText } = renderInput({ initialValue: 0 });
+    const field = getByLabelText(LABEL);
+    await user.type(field, '0.0000001');
+    await user.keyboard('{Enter}');
+    expect(field).toHaveValue('0.0000001');
   });
 });
