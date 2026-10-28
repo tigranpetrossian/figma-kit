@@ -1,4 +1,5 @@
 .fp-tooltip {
+  position: relative;
   box-sizing: border-box;
   padding: var(--space-1) var(--space-2);
   background-color: var(--color-bg-tooltip);
@@ -16,27 +17,39 @@
 }
 
 .fp-tooltip-arrow {
-  fill: var(--color-bg-tooltip);
-  width: var(--space-3_5);
-  height: 7px;
-  position: absolute;
+  --tooltip-arrow-base: var(--space-3_5);
+  --tooltip-arrow-depth: 7px;
+  background-color: var(--color-bg-tooltip);
+}
+
+.fp-tooltip-arrow[data-side='top'],
+.fp-tooltip-arrow[data-side='bottom'] {
+  width: var(--tooltip-arrow-base);
+  height: var(--tooltip-arrow-depth);
+}
+
+.fp-tooltip-arrow[data-side='left'],
+.fp-tooltip-arrow[data-side='right'] {
+  width: var(--tooltip-arrow-depth);
+  height: var(--tooltip-arrow-base);
 }
 
 .fp-tooltip-arrow[data-side='top'] {
   top: calc(100% - 1px);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
 }
 
 .fp-tooltip-arrow[data-side='bottom'] {
   bottom: calc(100% - 1px);
-  transform: rotate(180deg);
+  clip-path: polygon(0 100%, 100% 100%, 50% 0);
 }
 
 .fp-tooltip-arrow[data-side='left'] {
   left: calc(100% - 1px);
-  transform: rotate(-90deg);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
 }
 
 .fp-tooltip-arrow[data-side='right'] {
   right: calc(100% - 1px);
-  transform: rotate(90deg);
+  clip-path: polygon(100% 0, 0 50%, 100% 100%);
 }
