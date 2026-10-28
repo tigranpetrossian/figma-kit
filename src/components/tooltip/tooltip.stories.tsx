@@ -3,11 +3,34 @@ import type { ComponentProps } from 'react';
 import { Button } from '@components/button';
 import { Tooltip, TooltipProvider } from './tooltip';
 
-type TooltipStoryArgs = Pick<ComponentProps<typeof Tooltip>, 'children' | 'content'>;
+type TooltipStoryArgs = Pick<
+  ComponentProps<typeof Tooltip>,
+  'align' | 'children' | 'content' | 'open' | 'side' | 'sideOffset'
+>;
 
 const meta = {
   title: 'Components/Tooltip',
   component: Tooltip,
+  args: {
+    side: 'top',
+    align: 'center',
+  },
+  argTypes: {
+    side: {
+      control: 'radio',
+      options: ['top', 'right', 'bottom', 'left'],
+    },
+    align: {
+      control: 'radio',
+      options: ['start', 'center', 'end'],
+    },
+    sideOffset: {
+      control: 'number',
+    },
+    open: {
+      control: 'boolean',
+    },
+  },
 } satisfies Meta<TooltipStoryArgs>;
 
 type Story = StoryObj<typeof meta>;

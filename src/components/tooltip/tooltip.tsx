@@ -33,23 +33,6 @@ const Content = React.forwardRef<ContentElement, ContentProps>((props, ref) => {
   return <BaseTooltip.Popup ref={ref} className={addClassName(className, 'fp-tooltip')} {...contentProps} />;
 });
 
-type ArrowProps = BaseTooltip.Arrow.Props;
-
-const Arrow = (props: ArrowProps) => {
-  const { className, ...arrowProps } = props;
-  return (
-    <BaseTooltip.Arrow
-      className={addClassName(className, 'fp-tooltip-arrow')}
-      render={
-        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="5" viewBox="0 0 30 10" preserveAspectRatio="none">
-          <polygon points="0,0 30,0 15,10" />
-        </svg>
-      }
-      {...arrowProps}
-    />
-  );
-};
-
 type TooltipElement = HTMLDivElement;
 type TooltipPositioningProps = Pick<
   BaseTooltip.Positioner.Props,
@@ -81,11 +64,11 @@ type TooltipProps = Omit<BaseTooltip.Popup.Props, 'children' | 'content'> &
   TooltipPositioningProps &
   TooltipRootProps &
   TooltipTriggerProps & {
-  children: NonNullable<BaseTooltip.Trigger.Props['render']>;
-  container?: BaseTooltip.Portal.Props['container'] | undefined;
-  content: React.ReactNode;
-  keepMounted?: BaseTooltip.Portal.Props['keepMounted'] | undefined;
-};
+    children: NonNullable<BaseTooltip.Trigger.Props['render']>;
+    container?: BaseTooltip.Portal.Props['container'] | undefined;
+    content: React.ReactNode;
+    keepMounted?: BaseTooltip.Portal.Props['keepMounted'] | undefined;
+  };
 
 const Tooltip = React.forwardRef<TooltipElement, TooltipProps>((props, ref) => {
   const {
@@ -142,13 +125,13 @@ const Tooltip = React.forwardRef<TooltipElement, TooltipProps>((props, ref) => {
           disableAnchorTracking={disableAnchorTracking}
           positionMethod={positionMethod}
           side={side}
-          sideOffset={sideOffset ?? 7}
+          sideOffset={sideOffset ?? 6}
           sticky={sticky}
         >
           <Content ref={ref} {...contentProps}>
+            <BaseTooltip.Arrow className="fp-tooltip-arrow" />
             {content}
           </Content>
-          <Arrow />
         </BaseTooltip.Positioner>
       </BaseTooltip.Portal>
     </BaseTooltip.Root>
