@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createContext } from '@lib/react/create-context';
 import type { HSLA, HSVA, RGB, RGBA } from '@lib/color';
-import { hslaToHsva, hslaToRgba, hsvaToHsla, hsvaToRgba, rgbaToHsla, rgbaToHsva } from '@lib/color';
+import { hasHue, hslaToHsva, hslaToRgba, hsvaToHsla, hsvaToRgba, rgbaToHsla, rgbaToHsva } from '@lib/color';
 import { useControllableState } from '@lib/react/use-controllable-state';
 
 type ColorModel = 'hex' | 'rgb' | 'hsl' | 'hsv';
@@ -207,10 +207,6 @@ function keepHsvSaturation(current: HSVA, next: HSVA, rgb: RGB): HSVA {
 
 function keepHslSaturation(current: HSLA, next: HSLA, rgb: RGB): HSLA {
   return isBlack(rgb) || isWhite(rgb) ? { ...next, s: current.s } : next;
-}
-
-function hasHue({ r, g, b }: RGB) {
-  return Math.max(r, g, b) !== Math.min(r, g, b);
 }
 
 function isBlack({ r, g, b }: RGB) {

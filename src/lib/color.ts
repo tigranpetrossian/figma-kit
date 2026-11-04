@@ -4,6 +4,12 @@ import { createNumberDisplay } from '@lib/number/number-display';
 const BYTE_DISPLAY = createNumberDisplay({ min: 0, max: 1, scale: 255, precision: 0 });
 const OPACITY_DISPLAY = createNumberDisplay({ min: 0, max: 1, scale: 100, precision: 2 });
 const PERCENT_RANGE = { min: 0, max: 100 };
+// https://drafts.csswg.org/css-color-4/conversions.js: XYZ_to_lin_P3 · lin_sRGB_to_XYZ
+const LINEAR_SRGB_TO_LINEAR_DISPLAY_P3: Matrix = [
+  [0.8224619687143623, 0.17753803128563772, 0],
+  [0.03319419885096158, 0.9668058011490382, 0],
+  [0.017082630721120033, 0.07239744066396347, 0.9105199286149166],
+];
 
 type WithAlpha<T> = T & { a: number };
 
@@ -15,6 +21,8 @@ type HSVA = WithAlpha<HSV>;
 type HSLA = WithAlpha<HSL>;
 type P3String = `color(display-p3 ${number} ${number} ${number}${` / ${number}` | ''})`;
 type RGBString = `rgb(${number} ${number} ${number}${` / ${number}` | ''})`;
+type Channels = readonly [number, number, number];
+type Matrix = readonly [Channels, Channels, Channels];
 
 function rgbaToHsva({ r, g, b, a }: RGBA): HSVA {
   const max = Math.max(r, g, b);
@@ -106,6 +114,31 @@ function blendWithWhite(color: RGBA): RGBA {
   };
 }
 
+function srgbToDisplayP3(color: RGB): RGB {
+  if (!hasHue(color)) {
+    return color;
+  }
+  const linear: Channels = [srgbToLinear(color.r), srgbToLinear(color.g), srgbToLinear(color.b)];
+  const [toR, toG, toB] = LINEAR_SRGB_TO_LINEAR_DISPLAY_P3;
+  return { r: linearToSrgb(dot(toR, linear)), g: linearToSrgb(dot(toG, linear)), b: linearToSrgb(dot(toB, linear)) };
+}
+
+function hasHue({ r, g, b }: RGB) {
+  return Math.max(r, g, b) !== Math.min(r, g, b);
+}
+
+function srgbToLinear(channel: number) {
+  return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
+}
+
+function linearToSrgb(channel: number) {
+  return channel <= 0.0031308 ? channel * 12.92 : 1.055 * channel ** (1 / 2.4) - 0.055;
+}
+
+function dot(row: Channels, vector: Channels) {
+  return row[0] * vector[0] + row[1] * vector[1] + row[2] * vector[2];
+}
+
 export type { RGB, HSV, HSL, RGBA, HSVA, HSLA, P3String, RGBString };
 
 export {
@@ -120,4 +153,6 @@ export {
   rgbaToP3String,
   rgbaToCssString,
   blendWithWhite,
+  srgbToDisplayP3,
+  hasHue,
 };
