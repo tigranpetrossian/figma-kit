@@ -1,8 +1,9 @@
-import { useState } from 'react';
-import { describe, expect, it, vi } from 'vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { StrictMode, createRef, useState } from 'react';
+import { renderToString } from 'react-dom/server';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import type { ColorModel } from '@components/color-picker';
+import type { ColorModel, ColorSpace } from '@components/color-picker';
 import * as ColorPicker from '@components/color-picker';
 import type { RGBA } from '@lib/color';
 
@@ -18,6 +19,7 @@ const NEARLY_RED = { r: 1, g: 0, b: 1 / 255, a: 1 };
 const NEARLY_RED_HUE = 360 - 60 / 255;
 const AZURE = { r: 0, g: 0.5, b: 0.75, a: 1 };
 const TEAL = { r: 0, g: 85 / 255, b: 102 / 255, a: 1 };
+const HALF_RED = { r: 1, g: 0, b: 0, a: 0.5 };
 
 const user = userEvent.setup();
 
@@ -383,6 +385,147 @@ describe('ColorPicker precision', () => {
   });
 });
 
+describe('ColorPicker.Eyedropper', () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it('renders nothing where the browser has no EyeDropper', () => {
+    render(<EyedropperPicker initialColor={BLUE} />);
+
+    expect(screen.queryByRole('button', { name: 'Pick color' })).not.toBeInTheDocument();
+  });
+
+  it('renders a button named Pick color where the browser has an EyeDropper', () => {
+    stubEyeDropper();
+    render(<EyedropperPicker initialColor={BLUE} />);
+
+    expect(screen.getByRole('button', { name: 'Pick color' })).toBeInTheDocument();
+  });
+
+  it('renders no button in a server render even where the browser has an EyeDropper', () => {
+    stubEyeDropper();
+
+    const html = renderToString(<EyedropperPicker initialColor={BLUE} />);
+
+    expect(html).not.toContain('Pick color');
+  });
+
+  it('replaces the default name with the aria-label prop', () => {
+    stubEyeDropper();
+    render(<EyedropperPicker initialColor={BLUE} aria-label="Pipette" />);
+
+    expect(screen.getByRole('button', { name: 'Pipette' })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Pick color' })).not.toBeInTheDocument();
+  });
+
+  it('forwards its ref and onClick to the button and still opens the eyedropper', async () => {
+    const open = stubEyeDropper().mockResolvedValueOnce({ sRGBHex: '#00ff00' });
+    const ref = createRef<HTMLButtonElement>();
+    const handleClick = vi.fn();
+    render(
+      <ColorPicker.Root colorSpace="srgb" defaultColor={BLUE} defaultActiveModel="hex">
+        <ColorPicker.Eyedropper ref={ref} onClick={handleClick} />
+        <ColorPicker.Input />
+      </ColorPicker.Root>
+    );
+    const button = screen.getByRole('button', { name: 'Pick color' });
+
+    await user.click(button);
+
+    expect(ref.current).toBe(button);
+    expect(handleClick).toHaveBeenCalledTimes(1);
+    expect(open).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(screen.getByRole('textbox', { name: 'Hex' })).toHaveValue('00FF00'));
+  });
+
+  it('applies the sampled color and keeps the opacity', async () => {
+    stubEyeDropper().mockResolvedValueOnce({ sRGBHex: '#336699' });
+    const handleColorChange = vi.fn();
+    render(<EyedropperPicker initialColor={HALF_RED} onColorChange={handleColorChange} />);
+
+    await user.click(screen.getByRole('button', { name: 'Pick color' }));
+
+    await waitFor(() => expect(handleColorChange).toHaveBeenLastCalledWith({ r: 0.2, g: 0.4, b: 0.6, a: 0.5 }));
+    expect(screen.getByRole('textbox', { name: 'Hex' })).toHaveValue('336699');
+    expect(screen.getByRole('textbox', { name: 'Opacity' })).toHaveValue('50');
+  });
+
+  it('converts the sampled sRGB color to display-p3', async () => {
+    stubEyeDropper().mockResolvedValueOnce({ sRGBHex: '#ff0000' });
+    const handleColorChange = vi.fn();
+    render(<EyedropperPicker initialColor={BLUE} colorSpace="display-p3" onColorChange={handleColorChange} />);
+
+    await user.click(screen.getByRole('button', { name: 'Pick color' }));
+
+    await waitFor(() =>
+      expect(handleColorChange).toHaveBeenLastCalledWith({
+        r: expect.closeTo(0.9175, 4),
+        g: expect.closeTo(0.2003, 4),
+        b: expect.closeTo(0.1386, 4),
+        a: 1,
+      })
+    );
+  });
+
+  it('keeps the hue when it samples white in display-p3', async () => {
+    stubEyeDropper().mockResolvedValueOnce({ sRGBHex: '#ffffff' });
+    render(<EyedropperPicker initialColor={BLUE} colorSpace="display-p3" />);
+
+    await user.click(screen.getByRole('button', { name: 'Pick color' }));
+
+    await waitFor(() => expect(screen.getByRole('textbox', { name: 'Hex' })).toHaveValue('FFFFFF'));
+    expect(getHueThumb()).toHaveAttribute('aria-valuenow', '240');
+  });
+
+  it.each([
+    ['a cancelled pick', () => Promise.reject(new DOMException('', 'AbortError'))],
+    ['a malformed result', () => Promise.resolve({ sRGBHex: 'red' })],
+  ])('leaves the color alone after %s', async (_, open) => {
+    stubEyeDropper().mockImplementationOnce(open);
+    const handleColorChange = vi.fn();
+    render(<EyedropperPicker initialColor={BLUE} onColorChange={handleColorChange} />);
+
+    await user.click(screen.getByRole('button', { name: 'Pick color' }));
+    await settlePendingPicks();
+
+    expect(screen.getByRole('textbox', { name: 'Hex' })).toHaveValue('0000FF');
+    expect(handleColorChange).not.toHaveBeenCalled();
+  });
+
+  it('closes the eyedropper when the picker unmounts and not before', async () => {
+    const open = stubEyeDropper().mockImplementationOnce(rejectWhenAborted);
+    const { unmount } = render(
+      <StrictMode>
+        <EyedropperPicker initialColor={BLUE} />
+      </StrictMode>
+    );
+
+    await user.click(screen.getByRole('button', { name: 'Pick color' }));
+    const signal = open.mock.lastCall?.[0].signal;
+    expect(signal?.aborted).toBe(false);
+    unmount();
+    await settlePendingPicks();
+
+    expect(signal?.aborted).toBe(true);
+  });
+
+  it('keeps the first pick when the browser refuses a second one', async () => {
+    let resolveFirstPick: (result: unknown) => void = () => {};
+    stubEyeDropper()
+      .mockImplementationOnce(() => new Promise((resolve) => (resolveFirstPick = resolve)))
+      .mockImplementationOnce(() => Promise.reject(new DOMException('', 'InvalidStateError')));
+    render(<EyedropperPicker initialColor={BLUE} />);
+    const button = screen.getByRole('button', { name: 'Pick color' });
+
+    await user.click(button);
+    await user.click(button);
+    resolveFirstPick({ sRGBHex: '#00ff00' });
+
+    await waitFor(() => expect(screen.getByRole('textbox', { name: 'Hex' })).toHaveValue('00FF00'));
+  });
+});
+
 function ControlledPicker(props: {
   initialColor: RGBA;
   defaultActiveModel?: ColorModel;
@@ -430,6 +573,28 @@ function UncontrolledPicker(props: { defaultColor: RGBA; areaSize?: number }) {
   );
 }
 
+function EyedropperPicker(props: {
+  initialColor: RGBA;
+  colorSpace?: ColorSpace;
+  'aria-label'?: string;
+  onColorChange?: (color: RGBA) => void;
+}) {
+  const { initialColor, colorSpace = 'srgb', 'aria-label': ariaLabel, onColorChange } = props;
+
+  return (
+    <ColorPicker.Root
+      colorSpace={colorSpace}
+      defaultColor={initialColor}
+      defaultActiveModel="hex"
+      onColorChange={onColorChange}
+    >
+      <ColorPicker.Eyedropper aria-label={ariaLabel} />
+      <ColorPicker.Hue />
+      <ColorPicker.Input />
+    </ColorPicker.Root>
+  );
+}
+
 function getHsvFields() {
   const [hue, saturation, value] = screen.getAllByRole('textbox');
   return { hue, saturation, value };
@@ -463,4 +628,25 @@ function getAlphaThumb() {
 
 function toFloat32(color: RGBA): RGBA {
   return { r: Math.fround(color.r), g: Math.fround(color.g), b: Math.fround(color.b), a: Math.fround(color.a) };
+}
+
+function stubEyeDropper() {
+  const open = vi.fn<(options: { signal?: AbortSignal }) => Promise<unknown>>();
+  vi.stubGlobal(
+    'EyeDropper',
+    class {
+      open = open;
+    }
+  );
+  return open;
+}
+
+function rejectWhenAborted({ signal }: { signal?: AbortSignal }) {
+  return new Promise<unknown>((_, reject) => {
+    signal?.addEventListener('abort', () => reject(new DOMException('', 'AbortError')));
+  });
+}
+
+function settlePendingPicks() {
+  return new Promise((resolve) => setTimeout(resolve, 0));
 }
