@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { useState, type ReactNode } from 'react';
+import { Flex } from '@components/flex';
 import * as Select from '@components/select';
 import { CheckmarkIcon, ChevronDownIcon, ChevronUpIcon } from '@components/icons';
 import type { ColorSpace } from './color-picker';
@@ -52,10 +53,17 @@ const Picker = () => {
       </Select.Root>
       <div style={{ width: 240 }}>
         <ColorPicker.Root colorSpace={space}>
-          <ColorPicker.Area />
-          <ColorPicker.Hue />
-          <ColorPicker.Alpha />
-          <ColorPicker.Input />
+          <Flex direction="column" gap="2">
+            <ColorPicker.Area />
+            <Flex align="center" gap="3">
+              <ColorPicker.Eyedropper />
+              <Flex direction="column" gap="1" style={{ flex: 1 }}>
+                <ColorPicker.Hue />
+                <ColorPicker.Alpha />
+              </Flex>
+            </Flex>
+            <ColorPicker.Input />
+          </Flex>
         </ColorPicker.Root>
       </div>
     </>
