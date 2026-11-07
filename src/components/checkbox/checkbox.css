@@ -79,6 +79,5 @@
 }
 
 .fp-CheckboxDescription {
-  color: var(--figma-color-text-secondary);
   grid-area: 2 / 2;
 }

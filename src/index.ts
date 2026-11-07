@@ -13,7 +13,7 @@ import * as ValueField from './components/value-field';
 import * as ColorPicker from './components/color-picker';
 import * as Collapsible from './components/collapsible';
 
-export { Text, Label, Paragraph, Link } from './components/text';
+export { Text, Label, Paragraph, Link, Heading } from './components/text';
 export { Button } from './components/button';
 export { IconButton } from './components/icon-button';
 export { Input } from './components/input';

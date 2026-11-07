@@ -1,6 +1,11 @@
 import React, { useCallback, useId } from 'react';
 import { cx } from 'class-variance-authority';
-import { Text, Label as LabelPrimitive } from '@components/text';
+import {
+  Text,
+  Label as LabelPrimitive,
+  type LabelProps as LabelPrimitiveProps,
+  type TextProps,
+} from '@components/text';
 import { useComposedRefs } from '@lib/react/use-compose-refs';
 import { CheckmarkIcon } from '@components/icons';
 import { CheckmarkIndeterminateIcon } from '@components/icons/checkmark-indeterminate';
@@ -60,8 +65,8 @@ const Indicator = () => {
   );
 };
 
-type LabelElement = React.ElementRef<'label'>;
-type LabelProps = React.ComponentPropsWithoutRef<'label'>;
+type LabelElement = HTMLLabelElement;
+type LabelProps = LabelPrimitiveProps;
 
 const Label = React.forwardRef<LabelElement, LabelProps>((props, ref) => {
   const { className, ...labelProps } = props;
@@ -78,19 +83,20 @@ const Label = React.forwardRef<LabelElement, LabelProps>((props, ref) => {
   );
 });
 
-type DescriptionElement = React.ElementRef<'label'>;
-type DescriptionProps = React.ComponentPropsWithoutRef<'label'>;
+type DescriptionElement = HTMLSpanElement;
+type DescriptionProps = TextProps;
 
 const Description = React.forwardRef<DescriptionElement, DescriptionProps>((props, ref) => {
-  const { className, ...desriptionProps } = props;
+  const { className, color = 'secondary', ...descriptionProps } = props;
   const { id } = useCheckboxContext('Description');
   return (
     <Text
       aria-hidden="true"
       ref={ref}
       className={cx(className, 'fp-CheckboxDescription')}
+      color={color}
       id={`checkbox-description-${id}`}
-      {...desriptionProps}
+      {...descriptionProps}
     />
   );
 });

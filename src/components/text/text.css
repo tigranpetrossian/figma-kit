@@ -1,32 +1,70 @@
 .fp-Text {
   margin: 0;
   font-family: var(--font-family-default);
-  color: var(--figma-color-text);
+  color: var(--text-color, var(--figma-color-text));
   font-size: var(--font-size, var(--font-size-default));
-  line-height: var(--line-height, var(--line-height-3));
-  letter-spacing: var(--letter-spacing, var(--letter-spacing-3));
+  line-height: var(--line-height, var(--line-height-default));
+  letter-spacing: var(--letter-spacing, var(--letter-spacing-default));
   font-weight: var(--font-weight, var(--font-weight-default));
 
-  /**
-  Use custom properties to avoid specificy issues when nesting Text.
-  Nested Text components inherit properties of the parent Text, unless customized.
-  At the same time, Text falls back to default values without requiring :root level styling. */
-  &:where(.fp-size-small) {
+  &:where(.fp-size-1) {
     --font-size: var(--font-size-1);
     --line-height: var(--line-height-1);
     --letter-spacing: var(--letter-spacing-1);
   }
 
-  &:where(.fp-size-medium) {
+  &:where(.fp-size-2) {
+    --font-size: var(--font-size-2);
+    --line-height: var(--line-height-2);
+    --letter-spacing: var(--letter-spacing-2);
+  }
+
+  &:where(.fp-size-3) {
     --font-size: var(--font-size-3);
     --line-height: var(--line-height-3);
     --letter-spacing: var(--letter-spacing-3);
   }
 
-  &:where(.fp-size-large) {
+  &:where(.fp-size-4) {
+    --font-size: var(--font-size-4);
+    --line-height: var(--line-height-4);
+    --letter-spacing: var(--letter-spacing-4);
+  }
+
+  &:where(.fp-size-5) {
     --font-size: var(--font-size-5);
     --line-height: var(--line-height-5);
     --letter-spacing: var(--letter-spacing-5);
+  }
+
+  &:where(.fp-size-6) {
+    --font-size: var(--font-size-6);
+    --line-height: var(--line-height-6);
+    --letter-spacing: var(--letter-spacing-6);
+  }
+
+  &:where(.fp-size-7) {
+    --font-size: var(--font-size-7);
+    --line-height: var(--line-height-7);
+    --letter-spacing: var(--letter-spacing-7);
+  }
+
+  &:where(.fp-size-8) {
+    --font-size: var(--font-size-8);
+    --line-height: var(--line-height-8);
+    --letter-spacing: var(--letter-spacing-8);
+  }
+
+  &:where(.fp-size-9) {
+    --font-size: var(--font-size-9);
+    --line-height: var(--line-height-9);
+    --letter-spacing: var(--letter-spacing-9);
+  }
+
+  &:where(.fp-size-10) {
+    --font-size: var(--font-size-10);
+    --line-height: var(--line-height-10);
+    --letter-spacing: var(--letter-spacing-10);
   }
 
   &:where(.fp-weight-default) {
@@ -35,6 +73,178 @@
 
   &:where(.fp-weight-strong) {
     --font-weight: var(--font-weight-strong);
+  }
+
+  &:where(.fp-color-default) {
+    --text-color: var(--figma-color-text);
+  }
+
+  &:where(.fp-color-secondary) {
+    --text-color: var(--figma-color-text-secondary);
+  }
+
+  &:where(.fp-color-tertiary) {
+    --text-color: var(--figma-color-text-tertiary);
+  }
+
+  &:where(.fp-color-disabled) {
+    --text-color: var(--figma-color-text-disabled);
+  }
+
+  &:where(.fp-color-brand) {
+    --text-color: var(--figma-color-text-brand);
+  }
+
+  &:where(.fp-color-brand-secondary) {
+    --text-color: var(--figma-color-text-brand-secondary);
+  }
+
+  &:where(.fp-color-brand-tertiary) {
+    --text-color: var(--figma-color-text-brand-tertiary);
+  }
+
+  &:where(.fp-color-selected) {
+    --text-color: var(--figma-color-text-selected);
+  }
+
+  &:where(.fp-color-selected-secondary) {
+    --text-color: var(--figma-color-text-selected-secondary);
+  }
+
+  &:where(.fp-color-selected-tertiary) {
+    --text-color: var(--figma-color-text-selected-tertiary);
+  }
+
+  &:where(.fp-color-component) {
+    --text-color: var(--figma-color-text-component);
+  }
+
+  &:where(.fp-color-component-secondary) {
+    --text-color: var(--figma-color-text-component-secondary);
+  }
+
+  &:where(.fp-color-component-tertiary) {
+    --text-color: var(--figma-color-text-component-tertiary);
+  }
+
+  &:where(.fp-color-danger) {
+    --text-color: var(--figma-color-text-danger);
+  }
+
+  &:where(.fp-color-danger-secondary) {
+    --text-color: var(--figma-color-text-danger-secondary);
+  }
+
+  &:where(.fp-color-danger-tertiary) {
+    --text-color: var(--figma-color-text-danger-tertiary);
+  }
+
+  &:where(.fp-color-warning) {
+    --text-color: var(--figma-color-text-warning);
+  }
+
+  &:where(.fp-color-warning-secondary) {
+    --text-color: var(--figma-color-text-warning-secondary);
+  }
+
+  &:where(.fp-color-warning-tertiary) {
+    --text-color: var(--figma-color-text-warning-tertiary);
+  }
+
+  &:where(.fp-color-success) {
+    --text-color: var(--figma-color-text-success);
+  }
+
+  &:where(.fp-color-success-secondary) {
+    --text-color: var(--figma-color-text-success-secondary);
+  }
+
+  &:where(.fp-color-success-tertiary) {
+    --text-color: var(--figma-color-text-success-tertiary);
+  }
+
+  &:where(.fp-color-onbrand) {
+    --text-color: var(--figma-color-text-onbrand);
+  }
+
+  &:where(.fp-color-onbrand-secondary) {
+    --text-color: var(--figma-color-text-onbrand-secondary);
+  }
+
+  &:where(.fp-color-onbrand-tertiary) {
+    --text-color: var(--figma-color-text-onbrand-tertiary);
+  }
+
+  &:where(.fp-color-onselected) {
+    --text-color: var(--figma-color-text-onselected);
+  }
+
+  &:where(.fp-color-onselected-secondary) {
+    --text-color: var(--figma-color-text-onselected-secondary);
+  }
+
+  &:where(.fp-color-onselected-tertiary) {
+    --text-color: var(--figma-color-text-onselected-tertiary);
+  }
+
+  &:where(.fp-color-onselected-strong) {
+    --text-color: var(--figma-color-text-onselected-strong);
+  }
+
+  &:where(.fp-color-oncomponent) {
+    --text-color: var(--figma-color-text-oncomponent);
+  }
+
+  &:where(.fp-color-oncomponent-secondary) {
+    --text-color: var(--figma-color-text-oncomponent-secondary);
+  }
+
+  &:where(.fp-color-oncomponent-tertiary) {
+    --text-color: var(--figma-color-text-oncomponent-tertiary);
+  }
+
+  &:where(.fp-color-ondanger) {
+    --text-color: var(--figma-color-text-ondanger);
+  }
+
+  &:where(.fp-color-ondanger-secondary) {
+    --text-color: var(--figma-color-text-ondanger-secondary);
+  }
+
+  &:where(.fp-color-ondanger-tertiary) {
+    --text-color: var(--figma-color-text-ondanger-tertiary);
+  }
+
+  &:where(.fp-color-onwarning) {
+    --text-color: var(--figma-color-text-onwarning);
+  }
+
+  &:where(.fp-color-onwarning-secondary) {
+    --text-color: var(--figma-color-text-onwarning-secondary);
+  }
+
+  &:where(.fp-color-onwarning-tertiary) {
+    --text-color: var(--figma-color-text-onwarning-tertiary);
+  }
+
+  &:where(.fp-color-onsuccess) {
+    --text-color: var(--figma-color-text-onsuccess);
+  }
+
+  &:where(.fp-color-onsuccess-secondary) {
+    --text-color: var(--figma-color-text-onsuccess-secondary);
+  }
+
+  &:where(.fp-color-onsuccess-tertiary) {
+    --text-color: var(--figma-color-text-onsuccess-tertiary);
+  }
+
+  &:where(.fp-color-ondisabled) {
+    --text-color: var(--figma-color-text-ondisabled);
+  }
+
+  &:where(.fp-color-oninverse) {
+    --text-color: var(--figma-color-text-oninverse);
   }
 
   &:where(.fp-align-start) {
@@ -59,19 +269,17 @@
 
   & code {
     font-family: var(--font-family-monospace);
-    font-size: var(--font-size-2);
     background-color: var(--figma-color-bg-brand-tertiary);
-    padding: 0.05rem 0.15rem;
+    padding: 0.05rem 0.1rem;
     border-radius: var(--radius-extra-small);
   }
 
-  mark {
+  & mark {
     background-color: var(--figma-color-bg-onselected);
   }
 }
 
 .fp-Link {
-  color: var(--figma-color-text-brand);
   text-decoration: none;
 
   &:focus-visible {
