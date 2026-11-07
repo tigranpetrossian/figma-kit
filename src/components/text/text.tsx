@@ -2,18 +2,76 @@ import React from 'react';
 import { useRender } from '@base-ui/react/use-render';
 import type { VariantProps } from 'class-variance-authority';
 import { cx, cva } from 'class-variance-authority';
+import { fromKeys } from 'remeda';
+
+const TEXT_SIZES = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'] as const;
+
+const TEXT_COLORS = [
+  'default',
+  'secondary',
+  'tertiary',
+  'disabled',
+  'brand',
+  'brand-secondary',
+  'brand-tertiary',
+  'selected',
+  'selected-secondary',
+  'selected-tertiary',
+  'component',
+  'component-secondary',
+  'component-tertiary',
+  'danger',
+  'danger-secondary',
+  'danger-tertiary',
+  'warning',
+  'warning-secondary',
+  'warning-tertiary',
+  'success',
+  'success-secondary',
+  'success-tertiary',
+  'onbrand',
+  'onbrand-secondary',
+  'onbrand-tertiary',
+  'onselected',
+  'onselected-secondary',
+  'onselected-tertiary',
+  'onselected-strong',
+  'oncomponent',
+  'oncomponent-secondary',
+  'oncomponent-tertiary',
+  'ondanger',
+  'ondanger-secondary',
+  'ondanger-tertiary',
+  'onwarning',
+  'onwarning-secondary',
+  'onwarning-tertiary',
+  'onsuccess',
+  'onsuccess-secondary',
+  'onsuccess-tertiary',
+  'ondisabled',
+  'oninverse',
+] as const;
+
+const TEXT_SIZE_VARIANTS = fromKeys(TEXT_SIZES, (size) => `fp-size-${size}`);
+
+const TEXT_COLOR_VARIANTS = fromKeys(TEXT_COLORS, (color) => `fp-color-${color}`);
+
+const HEADING_LEVELS: Record<HeadingLevel, { tagName: HeadingTagName; size: TextSize }> = {
+  1: { tagName: 'h1', size: '9' },
+  2: { tagName: 'h2', size: '7' },
+  3: { tagName: 'h3', size: '5' },
+  4: { tagName: 'h4', size: '4' },
+  5: { tagName: 'h5', size: '3' },
+};
 
 const text = cva('fp-Text', {
   variants: {
-    size: {
-      small: 'fp-size-small',
-      medium: 'fp-size-medium',
-      large: 'fp-size-large',
-    },
+    size: TEXT_SIZE_VARIANTS,
     weight: {
       default: 'fp-weight-default',
       strong: 'fp-weight-strong',
     },
+    color: TEXT_COLOR_VARIANTS,
     align: {
       start: 'fp-align-start',
       center: 'fp-align-center',
@@ -25,110 +83,113 @@ const text = cva('fp-Text', {
   },
 });
 
-type TextElement = React.ElementRef<'span'>;
-type TextProps = React.ComponentPropsWithoutRef<'span'> &
-  VariantProps<typeof text> & {
+type TextVariants = VariantProps<typeof text>;
+type TextSize = (typeof TEXT_SIZES)[number];
+type TextWeight = NonNullable<TextVariants['weight']>;
+type TextColor = (typeof TEXT_COLORS)[number];
+type HeadingLevel = 1 | 2 | 3 | 4 | 5;
+type HeadingTagName = 'h1' | 'h2' | 'h3' | 'h4' | 'h5';
+
+type TextElementProps<TagName extends keyof React.JSX.IntrinsicElements> = Omit<
+  React.ComponentPropsWithoutRef<TagName>,
+  'color'
+> &
+  TextVariants & {
     render?: useRender.RenderProp | undefined;
   };
 
-const Text = React.forwardRef<TextElement, TextProps>((props, ref) => {
-  const { className, render, size, weight, align, block, ...textProps } = props;
+type TextProps = TextElementProps<'span'>;
+
+const Text = React.forwardRef<HTMLSpanElement, TextProps>((props, ref) => {
+  const { render, ...textProps } = props;
 
   return useRender({
     defaultTagName: 'span',
     render,
     ref,
-    props: {
-      className: text({
-        className,
-        size,
-        weight,
-        align,
-        block,
-      }),
-      ...textProps,
-    },
+    props: resolveTextProps(textProps),
   });
 });
 
-Text.displayName = 'Text';
+type LabelProps = TextElementProps<'label'>;
 
-type LabelElement = React.ElementRef<'label'>;
-type LabelProps = React.ComponentPropsWithoutRef<'label'> & VariantProps<typeof text>;
+const Label = React.forwardRef<HTMLLabelElement, LabelProps>((props, ref) => {
+  const { render, ...labelProps } = props;
 
-const Label = React.forwardRef<LabelElement, LabelProps>((props, ref) => {
-  const { className, size, weight, align, block, ...labelProps } = props;
-
-  return (
-    <label
-      ref={ref}
-      className={text({
-        className,
-        size,
-        weight,
-        align,
-        block,
-      })}
-      {...labelProps}
-    />
-  );
+  return useRender({
+    defaultTagName: 'label',
+    render,
+    ref,
+    props: resolveTextProps(labelProps),
+  });
 });
 
-Label.displayName = 'Label';
+type ParagraphProps = TextElementProps<'p'>;
 
-type ParagraphElement = React.ElementRef<'p'>;
-type ParagraphProps = React.ComponentPropsWithoutRef<'p'> & VariantProps<typeof text>;
+const Paragraph = React.forwardRef<HTMLParagraphElement, ParagraphProps>((props, ref) => {
+  const { render, ...paragraphProps } = props;
 
-const Paragraph = React.forwardRef<ParagraphElement, ParagraphProps>((props, ref) => {
-  const { className, size, weight, align, block, ...paragraphProps } = props;
-
-  return (
-    <p
-      ref={ref}
-      className={text({
-        className,
-        size,
-        weight,
-        align,
-        block,
-      })}
-      {...paragraphProps}
-    />
-  );
+  return useRender({
+    defaultTagName: 'p',
+    render,
+    ref,
+    props: resolveTextProps(paragraphProps),
+  });
 });
 
-type LinkElement = React.ElementRef<'a'>;
-type LinkProps = React.ComponentPropsWithoutRef<'a'> &
-  VariantProps<typeof text> & {
-    render?: useRender.RenderProp | undefined;
-  };
+type LinkProps = TextElementProps<'a'>;
 
-Paragraph.displayName = 'Paragraph';
-
-const Link = React.forwardRef<LinkElement, LinkProps>((props, ref) => {
-  const { className, render, size, weight, align, block, ...linkProps } = props;
+const Link = React.forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
+  const { render, className, color = 'brand', ...linkProps } = props;
 
   return useRender({
     defaultTagName: 'a',
     render,
     ref,
-    props: {
-      className: cx(
-        text({
-          className,
-          size,
-          weight,
-          align,
-          block,
-        }),
-        'fp-Link'
-      ),
-      ...linkProps,
-    },
+    props: resolveTextProps({ className: cx('fp-Link', className), color, ...linkProps }),
   });
 });
 
-Link.displayName = 'Link';
+type HeadingProps = TextElementProps<'h1'> & {
+  level?: HeadingLevel | undefined;
+};
 
-export type { TextProps, LabelProps, ParagraphProps, LinkProps };
-export { Text, Label, Paragraph, Link };
+const Heading = React.forwardRef<HTMLHeadingElement, HeadingProps>((props, ref) => {
+  const { render, level = 1, size, weight = 'strong', ...headingProps } = props;
+  const { tagName, size: levelSize } = HEADING_LEVELS[level];
+
+  return useRender({
+    defaultTagName: tagName,
+    render,
+    ref,
+    props: resolveTextProps({ size: size ?? levelSize, weight, ...headingProps }),
+  });
+});
+
+function resolveTextProps<Props extends TextVariants & { className?: string | undefined }>(props: Props) {
+  const { className, size, weight, color, align, block, ...elementProps } = props;
+
+  return {
+    className: text({ className, size, weight, color, align, block }),
+    ...elementProps,
+  };
+}
+
+Text.displayName = 'Text';
+Label.displayName = 'Label';
+Paragraph.displayName = 'Paragraph';
+Link.displayName = 'Link';
+Heading.displayName = 'Heading';
+
+export type {
+  TextProps,
+  LabelProps,
+  ParagraphProps,
+  LinkProps,
+  HeadingProps,
+  TextSize,
+  TextWeight,
+  TextColor,
+  HeadingLevel,
+};
+export { Text, Label, Paragraph, Link, Heading, TEXT_SIZES, TEXT_COLORS };

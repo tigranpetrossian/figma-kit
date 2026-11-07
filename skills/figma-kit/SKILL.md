@@ -44,7 +44,7 @@ Before writing a component, read its reference. It shows how the parts nest and 
 | ValueField (numbers, hex, presets) | [references/value-field.md](references/value-field.md) |
 | ColorPicker | [references/color-picker.md](references/color-picker.md) |
 | Input, Textarea, Checkbox, RadioGroup, Switch, Slider | [references/form-controls.md](references/form-controls.md) |
-| Text, Label, Paragraph, Link | [references/text.md](references/text.md) |
+| Text, Label, Paragraph, Link, Heading | [references/text.md](references/text.md) |
 | Icons | [references/icons.md](references/icons.md) |
 
 ## Rules

@@ -24,7 +24,7 @@ const Simple: Story = {
   render() {
     return (
       <ContextMenu.Root>
-        <ContextMenu.Trigger render={<Text size="large" style={triggerStyle} />}>Right click here</ContextMenu.Trigger>
+        <ContextMenu.Trigger render={<Text size="5" style={triggerStyle} />}>Right click here</ContextMenu.Trigger>
         <ContextMenu.Portal>
           <ContextMenu.Positioner sideOffset={0}>
             <ContextMenu.Popup style={{ minWidth: 200 }}>
@@ -129,7 +129,7 @@ const WithCheckboxes: Story = {
   render() {
     return (
       <ContextMenu.Root>
-        <ContextMenu.Trigger render={<Text size="large" style={triggerStyle} />}>Right click here</ContextMenu.Trigger>
+        <ContextMenu.Trigger render={<Text size="5" style={triggerStyle} />}>Right click here</ContextMenu.Trigger>
         <ContextMenu.Portal>
           <ContextMenu.Positioner sideOffset={0}>
             <ContextMenu.Popup style={{ minWidth: 200 }}>
