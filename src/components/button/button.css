@@ -129,11 +129,11 @@
   outline-color: transparent;
   color: var(--figma-color-text);
 
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: var(--figma-color-bg-hover);
   }
 
-  &:active {
+  &:active:not(:disabled) {
     background-color: var(--figma-color-bg-pressed);
   }
 
@@ -143,7 +143,6 @@
 
   &:disabled {
     color: var(--figma-color-text-disabled);
-    outline-color: var(--figma-color-border-disabled);
   }
 }
 
