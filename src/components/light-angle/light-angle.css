@@ -1,3 +1,13 @@
+:root,
+.light,
+.light-theme {
+  --light-angle-beam-opacity: 1;
+}
+
+.figma-dark {
+  --light-angle-beam-opacity: 0.2;
+}
+
 .fp-LightAngleRoot {
   position: relative;
   flex-shrink: 0;
@@ -20,6 +30,7 @@
   bottom: 0;
   left: 0;
   display: block;
+  opacity: var(--light-angle-beam-opacity);
 }
 
 .fp-LightAngleSource {
