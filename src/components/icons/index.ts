@@ -54,6 +54,7 @@ export { LayerBlurIcon } from './layer-blur';
 export { LayersCollapseIcon } from './layers-collapse';
 export { LetterSpacingIcon } from './letter-spacing';
 export { LineHeightIcon } from './line-height';
+export { LightSourceIcon } from './light-source';
 export { LinkIcon } from './link';
 export { ListBulletedIcon } from './list-bulleted';
 export { ListNumberedIcon } from './list-numbered';
