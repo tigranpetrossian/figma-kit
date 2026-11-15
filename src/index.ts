@@ -19,6 +19,7 @@ export { IconButton } from './components/icon-button';
 export { Input } from './components/input';
 export { Textarea } from './components/textarea';
 export { Slider } from './components/slider';
+export { LightAngle } from './components/light-angle';
 export { Switch } from './components/switch';
 export { Tooltip, TooltipProvider } from './components/tooltip';
 export { Tabs };
