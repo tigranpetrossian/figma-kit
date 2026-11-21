@@ -1,5 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { useState } from 'react';
 import type { ReactNode } from 'react';
+import { OpacityIcon } from '@components/icons';
+import * as ValueField from '@components/value-field';
 import { Slider } from './slider';
 
 const meta = {
@@ -117,6 +120,43 @@ const SmallHints: Story = { ...Hints, args: { ...Hints.args, size: 'small' } };
 
 const SmallDisabled: Story = { ...Disabled, args: { ...Disabled.args, size: 'small' } };
 
+const WithValueField: Story = {
+  decorators: [withHorizontalWidth],
+  render() {
+    return <SliderWithValueField valueFieldSide="right" />;
+  },
+};
+
+const WithValueFieldLeft: Story = {
+  decorators: [withHorizontalWidth],
+  render() {
+    return <SliderWithValueField valueFieldSide="left" icon={<OpacityIcon />} />;
+  },
+};
+
+function SliderWithValueField(props: { valueFieldSide: 'left' | 'right'; icon?: ReactNode }) {
+  const [value, setValue] = useState(80);
+
+  function handleSliderChange([nextValue = value]: number[]) {
+    setValue(nextValue);
+  }
+
+  const valueField = (
+    <ValueField.Root>
+      <ValueField.Scrubber>{props.icon && <ValueField.Label>{props.icon}</ValueField.Label>}</ValueField.Scrubber>
+      <ValueField.Numeric value={value} onChange={setValue} min={0} max={100} precision={0} />
+    </ValueField.Root>
+  );
+
+  return (
+    <ValueField.Multi>
+      {props.valueFieldSide === 'left' && valueField}
+      <Slider size="small" min={0} max={100} value={[value]} onValueChange={handleSliderChange} />
+      {props.valueFieldSide === 'right' && valueField}
+    </ValueField.Multi>
+  );
+}
+
 function withHorizontalWidth(Story: () => ReactNode) {
   return (
     <div style={{ width: 200 }}>
@@ -147,4 +187,6 @@ export {
   SmallRangeAnchor,
   SmallVertical,
   Vertical,
+  WithValueField,
+  WithValueFieldLeft,
 };

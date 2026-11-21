@@ -1,7 +1,6 @@
 import type { StoryObj, Meta } from '@storybook/react-vite';
 import { useState } from 'react';
 import { Flex } from '@components/flex';
-import { Slider } from '@components/slider';
 import { Text } from '@components/text';
 import type { RGBA } from '@lib/color';
 import * as ValueField from './';
@@ -98,18 +97,6 @@ const Rgba: Story = {
 const HexWithAlpha: Story = {
   render() {
     return <HexWithAlphaField />;
-  },
-};
-
-const WithSlider: Story = {
-  render() {
-    return <SliderField />;
-  },
-};
-
-const WithSliderDisabled: Story = {
-  render() {
-    return <SliderField disabled />;
   },
 };
 
@@ -269,26 +256,6 @@ const HexWithAlphaField = () => {
   );
 };
 
-const SliderField = (props: { disabled?: boolean }) => {
-  const [value, setValue] = useState(80);
-
-  function handleSliderChange([nextValue = value]: number[]) {
-    setValue(nextValue);
-  }
-
-  return (
-    <div style={{ width: 136 }}>
-      <ValueField.Multi disabled={props.disabled}>
-        <Slider size="small" min={0} max={100} value={[value]} onValueChange={handleSliderChange} />
-        <ValueField.Root>
-          <ValueField.Scrubber />
-          <ValueField.Numeric value={value} onChange={setValue} min={0} max={100} precision={0} />
-        </ValueField.Root>
-      </ValueField.Multi>
-    </div>
-  );
-};
-
 const OpacityIcon = () => {
   return (
     <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -314,6 +281,4 @@ export {
   Rgba,
   WithIcon,
   WithLabel,
-  WithSlider,
-  WithSliderDisabled,
 };

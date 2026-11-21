@@ -194,10 +194,18 @@
     margin-inline: 10px 11px;
   }
 
+  > .fp-ValueFieldRoot + .fp-SliderRoot {
+    margin-inline: 11px 10px;
+  }
+
   > .fp-ValueFieldRoot {
     flex: 0 0 var(--space-14);
     outline: 1px solid transparent;
     outline-offset: -1px;
+
+    &:first-child {
+      border-right: 1px solid var(--figma-color-bg);
+    }
 
     &:hover:where(:not([data-disabled])) {
       outline-color: var(--figma-color-border);
